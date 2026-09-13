@@ -50,16 +50,39 @@ Se isso for verdade, três coisas mudam:
 
 ---
 
+## De onde vem este curso
+
+Duas fontes sustentam os Encontros 2 e 3:
+
+**Gelman, Hill & Vehtari (2020), *Regression and Other Stories*** — a
+postura: regressão é uma ferramenta de **comparação e predição**, não uma
+máquina de produzir valores de *p*. Simular, ajustar, prever, checar.
+
+**Lindeløv, *Common statistical tests are linear models*** — a
+demonstração: a tabela que mostra cada teste clássico como um `lm()` com
+uma matriz de delineamento específica.
+
+::: {.nota}
+O ROS ajusta quase tudo com `stan_glm()`. Neste curso usamos `lm()` e
+`glm()` como padrão — que é o que vocês vão encontrar na literatura e nos
+laboratórios — e, quando mostramos a versão bayesiana, usamos `brms`, cuja
+sintaxe é idêntica à do `lme4` e do `glmmTMB` que veremos nos Encontros 7
+e 8. Uma notação só para o curso inteiro.
+:::
+
+---
+
 ## Hoje
 
 1. Anatomia do modelo linear — e onde mora a premissa de normalidade
-2. Teste t é `lm()`: a matriz de delineamento escrita à mão
-3. Correlação e regressão
-4. **Intervalo**
-5. Interpretar coeficientes na escala certa
-6. Codificação de fatores: `contr.treatment` e `contr.sum`
-7. Colinearidade
-8. Diagnóstico de resíduos
+2. Simular para entender: dados falsos e recuperação de parâmetros
+3. Teste t é `lm()`: a matriz de delineamento escrita à mão
+4. Correlação e regressão
+5. **Intervalo**
+6. Interpretar coeficientes: comparação, não efeito
+7. Codificação de fatores: `contr.treatment` e `contr.sum`
+8. A mesma regressão em `brms`
+9. Colinearidade e diagnóstico de resíduos
 
 ---
 
@@ -129,7 +152,79 @@ Violar (2) invalida tudo.
 
 ---
 
-# 2. Teste t é `lm()` {.secao}
+# 2. Simular para entender {.secao}
+
+---
+
+## O hábito mais útil do ROS
+
+::: {.definicao}
+Antes de ajustar um modelo a dados reais, **simule dados em que você sabe
+a resposta** e confira se o modelo a recupera.
+:::
+
+Se o modelo não recupera parâmetros que você mesmo escolheu, o problema
+não está nos dados — está no seu entendimento do modelo.
+
+---
+
+## Simular, ajustar, recuperar
+
+```{r}
+set.seed(2026)
+
+n <- 120
+comprimento <- runif(n, 20, 60)               # comprimento rostro-cloacal, mm
+massa <- 3 + 0.45 * comprimento + rnorm(n, 0, 2)   # verdade: b0 = 3, b1 = 0,45
+
+coef(lm(massa ~ comprimento))
+```
+
+O ajuste devolve algo próximo de 3 e de 0,45. **Nós sabemos que está
+certo porque nós escrevemos a verdade.**
+
+---
+
+## E quanto varia de amostra para amostra?
+
+```{r}
+#| fig-height: 3.2
+simula_uma <- function(i) {
+  x <- runif(120, 20, 60)
+  y <- 3 + 0.45 * x + rnorm(120, 0, 2)
+  coef(lm(y ~ x))[2]
+}
+
+inclinacoes <- purrr::map_dbl(1:500, simula_uma)
+
+ggplot(tibble(inclinacoes), aes(inclinacoes)) +
+  geom_histogram(bins = 30, fill = "#1c6e8c", colour = "white") +
+  geom_vline(xintercept = 0.45, colour = "#c08a3e", linewidth = 1) +
+  labs(x = "Inclinação estimada", y = NULL)
+```
+
+A linha dourada é a verdade. O espalhamento **é** o erro-padrão — não uma
+fórmula decorada, mas uma quantidade que você pode ver.
+
+---
+
+## Para que serve na prática
+
+- **Planejar amostragem**: com $n = 20$, quão larga fica essa
+  distribuição? É a forma honesta de avaliar poder (ROS, cap. 16).
+- **Depurar**: se o modelo não recupera o que você simulou, você entendeu
+  a fórmula errado.
+- **Entender um método novo**: antes de usar GLMM nos seus dados, simule
+  um conjunto com estrutura hierárquica conhecida.
+
+::: {.nota}
+Vamos usar este mesmo truque no Encontro 4 (distribuições), no 6 (excesso
+de zeros) e no 7 (efeitos aleatórios).
+:::
+
+---
+
+# 3. Teste t é `lm()` {.secao}
 
 ---
 
@@ -233,7 +328,7 @@ models*](https://lindeloev.github.io/tests-as-linear/).
 
 ---
 
-# 3. Correlação e regressão {.secao}
+# 4. Correlação e regressão {.secao}
 
 ---
 
@@ -285,7 +380,7 @@ influente — vale olhar o gráfico antes de escolher.
 
 ---
 
-# 4. Interpretar coeficientes {.secao}
+# 5. Interpretar coeficientes {.secao}
 
 ---
 
@@ -348,6 +443,25 @@ ggplot(pinguins, aes(bill_length_mm, body_mass_g, colour = species)) +
 
 ---
 
+## Comparação, não efeito
+
+::: {.definicao}
+Em dados observacionais, um coeficiente é uma **comparação entre
+unidades que diferem naquela variável** — não o que aconteceria se você
+mudasse a variável numa mesma unidade.
+:::
+
+| Escreva | Não escreva |
+|---|---|
+| "pinguins que têm 1 mm a mais de bico pesam, em média, X g a mais" | "aumentar o bico em 1 mm aumenta a massa em X g" |
+| "sítios 1 km mais distantes do parque têm, em média, Y atropelamentos a menos" | "afastar o sítio do parque reduz a mortalidade em Y" |
+
+A linguagem causal exige um argumento causal — delineamento experimental
+ou um DAG defensável (Encontro 5). O modelo, sozinho, não fornece esse
+argumento.
+
+---
+
 ## Paradoxo de Simpson
 
 ```{r}
@@ -367,7 +481,7 @@ resultado.**
 
 ---
 
-# 5. Codificação de fatores {.secao}
+# 6. Codificação de fatores {.secao}
 
 ---
 
@@ -432,7 +546,109 @@ condição basal, a espécie focal.
 
 ---
 
-# 6. Colinearidade {.secao}
+# 7. A mesma regressão, em `brms` {.secao}
+
+---
+
+## Por que mostrar isso agora
+
+O livro-texto do curso ajusta quase tudo em bayesiano. Vale ver, desde já,
+que é **o mesmo modelo** — e começar a usar a notação que vai valer até o
+fim do curso.
+
+```{r}
+#| eval: false
+library(brms)
+
+m_bayes <- brm(body_mass_g ~ bill_length_mm, data = pinguins,
+               chains = 4, iter = 2000, seed = 2026,
+               file = "../cache/e02_bico")   # compila uma vez, reusa depois
+summary(m_bayes)
+```
+
+::: {.definicao}
+A fórmula é exatamente a mesma que você escreveria em `lm()`. E a mesma
+que você vai escrever em `lmer()`, `glmmTMB()` e `brm()` nos Encontros 7 e
+8 — só acrescentando `(1 | grupo)`.
+:::
+
+---
+
+## Uma notação, quatro pacotes
+
+```{r}
+#| eval: false
+lm       (massa ~ svl,                  data = d)                     # gaussiano
+glm      (massa ~ svl, family = Gamma,  data = d)                     # GLM
+lme4::lmer   (massa ~ svl + (1 | poca),               data = d)       # LMM
+glmmTMB::glmmTMB(massa ~ svl + (1 | poca), family = Gamma, data = d)  # GLMM
+brms::brm    (massa ~ svl + (1 | poca), family = Gamma, data = d)     # bayesiano
+```
+
+::: {.nota}
+É por isso que escolhemos `brms` e não outro pacote bayesiano: o custo de
+transferência entre as cinco linhas acima é quase zero. Referência prática:
+Kurz, *Statistical Rethinking recoded*
+(<https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/>).
+:::
+
+---
+
+## O preço: compilação
+
+O `brms` traduz cada modelo para um programa Stan e **compila em C++**.
+
+- primeira vez na vida da máquina: alguns minutos;
+- cada modelo **novo**: dezenas de segundos;
+- mesmo modelo de novo, com `file = "cache/..."`: instantâneo.
+
+::: {.definicao}
+Por isso todos os modelos `brms` deste curso já estão em cache no
+repositório. Nas suas análises, use sempre `file =` — vocês vão agradecer
+na terceira vez que renderizarem o relatório.
+:::
+
+---
+
+## O que muda e o que não muda
+
+| | `lm()` | `brm()` |
+|---|---|---|
+| Estimativa pontual | idêntica, na prática | mediana da posterior |
+| Incerteza | erro-padrão, IC de 95 % | desvio-padrão da posterior, intervalo de credibilidade |
+| Priors | nenhuma (implicitamente planas) | fracamente informativas por padrão |
+| O que você pode dizer | "95 % dos ICs construídos assim conteriam o valor" | "há 95 % de probabilidade de o parâmetro estar aqui" |
+| Amostra pequena | estimativa instável | a prior regulariza |
+
+::: {.definicao}
+Com bastante dado e priors fracas, os dois dão praticamente o mesmo
+número. A diferença aparece quando o dado é pouco — que é a situação de
+boa parte da ecologia de campo.
+:::
+
+---
+
+## O que você ganha de graça
+
+```{r}
+#| eval: false
+# distribuição preditiva posterior — o que o modelo acha
+# que seriam novos dados
+pp_check(m_bayes, ndraws = 50)
+
+# incerteza sobre qualquer quantidade derivada, sem fórmula:
+posterior <- as_draws_df(m_bayes)
+quantile(posterior$b_bill_length_mm * 10, c(.025, .5, .975))
+```
+
+Propagar incerteza para uma quantidade derivada — "massa esperada de um
+pinguim com bico 10 mm maior" — é uma linha de código, não uma derivação.
+
+Voltamos a isso no Encontro 8, com GLMM.
+
+---
+
+# 8. Colinearidade {.secao}
 
 ---
 
@@ -465,7 +681,7 @@ decisão é **biológica**, não mecânica:
 
 ---
 
-# 7. Diagnóstico {.secao}
+# 9. Diagnóstico {.secao}
 
 ---
 
@@ -509,6 +725,33 @@ que é a única forma honesta de diagnosticar resíduos não gaussianos.
 
 ---
 
+## Resíduo contra predito, nunca contra observado
+
+::: {.definicao}
+Gráfico de resíduo contra o valor **observado** mostra uma correlação
+negativa mesmo quando o modelo está perfeito. É artefato, não
+diagnóstico. (ROS, cap. 11.)
+:::
+
+```{r}
+#| echo: false
+#| fig-height: 3.0
+res <- resid(m_mult)
+fit <- fitted(m_mult)
+obs <- fit + res
+bind_rows(
+  tibble(x = fit, r = res, tipo = "Contra o predito (correto)"),
+  tibble(x = obs, r = res, tipo = "Contra o observado (artefato)")
+) |>
+  ggplot(aes(x, r)) +
+  geom_point(alpha = .4, colour = "#1c6e8c") +
+  geom_hline(yintercept = 0, colour = "#c08a3e") +
+  facet_wrap(~tipo, scales = "free_x") +
+  labs(x = NULL, y = "Resíduo")
+```
+
+---
+
 ## Alavancagem não é outlier
 
 - **Outlier**: resíduo grande. Está longe do que o modelo previu.
@@ -531,10 +774,12 @@ relatado.
 
 1. $\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}$
    — só a matriz $\mathbf{X}$ muda entre os "testes".
-2. A normalidade exigida é a **do resíduo**.
-3. Coeficiente se interpreta **com unidade**, na escala da resposta.
-4. Codificação de fatores muda o significado da tabela, não o ajuste.
-5. Colinearidade é problema de interpretação, não de premissa.
+2. Simular dados falsos e recuperar os parâmetros é a forma mais barata
+   de saber se você entendeu o modelo.
+3. A normalidade exigida é a **do resíduo**.
+4. Coeficiente é **comparação**, com unidade — não efeito causal.
+5. Codificação de fatores muda o significado da tabela, não o ajuste.
+6. Colinearidade é problema de interpretação, não de premissa.
 
 ---
 
@@ -567,6 +812,7 @@ ANCOVA e interações. Nenhum conceito novo de inferência.
   Stories*. Cambridge University Press. Parte I.
 - Lindeløv, J.K. *Common statistical tests are linear models*.
   <https://lindeloev.github.io/tests-as-linear/>
+- Exemplos e código do ROS: <https://avehtari.github.io/ROS-Examples/>
 - Horst, A.M., Hill, A.P. & Gorman, K.B. 2020. palmerpenguins: Palmer
   Archipelago (Antarctica) penguin data. Pacote R.
 - da Silva, F.R. et al. 2022. *Análises Ecológicas no R*, cap. 7.

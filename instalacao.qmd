@@ -49,6 +49,8 @@ pacotes <- c(
   "GGally", "ggeffects", "broom", "broom.mixed", "knitr", "rmarkdown",
   # modelos lineares e GLM
   "car", "emmeans", "MASS", "performance", "see", "sjPlot", "marginaleffects",
+  # versão bayesiana dos mesmos modelos
+  "loo", "bayesplot",
   # GLMM, zeros inflados e ordinais
   "lme4", "glmmTMB", "DHARMa", "ordinal", "pscl", "lmtest",
   # seleção de modelos
@@ -61,15 +63,21 @@ faltando <- setdiff(pacotes, rownames(installed.packages()))
 if (length(faltando)) install.packages(faltando)
 ```
 
-### `brms` e Stan
+### `brms` e Stan — o passo demorado
 
-Instale em separado, porque é o passo demorado:
+Usamos o `brms` do **Encontro 2 em diante**, sempre ao lado do modelo
+frequentista equivalente. A razão de ser ele, e não outro pacote
+bayesiano, é que a sintaxe é **idêntica** à do `lme4` e do `glmmTMB`:
+`y ~ x + (1 | grupo)` significa a mesma coisa nos três. Você aprende uma
+notação só.
+
+O preço é que o `brms` **compila um programa Stan para cada modelo novo**.
+Por isso ele precisa de compilador C++ e de paciência na primeira
+execução.
 
 ```{r}
 #| eval: false
 install.packages("brms")   # puxa rstan e StanHeaders
-install.packages("loo")
-install.packages("bayesplot")
 ```
 
 Teste a compilação com um modelo mínimo. **A primeira execução demora**;

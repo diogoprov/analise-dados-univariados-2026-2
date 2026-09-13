@@ -1,0 +1,115 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Provete Lab//Plano Univariados 2026-2 REVISADO//PT-BR
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Univariados 2026/2 — plano de recuperação
+BEGIN:VEVENT
+UID:20260914-publicar@provetelab.org
+DTSTAMP:20260913T230000Z
+DTSTART;VALUE=DATE:20260914
+DTEND;VALUE=DATE:20260915
+SUMMARY:🚨 URGENTE (30 min) — publicar repo + mandar instalação aos alunos
+DESCRIPTION:Criar o repo analise-dados-univariados-2026-2 no GitHub e dar push\nAtivar GitHub Pages (branch main\, pasta /docs)\nMandar o link de instalacao.html aos alunos AGORA\nMotivo: o brms compila C++ na primeira execução; quem deixar para domingo 20 chega sem ambiente\nPublicar também o programa no Moodle
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20260915-rev-e1e2@provetelab.org
+DTSTAMP:20260913T230000Z
+DTSTART;VALUE=DATE:20260915
+DTEND;VALUE=DATE:20260916
+SUMMARY:✅ Revisar E1 + E2 (~2 h)
+DESCRIPTION:Rascunhos prontos em slides/e01.qmd e slides/e02.qmd\nO que revisar: seu tom nos slides de abertura\, exemplos que você prefere\, figuras dos pptx antigos que queira reinserir\nE1: EDA/reprodutibilidade/LLMs — E2: tests-as-linear\, matriz de delineamento\, contrastes
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20260916-rev-e3e4@provetelab.org
+DTSTAMP:20260913T230000Z
+DTSTART;VALUE=DATE:20260916
+DTEND;VALUE=DATE:20260917
+SUMMARY:✅ Revisar E3 + E4 (~2 h)
+DESCRIPTION:E3: ANOVA/ANCOVA como lm()\, SS I/II/III\, emmeans\nE4: distribuições e família exponencial\, simulação em R\, Pearson vs Spearman
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20260917-rev-e5e6@provetelab.org
+DTSTAMP:20260913T230000Z
+DTSTART;VALUE=DATE:20260917
+DTEND;VALUE=DATE:20260918
+SUMMARY:✅ Revisar E5 + E6 (~2 h) — E6 tem o bloco novo de ZI/Hurdle
+DESCRIPTION:E5: verossimilhança\, logística\, Poisson\, DAGs\nE6: DHARMa\, sobredispersão\, ZIP/ZINB/hurdle com glmmTMB (bloco escrito do zero)\, ordinal com clm/clmm\nPrioridade de revisão: o bloco ZI/Hurdle\, por ser conteúdo novo
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20260918-rev-e7e8@provetelab.org
+DTSTAMP:20260913T230000Z
+DTSTART;VALUE=DATE:20260918
+DTEND;VALUE=DATE:20260919
+SUMMARY:✅ Revisar E7 + E8 (~2 h) + ⚙️ rodar e cachear os brm() no M5 (~1 h)
+DESCRIPTION:E7: pseudorreplicação\, efeitos aleatórios\, shrinkage\, ICC\nE8: lme4 vs glmmTMB\, convergência\, ponte brms\, BARG\nIMPORTANTE: rodar todos os brm() do E8 com file = "cache/..." para não compilar Stan durante a aula
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20260919-rev-e9@provetelab.org
+DTSTAMP:20260913T230000Z
+DTSTART;VALUE=DATE:20260919
+DTEND;VALUE=DATE:20260920
+SUMMARY:⚡ Revisar E9 (~2 h) — o bloco mais denso
+DESCRIPTION:Único bloco sem material próprio anterior: KL/AIC\, AICc\, BIC\, pesos de Akaike\, model averaging\, crítica ao dredge\, LOO/WAIC\nÉ o que travou o roadmap original em 31/08 — revisar com calma e com tempo de sobra antes de sexta 25
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20260920-final@provetelab.org
+DTSTAMP:20260913T230000Z
+DTSTART;VALUE=DATE:20260920
+DTEND;VALUE=DATE:20260921
+SUMMARY:🏁 Revisar E10 + ensaio do Dia 1 + render final e push (~3 h)
+DESCRIPTION:E10 em versão comprimida (contingência 1 do roadmap original)\nEnsaiar E1 e E2 cronometrados — são as duas aulas de amanhã\nquarto render + commit + push\nConferir que todos os links de dados abrem no site publicado
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20260921-d1@provetelab.org
+DTSTAMP:20260913T230000Z
+DTSTART;VALUE=DATE:20260921
+DTEND;VALUE=DATE:20260922
+SUMMARY:🎓 Dia 1 — E1 (EDA/reprodutibilidade) + E2 (tests-as-linear)
+DESCRIPTION:Manhã: E1 — productive failure\, Popovic et al.\, EDA em 8 passos\, fluxo Quarto/git\, bloco de LLMs\nTarde: E2 — modelo linear unificador\, matriz de delineamento\, contrastes\, diagnóstico\nÀ noite: conferir E3 e E4
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20260922-d2@provetelab.org
+DTSTAMP:20260913T230000Z
+DTSTART;VALUE=DATE:20260922
+DTEND;VALUE=DATE:20260923
+SUMMARY:🎓 Dia 2 — E3 (ANOVA/ANCOVA como lm) + E4 (distribuições)
+DESCRIPTION:À noite: conferir E5 e E6
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20260923-d3@provetelab.org
+DTSTAMP:20260913T230000Z
+DTSTART;VALUE=DATE:20260923
+DTEND;VALUE=DATE:20260924
+SUMMARY:🎓 Dia 3 — E5 (GLM I) + E6 (GLM II: diagnóstico, ZI, ordinal)
+DESCRIPTION:À noite: conferir E7 e E8\, e confirmar que o cache dos brm() está válido
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20260924-d4@provetelab.org
+DTSTAMP:20260913T230000Z
+DTSTART;VALUE=DATE:20260924
+DTEND;VALUE=DATE:20260925
+SUMMARY:🎓 Dia 4 — E7 (GLMM I) + E8 (GLMM II + ponte brms)
+DESCRIPTION:À noite: conferir E9 e E10
+TRANSP:TRANSPARENT
+END:VEVENT
+BEGIN:VEVENT
+UID:20260925-d5@provetelab.org
+DTSTAMP:20260913T230000Z
+DTSTART;VALUE=DATE:20260925
+DTEND;VALUE=DATE:20260926
+SUMMARY:🎓 Dia 5 — E9 (seleção de modelos) + E10 (JSDM) + combinar trabalho final
+DESCRIPTION:Definir com a turma o prazo de entrega do relatório Quarto
+TRANSP:TRANSPARENT
+END:VEVENT
+END:VCALENDAR
