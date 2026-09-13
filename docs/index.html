@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt" xml:lang="pt"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Análise de Dados Univariados</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-listing/list.min.js"></script>
+<script src="site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-ec100a28b3f28334d858203a6e0baf76.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-cronograma .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-order','listing-title','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-title-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-cronograma'] = new List('listing-cronograma', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+<style>html{ scroll-behavior: smooth; }</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="Análise de Dados Univariados">
+<meta property="og:description" content="Disciplina de pós-graduação — PPG em Biologia Animal, UFMS (45 h, intensiva)">
+<meta property="og:site_name" content="Análise de Dados Univariados">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Análise de Dados Univariados</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Procurar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Alternar de navegação" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
+<span class="menu-text">Início</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./programa.html"> 
+<span class="menu-text">Programa</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./instalacao.html"> 
+<span class="menu-text">Instalação</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./trabalho-final.html"> 
+<span class="menu-text">Trabalho final</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/diogoprov/analise-dados-univariados-2026-2"> <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://provetelab.org/teaching/"> <i class="bi bi-house-door" role="img" aria-label="Biodiversity Synthesis Lab">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Nesta página</h2>
+   
+  <ul>
+  <li><a href="#o-curso-em-uma-frase" id="toc-o-curso-em-uma-frase" class="nav-link active" data-scroll-target="#o-curso-em-uma-frase">O curso em uma frase</a></li>
+  <li><a href="#cronograma" id="toc-cronograma" class="nav-link" data-scroll-target="#cronograma">Cronograma</a></li>
+  <li><a href="#antes-do-primeiro-dia" id="toc-antes-do-primeiro-dia" class="nav-link" data-scroll-target="#antes-do-primeiro-dia">Antes do primeiro dia</a></li>
+  <li><a href="#como-este-material-está-organizado" id="toc-como-este-material-está-organizado" class="nav-link" data-scroll-target="#como-este-material-está-organizado">Como este material está organizado</a></li>
+  <li><a href="#metodologia" id="toc-metodologia" class="nav-link" data-scroll-target="#metodologia">Metodologia</a></li>
+  <li><a href="#avaliação" id="toc-avaliação" class="nav-link" data-scroll-target="#avaliação">Avaliação</a></li>
+  <li><a href="#contato" id="toc-contato" class="nav-link" data-scroll-target="#contato">Contato</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Análise de Dados Univariados</h1>
+<p class="subtitle lead">Disciplina de pós-graduação — PPG em Biologia Animal, UFMS (45 h, intensiva)</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Disciplina <strong>ANÁLISE DE DADOS UNIVARIADOS</strong> (45 h) do Programa de Pós-Graduação em Biologia Animal da UFMS, oferecida no formato <strong>intensivo</strong> de <strong>21 a 25 de setembro de 2026</strong>, em dois blocos diários de 4,5 h. Esta página reúne os materiais públicos do curso — slides, scripts R, conjuntos de dados e leituras.</p>
+</div>
+</div>
+</div>
+<section id="o-curso-em-uma-frase" class="level2">
+<h2 class="anchored" data-anchor-id="o-curso-em-uma-frase">O curso em uma frase</h2>
+<p>Praticamente tudo o que você aprendeu como “teste estatístico” é um <strong>modelo linear</strong> com uma matriz de delineamento diferente. A partir daí, o caminho é sempre o mesmo: relaxar uma premissa de cada vez — distribuição da resposta (GLM), independência das observações (GLMM), incerteza sobre qual modelo usar (seleção de modelos) e incerteza sobre os próprios parâmetros (inferência bayesiana).</p>
+</section>
+<section id="cronograma" class="level2">
+<h2 class="anchored" data-anchor-id="cronograma">Cronograma</h2>
+<div id="listing-cronograma" class="quarto-listing quarto-listing-container-table">
+<table class="quarto-listing-table table">
+<thead>
+<tr>
+
+<th>
+Enc.
+</th>
+
+<th>
+Tópico
+</th>
+
+<th>
+Conteúdo
+</th>
+
+</tr>
+</thead>
+<tbody class="list">
+
+<tr data-index="0" data-listing-file-modified-sort="1789341674622" data-listing-reading-time-sort="2" data-listing-word-count-sort="283" data-listing-title-sort="E1 — EDA, reprodutibilidade e literacia em IA" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-order">1</span>
+</td>
+<td>
+<a href="./encontros/e01-eda-reprodutibilidade/index.html" class="title listing-title">E1 — EDA, reprodutibilidade e literacia em IA</a>
+</td>
+<td>
+<span class="listing-description">Análise exploratória segundo Zuur &amp; Ieno (2016). Fluxo Quarto + git. Pergunta focada, PICO e pré-registro. Uso responsável de LLMs em estatística.</span>
+</td>
+
+</tr>
+
+<tr data-index="1" data-listing-file-modified-sort="1789341674623" data-listing-reading-time-sort="2" data-listing-word-count-sort="250" data-listing-title-sort="E2 — O modelo linear como arcabouço unificador" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-order">2</span>
+</td>
+<td>
+<a href="./encontros/e02-modelo-linear-unificador/index.html" class="title listing-title">E2 — O modelo linear como arcabouço unificador</a>
+</td>
+<td>
+<span class="listing-description">Teste t e regressão como o mesmo <code>lm()</code>. Matriz de delineamento explicitada. Dummy e effect coding, <code>contr.treatment</code> e <code>contr.sum</code>. Interpretação de coeficientes.</span>
+</td>
+
+</tr>
+
+<tr data-index="2" data-listing-file-modified-sort="1789341674623" data-listing-reading-time-sort="1" data-listing-word-count-sort="199" data-listing-title-sort="E3 — ANOVA, ANCOVA e interações como modelos lineares" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-order">3</span>
+</td>
+<td>
+<a href="./encontros/e03-anova-ancova/index.html" class="title listing-title">E3 — ANOVA, ANCOVA e interações como modelos lineares</a>
+</td>
+<td>
+<span class="listing-description">ANOVA de um e dois fatores, ANCOVA e interações escritas como <code>lm()</code>. Somas de quadrados tipo I, II e III. Comparações planejadas com <code>emmeans</code>.</span>
+</td>
+
+</tr>
+
+<tr data-index="3" data-listing-file-modified-sort="1789341674624" data-listing-reading-time-sort="2" data-listing-word-count-sort="214" data-listing-title-sort="E4 — Distribuições de probabilidade e a família exponencial" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-order">4</span>
+</td>
+<td>
+<a href="./encontros/e04-distribuicoes/index.html" class="title listing-title">E4 — Distribuições de probabilidade e a família exponencial</a>
+</td>
+<td>
+<span class="listing-description">Normal, Gamma, Binomial, Poisson e binomial negativa como família exponencial. Simulação em R. O que a função de ligação resolve. Pearson e Spearman.</span>
+</td>
+
+</tr>
+
+<tr data-index="4" data-listing-file-modified-sort="1789341674625" data-listing-reading-time-sort="2" data-listing-word-count-sort="242" data-listing-title-sort="E5 — GLM I: verossimilhança, binomial e Poisson" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-order">5</span>
+</td>
+<td>
+<a href="./encontros/e05-glm-i/index.html" class="title listing-title">E5 — GLM I: verossimilhança, binomial e Poisson</a>
+</td>
+<td>
+<span class="listing-description">Máxima verossimilhança. Regressão logística e de Poisson. Escala do preditor linear versus escala da resposta. DAGs e raciocínio causal na escolha de covariáveis.</span>
+</td>
+
+</tr>
+
+<tr data-index="5" data-listing-file-modified-sort="1789341734886" data-listing-reading-time-sort="2" data-listing-word-count-sort="234" data-listing-title-sort="E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-order">6</span>
+</td>
+<td>
+<a href="./encontros/e06-glm-ii/index.html" class="title listing-title">E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais</a>
+</td>
+<td>
+<span class="listing-description">Resíduos quantílicos com DHARMa. Sobredispersão: quasi-Poisson e binomial negativa. Modelos ZIP, ZINB e hurdle com <code>glmmTMB</code>. Regressão ordinal com <code>ordinal::clm</code>.</span>
+</td>
+
+</tr>
+
+<tr data-index="6" data-listing-file-modified-sort="1789341734886" data-listing-reading-time-sort="2" data-listing-word-count-sort="254" data-listing-title-sort="E7 — GLMM I: por que efeitos aleatórios" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-order">7</span>
+</td>
+<td>
+<a href="./encontros/e07-glmm-i/index.html" class="title listing-title">E7 — GLMM I: por que efeitos aleatórios</a>
+</td>
+<td>
+<span class="listing-description">Pseudorreplicação. O que um efeito aleatório é e o que estima. Intercepto e inclinação aleatórios. Anatomia de <code>lmer</code> e <code>glmer</code>. ICC e graus de liberdade.</span>
+</td>
+
+</tr>
+
+<tr data-index="7" data-listing-file-modified-sort="1789341734887" data-listing-reading-time-sort="2" data-listing-word-count-sort="298" data-listing-title-sort="E8 — GLMM II: `lme4`, `glmmTMB` e a ponte bayesiana" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-order">8</span>
+</td>
+<td>
+<a href="./encontros/e08-glmm-ii-brms/index.html" class="title listing-title">E8 — GLMM II: <code>lme4</code>, <code>glmmTMB</code> e a ponte bayesiana</a>
+</td>
+<td>
+<span class="listing-description">Ajuste e diagnóstico de GLMM. Convergência. <code>lme4</code> versus <code>glmmTMB</code>. O mesmo modelo reajustado em <code>brms</code>: priors, MCMC, <code>pp_check()</code> e relato BARG.</span>
+</td>
+
+</tr>
+
+<tr data-index="8" data-listing-file-modified-sort="1789341734888" data-listing-reading-time-sort="2" data-listing-word-count-sort="262" data-listing-title-sort="E9 — Teoria da informação e seleção de modelos" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-order">9</span>
+</td>
+<td>
+<a href="./encontros/e09-selecao-modelos/index.html" class="title listing-title">E9 — Teoria da informação e seleção de modelos</a>
+</td>
+<td>
+<span class="listing-description">Divergência de Kullback–Leibler e AIC. AICc, BIC, pesos de Akaike e razões de evidência. Model averaging. Crítica ao dredge. LOO e WAIC.</span>
+</td>
+
+</tr>
+
+<tr data-index="9" data-listing-file-modified-sort="1789341734889" data-listing-reading-time-sort="2" data-listing-word-count-sort="212" data-listing-title-sort="E10 — Multivariados baseados em modelos e JSDM" data-listing-filename-sort="index.qmd">
+<td>
+<span class="listing-order">10</span>
+</td>
+<td>
+<a href="./encontros/e10-jsdm/index.html" class="title listing-title">E10 — Multivariados baseados em modelos e JSDM</a>
+</td>
+<td>
+<span class="listing-description">Por que a ordenação clássica não modela variância. GLM multivariado com <code>mvabund</code>. Introdução aos modelos conjuntos de distribuição de espécies (Hmsc).</span>
+</td>
+
+</tr>
+
+</tbody>
+</table>
+<div class="listing-no-matching d-none">Nenhum item correspondente</div>
+</div>
+</section>
+<section id="antes-do-primeiro-dia" class="level2">
+<h2 class="anchored" data-anchor-id="antes-do-primeiro-dia">Antes do primeiro dia</h2>
+<ol type="1">
+<li>Siga o roteiro de <strong><a href="./instalacao.html">instalação</a></strong>. Chegue com R, RStudio, Quarto e os pacotes já funcionando — inclusive o <code>brms</code>, que precisa compilar código C++ na primeira execução e pode levar alguns minutos.</li>
+<li>Leia <strong>Popovic et al.&nbsp;(2024)</strong>, <em>Four principles for improved statistical ecology</em> — discutimos os quatro princípios nos primeiros 30 min do Encontro 1.</li>
+<li>Traga <strong>um conjunto de dados seu</strong> (ou de um repositório aberto). Ele será a base do <a href="./trabalho-final.html">trabalho final</a> e vamos usá-lo nos exercícios sempre que possível.</li>
+</ol>
+</section>
+<section id="como-este-material-está-organizado" class="level2">
+<h2 class="anchored" data-anchor-id="como-este-material-está-organizado">Como este material está organizado</h2>
+<p>Cada encontro tem uma página própria com os slides, o script da prática, os dados usados e as leituras. Os slides são documentos Quarto — o código R que aparece neles foi de fato executado na renderização, e você pode copiá-lo e rodar.</p>
+<p>Todo o material está em <a href="https://github.com/diogoprov/analise-dados-univariados-2026-2" class="uri">https://github.com/diogoprov/analise-dados-univariados-2026-2</a>. Correções e sugestões são bem-vindas via <em>issue</em> ou <em>pull request</em>.</p>
+</section>
+<section id="metodologia" class="level2">
+<h2 class="anchored" data-anchor-id="metodologia">Metodologia</h2>
+<p>Cada encontro abre com <strong>20 min de <em>productive failure</em></strong> (Kay et al. 2026): apresento uma pergunta ecológica e um conjunto de dados, e vocês, em grupos pequenos e deliberadamente heterogêneos quanto à formação quantitativa, propõem uma análise <strong>antes</strong> de eu apresentar o método. O objetivo não é acertar — é explicitar premissas e dificuldades. Depois disso, exposição e prática em R.</p>
+</section>
+<section id="avaliação" class="level2">
+<h2 class="anchored" data-anchor-id="avaliação">Avaliação</h2>
+<p>Um <strong>relatório Quarto reproduzível</strong> com dados próprios ou de repositório aberto. Ver <a href="./trabalho-final.html">trabalho final</a> para a estrutura esperada e os critérios.</p>
+</section>
+<section id="contato" class="level2">
+<h2 class="anchored" data-anchor-id="contato">Contato</h2>
+<p>Prof.&nbsp;Diogo B. Provete — <a href="mailto:diogo.provete@ufms.br">diogo.provete@ufms.br</a> · <a href="https://provetelab.org">Biodiversity Synthesis Lab</a></p>
+
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/diogoprov\.github\.io\/analise-dados-univariados-2026-2\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© Diogo B. Provete · Biodiversity Synthesis Lab · Instituto de Biociências, UFMS</p>
+</div>   
+    <div class="nav-footer-center">
+<p>Conteúdo sob <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt-br">CC BY-NC-SA 4.0</a></p>
+</div>
+    <div class="nav-footer-right">
+<p>Built with <a href="https://quarto.org">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

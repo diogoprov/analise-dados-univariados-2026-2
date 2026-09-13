@@ -1,0 +1,1248 @@
+[
+  {
+    "objectID": "trabalho-final.html",
+    "href": "trabalho-final.html",
+    "title": "Trabalho final",
+    "section": "",
+    "text": "Entrega: a combinar com a turma no Encontro 1 · Formato: .qmd + .html renderizado + dados (ou link para eles)"
+  },
+  {
+    "objectID": "trabalho-final.html#o-que-é",
+    "href": "trabalho-final.html#o-que-é",
+    "title": "Trabalho final",
+    "section": "O que é",
+    "text": "O que é\nUma análise completa de um conjunto de dados seu — idealmente do seu mestrado ou doutorado — escrita como documento Quarto que qualquer pessoa consiga renderizar do zero e obter exatamente os seus resultados.\nNão é um relatório sobre a disciplina. É a análise que você precisaria fazer de qualquer jeito, feita direito e documentada."
+  },
+  {
+    "objectID": "trabalho-final.html#estrutura-exigida",
+    "href": "trabalho-final.html#estrutura-exigida",
+    "title": "Trabalho final",
+    "section": "Estrutura exigida",
+    "text": "Estrutura exigida\nA espinha é o checklist de Davis & Kay (2023): quatro seções que toda descrição de método estatístico deve conter.\n\n1. Objetivo\nQual é a pergunta? Formule de modo que a resposta seja um parâmetro estimável, não uma vaga “relação entre X e Y”. Diga se a análise é confirmatória (a hipótese existia antes de você olhar os dados) ou exploratória. As duas são legítimas; apresentá-las trocadas não é.\n\n\n2. Variáveis\nResposta e preditoras, com unidade, escala de medida e amplitude observada. Para cada preditora, diga por que ela está no modelo — e, se couber, desenhe o DAG (dagitty) que justifica a escolha. Variável no modelo por estar no banco de dados não é justificativa.\n\n\n3. Método estatístico\nDistribuição assumida para a resposta e função de ligação, com a razão biológica da escolha. Estrutura de efeitos aleatórios, se houver, e o que cada um representa em termos de delineamento amostral. Como a sobredispersão e o excesso de zeros foram verificados. Critério de comparação de modelos, se houver comparação.\n\n\n4. Implementação\nVersão do R, versões dos pacotes principais, semente aleatória. Uma chamada sessionInfo() ou sessioninfo::session_info() ao final resolve."
+  },
+  {
+    "objectID": "trabalho-final.html#seções-adicionais",
+    "href": "trabalho-final.html#seções-adicionais",
+    "title": "Trabalho final",
+    "section": "Seções adicionais",
+    "text": "Seções adicionais\nAlém do checklist, o relatório deve conter:\nAnálise exploratória seguindo o protocolo de Zuur & Ieno (2016): outliers, homogeneidade de variância, distribuição da resposta, excesso de zeros, colinearidade entre preditoras, relações entre resposta e preditoras, interações, independência.\nDiagnóstico do modelo com DHARMa — resíduos quantílicos simulados, teste de dispersão, teste de zeros inflados. Mostre os gráficos e comente o que eles dizem, mesmo (e principalmente) quando o ajuste não é bom.\nInterpretação biológica. Traduza os coeficientes para a escala da resposta e diga o que significam para o organismo ou o sistema. Um parágrafo de conclusão que um leitor da sua área entenda sem olhar a tabela."
+  },
+  {
+    "objectID": "trabalho-final.html#extensão-bayesiana-opcional-recomendada",
+    "href": "trabalho-final.html#extensão-bayesiana-opcional-recomendada",
+    "title": "Trabalho final",
+    "section": "Extensão bayesiana (opcional, recomendada)",
+    "text": "Extensão bayesiana (opcional, recomendada)\nReajuste o mesmo modelo em brms e relate segundo o BARG (Kruschke 2021): preâmbulo mais os seis passos. Comparar as duas estimativas — e explicar por que diferem, ou por que não diferem — vale mais do que qualquer análise adicional."
+  },
+  {
+    "objectID": "trabalho-final.html#critérios-de-avaliação",
+    "href": "trabalho-final.html#critérios-de-avaliação",
+    "title": "Trabalho final",
+    "section": "Critérios de avaliação",
+    "text": "Critérios de avaliação\n\n\n\n\n\n\n\nCritério\nO que se espera\n\n\n\n\nAdequação do modelo\nA distribuição e a estrutura de efeitos correspondem ao que os dados são e a como foram coletados\n\n\nDiagnóstico\nOs problemas foram procurados, encontrados e discutidos — não escondidos\n\n\nJustificativa\nCada escolha analítica tem uma razão explícita, biológica ou estatística\n\n\nReprodutibilidade\nO documento renderiza do zero em outra máquina\n\n\nInterpretação\nOs resultados são traduzidos para linguagem biológica, sem exagerar o que os dados sustentam\n\n\nHonestidade\nLimitações declaradas; análises exploratórias não apresentadas como confirmatórias\n\n\n\nUm modelo que não ajustou bem, com diagnóstico honesto e discussão do porquê, vale mais do que um modelo aparentemente perfeito com o diagnóstico omitido."
+  },
+  {
+    "objectID": "trabalho-final.html#uso-de-modelos-de-linguagem",
+    "href": "trabalho-final.html#uso-de-modelos-de-linguagem",
+    "title": "Trabalho final",
+    "section": "Uso de modelos de linguagem",
+    "text": "Uso de modelos de linguagem\nPermitido e esperado — com declaração. Ao final do relatório, informe:\n\nqual modelo e qual versão;\nque porções do código foram geradas ou modificadas com auxílio dele;\nos prompts das partes críticas, como material suplementar.\n\nA responsabilidade pelo código é sua, como se o tivesse escrito. Regra prática do curso: o LLM escreve o código; você escreve a ciência."
+  },
+  {
+    "objectID": "trabalho-final.html#autoria",
+    "href": "trabalho-final.html#autoria",
+    "title": "Trabalho final",
+    "section": "Autoria",
+    "text": "Autoria\nEm trabalhos em grupo, as iniciais dos autores nos Métodos seguem o MeRIT (Nakagawa et al. 2023) — quem fez o quê, explicitamente."
+  },
+  {
+    "objectID": "trabalho-final.html#esqueleto-para-copiar",
+    "href": "trabalho-final.html#esqueleto-para-copiar",
+    "title": "Trabalho final",
+    "section": "Esqueleto para copiar",
+    "text": "Esqueleto para copiar\n---\ntitle: \"Efeito de &lt;preditora&gt; sobre &lt;resposta&gt; em &lt;sistema&gt;\"\nauthor: \"Seu Nome\"\ndate: today\nformat:\n  html:\n    toc: true\n    code-fold: show\n    embed-resources: true\nexecute:\n  warning: false\n---\n\n## 1. Objetivo\n\n## 2. Variáveis\n\n## 3. Método estatístico\n\n## 4. Implementação\n\n## Análise exploratória (Zuur & Ieno 2016)\n\n## Ajuste do modelo\n\n## Diagnóstico (DHARMa)\n\n## Resultados e interpretação biológica\n\n## Limitações\n\n## Declaração de uso de IA\n\n## Informações da sessão\n\n```{r}\nsessioninfo::session_info()\n```"
+  },
+  {
+    "objectID": "slides/e01.html#bem-vindos",
+    "href": "slides/e01.html#bem-vindos",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Bem-vindos",
+    "text": "Bem-vindos\nAnálise de Dados Univariados — 45 h, cinco dias.\nQuatro coisas que este curso vai tentar fazer com vocês:\n\nmostrar que o que vocês aprenderam como uma coleção de testes é um modelo só;\ndar critério para escolher a distribuição da resposta, em vez de transformar os dados até que fiquem normais;\ntornar o diagnóstico de modelo um hábito, não uma formalidade;\ndeixar vocês capazes de ler um artigo com GLMM e saber se ele está certo."
+  },
+  {
+    "objectID": "slides/e01.html#o-curso-em-uma-frase",
+    "href": "slides/e01.html#o-curso-em-uma-frase",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "O curso em uma frase",
+    "text": "O curso em uma frase\n\nPraticamente tudo que você aprendeu como “teste estatístico” é um modelo linear com uma matriz de delineamento diferente.\n\nA partir daí, o caminho é sempre relaxar uma premissa de cada vez:\n\n\n\nRelaxamos\nChegamos em\n\n\n\n\na distribuição da resposta\nGLM\n\n\na independência das observações\nGLMM\n\n\na certeza sobre qual modelo usar\nseleção de modelos\n\n\na certeza sobre os parâmetros\ninferência bayesiana"
+  },
+  {
+    "objectID": "slides/e01.html#como-as-aulas-funcionam",
+    "href": "slides/e01.html#como-as-aulas-funcionam",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Como as aulas funcionam",
+    "text": "Como as aulas funcionam\nCada encontro abre com 20 minutos de productive failure:\n\neu apresento uma pergunta e um conjunto de dados;\nvocês, em grupos de 3 ou 4, escrevem como analisariam — antes de eu ensinar o método;\ncada grupo apresenta em 1 minuto;\nsó então eu mostro o método formal.\n\n\nO objetivo não é acertar. É explicitar o que vocês já assumem sem perceber. Grupos são montados com formação quantitativa deliberadamente heterogênea."
+  },
+  {
+    "objectID": "slides/e01.html#combinado",
+    "href": "slides/e01.html#combinado",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Combinado",
+    "text": "Combinado\n\nPerguntem durante, não no fim. Se uma coisa não fez sentido para você, não fez sentido para mais três pessoas na sala.\nErro de modelo em aula é material didático, não constrangimento.\nO trabalho final usa os dados de vocês. Quanto mais cedo vocês os trouxerem para as práticas, melhor.\nTudo está em diogoprov.github.io/analise-dados-univariados-2026-2."
+  },
+  {
+    "objectID": "slides/e01.html#hoje",
+    "href": "slides/e01.html#hoje",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Hoje",
+    "text": "Hoje\n\nProductive failure de abertura — 20 min\nOs quatro princípios de Popovic et al. (2024) — 30 min\nPergunta focada, HARKing e pré-registro — 30 min\nIntervalo\nExploração de dados: o protocolo em oito passos — 90 min\nFluxo reprodutível: projeto, Quarto, git — 45 min\nUso saudável de LLMs em estatística — 60 min"
+  },
+  {
+    "objectID": "slides/e01.html#o-problema",
+    "href": "slides/e01.html#o-problema",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "O problema",
+    "text": "O problema\nVocês têm contagens de anfíbios mortos por atropelamento em 52 sítios ao longo de uma rodovia em Portugal, com variáveis da paisagem em cada sítio: distância ao parque mais próximo, distância a áreas urbanas, cobertura de diferentes tipos de vegetação, densidade de estradas.\n\nPergunta: quais características da paisagem explicam a mortalidade de anfíbios na estrada?\n\nEm grupos, por 10 minutos, escrevam:\n\nqual análise vocês fariam;\nque premissas ela assume;\no que poderia dar errado."
+  },
+  {
+    "objectID": "slides/e01.html#os-dados",
+    "href": "slides/e01.html#os-dados",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Os dados",
+    "text": "Os dados\n\nRK &lt;- read.delim(\"../dados/RoadKills.txt\")\ndim(RK)\n\n[1] 52 23\n\nRK[1:4, c(\"TOT.N\", \"D.PARK\", \"OPEN.L\", \"L.WAT.C\")]\n\n  TOT.N   D.PARK OPEN.L L.WAT.C\n1    22  250.214 22.684   0.583\n2    14  741.179 24.657   1.419\n3    65 1240.080 30.121   2.005\n4    55 1739.885 50.277   1.924\n\n\n\nDados de Zuur, Ieno & Smith, usados em Mixed Effects Models and Extensions in Ecology with R (2009). Voltaremos a eles no Encontro 5."
+  },
+  {
+    "objectID": "slides/e01.html#uma-coisa-que-vocês-já-viram",
+    "href": "slides/e01.html#uma-coisa-que-vocês-já-viram",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Uma coisa que vocês já viram",
+    "text": "Uma coisa que vocês já viram\n\n\n\n\n\n\n\n\n\nContagem. Só inteiros não negativos. Variância cresce com a média. Cauda longa à direita.\nUma regressão linear comum é apropriada aqui? Guardem a resposta."
+  },
+  {
+    "objectID": "slides/e01.html#por-que-começar-por-aqui",
+    "href": "slides/e01.html#por-que-começar-por-aqui",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Por que começar por aqui",
+    "text": "Por que começar por aqui\nUm levantamento honesto da literatura ecológica encontra os mesmos quatro problemas repetidamente. Eles não são de matemática — são de prática.\n\nPergunta focada\nModelagem da dependência\nTamanhos de efeito\nReprodutibilidade\n\nEste curso inteiro é uma tentativa de instalar esses quatro hábitos."
+  },
+  {
+    "objectID": "slides/e01.html#princípio-1-pergunta-focada",
+    "href": "slides/e01.html#princípio-1-pergunta-focada",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Princípio 1 — Pergunta focada",
+    "text": "Princípio 1 — Pergunta focada\nUma pergunta que a análise pode responder com um parâmetro.\n\n\n\n\n\n\n\nEm vez de\nEscreva\n\n\n\n\n“investigar a relação entre urbanização e anuros”\n“qual a mudança esperada na riqueza de anuros por 10 % de aumento em área impermeabilizada?”\n\n\n“verificar se há efeito do tratamento”\n“qual a diferença média de massa entre tratamento e controle, e com que incerteza?”\n\n\n\n\nA segunda coluna já determina o modelo. A primeira permite justificar qualquer coisa depois."
+  },
+  {
+    "objectID": "slides/e01.html#princípio-2-modelar-a-dependência",
+    "href": "slides/e01.html#princípio-2-modelar-a-dependência",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Princípio 2 — Modelar a dependência",
+    "text": "Princípio 2 — Modelar a dependência\nObservações do mesmo transecto, da mesma poça, do mesmo indivíduo, do mesmo ano não são independentes.\nIgnorar isso não é um detalhe técnico: inflaciona a confiança em efeitos que talvez não existam.\n→ É o Encontro 7 inteiro."
+  },
+  {
+    "objectID": "slides/e01.html#princípio-3-tamanhos-de-efeito",
+    "href": "slides/e01.html#princípio-3-tamanhos-de-efeito",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Princípio 3 — Tamanhos de efeito",
+    "text": "Princípio 3 — Tamanhos de efeito\nUm valor de p responde “consigo distinguir de zero?”.\nA biologia quer saber quanto, em que direção e com que incerteza.\n\nCoeficiente com unidade e intervalo, na escala da resposta. Sempre."
+  },
+  {
+    "objectID": "slides/e01.html#princípio-4-reprodutibilidade",
+    "href": "slides/e01.html#princípio-4-reprodutibilidade",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Princípio 4 — Reprodutibilidade",
+    "text": "Princípio 4 — Reprodutibilidade\nCódigo e dados disponíveis, ambiente declarado, análise que roda do zero em outra máquina.\nNão é burocracia de revisor. É a única forma de você mesmo conseguir refazer a análise quando o revisor pedir uma alteração — dezoito meses depois.\n→ Bloco 6 de hoje."
+  },
+  {
+    "objectID": "slides/e01.html#harking",
+    "href": "slides/e01.html#harking",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "HARKing",
+    "text": "HARKing\n\nHypothesizing After the Results are Known — formular a hipótese depois de ver o resultado, e apresentá-la como se fosse anterior.\n\nO problema não é olhar os dados. É apresentar como confirmatório o que foi exploratório.\nConsequência estatística direta: o valor de p deixa de significar o que ele afirma significar."
+  },
+  {
+    "objectID": "slides/e01.html#p-hacking",
+    "href": "slides/e01.html#p-hacking",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "p-hacking",
+    "text": "p-hacking\nNão é fraude deliberada, na maior parte das vezes. É a soma de decisões razoáveis tomadas uma de cada vez:\n\nexcluir aquele outlier estranho;\ntestar com e sem a covariável;\ntransformar a resposta se não der significativo;\nparar de coletar quando p &lt; 0,05;\nanalisar três respostas e reportar a que “funcionou”.\n\n\nCada passo é defensável isoladamente. Juntos, garantem um resultado significativo a partir de ruído."
+  },
+  {
+    "objectID": "slides/e01.html#confirmatório-exploratório",
+    "href": "slides/e01.html#confirmatório-exploratório",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Confirmatório × exploratório",
+    "text": "Confirmatório × exploratório\n\n\n\n\nConfirmatório\nExploratório\n\n\n\n\nHipótese\nanterior aos dados\nemerge dos dados\n\n\nNº de modelos\npoucos, definidos a priori\nmuitos\n\n\nValor de p\ninterpretável\ndescritivo\n\n\nO que produz\num teste\numa hipótese para testar depois\n\n\n\nAs duas são ciência legítima. O que não é legítimo é trocar o rótulo."
+  },
+  {
+    "objectID": "slides/e01.html#pico-finer",
+    "href": "slides/e01.html#pico-finer",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "PICO / FINER",
+    "text": "PICO / FINER\nDuas estruturas emprestadas da área biomédica para afiar a pergunta:\nPICO — População, Intervenção (ou exposição), Comparação, Outcome.\nFINER — Feasible, Interesting, Novel, Ethical, Relevant.\n\nExercício de 5 min: escrevam a pergunta do capítulo de vocês no formato PICO. Quem não conseguir preencher os quatro campos descobriu algo importante sobre o próprio projeto."
+  },
+  {
+    "objectID": "slides/e01.html#pré-registro",
+    "href": "slides/e01.html#pré-registro",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Pré-registro",
+    "text": "Pré-registro\nRegistrar pergunta, delineamento e plano de análise antes de coletar ou de analisar.\n\nOSF e AsPredicted — gratuitos, poucos minutos;\nnão impede análise exploratória — apenas separa claramente as duas;\nem ecologia observacional, registrar antes de olhar os dados já resolve a maior parte do problema."
+  },
+  {
+    "objectID": "slides/e01.html#por-que-existe-um-protocolo",
+    "href": "slides/e01.html#por-que-existe-um-protocolo",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Por que existe um protocolo",
+    "text": "Por que existe um protocolo\nSem protocolo, exploração vira caça ao resultado.\nCom protocolo, é uma lista de verificação: oito perguntas, na mesma ordem, sempre — antes de ajustar qualquer modelo.\n\nExplorar dados serve para detectar problemas, não para escolher a hipótese."
+  },
+  {
+    "objectID": "slides/e01.html#os-oito-passos",
+    "href": "slides/e01.html#os-oito-passos",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Os oito passos",
+    "text": "Os oito passos\n\nHá outliers na resposta e nas preditoras?\nA variância é homogênea?\nQual a distribuição da resposta?\nHá excesso de zeros?\nHá colinearidade entre preditoras?\nComo é a relação entre resposta e preditoras?\nHá interações plausíveis?\nAs observações são independentes?"
+  },
+  {
+    "objectID": "slides/e01.html#passo-1-outliers",
+    "href": "slides/e01.html#passo-1-outliers",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Passo 1 — Outliers",
+    "text": "Passo 1 — Outliers\nO gráfico de Cleveland é mais informativo que o boxplot: mostra cada observação contra a ordem no arquivo.\n\nlibrary(tidyverse)\ndados &lt;- read_delim(\"../dados/dados_com_outliers_e_faltantes.csv\", delim = \";\")\n\ndados |&gt;\n  mutate(ordem = row_number()) |&gt;\n  ggplot(aes(x = Pontuacao, y = ordem, colour = Grupo)) +\n  geom_point() +\n  scale_colour_manual(values = c(\"#1c6e8c\", \"#c08a3e\")) +\n  labs(x = \"Valor observado\", y = \"Ordem no arquivo\") +\n  theme_minimal(base_size = 14)"
+  },
+  {
+    "objectID": "slides/e01.html#outlier-não-é-erro",
+    "href": "slides/e01.html#outlier-não-é-erro",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Outlier não é erro",
+    "text": "Outlier não é erro\nTrês perguntas, nesta ordem:\n\nÉ erro de digitação ou de medida? → corrija ou remova, e documente.\nÉ uma observação legítima e extrema? → mantenha, e escolha um modelo que a acomode.\nEstá influenciando o ajuste desproporcionalmente? → é uma questão de alavancagem, não de exclusão (Encontro 2).\n\n\nRemover observações porque incomodam o modelo é a forma mais comum de p-hacking em ecologia."
+  },
+  {
+    "objectID": "slides/e01.html#passo-2-homogeneidade-de-variância",
+    "href": "slides/e01.html#passo-2-homogeneidade-de-variância",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Passo 2 — Homogeneidade de variância",
+    "text": "Passo 2 — Homogeneidade de variância\n\nhet &lt;- read_delim(\"../dados/dados_heterocedasticidade.csv\", delim = \";\")\n\nggplot(het, aes(Dificuldade, Desempenho, fill = Metodo)) +\n  geom_boxplot(alpha = .75) +\n  scale_fill_manual(values = c(\"#1c6e8c\", \"#c08a3e\", \"#6b8f71\")) +\n  theme_minimal(base_size = 14) +\n  labs(x = \"Dificuldade\", y = \"Desempenho\")"
+  },
+  {
+    "objectID": "slides/e01.html#passo-2-quanto-difere",
+    "href": "slides/e01.html#passo-2-quanto-difere",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Passo 2 — quanto difere?",
+    "text": "Passo 2 — quanto difere?\n\nhet |&gt;\n  group_by(Metodo, Dificuldade) |&gt;\n  summarise(media = round(mean(Desempenho), 1),\n            dp    = round(sd(Desempenho), 1), .groups = \"drop\")\n\n# A tibble: 4 × 4\n  Metodo Dificuldade media    dp\n  &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;\n1 M1     Alta         40.1   1.7\n2 M1     Baixa        29.8   1.7\n3 M2     Alta         39    12.8\n4 M2     Baixa        29.7  23.8\n\n\nOlhem a coluna dp: as médias de M1 e M2 são parecidas, mas a dispersão de M2 é várias vezes maior. A variância depende do nível da preditora — exatamente o que o modelo linear supõe que não acontece.\n\nRepare que um teste de médias aqui responderia “não há diferença” e perderia o achado mais interessante do conjunto de dados.\n\n\nGuardem: no Encontro 4 isso deixa de ser um problema a corrigir e passa a ser uma informação sobre a distribuição — em muitas famílias da família exponencial, a variância é função da média por construção."
+  },
+  {
+    "objectID": "slides/e01.html#passo-3-distribuição-da-resposta",
+    "href": "slides/e01.html#passo-3-distribuição-da-resposta",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Passo 3 — Distribuição da resposta",
+    "text": "Passo 3 — Distribuição da resposta\n\nnn &lt;- read_delim(\"../dados/dados_nao_normais.csv\", delim = \";\")\n\nggplot(nn, aes(Tempo_Reacao, fill = Tratamento)) +\n  geom_histogram(bins = 25, colour = \"white\", alpha = .8) +\n  scale_fill_manual(values = c(\"#1c6e8c\", \"#c08a3e\")) +\n  theme_minimal(base_size = 14) +\n  labs(x = \"Tempo de reação\", y = \"Frequência\")\n\n\n\n\n\n\n\n\n\nAtenção: o modelo linear não assume que a resposta é normal. Assume que o resíduo é. Voltaremos a isso no Encontro 2 — é um dos mal-entendidos mais caros da estatística aplicada."
+  },
+  {
+    "objectID": "slides/e01.html#passo-4-excesso-de-zeros",
+    "href": "slides/e01.html#passo-4-excesso-de-zeros",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Passo 4 — Excesso de zeros",
+    "text": "Passo 4 — Excesso de zeros\n\nggplot(RK, aes(TOT.N)) +\n  geom_bar(fill = \"#1c6e8c\") +\n  labs(x = \"Anfíbios mortos\", y = \"Nº de sítios\") +\n  theme_minimal(base_size = 14)\n\n\n\n\n\n\n\n\nQuantos zeros são “demais” depende da distribuição assumida — é uma pergunta sobre o modelo, não sobre os dados. Encontro 6."
+  },
+  {
+    "objectID": "slides/e01.html#passo-5-colinearidade",
+    "href": "slides/e01.html#passo-5-colinearidade",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Passo 5 — Colinearidade",
+    "text": "Passo 5 — Colinearidade\n\nRK |&gt;\n  select(D.PARK, OPEN.L, L.WAT.C, MONT.S) |&gt;\n  cor(use = \"complete.obs\") |&gt;\n  round(2)\n\n        D.PARK OPEN.L L.WAT.C MONT.S\nD.PARK    1.00   0.27    0.28   0.07\nOPEN.L    0.27   1.00    0.23  -0.15\nL.WAT.C   0.28   0.23    1.00  -0.04\nMONT.S    0.07  -0.15   -0.04   1.00\n\n\nPreditoras muito correlacionadas não violam premissa nenhuma — elas tornam os coeficientes individualmente não identificáveis. O modelo prediz bem e interpreta mal."
+  },
+  {
+    "objectID": "slides/e01.html#passos-6-e-7-relações-e-interações",
+    "href": "slides/e01.html#passos-6-e-7-relações-e-interações",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Passos 6 e 7 — Relações e interações",
+    "text": "Passos 6 e 7 — Relações e interações\n\nggplot(RK, aes(D.PARK, TOT.N)) +\n  geom_point(colour = \"#1c6e8c\") +\n  geom_smooth(method = \"loess\", se = FALSE, colour = \"#144f64\") +\n  labs(x = \"Distância ao parque (m)\", y = \"Anfíbios mortos\") +\n  theme_minimal(base_size = 14)\n\n\n\n\n\n\n\n\nDecrescente e claramente não linear. Uma reta ajustada aqui erraria de forma sistemática, não aleatória."
+  },
+  {
+    "objectID": "slides/e01.html#passo-8-independência",
+    "href": "slides/e01.html#passo-8-independência",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Passo 8 — Independência",
+    "text": "Passo 8 — Independência\nA pergunta que não se responde com gráfico: responde-se olhando o delineamento amostral.\n\nAs observações vêm dos mesmos sítios em datas diferentes?\nDo mesmo indivíduo?\nDe sítios vizinhos no espaço?\n\nSe a resposta for sim para alguma, você precisa de efeitos aleatórios (Encontro 7) ou de uma estrutura de correlação."
+  },
+  {
+    "objectID": "slides/e01.html#o-que-não-fazer-na-exploração",
+    "href": "slides/e01.html#o-que-não-fazer-na-exploração",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "O que NÃO fazer na exploração",
+    "text": "O que NÃO fazer na exploração\n\nTestar normalidade com Shapiro–Wilk e decidir o modelo a partir disso.\nRodar todas as correlações e escolher as significativas.\nDecidir a hipótese depois de ver os gráficos e apresentá-la como anterior.\nRemover observações até o pressuposto “passar”."
+  },
+  {
+    "objectID": "slides/e01.html#o-problema-concreto",
+    "href": "slides/e01.html#o-problema-concreto",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "O problema concreto",
+    "text": "O problema concreto\nVocê submete. Volta em 14 meses com “refaça a Figura 3 excluindo os juvenis”.\nE então: em qual das sete pastas está o script que gerou a Figura 3? Que versão dos dados ela usou? Por que o número na tabela não bate com o do texto?\n\nReprodutibilidade é, antes de tudo, um favor que você faz a si mesmo."
+  },
+  {
+    "objectID": "slides/e01.html#um-projeto-um-diretório",
+    "href": "slides/e01.html#um-projeto-um-diretório",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Um projeto, um diretório",
+    "text": "Um projeto, um diretório\nmeu-projeto/\n├── meu-projeto.Rproj\n├── dados/\n│   ├── brutos/          # nunca editados, nunca sobrescritos\n│   └── processados/\n├── scripts/\n├── figuras/\n└── relatorio.qmd\nRegra que resolve metade dos problemas: dados brutos são somente-leitura. Toda limpeza acontece em código."
+  },
+  {
+    "objectID": "slides/e01.html#caminhos",
+    "href": "slides/e01.html#caminhos",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Caminhos",
+    "text": "Caminhos\n\n# Nunca:\nread.csv(\"/Users/diogo/Documents/projeto-final-v3/dados.csv\")\n\n# Sempre:\nlibrary(here)\nread_csv(here(\"dados\", \"brutos\", \"anuros.csv\"))\n\nhere() resolve a partir da raiz do projeto. O script roda na sua máquina, na do orientando e no GitHub Actions."
+  },
+  {
+    "objectID": "slides/e01.html#quarto",
+    "href": "slides/e01.html#quarto",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Quarto",
+    "text": "Quarto\nTexto, código e resultado no mesmo arquivo. O número do texto é o número que o código calculou.\nA riqueza média foi de `r round(mean(dados$riqueza), 1)` espécies.\nNunca mais copiar e colar um resultado — e nunca mais esquecer de atualizar o texto quando o dado muda."
+  },
+  {
+    "objectID": "slides/e01.html#git-em-três-comandos",
+    "href": "slides/e01.html#git-em-três-comandos",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "git, em três comandos",
+    "text": "git, em três comandos\ngit add .\ngit commit -m \"Adiciona diagnóstico do modelo Poisson\"\ngit push\nO que você ganha:\n\nhistórico de por que cada mudança foi feita;\nliberdade para experimentar sem medo de quebrar o que funcionava;\ncolaboração sem analise_final_v2_REALFINAL.R.\n\n\nDetalhes em Happy Git with R."
+  },
+  {
+    "objectID": "slides/e01.html#fair",
+    "href": "slides/e01.html#fair",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "FAIR",
+    "text": "FAIR\nDados e código devem ser:\n\nFindable — com identificador persistente (DOI);\nAccessible — em repositório público (Zenodo, Dryad, OSF);\nInteroperable — em formato aberto (.csv, não .xlsx com macro);\nReusable — com licença e dicionário de variáveis.\n\nDepositar dados aumenta citação e é exigido por um número crescente de periódicos."
+  },
+  {
+    "objectID": "slides/e01.html#o-ponto-de-partida",
+    "href": "slides/e01.html#o-ponto-de-partida",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "O ponto de partida",
+    "text": "O ponto de partida\nVocês já estão usando. Fingir que não é abdicar de formar critério.\nO objetivo deste bloco não é proibir nem endossar. É responder: para que servem, para que não servem, e como declarar o uso."
+  },
+  {
+    "objectID": "slides/e01.html#o-que-um-llm-faz",
+    "href": "slides/e01.html#o-que-um-llm-faz",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "O que um LLM faz",
+    "text": "O que um LLM faz\nPrediz a próxima palavra a partir de um corpus gigantesco.\nEle não sabe estatística. Ele sabe como textos sobre estatística costumam continuar.\n\nConsequência direta: é bom em código frequente (ggplot2, dplyr, lm()) e ruim em métodos raros ou recentes. Alucinação não é bug — é o comportamento esperado de um sistema que prefere plausibilidade a verdade."
+  },
+  {
+    "objectID": "slides/e01.html#onde-ajudam",
+    "href": "slides/e01.html#onde-ajudam",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Onde ajudam",
+    "text": "Onde ajudam\n\nExplicar código herdado — o script sem comentários do orientando anterior.\nComentar código próprio antigo — aquele de seis meses atrás.\nTraduzir — exemplo em Python para R; nlme para glmmTMB.\nDepurar erros crípticos — são especialmente bons nas mensagens de erro do lme4.\nOtimizar — um laço for virando purrr::map().\nSugerir testes — para quem começa a escrever funções."
+  },
+  {
+    "objectID": "slides/e01.html#onde-fazem-mal",
+    "href": "slides/e01.html#onde-fazem-mal",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Onde fazem mal",
+    "text": "Onde fazem mal\n\nInterpretação estatística. Vão inventar a interpretação de uma variância de efeito aleatório com toda a segurança do mundo.\nMétodos ecológicos raros. Hmsc, mvabund, gllvm, glmmTMB com ziformula complexa — sub-representados no corpus, alta taxa de alucinação.\nMatemática e lógica. Confundem log-odds com odds, invertem fórmulas.\nReprodutibilidade. Mesmo prompt, resposta diferente. Versão do modelo agora faz parte do método.\n\n\nTerceirize o código. Nunca terceirize o pensamento estatístico."
+  },
+  {
+    "objectID": "slides/e01.html#como-usar-bem",
+    "href": "slides/e01.html#como-usar-bem",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Como usar bem",
+    "text": "Como usar bem\n\nContexto sempre. Não “faça um GLM”; sim “tenho contagem de girinos em 30 poças, com temperatura e área como covariáveis; quero GLM Poisson com glmmTMB e poça como efeito aleatório”.\nCole o erro inteiro, não a paráfrase.\nPeça três alternativas — divergência entre elas é sinal de alucinação.\nPeça explicação linha a linha antes de rodar. Se você não consegue acompanhar, não está pronto para usar aquele código.\nTeste em 20 linhas simuladas antes de escalar."
+  },
+  {
+    "objectID": "slides/e01.html#declaração-e-responsabilidade",
+    "href": "slides/e01.html#declaração-e-responsabilidade",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Declaração e responsabilidade",
+    "text": "Declaração e responsabilidade\n\nDeclarar modelo, versão e que parte do código foi gerada.\nPrompts críticos vão como material suplementar.\nO autor responde pelo código como se o tivesse escrito. Não existe “o ChatGPT errou”.\nIA não pode ser coautora — política vigente em praticamente todos os periódicos da área.\n\nVale igual no trabalho final desta disciplina."
+  },
+  {
+    "objectID": "slides/e01.html#a-frase-para-levar",
+    "href": "slides/e01.html#a-frase-para-levar",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "A frase para levar",
+    "text": "A frase para levar\n\nO LLM escreve o código; você escreve a ciência."
+  },
+  {
+    "objectID": "slides/e01.html#o-que-fica-de-hoje",
+    "href": "slides/e01.html#o-que-fica-de-hoje",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "O que fica de hoje",
+    "text": "O que fica de hoje\n\nA pergunta vem antes dos dados — e o rótulo confirmatório/exploratório é honestidade básica.\nExploração de dados é lista de verificação, não caça ao resultado.\nReprodutibilidade é um favor ao seu eu futuro.\nLLM é ferramenta de código, não de interpretação."
+  },
+  {
+    "objectID": "slides/e01.html#para-amanhã",
+    "href": "slides/e01.html#para-amanhã",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Para amanhã",
+    "text": "Para amanhã\nLeitura: Gelman, Hill & Vehtari (2020), Regression and Other Stories, Parte I.\nExercício: rode o protocolo de oito passos nos seus dados e escreva meia página sobre o que encontrou. Traga amanhã — vamos usar nas práticas.\nAmanhã de manhã: teste t, correlação e regressão deixam de ser três coisas."
+  },
+  {
+    "objectID": "slides/e01.html#referências",
+    "href": "slides/e01.html#referências",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Referências",
+    "text": "Referências\n\n\nCooper, N. et al. 2024. Harnessing large language models for coding, teaching and inclusion. Methods in Ecology and Evolution 15:1757–1763.\nKay, M. et al. 2026. A century of inertia in quantitative ecology education. Methods in Ecology and Evolution.\nPopovic, G. et al. 2024. Four principles for improved statistical ecology. Methods in Ecology and Evolution 15:266–281.\nZuur, A.F., Ieno, E.N. & Elphick, C.S. 2010. A protocol for data exploration to avoid common statistical problems. Methods in Ecology and Evolution 1:3–14.\nZuur, A.F. & Ieno, E.N. 2016. A protocol for conducting and presenting results of regression-type analyses. Methods in Ecology and Evolution.\nda Silva, F.R. et al. 2022. Análises Ecológicas no R. NUPEEA."
+  },
+  {
+    "objectID": "instalacao.html",
+    "href": "instalacao.html",
+    "title": "Preparação do ambiente",
+    "section": "",
+    "text": "ImportanteNão deixe para o primeiro dia\n\n\n\nA instalação do brms compila código C++ e pode levar de 10 a 40 minutos na primeira vez, dependendo da máquina e da conexão. Se você chegar na segunda-feira sem isso pronto, vai perder a prática do Encontro 8.\nSe travar em algum passo, mande um e-mail antes do curso: diogo.provete@ufms.br."
+  },
+  {
+    "objectID": "instalacao.html#r-e-rstudio",
+    "href": "instalacao.html#r-e-rstudio",
+    "title": "Preparação do ambiente",
+    "section": "1. R e RStudio",
+    "text": "1. R e RStudio\nInstale, nesta ordem:\n\nR ≥ 4.4 — https://cran.r-project.org\nRStudio Desktop — https://posit.co/download/rstudio-desktop/\nQuarto ≥ 1.5 — https://quarto.org/docs/get-started/\n\nSe você já tem R instalado há mais de um ano, atualize. Vários pacotes que usaremos (glmmTMB, brms, DHARMa) exigem versões recentes.\n\nCompilador C++\nO brms precisa compilar modelos. Antes de instalá-lo:\n\nmacOS: abra o Terminal e rode xcode-select --install.\nWindows: instale o Rtools na versão correspondente ao seu R, a partir do CRAN.\nLinux: instale build-essential (Debian/Ubuntu) ou o grupo de ferramentas de desenvolvimento da sua distribuição."
+  },
+  {
+    "objectID": "instalacao.html#pacotes",
+    "href": "instalacao.html#pacotes",
+    "title": "Preparação do ambiente",
+    "section": "2. Pacotes",
+    "text": "2. Pacotes\nRode o bloco abaixo no console do R. Ele instala apenas o que estiver faltando.\n\npacotes &lt;- c(\n  # manipulação e visualização\n  \"tidyverse\", \"here\", \"janitor\", \"palmerpenguins\", \"patchwork\",\n  \"GGally\", \"ggeffects\", \"broom\", \"broom.mixed\", \"knitr\", \"rmarkdown\",\n  # modelos lineares e GLM\n  \"car\", \"emmeans\", \"MASS\", \"performance\", \"see\", \"sjPlot\", \"marginaleffects\",\n  # versão bayesiana dos mesmos modelos\n  \"loo\", \"bayesplot\",\n  # GLMM, zeros inflados e ordinais\n  \"lme4\", \"glmmTMB\", \"DHARMa\", \"ordinal\", \"pscl\", \"lmtest\",\n  # seleção de modelos\n  \"MuMIn\", \"AICcmodavg\",\n  # raciocínio causal\n  \"dagitty\", \"ggdag\"\n)\n\nfaltando &lt;- setdiff(pacotes, rownames(installed.packages()))\nif (length(faltando)) install.packages(faltando)\n\n\nbrms e Stan — o passo demorado\nUsamos o brms do Encontro 2 em diante, sempre ao lado do modelo frequentista equivalente. A razão de ser ele, e não outro pacote bayesiano, é que a sintaxe é idêntica à do lme4 e do glmmTMB: y ~ x + (1 | grupo) significa a mesma coisa nos três. Você aprende uma notação só.\nO preço é que o brms compila um programa Stan para cada modelo novo. Por isso ele precisa de compilador C++ e de paciência na primeira execução.\n\ninstall.packages(\"brms\")   # puxa rstan e StanHeaders\n\nTeste a compilação com um modelo mínimo. A primeira execução demora; as seguintes, não.\n\nlibrary(brms)\n\nteste &lt;- brm(mpg ~ wt, data = mtcars, chains = 2, iter = 1000, refresh = 0)\nsummary(teste)\n\nSe summary() imprimir uma tabela com Rhat igual a 1.00, está pronto.\n\n\n\n\n\n\nDicaAlternativa mais rápida: cmdstanr\n\n\n\nSe a instalação do rstan der problema — o que acontece com alguma frequência no Windows —, o caminho alternativo é o cmdstanr, que baixa um Stan pré-compilado. As instruções oficiais estão em https://mc-stan.org/cmdstanr/. Depois, use backend = \"cmdstanr\" nas chamadas a brm().\n\n\n\n\nOpcional — Encontro 10\nSó para quem quiser acompanhar a prática de JSDM. É pesado; não é obrigatório.\n\ninstall.packages(c(\"Hmsc\", \"mvabund\", \"gllvm\"))"
+  },
+  {
+    "objectID": "instalacao.html#verificação",
+    "href": "instalacao.html#verificação",
+    "title": "Preparação do ambiente",
+    "section": "3. Verificação",
+    "text": "3. Verificação\nRode este bloco e confira se nenhuma linha acusa falha:\n\nessenciais &lt;- c(\"tidyverse\", \"lme4\", \"glmmTMB\", \"DHARMa\", \"emmeans\",\n                \"performance\", \"MuMIn\", \"ordinal\", \"brms\")\n\nresultado &lt;- vapply(essenciais, function(p) {\n  ok &lt;- requireNamespace(p, quietly = TRUE)\n  cat(sprintf(\"%-12s %s\\n\", p, if (ok) \"OK\" else \"FALTANDO\"))\n  ok\n}, logical(1))\n\nif (all(resultado)) cat(\"\\nAmbiente pronto.\\n\") else cat(\"\\nInstale os pacotes marcados como FALTANDO.\\n\")"
+  },
+  {
+    "objectID": "instalacao.html#projeto-do-curso",
+    "href": "instalacao.html#projeto-do-curso",
+    "title": "Preparação do ambiente",
+    "section": "4. Projeto do curso",
+    "text": "4. Projeto do curso\nCrie um projeto do RStudio para a disciplina e, dentro dele, as pastas dados/, scripts/ e figuras/. Baixe os conjuntos de dados da página de cada encontro para dados/.\nQuem usa git pode simplesmente clonar o repositório do curso:\ngit clone https://github.com/diogoprov/analise-dados-univariados-2026-2.git"
+  },
+  {
+    "objectID": "instalacao.html#o-que-trazer",
+    "href": "instalacao.html#o-que-trazer",
+    "title": "Preparação do ambiente",
+    "section": "5. O que trazer",
+    "text": "5. O que trazer\n\nNotebook com o ambiente acima funcionando;\num conjunto de dados seu — de preferência o do seu mestrado ou doutorado, ainda que parcial. Ele é a matéria-prima do trabalho final e dos exercícios;\na leitura pré-curso feita: Popovic et al. (2024)."
+  },
+  {
+    "objectID": "encontros/e10-jsdm/index.html",
+    "href": "encontros/e10-jsdm/index.html",
+    "title": "E10 — Multivariados baseados em modelos e JSDM",
+    "section": "",
+    "text": "Sexta, 25 de setembro de 2026 · tarde · 4,5 h\nO encontro de fechamento: o que acontece quando a resposta deixa de ser uma variável e passa a ser uma matriz de espécies. Apresentado como rudimentos — o aprofundamento é a disciplina de análises multidimensionais."
+  },
+  {
+    "objectID": "encontros/e10-jsdm/index.html#slides",
+    "href": "encontros/e10-jsdm/index.html#slides",
+    "title": "E10 — Multivariados baseados em modelos e JSDM",
+    "section": "Slides",
+    "text": "Slides\n Abrir slides"
+  },
+  {
+    "objectID": "encontros/e10-jsdm/index.html#conteúdo",
+    "href": "encontros/e10-jsdm/index.html#conteúdo",
+    "title": "E10 — Multivariados baseados em modelos e JSDM",
+    "section": "Conteúdo",
+    "text": "Conteúdo\n\nO contraponto — PCA e RDA feitas no início da aula, para mostrar o que elas fazem e o que não fazem: não há modelo de erro, não há distribuição, não há predição.\nGLM multivariado — mvabund::manyglm(): um GLM por espécie, com inferência conjunta por reamostragem. A relação média–variância que a ordenação baseada em distância ignora.\nJSDM — matrizes Y (ocorrência), X (ambiente), T (traços) e a filogenia; o que os efeitos aleatórios residuais dizem sobre associação entre espécies — e o que não dizem sobre interação ecológica.\nHmsc na prática — exemplo compacto, poucas espécies e poucos sítios, para rodar em sala."
+  },
+  {
+    "objectID": "encontros/e10-jsdm/index.html#leituras",
+    "href": "encontros/e10-jsdm/index.html#leituras",
+    "title": "E10 — Multivariados baseados em modelos e JSDM",
+    "section": "Leituras",
+    "text": "Leituras\n\nObrigatória: Ovaskainen & Abrego (2020), caps. 1 a 5.\nComplementar: Análises Ecológicas no R, cap. 9."
+  },
+  {
+    "objectID": "encontros/e10-jsdm/index.html#recursos-externos",
+    "href": "encontros/e10-jsdm/index.html#recursos-externos",
+    "title": "E10 — Multivariados baseados em modelos e JSDM",
+    "section": "Recursos externos",
+    "text": "Recursos externos\n\nAnálises Ecológicas no R — cap. 9\nVídeo: JSDM — canal @DiogoBProvete\nAnálises multidimensionais — aula 04\n\n\nVolta para o índice do curso."
+  },
+  {
+    "objectID": "encontros/e08-glmm-ii-brms/index.html",
+    "href": "encontros/e08-glmm-ii-brms/index.html",
+    "title": "E8 — GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "",
+    "text": "Quinta, 24 de setembro de 2026 · tarde · 4,5 h\nDois blocos. No primeiro, GLMM na prática, com todos os problemas reais. No segundo, o mesmo modelo, os mesmos dados, outro arcabouço."
+  },
+  {
+    "objectID": "encontros/e08-glmm-ii-brms/index.html#slides",
+    "href": "encontros/e08-glmm-ii-brms/index.html#slides",
+    "title": "E8 — GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "Slides",
+    "text": "Slides\n Abrir slides"
+  },
+  {
+    "objectID": "encontros/e08-glmm-ii-brms/index.html#conteúdo",
+    "href": "encontros/e08-glmm-ii-brms/index.html#conteúdo",
+    "title": "E8 — GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "Conteúdo",
+    "text": "Conteúdo\n\nBloco 1 — frequentista (3 h)\n\nGLMM com resposta não normal: glmer() e glmmTMB().\nQuando usar glmmTMB em vez de lme4 — zeros inflados, dispersão modelada, famílias adicionais.\nConvergência — o que os avisos significam, e o que fazer: reescalar preditoras, simplificar a estrutura aleatória, trocar o otimizador.\nDiagnóstico com DHARMa em modelos mistos.\n\\(R^2\\) marginal e condicional (Nakagawa) e relato segundo Davis & Kay (2023).\n\n\n\nBloco 2 — a ponte bayesiana (1,5 h)\n\nA sintaxe do brms é a do lme4 — o custo de transferência é quase zero.\nPriors fracamente informativas — o que são, por que o padrão importa, análise de sensibilidade.\nDiagnóstico de MCMC — \\(\\hat{R}\\), ESS, transições divergentes.\npp_check() — checagem preditiva posterior, que é o análogo honesto do diagnóstico de resíduos.\nIntervalo de credibilidade versus intervalo de confiança — o que cada um permite dizer.\nRelato BARG (Kruschke 2021).\n\n\n\n\n\n\n\nAviso\n\n\n\nTraga o brms já compilado. Os modelos desta aula estão em cache (file = \"cache/...\"), mas o seu primeiro brm() na máquina de vocês vai compilar do zero."
+  },
+  {
+    "objectID": "encontros/e08-glmm-ii-brms/index.html#dados",
+    "href": "encontros/e08-glmm-ii-brms/index.html#dados",
+    "title": "E8 — GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "Dados",
+    "text": "Dados\n\nRIKZ.txt — o mesmo do E7, agora nos dois arcabouços.\nExemplo dos girinos de McElreath, via Kurz cap. 13."
+  },
+  {
+    "objectID": "encontros/e08-glmm-ii-brms/index.html#leituras",
+    "href": "encontros/e08-glmm-ii-brms/index.html#leituras",
+    "title": "E8 — GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "Leituras",
+    "text": "Leituras\n\nObrigatória: Gelman, Hill & Vehtari (2020), caps. 9 e 10.\nComplementar: Harrison et al. (2018).\nRelato: Kruschke, J.K. 2021. Bayesian Analysis Reporting Guidelines. Nature Human Behaviour. doi:10.1038/s41562-021-01177-7\nApoio prático: Kurz, Statistical Rethinking with brms, cap. 13 — “Models with Memory”.\n\n\nVolta para o índice do curso."
+  },
+  {
+    "objectID": "encontros/e06-glm-ii/index.html",
+    "href": "encontros/e06-glm-ii/index.html",
+    "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "",
+    "text": "Quarta, 23 de setembro de 2026 · tarde · 4,5 h\nO encontro em que os modelos do E5 falham — e o que fazer a respeito. Diagnóstico primeiro, remédio depois."
+  },
+  {
+    "objectID": "encontros/e06-glm-ii/index.html#slides",
+    "href": "encontros/e06-glm-ii/index.html#slides",
+    "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Slides",
+    "text": "Slides\n Abrir slides"
+  },
+  {
+    "objectID": "encontros/e06-glm-ii/index.html#conteúdo",
+    "href": "encontros/e06-glm-ii/index.html#conteúdo",
+    "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Conteúdo",
+    "text": "Conteúdo\n\nPor que os resíduos comuns não servem para GLM — e o que são resíduos quantílicos simulados. DHARMa do início ao fim.\nSobredispersão — como detectar (check_overdispersion()), o que causa, e as três saídas: quasi-Poisson, binomial negativa, ou efeito aleatório em nível de observação. Quando cada uma é honesta.\nExcesso de zeros — zero estrutural versus zero amostral, que é uma distinção biológica, não estatística. ZIP, ZINB e hurdle com glmmTMB(ziformula = ~ .). Como escolher.\nRespostas ordinais — o modelo de odds proporcionais com ordinal::clm() e clmm(); por que tratar escala ordinal como contínua distorce o resultado.\nRelato — o que precisa aparecer no texto do artigo."
+  },
+  {
+    "objectID": "encontros/e06-glm-ii/index.html#dados",
+    "href": "encontros/e06-glm-ii/index.html#dados",
+    "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Dados",
+    "text": "Dados\n\nRoadKills.txt — sobredispersão.\nParasiteCod.txt — excesso de zeros (Zuur et al. 2009).\nNA.csv — índice melanofórico, resposta ordinal."
+  },
+  {
+    "objectID": "encontros/e06-glm-ii/index.html#leituras",
+    "href": "encontros/e06-glm-ii/index.html#leituras",
+    "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Leituras",
+    "text": "Leituras\n\nObrigatória: Zuur et al. (2009), cap. 11.\nComplementar, bayesiano: Kurz, Statistical Rethinking with brms, cap. 12 — “Monsters and Mixtures”, que cobre sobredispersão, zeros inflados e ordinais no arcabouço bayesiano."
+  },
+  {
+    "objectID": "encontros/e06-glm-ii/index.html#recursos-externos",
+    "href": "encontros/e06-glm-ii/index.html#recursos-externos",
+    "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Recursos externos",
+    "text": "Recursos externos\n\nDHARMa — vinheta\nglmmTMB — vinhetas\nAnálises Ecológicas no R — cap. 8\n\n\nVolta para o índice do curso."
+  },
+  {
+    "objectID": "encontros/e04-distribuicoes/index.html",
+    "href": "encontros/e04-distribuicoes/index.html",
+    "title": "E4 — Distribuições de probabilidade e a família exponencial",
+    "section": "",
+    "text": "Terça, 22 de setembro de 2026 · tarde · 4,5 h\nA ponte entre o modelo linear e o GLM. A pergunta que organiza o encontro: que processo gerador de dados a minha variável resposta plausivelmente tem?"
+  },
+  {
+    "objectID": "encontros/e04-distribuicoes/index.html#slides",
+    "href": "encontros/e04-distribuicoes/index.html#slides",
+    "title": "E4 — Distribuições de probabilidade e a família exponencial",
+    "section": "Slides",
+    "text": "Slides\n Abrir slides"
+  },
+  {
+    "objectID": "encontros/e04-distribuicoes/index.html#conteúdo",
+    "href": "encontros/e04-distribuicoes/index.html#conteúdo",
+    "title": "E4 — Distribuições de probabilidade e a família exponencial",
+    "section": "Conteúdo",
+    "text": "Conteúdo\n\nVariável aleatória, função de densidade e de massa — o mínimo necessário, sem formalismo desnecessário.\nAs distribuições que importam em ecologia — Normal, Gamma, Binomial, Poisson, binomial negativa, Beta. Para cada uma: que tipo de medida gera, quais parâmetros tem, como se parece.\nSimulação em R — rnorm(), rpois(), rnbinom(), rgamma(), rbinom(). Simular antes de ajustar é a melhor forma de entender um modelo.\nA família exponencial — o que essas distribuições têm em comum e por que isso permite um único algoritmo de ajuste.\nFunção de ligação — o problema que ela resolve, e por que não é a mesma coisa que transformar a variável resposta.\nCorrelação — Pearson e Spearman, o que cada uma assume."
+  },
+  {
+    "objectID": "encontros/e04-distribuicoes/index.html#leituras",
+    "href": "encontros/e04-distribuicoes/index.html#leituras",
+    "title": "E4 — Distribuições de probabilidade e a família exponencial",
+    "section": "Leituras",
+    "text": "Leituras\n\nObrigatória: Agresti (2015), cap. 4.\nComplementar: Field (2022).\nConceitual, opcional: Kurz, Statistical Rethinking with brms, cap. 10 — “Big Entropy and the Generalized Linear Model”."
+  },
+  {
+    "objectID": "encontros/e04-distribuicoes/index.html#recursos-externos",
+    "href": "encontros/e04-distribuicoes/index.html#recursos-externos",
+    "title": "E4 — Distribuições de probabilidade e a família exponencial",
+    "section": "Recursos externos",
+    "text": "Recursos externos\n\nBioestatística — aula 05, probabilidade\n\n\nVolta para o índice do curso."
+  },
+  {
+    "objectID": "encontros/e02-modelo-linear-unificador/index.html",
+    "href": "encontros/e02-modelo-linear-unificador/index.html",
+    "title": "E2 — O modelo linear como arcabouço unificador",
+    "section": "",
+    "text": "Segunda, 21 de setembro de 2026 · tarde · 4,5 h\nO encontro que reorganiza o que você já sabe. Teste t, correlação e regressão deixam de ser três procedimentos e passam a ser um modelo só, com matrizes de delineamento diferentes."
+  },
+  {
+    "objectID": "encontros/e02-modelo-linear-unificador/index.html#slides",
+    "href": "encontros/e02-modelo-linear-unificador/index.html#slides",
+    "title": "E2 — O modelo linear como arcabouço unificador",
+    "section": "Slides",
+    "text": "Slides\n Abrir slides"
+  },
+  {
+    "objectID": "encontros/e02-modelo-linear-unificador/index.html#conteúdo",
+    "href": "encontros/e02-modelo-linear-unificador/index.html#conteúdo",
+    "title": "E2 — O modelo linear como arcabouço unificador",
+    "section": "Conteúdo",
+    "text": "Conteúdo\n\nAnatomia de um modelo linear — \\(y = X\\beta + \\varepsilon\\), o que cada peça significa e onde entra a premissa de normalidade (no resíduo, não nos dados).\nTeste t é lm(y ~ grupo) — a matriz de delineamento 0/1 escrita à mão, ao lado da saída de t.test(). Mesmos números.\nCorrelação e regressão — o que muda e o que não muda; Pearson versus Spearman.\nCodificação de fatores — contr.treatment (padrão do R) e contr.sum; por que o intercepto significa coisas diferentes em cada um, e por que isso derruba interpretações.\nInterpretação de coeficientes — na escala da resposta, com unidade.\nColinearidade — VIF, e por que ela não é um problema de “violação de premissa”, mas de identificabilidade."
+  },
+  {
+    "objectID": "encontros/e02-modelo-linear-unificador/index.html#prática",
+    "href": "encontros/e02-modelo-linear-unificador/index.html#prática",
+    "title": "E2 — O modelo linear como arcabouço unificador",
+    "section": "Prática",
+    "text": "Prática\nExercícios com palmerpenguins e com os dados de diagnóstico. Quem trouxe dados próprios já ajusta o primeiro lm() neles."
+  },
+  {
+    "objectID": "encontros/e02-modelo-linear-unificador/index.html#leituras",
+    "href": "encontros/e02-modelo-linear-unificador/index.html#leituras",
+    "title": "E2 — O modelo linear como arcabouço unificador",
+    "section": "Leituras",
+    "text": "Leituras\n\nObrigatória: Gelman, Hill & Vehtari (2020), Regression and Other Stories, Parte I.\nComplementar: Agresti (2015), caps. 1 a 3.\nApoio: Lindeløv, Common statistical tests are linear models"
+  },
+  {
+    "objectID": "encontros/e02-modelo-linear-unificador/index.html#recursos-externos",
+    "href": "encontros/e02-modelo-linear-unificador/index.html#recursos-externos",
+    "title": "E2 — O modelo linear como arcabouço unificador",
+    "section": "Recursos externos",
+    "text": "Recursos externos\n\nAnálises Ecológicas no R — cap. 7\nVídeo: modelos lineares — canal @DiogoBProvete\n\n\nVolta para o índice do curso."
+  },
+  {
+    "objectID": "encontros/e01-eda-reprodutibilidade/index.html",
+    "href": "encontros/e01-eda-reprodutibilidade/index.html",
+    "title": "E1 — EDA, reprodutibilidade e literacia em IA",
+    "section": "",
+    "text": "Segunda, 21 de setembro de 2026 · manhã · 4,5 h\nAntes de qualquer modelo: como olhar os dados sem enganar a si mesmo, como formular a pergunta antes de olhar, e como documentar tudo de modo que outra pessoa — inclusive você daqui a dois anos — consiga refazer."
+  },
+  {
+    "objectID": "encontros/e01-eda-reprodutibilidade/index.html#slides",
+    "href": "encontros/e01-eda-reprodutibilidade/index.html#slides",
+    "title": "E1 — EDA, reprodutibilidade e literacia em IA",
+    "section": "Slides",
+    "text": "Slides\n Abrir slides"
+  },
+  {
+    "objectID": "encontros/e01-eda-reprodutibilidade/index.html#conteúdo",
+    "href": "encontros/e01-eda-reprodutibilidade/index.html#conteúdo",
+    "title": "E1 — EDA, reprodutibilidade e literacia em IA",
+    "section": "Conteúdo",
+    "text": "Conteúdo\n\nProductive failure de abertura (20 min) — uma pergunta, um conjunto de dados, nenhuma instrução.\nOs quatro princípios de Popovic et al. (2024) como moldura do curso (30 min).\nPergunta focada, PICO e pré-registro (30 min) — HARKing, p-hacking, a distinção entre análise confirmatória e exploratória, e o custo real de mudar a hipótese depois de ver os dados.\nEDA segundo Zuur & Ieno (2016) — o protocolo em oito passos, com dados problemáticos de verdade.\nFluxo reprodutível — projeto do RStudio, here, Quarto, git, princípios FAIR.\nUso saudável de LLMs em estatística (60 min) — onde ajudam, onde fazem mal, como declarar."
+  },
+  {
+    "objectID": "encontros/e01-eda-reprodutibilidade/index.html#dados",
+    "href": "encontros/e01-eda-reprodutibilidade/index.html#dados",
+    "title": "E1 — EDA, reprodutibilidade e literacia em IA",
+    "section": "Dados",
+    "text": "Dados\n\ndados_com_outliers_e_faltantes.csv\ndados_heterocedasticidade.csv\ndados_nao_normais.csv"
+  },
+  {
+    "objectID": "encontros/e01-eda-reprodutibilidade/index.html#leituras",
+    "href": "encontros/e01-eda-reprodutibilidade/index.html#leituras",
+    "title": "E1 — EDA, reprodutibilidade e literacia em IA",
+    "section": "Leituras",
+    "text": "Leituras\n\nObrigatória, pré-aula: Popovic, G. et al. 2024. Four principles for improved statistical ecology. Methods in Ecology and Evolution 15:266–281.\nComplementar: Cooper, N. et al. 2024. Harnessing large language models for coding, teaching and inclusion. Methods in Ecology and Evolution 15:1757–1763.\nPara quem se vê orientando: Kay, M. et al. 2026. A century of inertia in quantitative ecology education. Methods in Ecology and Evolution."
+  },
+  {
+    "objectID": "encontros/e01-eda-reprodutibilidade/index.html#recursos-externos",
+    "href": "encontros/e01-eda-reprodutibilidade/index.html#recursos-externos",
+    "title": "E1 — EDA, reprodutibilidade e literacia em IA",
+    "section": "Recursos externos",
+    "text": "Recursos externos\n\nAnálises Ecológicas no R — caps. 4 a 6\nIntrodução à Linguagem R — aulas 02, 04, 05 e 08\nQuarto — documentação oficial\nHappy Git with R\n\n\nVolta para o índice do curso."
+  },
+  {
+    "objectID": "encontros/e03-anova-ancova/index.html",
+    "href": "encontros/e03-anova-ancova/index.html",
+    "title": "E3 — ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "",
+    "text": "Terça, 22 de setembro de 2026 · manhã · 4,5 h\nContinuação direta do Encontro 2: mais colunas na matriz de delineamento, nenhum conceito novo de inferência."
+  },
+  {
+    "objectID": "encontros/e03-anova-ancova/index.html#slides",
+    "href": "encontros/e03-anova-ancova/index.html#slides",
+    "title": "E3 — ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Slides",
+    "text": "Slides\n Abrir slides"
+  },
+  {
+    "objectID": "encontros/e03-anova-ancova/index.html#conteúdo",
+    "href": "encontros/e03-anova-ancova/index.html#conteúdo",
+    "title": "E3 — ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Conteúdo",
+    "text": "Conteúdo\n\nANOVA de um fator como lm() com \\(k-1\\) colunas dummy; a tabela de ANOVA como decomposição da soma de quadrados do mesmo ajuste.\nDois fatores e interação — o que uma interação é na matriz de delineamento, e o que ela significa biologicamente.\nANCOVA — fator mais covariável contínua; a premissa de homogeneidade de inclinações é literalmente a ausência de interação.\nSomas de quadrados I, II e III com car::Anova() — quando dão resultados diferentes e qual usar em delineamento desbalanceado.\nComparações planejadas e post-hoc com emmeans — e por que comparação planejada é quase sempre melhor do que varrer todos os pares.\nRelato segundo o checklist de Davis & Kay (2023)."
+  },
+  {
+    "objectID": "encontros/e03-anova-ancova/index.html#dados",
+    "href": "encontros/e03-anova-ancova/index.html#dados",
+    "title": "E3 — ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Dados",
+    "text": "Dados\n\nanova_dois_fatores.csv\nCap7_exercicio1.csv"
+  },
+  {
+    "objectID": "encontros/e03-anova-ancova/index.html#leituras",
+    "href": "encontros/e03-anova-ancova/index.html#leituras",
+    "title": "E3 — ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Leituras",
+    "text": "Leituras\n\nObrigatória: Quinn & Keough (2023), caps. 8 e 9.\nComplementar: Gelman, Hill & Vehtari (2020), caps. 10 a 12."
+  },
+  {
+    "objectID": "encontros/e03-anova-ancova/index.html#recursos-externos",
+    "href": "encontros/e03-anova-ancova/index.html#recursos-externos",
+    "title": "E3 — ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Recursos externos",
+    "text": "Recursos externos\n\nAnálises Ecológicas no R — cap. 7\nemmeans — vinhetas\n\n\nVolta para o índice do curso."
+  },
+  {
+    "objectID": "encontros/e05-glm-i/index.html",
+    "href": "encontros/e05-glm-i/index.html",
+    "title": "E5 — GLM I: verossimilhança, binomial e Poisson",
+    "section": "",
+    "text": "Quarta, 23 de setembro de 2026 · manhã · 4,5 h\nO primeiro encontro com modelos cuja resposta não é contínua e ilimitada — e com a pergunta que decide a qualidade de qualquer análise observacional: que covariáveis entram no modelo, e por quê?"
+  },
+  {
+    "objectID": "encontros/e05-glm-i/index.html#slides",
+    "href": "encontros/e05-glm-i/index.html#slides",
+    "title": "E5 — GLM I: verossimilhança, binomial e Poisson",
+    "section": "Slides",
+    "text": "Slides\n Abrir slides"
+  },
+  {
+    "objectID": "encontros/e05-glm-i/index.html#conteúdo",
+    "href": "encontros/e05-glm-i/index.html#conteúdo",
+    "title": "E5 — GLM I: verossimilhança, binomial e Poisson",
+    "section": "Conteúdo",
+    "text": "Conteúdo\n\nMáxima verossimilhança — a ideia, com uma superfície de verossimilhança desenhada em R. Deviance e teste de razão de verossimilhanças.\nGLM binomial — proporções e dados binários; odds, log-odds, razão de chances versus risco relativo; separação completa e a correção de Firth.\nGLM Poisson — contagens; o log como ligação canônica; offset para esforço amostral desigual.\nInterpretar na escala certa — o coeficiente está em log; a biologia está na escala da resposta. ggeffects e marginaleffects.\nDAGs e raciocínio causal (60 min) — dagitty, critério backdoor, confounders (controlar) versus colisores (não controlar). Por que seleção estatística de variáveis não substitui pensar sobre causalidade."
+  },
+  {
+    "objectID": "encontros/e05-glm-i/index.html#dados",
+    "href": "encontros/e05-glm-i/index.html#dados",
+    "title": "E5 — GLM I: verossimilhança, binomial e Poisson",
+    "section": "Dados",
+    "text": "Dados\n\nRoadKills.txt — anfíbios atropelados em 52 sítios em Portugal (Zuur et al. 2009).\nUV.csv — resposta binomial, contagem de células."
+  },
+  {
+    "objectID": "encontros/e05-glm-i/index.html#leituras",
+    "href": "encontros/e05-glm-i/index.html#leituras",
+    "title": "E5 — GLM I: verossimilhança, binomial e Poisson",
+    "section": "Leituras",
+    "text": "Leituras\n\nObrigatória: Agresti (2015), caps. 5 e 6.\nComplementar: Zuur et al. (2009), caps. 8 e 9.\nCausalidade: Arif, S. & MacNeil, M.A. 2023. Ecological Monographs — inferência causal em ecologia."
+  },
+  {
+    "objectID": "encontros/e05-glm-i/index.html#recursos-externos",
+    "href": "encontros/e05-glm-i/index.html#recursos-externos",
+    "title": "E5 — GLM I: verossimilhança, binomial e Poisson",
+    "section": "Recursos externos",
+    "text": "Recursos externos\n\nAnálises Ecológicas no R — cap. 8\n\n\nVolta para o índice do curso."
+  },
+  {
+    "objectID": "encontros/e07-glmm-i/index.html",
+    "href": "encontros/e07-glmm-i/index.html",
+    "title": "E7 — GLMM I: por que efeitos aleatórios",
+    "section": "",
+    "text": "Quinta, 24 de setembro de 2026 · manhã · 4,5 h\nO encontro sobre a premissa que quase todo delineamento ecológico viola: independência das observações."
+  },
+  {
+    "objectID": "encontros/e07-glmm-i/index.html#slides",
+    "href": "encontros/e07-glmm-i/index.html#slides",
+    "title": "E7 — GLMM I: por que efeitos aleatórios",
+    "section": "Slides",
+    "text": "Slides\n Abrir slides"
+  },
+  {
+    "objectID": "encontros/e07-glmm-i/index.html#conteúdo",
+    "href": "encontros/e07-glmm-i/index.html#conteúdo",
+    "title": "E7 — GLMM I: por que efeitos aleatórios",
+    "section": "Conteúdo",
+    "text": "Conteúdo\n\nPseudorreplicação (Hurlbert 1984) — reconhecer no seu próprio delineamento. A estrutura do modelo deve espelhar a estrutura da amostragem.\nO que um efeito aleatório é — não “uma variável que não interessa”, mas um conjunto de níveis amostrados de uma população de níveis, cuja variância é o que se estima.\nFixo ou aleatório? — os critérios, e por que a resposta depende da pergunta, não do dado.\nIntercepto aleatório e inclinação aleatória — o que cada um permite, desenhado.\nAnatomia de lmer — (1 | grupo), (x | grupo), (1 | a/b). Shrinkage e por que estimativas de grupos pequenos são puxadas para a média.\nICC, variância dos efeitos aleatórios, e o problema dos graus de liberdade — aproximação de Kenward–Roger e Satterthwaite."
+  },
+  {
+    "objectID": "encontros/e07-glmm-i/index.html#dados",
+    "href": "encontros/e07-glmm-i/index.html#dados",
+    "title": "E7 — GLMM I: por que efeitos aleatórios",
+    "section": "Dados",
+    "text": "Dados\n\nRIKZ.txt — riqueza de invertebrados em transectos de nove praias (Zuur et al. 2009).\nOwls.txt — vocalização de ninhegos por ninho."
+  },
+  {
+    "objectID": "encontros/e07-glmm-i/index.html#leituras",
+    "href": "encontros/e07-glmm-i/index.html#leituras",
+    "title": "E7 — GLMM I: por que efeitos aleatórios",
+    "section": "Leituras",
+    "text": "Leituras\n\nObrigatória: Bolker, B.M. et al. 2009. Generalized linear mixed models: a practical guide for ecology and evolution. Trends in Ecology & Evolution.\nChecklist: Harrison, X.A. et al. 2018. A brief introduction to mixed effects modelling and multi-model inference in ecology. PeerJ.\nComplementar: Zuur et al. (2009), cap. 5.\n\n\nVolta para o índice do curso."
+  },
+  {
+    "objectID": "encontros/e09-selecao-modelos/index.html",
+    "href": "encontros/e09-selecao-modelos/index.html",
+    "title": "E9 — Teoria da informação e seleção de modelos",
+    "section": "",
+    "text": "Sexta, 25 de setembro de 2026 · manhã · 4,5 h\nO encontro sobre a pergunta que vem depois de ajustar vários modelos — e sobre por que ela é mais perigosa do que parece."
+  },
+  {
+    "objectID": "encontros/e09-selecao-modelos/index.html#slides",
+    "href": "encontros/e09-selecao-modelos/index.html#slides",
+    "title": "E9 — Teoria da informação e seleção de modelos",
+    "section": "Slides",
+    "text": "Slides\n Abrir slides"
+  },
+  {
+    "objectID": "encontros/e09-selecao-modelos/index.html#conteúdo",
+    "href": "encontros/e09-selecao-modelos/index.html#conteúdo",
+    "title": "E9 — Teoria da informação e seleção de modelos",
+    "section": "Conteúdo",
+    "text": "Conteúdo\n\nBloco 1 — teoria da informação (3,5 h)\n\nContexto — Akaike (1974), Burnham & Anderson (2002), e a virada de “testar hipóteses” para “comparar modelos”.\nDivergência de Kullback–Leibler — a distância entre o modelo e a realidade, e por que o AIC é uma estimativa dela.\nAIC, AICc e BIC — o que cada um penaliza, quando usar, e por que não se comparam modelos ajustados a conjuntos de dados diferentes.\nPesos de Akaike e razões de evidência — como se leem, o que não dizem.\nModel averaging com MuMIn::model.avg() — e as condições em que faz sentido.\nCrítica ao garimpo — por que dredge() sobre 20 preditoras não é análise, e o que fazer no lugar: conjunto de modelos definido a priori a partir de hipóteses biológicas.\nRelato segundo Gerstner et al. (2017).\n\n\n\nBloco 2 — bayesiano (45 min)\n\nWAIC e PSIS-LOO com loo::loo_compare().\nQuando LOO é preferível a AIC em modelos hierárquicos.\nFecho — Burnham & Anderson versus Gelman, Hill & Vehtari: não selecionar, mediar."
+  },
+  {
+    "objectID": "encontros/e09-selecao-modelos/index.html#leituras",
+    "href": "encontros/e09-selecao-modelos/index.html#leituras",
+    "title": "E9 — Teoria da informação e seleção de modelos",
+    "section": "Leituras",
+    "text": "Leituras\n\nObrigatória: Burnham & Anderson (2002), caps. 2 a 4.\nComplementar: Gelman, Hill & Vehtari (2020), cap. 11.\nApoio: Kurz, Statistical Rethinking with brms, cap. 7 — “Ulysses’ Compass”.\n\n\nVolta para o índice do curso."
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Análise de Dados Univariados",
+    "section": "",
+    "text": "Disciplina ANÁLISE DE DADOS UNIVARIADOS (45 h) do Programa de Pós-Graduação em Biologia Animal da UFMS, oferecida no formato intensivo de 21 a 25 de setembro de 2026, em dois blocos diários de 4,5 h. Esta página reúne os materiais públicos do curso — slides, scripts R, conjuntos de dados e leituras."
+  },
+  {
+    "objectID": "index.html#o-curso-em-uma-frase",
+    "href": "index.html#o-curso-em-uma-frase",
+    "title": "Análise de Dados Univariados",
+    "section": "O curso em uma frase",
+    "text": "O curso em uma frase\nPraticamente tudo o que você aprendeu como “teste estatístico” é um modelo linear com uma matriz de delineamento diferente. A partir daí, o caminho é sempre o mesmo: relaxar uma premissa de cada vez — distribuição da resposta (GLM), independência das observações (GLMM), incerteza sobre qual modelo usar (seleção de modelos) e incerteza sobre os próprios parâmetros (inferência bayesiana)."
+  },
+  {
+    "objectID": "index.html#cronograma",
+    "href": "index.html#cronograma",
+    "title": "Análise de Dados Univariados",
+    "section": "Cronograma",
+    "text": "Cronograma\n\n\n\n\n\n\nEnc.\n\n\n\nTópico\n\n\n\nConteúdo\n\n\n\n\n\n\n\n\n1\n\n\nE1 — EDA, reprodutibilidade e literacia em IA\n\n\nAnálise exploratória segundo Zuur & Ieno (2016). Fluxo Quarto + git. Pergunta focada, PICO e pré-registro. Uso responsável de LLMs em estatística.\n\n\n\n\n\n\n2\n\n\nE2 — O modelo linear como arcabouço unificador\n\n\nTeste t e regressão como o mesmo lm(). Matriz de delineamento explicitada. Dummy e effect coding, contr.treatment e contr.sum. Interpretação de coeficientes.\n\n\n\n\n\n\n3\n\n\nE3 — ANOVA, ANCOVA e interações como modelos lineares\n\n\nANOVA de um e dois fatores, ANCOVA e interações escritas como lm(). Somas de quadrados tipo I, II e III. Comparações planejadas com emmeans.\n\n\n\n\n\n\n4\n\n\nE4 — Distribuições de probabilidade e a família exponencial\n\n\nNormal, Gamma, Binomial, Poisson e binomial negativa como família exponencial. Simulação em R. O que a função de ligação resolve. Pearson e Spearman.\n\n\n\n\n\n\n5\n\n\nE5 — GLM I: verossimilhança, binomial e Poisson\n\n\nMáxima verossimilhança. Regressão logística e de Poisson. Escala do preditor linear versus escala da resposta. DAGs e raciocínio causal na escolha de covariáveis.\n\n\n\n\n\n\n6\n\n\nE6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais\n\n\nResíduos quantílicos com DHARMa. Sobredispersão: quasi-Poisson e binomial negativa. Modelos ZIP, ZINB e hurdle com glmmTMB. Regressão ordinal com ordinal::clm.\n\n\n\n\n\n\n7\n\n\nE7 — GLMM I: por que efeitos aleatórios\n\n\nPseudorreplicação. O que um efeito aleatório é e o que estima. Intercepto e inclinação aleatórios. Anatomia de lmer e glmer. ICC e graus de liberdade.\n\n\n\n\n\n\n8\n\n\nE8 — GLMM II: lme4, glmmTMB e a ponte bayesiana\n\n\nAjuste e diagnóstico de GLMM. Convergência. lme4 versus glmmTMB. O mesmo modelo reajustado em brms: priors, MCMC, pp_check() e relato BARG.\n\n\n\n\n\n\n9\n\n\nE9 — Teoria da informação e seleção de modelos\n\n\nDivergência de Kullback–Leibler e AIC. AICc, BIC, pesos de Akaike e razões de evidência. Model averaging. Crítica ao dredge. LOO e WAIC.\n\n\n\n\n\n\n10\n\n\nE10 — Multivariados baseados em modelos e JSDM\n\n\nPor que a ordenação clássica não modela variância. GLM multivariado com mvabund. Introdução aos modelos conjuntos de distribuição de espécies (Hmsc).\n\n\n\n\n\n\nNenhum item correspondente"
+  },
+  {
+    "objectID": "index.html#antes-do-primeiro-dia",
+    "href": "index.html#antes-do-primeiro-dia",
+    "title": "Análise de Dados Univariados",
+    "section": "Antes do primeiro dia",
+    "text": "Antes do primeiro dia\n\nSiga o roteiro de instalação. Chegue com R, RStudio, Quarto e os pacotes já funcionando — inclusive o brms, que precisa compilar código C++ na primeira execução e pode levar alguns minutos.\nLeia Popovic et al. (2024), Four principles for improved statistical ecology — discutimos os quatro princípios nos primeiros 30 min do Encontro 1.\nTraga um conjunto de dados seu (ou de um repositório aberto). Ele será a base do trabalho final e vamos usá-lo nos exercícios sempre que possível."
+  },
+  {
+    "objectID": "index.html#como-este-material-está-organizado",
+    "href": "index.html#como-este-material-está-organizado",
+    "title": "Análise de Dados Univariados",
+    "section": "Como este material está organizado",
+    "text": "Como este material está organizado\nCada encontro tem uma página própria com os slides, o script da prática, os dados usados e as leituras. Os slides são documentos Quarto — o código R que aparece neles foi de fato executado na renderização, e você pode copiá-lo e rodar.\nTodo o material está em https://github.com/diogoprov/analise-dados-univariados-2026-2. Correções e sugestões são bem-vindas via issue ou pull request."
+  },
+  {
+    "objectID": "index.html#metodologia",
+    "href": "index.html#metodologia",
+    "title": "Análise de Dados Univariados",
+    "section": "Metodologia",
+    "text": "Metodologia\nCada encontro abre com 20 min de productive failure (Kay et al. 2026): apresento uma pergunta ecológica e um conjunto de dados, e vocês, em grupos pequenos e deliberadamente heterogêneos quanto à formação quantitativa, propõem uma análise antes de eu apresentar o método. O objetivo não é acertar — é explicitar premissas e dificuldades. Depois disso, exposição e prática em R."
+  },
+  {
+    "objectID": "index.html#avaliação",
+    "href": "index.html#avaliação",
+    "title": "Análise de Dados Univariados",
+    "section": "Avaliação",
+    "text": "Avaliação\nUm relatório Quarto reproduzível com dados próprios ou de repositório aberto. Ver trabalho final para a estrutura esperada e os critérios."
+  },
+  {
+    "objectID": "index.html#contato",
+    "href": "index.html#contato",
+    "title": "Análise de Dados Univariados",
+    "section": "Contato",
+    "text": "Contato\nProf. Diogo B. Provete — diogo.provete@ufms.br · Biodiversity Synthesis Lab"
+  },
+  {
+    "objectID": "programa.html",
+    "href": "programa.html",
+    "title": "Programa da disciplina",
+    "section": "",
+    "text": "45 h · 21 a 25 de setembro de 2026 · dois blocos diários de 4,5 h · Docente: Diogo B. Provete"
+  },
+  {
+    "objectID": "programa.html#ementa",
+    "href": "programa.html#ementa",
+    "title": "Programa da disciplina",
+    "section": "Ementa",
+    "text": "Ementa\nAnálise exploratória de dados e reprodutibilidade. Testes estatísticos clássicos redefinidos como modelos lineares. Distribuições de probabilidade e a família exponencial. Correlação de Pearson e Spearman. Teoria de decisão, erros do tipo I e II. Introdução aos modelos lineares generalizados (GLM), incluindo modelos para dados de contagem, binários, com excesso de zeros e ordinais. Modelos lineares generalizados mistos (GLMM) e suas aplicações em ecologia. Teoria da informação e seleção de modelos. Rudimentos de métodos multivariados baseados em modelos e modelos conjuntos de distribuição de espécies (JSDM)."
+  },
+  {
+    "objectID": "programa.html#objetivos",
+    "href": "programa.html#objetivos",
+    "title": "Programa da disciplina",
+    "section": "Objetivos",
+    "text": "Objetivos\nAo fim da disciplina, o(a) aluno(a) deve ser capaz de:\n\nreconhecer que testes t, ANOVA, ANCOVA e regressão são o mesmo modelo linear com matrizes de delineamento distintas, e escrever qualquer um deles com lm();\nescolher a distribuição e a função de ligação adequadas à natureza da variável resposta, justificando a escolha em termos biológicos e estatísticos;\najustar e diagnosticar GLMs e GLMMs em R, identificando sobredispersão, excesso de zeros e problemas de convergência;\ncomparar modelos com critérios de teoria da informação, entendendo os limites da prática de seleção;\nler e interpretar uma análise bayesiana simples ajustada com brms, incluindo diagnóstico de convergência;\nrelatar uma análise de forma reproduzível e completa, segundo protocolos publicados."
+  },
+  {
+    "objectID": "programa.html#duas-espinhas-dorsais",
+    "href": "programa.html#duas-espinhas-dorsais",
+    "title": "Programa da disciplina",
+    "section": "Duas espinhas dorsais",
+    "text": "Duas espinhas dorsais\nTudo é modelo linear. Os testes clássicos entram como casos particulares de lm() com matrizes de delineamento distintas, seguindo Lindeløv e Gelman, Hill & Vehtari (2020).\nA ponte bayesiana é distribuída, não paralela. Em vez de um bloco bayesiano isolado no fim, a mesma pergunta e os mesmos dados são ajustados nos dois arcabouços: ao final do Encontro 8 (GLMM em brms) e no bloco de LOO/WAIC do Encontro 9."
+  },
+  {
+    "objectID": "programa.html#cronograma",
+    "href": "programa.html#cronograma",
+    "title": "Programa da disciplina",
+    "section": "Cronograma",
+    "text": "Cronograma\n\n\n\n\n\n\n\n\n\nDia\nData\nManhã (4,5 h)\nTarde (4,5 h)\n\n\n\n\n1\nseg 21/09\nE1 — EDA, reprodutibilidade e literacia em IA\nE2 — O modelo linear como arcabouço unificador\n\n\n2\nter 22/09\nE3 — ANOVA, ANCOVA e interações como lm()\nE4 — Distribuições e a família exponencial\n\n\n3\nqua 23/09\nE5 — GLM I: verossimilhança, binomial e Poisson\nE6 — GLM II: diagnóstico, sobredispersão, zeros e ordinais\n\n\n4\nqui 24/09\nE7 — GLMM I: por que efeitos aleatórios\nE8 — GLMM II: lme4/glmmTMB e a ponte com brms\n\n\n5\nsex 25/09\nE9 — Teoria da informação e seleção de modelos\nE10 — Multivariados baseados em modelos e JSDM\n\n\n\nO detalhamento de cada encontro está na página inicial."
+  },
+  {
+    "objectID": "programa.html#pré-requisitos",
+    "href": "programa.html#pré-requisitos",
+    "title": "Programa da disciplina",
+    "section": "Pré-requisitos",
+    "text": "Pré-requisitos\nFamiliaridade com R no nível da disciplina Introdução à Linguagem R (PPGEC/UFMS) — objetos, pacotes, tidyverse, ggplot2. Quem não cursou deve percorrer os capítulos 4 a 6 de Análises Ecológicas no R antes do primeiro dia.\nNão se pressupõe conhecimento prévio de GLM, GLMM ou estatística bayesiana."
+  },
+  {
+    "objectID": "programa.html#metodologia",
+    "href": "programa.html#metodologia",
+    "title": "Programa da disciplina",
+    "section": "Metodologia",
+    "text": "Metodologia\nAulas expositivas intercaladas com prática em R. Cada encontro abre com 20 min de productive failure (Kay et al. 2026, Box 1): pergunta ecológica e dados apresentados antes do método, proposta de análise escrita em grupos pequenos e apresentação de 1 min por grupo. Os grupos são formados deliberadamente com formação quantitativa heterogênea.\nCada encontro tem uma leitura obrigatória e uma opcional, indicadas na página do encontro."
+  },
+  {
+    "objectID": "programa.html#avaliação",
+    "href": "programa.html#avaliação",
+    "title": "Programa da disciplina",
+    "section": "Avaliação",
+    "text": "Avaliação\nRelatório Quarto reproduzível com dados próprios ou de repositório aberto, contendo:\n\nobjetivo, variáveis, método estatístico e implementação, seguindo o checklist de Davis & Kay (2023);\nanálise exploratória seguindo o protocolo de Zuur & Ieno (2016);\najuste de GLM ou GLMM apropriado à natureza da resposta;\ndiagnóstico com DHARMa;\ncomparação de modelos com justificativa;\ninterpretação em linguagem biológica.\n\nExtensão bayesiana opcional (recomendada): reajuste em brms com relato segundo o BARG (Kruschke 2021).\nEm trabalhos feitos em grupo, as iniciais dos autores nos Métodos seguem o MeRIT (Nakagawa et al. 2023).\nO uso de modelos de linguagem deve ser declarado conforme discutido no Encontro 1 — modelo, versão, que porção do código foi gerada e quem responde por ela."
+  },
+  {
+    "objectID": "programa.html#bibliografia",
+    "href": "programa.html#bibliografia",
+    "title": "Programa da disciplina",
+    "section": "Bibliografia",
+    "text": "Bibliografia\n\nObrigatória\n\nBolker, B.M. et al. 2009. Generalized linear mixed models: a practical guide for ecology and evolution. Trends in Ecology & Evolution.\nBurnham, K.P. & Anderson, D.R. 2002. Model Selection and Multimodel Inference: a practical information-theoretic approach. 2ª ed. Springer. — caps. 2–4.\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA. https://analises-ecologicas.com — caps. 4–9.\nGelman, A.; Hill, J. & Vehtari, A. 2020. Regression and Other Stories. Cambridge University Press.\nOvaskainen, O. & Abrego, N. 2020. Joint Species Distribution Modelling. Cambridge University Press. — caps. 1–5.\nPopovic, G. et al. 2024. Four principles for improved statistical ecology. Methods in Ecology and Evolution 15:266–281. — leitura pré-curso.\n\n\n\nComplementar\n\nAgresti, A. 2015. Foundations of Linear and Generalized Linear Models. Wiley.\nCooper, N. et al. 2024. Harnessing large language models for coding, teaching and inclusion. Methods in Ecology and Evolution 15:1757–1763.\nDavis, S. & Kay, M. 2023. Ecosphere. doi:10.1002/ecs2.4539 — checklist de relato estatístico.\nField, A. 2022. Discovering Statistics Using R. Sage.\nGotelli, N.J. & Ellison, A.M. 2011. Princípios de Estatística em Ecologia. Artmed.\nHarrison, X.A. et al. 2018. A brief introduction to mixed effects modelling and multi-model inference in ecology. PeerJ.\nKay, M. et al. 2026. A century of inertia in quantitative ecology education. Methods in Ecology and Evolution.\nKruschke, J.K. 2021. Bayesian Analysis Reporting Guidelines. Nature Human Behaviour. doi:10.1038/s41562-021-01177-7\nKurz, A.S. Statistical Rethinking with brms, ggplot2, and the tidyverse, 2ª ed. https://bookdown.org/content/70a06054-8138-4d90-aaa0-895f57aab1b4/\nMcElreath, R. 2020. Statistical Rethinking. 2ª ed. CRC Press.\nQuinn, G.P. & Keough, M.J. 2023. Experimental Design and Data Analysis for Biologists. 2ª ed. Cambridge University Press.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer.\nZuur, A.F. & Ieno, E.N. 2016. A protocol for conducting and presenting results of regression-type analyses. Methods in Ecology and Evolution.\n\n\n\nRecursos online\n\ntests-as-linear — Jonas Kristoffer Lindeløv\nCanal do YouTube @DiogoBProvete — estatística para as ciências da vida, em português.\nIntrodução à Linguagem R — disciplina pré-requisito.\nAnálises multidimensionais — continuação natural deste curso."
+  },
+  {
+    "objectID": "slides/e02.html#a-tese-deste-encontro",
+    "href": "slides/e02.html#a-tese-deste-encontro",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "A tese deste encontro",
+    "text": "A tese deste encontro\n\nTeste t, ANOVA, ANCOVA, correlação e regressão não são cinco procedimentos. São um modelo, com matrizes de delineamento diferentes.\n\nSe isso for verdade, três coisas mudam:\n\nvocê deixa de decorar uma árvore de decisão de testes;\no diagnóstico passa a ser um só;\nestender o modelo (GLM, GLMM) vira uma sequência natural, não um assunto novo."
+  },
+  {
+    "objectID": "slides/e02.html#de-onde-vem-este-curso",
+    "href": "slides/e02.html#de-onde-vem-este-curso",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "De onde vem este curso",
+    "text": "De onde vem este curso\nDuas fontes sustentam os Encontros 2 e 3:\nGelman, Hill & Vehtari (2020), Regression and Other Stories — a postura: regressão é uma ferramenta de comparação e predição, não uma máquina de produzir valores de p. Simular, ajustar, prever, checar.\nLindeløv, Common statistical tests are linear models — a demonstração: a tabela que mostra cada teste clássico como um lm() com uma matriz de delineamento específica.\n\nO ROS ajusta quase tudo com stan_glm(). Neste curso usamos lm() e glm() como padrão — que é o que vocês vão encontrar na literatura e nos laboratórios — e, quando mostramos a versão bayesiana, usamos brms, cuja sintaxe é idêntica à do lme4 e do glmmTMB que veremos nos Encontros 7 e 8. Uma notação só para o curso inteiro."
+  },
+  {
+    "objectID": "slides/e02.html#hoje",
+    "href": "slides/e02.html#hoje",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Hoje",
+    "text": "Hoje\n\nAnatomia do modelo linear — e onde mora a premissa de normalidade\nSimular para entender: dados falsos e recuperação de parâmetros\nTeste t é lm(): a matriz de delineamento escrita à mão\nCorrelação e regressão\nIntervalo\nInterpretar coeficientes: comparação, não efeito\nCodificação de fatores: contr.treatment e contr.sum\nA mesma regressão em brms\nColinearidade e diagnóstico de resíduos"
+  },
+  {
+    "objectID": "slides/e02.html#a-equação",
+    "href": "slides/e02.html#a-equação",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "A equação",
+    "text": "A equação\n\\[\ny_i = \\beta_0 + \\beta_1 x_i + \\varepsilon_i,\n\\qquad \\varepsilon_i \\sim \\mathcal{N}(0, \\sigma^2)\n\\]\nOu, em forma matricial, para o modelo inteiro de uma vez:\n\\[\n\\mathbf{y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\varepsilon}\n\\]\n\n\\(\\mathbf{X}\\) é a matriz de delineamento. É ela — e só ela — que muda entre um teste t e uma regressão."
+  },
+  {
+    "objectID": "slides/e02.html#onde-mora-a-premissa-de-normalidade",
+    "href": "slides/e02.html#onde-mora-a-premissa-de-normalidade",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Onde mora a premissa de normalidade",
+    "text": "Onde mora a premissa de normalidade\n\n\n\n\n\n\n\n\n\n\nO modelo linear não assume que y é normal. Assume que o resíduo é. Testar normalidade da variável resposta e decidir a análise a partir disso é um erro comum e caro."
+  },
+  {
+    "objectID": "slides/e02.html#as-quatro-premissas-na-ordem-que-importa",
+    "href": "slides/e02.html#as-quatro-premissas-na-ordem-que-importa",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "As quatro premissas, na ordem que importa",
+    "text": "As quatro premissas, na ordem que importa\n\nLinearidade — a relação é aditiva na escala em que foi escrita.\nIndependência — os resíduos não carregam informação uns dos outros. Vem do delineamento, não do gráfico.\nHomocedasticidade — a variância do resíduo não depende do predito.\nNormalidade do resíduo — a menos importante das quatro, e a única que quase todo mundo testa.\n\n\nEm amostras razoáveis, violar (4) modestamente é quase inofensivo. Violar (2) invalida tudo."
+  },
+  {
+    "objectID": "slides/e02.html#o-hábito-mais-útil-do-ros",
+    "href": "slides/e02.html#o-hábito-mais-útil-do-ros",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "O hábito mais útil do ROS",
+    "text": "O hábito mais útil do ROS\n\nAntes de ajustar um modelo a dados reais, simule dados em que você sabe a resposta e confira se o modelo a recupera.\n\nSe o modelo não recupera parâmetros que você mesmo escolheu, o problema não está nos dados — está no seu entendimento do modelo."
+  },
+  {
+    "objectID": "slides/e02.html#simular-ajustar-recuperar",
+    "href": "slides/e02.html#simular-ajustar-recuperar",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Simular, ajustar, recuperar",
+    "text": "Simular, ajustar, recuperar\n\nset.seed(2026)\n\nn &lt;- 120\ncomprimento &lt;- runif(n, 20, 60)               # comprimento rostro-cloacal, mm\nmassa &lt;- 3 + 0.45 * comprimento + rnorm(n, 0, 2)   # verdade: b0 = 3, b1 = 0,45\n\ncoef(lm(massa ~ comprimento))\n\n(Intercept) comprimento \n  4.3298505   0.4173157 \n\n\nO ajuste devolve algo próximo de 3 e de 0,45. Nós sabemos que está certo porque nós escrevemos a verdade."
+  },
+  {
+    "objectID": "slides/e02.html#e-quanto-varia-de-amostra-para-amostra",
+    "href": "slides/e02.html#e-quanto-varia-de-amostra-para-amostra",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "E quanto varia de amostra para amostra?",
+    "text": "E quanto varia de amostra para amostra?\n\nsimula_uma &lt;- function(i) {\n  x &lt;- runif(120, 20, 60)\n  y &lt;- 3 + 0.45 * x + rnorm(120, 0, 2)\n  coef(lm(y ~ x))[2]\n}\n\ninclinacoes &lt;- purrr::map_dbl(1:500, simula_uma)\n\nggplot(tibble(inclinacoes), aes(inclinacoes)) +\n  geom_histogram(bins = 30, fill = \"#1c6e8c\", colour = \"white\") +\n  geom_vline(xintercept = 0.45, colour = \"#c08a3e\", linewidth = 1) +\n  labs(x = \"Inclinação estimada\", y = NULL)\n\n\n\n\n\n\n\n\nA linha dourada é a verdade. O espalhamento é o erro-padrão — não uma fórmula decorada, mas uma quantidade que você pode ver."
+  },
+  {
+    "objectID": "slides/e02.html#para-que-serve-na-prática",
+    "href": "slides/e02.html#para-que-serve-na-prática",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Para que serve na prática",
+    "text": "Para que serve na prática\n\nPlanejar amostragem: com \\(n = 20\\), quão larga fica essa distribuição? É a forma honesta de avaliar poder (ROS, cap. 16).\nDepurar: se o modelo não recupera o que você simulou, você entendeu a fórmula errado.\nEntender um método novo: antes de usar GLMM nos seus dados, simule um conjunto com estrutura hierárquica conhecida.\n\n\nVamos usar este mesmo truque no Encontro 4 (distribuições), no 6 (excesso de zeros) e no 7 (efeitos aleatórios)."
+  },
+  {
+    "objectID": "slides/e02.html#a-pergunta",
+    "href": "slides/e02.html#a-pergunta",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "A pergunta",
+    "text": "A pergunta\nMachos e fêmeas de Pygoscelis adeliae diferem no comprimento do bico?\n\nadelie &lt;- pinguins |&gt; filter(species == \"Adelie\")\n\nggplot(adelie, aes(sex, bill_length_mm, fill = sex)) +\n  geom_boxplot(alpha = .7, show.legend = FALSE) +\n  scale_fill_manual(values = c(\"#1c6e8c\", \"#c08a3e\")) +\n  labs(x = NULL, y = \"Comprimento do bico (mm)\")"
+  },
+  {
+    "objectID": "slides/e02.html#do-jeito-que-vocês-aprenderam",
+    "href": "slides/e02.html#do-jeito-que-vocês-aprenderam",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Do jeito que vocês aprenderam",
+    "text": "Do jeito que vocês aprenderam\n\nt.test(bill_length_mm ~ sex, data = adelie, var.equal = TRUE)\n\n\n    Two Sample t-test\n\ndata:  bill_length_mm by sex\nt = -8.7765, df = 144, p-value = 4.44e-15\nalternative hypothesis: true difference in means between group female and group male is not equal to 0\n95 percent confidence interval:\n -3.838435 -2.427319\nsample estimates:\nmean in group female   mean in group male \n            37.25753             40.39041"
+  },
+  {
+    "objectID": "slides/e02.html#do-jeito-que-vamos-usar",
+    "href": "slides/e02.html#do-jeito-que-vamos-usar",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Do jeito que vamos usar",
+    "text": "Do jeito que vamos usar\n\nm_t &lt;- lm(bill_length_mm ~ sex, data = adelie)\nsummary(m_t)$coefficients\n\n             Estimate Std. Error   t value      Pr(&gt;|t|)\n(Intercept) 37.257534  0.2524088 147.60791 4.653163e-159\nsexmale      3.132877  0.3569599   8.77655  4.440460e-15\n\n\n\nComparem: a estimativa de sexmale é exatamente a diferença entre as médias; o valor de t e o valor de p são os mesmos do t.test(). Não é coincidência — é o mesmo cálculo."
+  },
+  {
+    "objectID": "slides/e02.html#por-que-são-iguais-a-matriz-de-delineamento",
+    "href": "slides/e02.html#por-que-são-iguais-a-matriz-de-delineamento",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Por que são iguais: a matriz de delineamento",
+    "text": "Por que são iguais: a matriz de delineamento\n\nX &lt;- model.matrix(m_t)\nhead(X, 8)\n\n  (Intercept) sexmale\n1           1       1\n2           1       0\n3           1       0\n4           1       0\n5           1       1\n6           1       0\n7           1       1\n8           1       0\n\n\nUma coluna de 1 (o intercepto) e uma coluna 0/1 que marca male."
+  },
+  {
+    "objectID": "slides/e02.html#lendo-a-matriz",
+    "href": "slides/e02.html#lendo-a-matriz",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Lendo a matriz",
+    "text": "Lendo a matriz\nPara uma fêmea, a linha é \\((1, 0)\\):\n\\[\\hat{y} = \\beta_0 \\cdot 1 + \\beta_1 \\cdot 0 = \\beta_0\\]\nPara um macho, \\((1, 1)\\):\n\\[\\hat{y} = \\beta_0 + \\beta_1\\]\n\n\\(\\beta_0\\) = média das fêmeas. \\(\\beta_1\\) = diferença macho − fêmea. O “teste t” é o teste de que \\(\\beta_1 = 0\\)."
+  },
+  {
+    "objectID": "slides/e02.html#confirmando-na-mão",
+    "href": "slides/e02.html#confirmando-na-mão",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Confirmando na mão",
+    "text": "Confirmando na mão\n\nmedias &lt;- adelie |&gt;\n  group_by(sex) |&gt;\n  summarise(media = mean(bill_length_mm))\nmedias\n\n# A tibble: 2 × 2\n  sex    media\n  &lt;fct&gt;  &lt;dbl&gt;\n1 female  37.3\n2 male    40.4\n\ncoef(m_t)\n\n(Intercept)     sexmale \n  37.257534    3.132877"
+  },
+  {
+    "objectID": "slides/e02.html#o-mapa-completo",
+    "href": "slides/e02.html#o-mapa-completo",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "O mapa completo",
+    "text": "O mapa completo\n\n\n\nTeste clássico\nO mesmo modelo\n\n\n\n\nteste t de uma amostra\nlm(y ~ 1)\n\n\nteste t de duas amostras\nlm(y ~ grupo)\n\n\nteste t pareado\nlm(diferença ~ 1)\n\n\nANOVA de um fator\nlm(y ~ fator)\n\n\nANOVA de dois fatores\nlm(y ~ a * b)\n\n\nANCOVA\nlm(y ~ fator + x)\n\n\ncorrelação de Pearson\nlm(y ~ x) padronizado\n\n\nregressão múltipla\nlm(y ~ x1 + x2 + ...)\n\n\n\n\nDetalhamento em Lindeløv, Common statistical tests are linear models."
+  },
+  {
+    "objectID": "slides/e02.html#a-mesma-informação-ênfases-diferentes",
+    "href": "slides/e02.html#a-mesma-informação-ênfases-diferentes",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "A mesma informação, ênfases diferentes",
+    "text": "A mesma informação, ênfases diferentes\n\nr &lt;- cor(pinguins$bill_length_mm, pinguins$body_mass_g)\nr\n\n[1] 0.5894511\n\nm_reg &lt;- lm(body_mass_g ~ bill_length_mm, data = pinguins)\nsummary(m_reg)$r.squared\n\n[1] 0.3474526\n\nr^2\n\n[1] 0.3474526\n\n\n\\(R^2\\) da regressão simples é o quadrado da correlação."
+  },
+  {
+    "objectID": "slides/e02.html#o-que-muda",
+    "href": "slides/e02.html#o-que-muda",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "O que muda",
+    "text": "O que muda\n\n\n\n\nCorrelação\nRegressão\n\n\n\n\nSimetria\n\\(r_{xy} = r_{yx}\\)\n\\(y \\sim x \\neq x \\sim y\\)\n\n\nUnidade\nadimensional\nunidade de \\(y\\) por unidade de \\(x\\)\n\n\nPredição\nnão\nsim\n\n\nPapel das variáveis\nsimétrico\nresposta e preditora\n\n\n\n\nSe a sua pergunta tem uma direção — “o que a temperatura faz com a massa?” —, você quer regressão. Correlação é para quando as duas variáveis têm o mesmo estatuto."
+  },
+  {
+    "objectID": "slides/e02.html#pearson-spearman",
+    "href": "slides/e02.html#pearson-spearman",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Pearson × Spearman",
+    "text": "Pearson × Spearman\n\ncor(pinguins$bill_length_mm, pinguins$body_mass_g, method = \"pearson\")\n\n[1] 0.5894511\n\ncor(pinguins$bill_length_mm, pinguins$body_mass_g, method = \"spearman\")\n\n[1] 0.5764804\n\n\n\nPearson mede associação linear; sensível a outliers.\nSpearman é Pearson nos postos: mede associação monotônica, robusta a outliers e a não linearidade.\n\nDiferença grande entre as duas é sinal de não linearidade ou de outlier influente — vale olhar o gráfico antes de escolher."
+  },
+  {
+    "objectID": "slides/e02.html#regressão-simples",
+    "href": "slides/e02.html#regressão-simples",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Regressão simples",
+    "text": "Regressão simples\n\ncoef(m_reg)\n\n   (Intercept) bill_length_mm \n     388.84516       86.79176 \n\n\n\nA cada 1 mm a mais de bico, a massa esperada aumenta 86.8 g.\n\nRepare que a interpretação só existe com unidade. Coeficiente sem unidade é número solto."
+  },
+  {
+    "objectID": "slides/e02.html#e-o-intercepto",
+    "href": "slides/e02.html#e-o-intercepto",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "E o intercepto?",
+    "text": "E o intercepto?\n389 g é a massa esperada de um pinguim com bico de 0 mm — que não existe.\n\npinguins &lt;- pinguins |&gt; mutate(bico_c = bill_length_mm - mean(bill_length_mm))\ncoef(lm(body_mass_g ~ bico_c, data = pinguins))\n\n(Intercept)      bico_c \n 4207.05706    86.79176 \n\n\nCentrando a preditora, o intercepto passa a ser a massa esperada de um pinguim de bico médio. A inclinação não muda."
+  },
+  {
+    "objectID": "slides/e02.html#regressão-múltipla-o-que-controlar-significa",
+    "href": "slides/e02.html#regressão-múltipla-o-que-controlar-significa",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Regressão múltipla: o que “controlar” significa",
+    "text": "Regressão múltipla: o que “controlar” significa\n\nm_mult &lt;- lm(body_mass_g ~ bill_length_mm + flipper_length_mm, data = pinguins)\nround(coef(m_mult), 2)\n\n      (Intercept)    bill_length_mm flipper_length_mm \n         -5836.30              4.96             48.89 \n\n\n\nCada coeficiente é o efeito daquela preditora mantendo as demais constantes. Note que o efeito do bico caiu bastante em relação ao modelo simples — porque bico e nadadeira medem, em parte, a mesma coisa."
+  },
+  {
+    "objectID": "slides/e02.html#efeito-marginal-visualmente",
+    "href": "slides/e02.html#efeito-marginal-visualmente",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Efeito marginal, visualmente",
+    "text": "Efeito marginal, visualmente\n\nggplot(pinguins, aes(bill_length_mm, body_mass_g, colour = species)) +\n  geom_point(alpha = .6) +\n  geom_smooth(method = \"lm\", se = FALSE) +\n  scale_colour_manual(values = c(\"#1c6e8c\", \"#c08a3e\", \"#6b8f71\")) +\n  labs(x = \"Comprimento do bico (mm)\", y = \"Massa (g)\", colour = NULL)"
+  },
+  {
+    "objectID": "slides/e02.html#comparação-não-efeito",
+    "href": "slides/e02.html#comparação-não-efeito",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Comparação, não efeito",
+    "text": "Comparação, não efeito\n\nEm dados observacionais, um coeficiente é uma comparação entre unidades que diferem naquela variável — não o que aconteceria se você mudasse a variável numa mesma unidade.\n\n\n\n\n\n\n\n\nEscreva\nNão escreva\n\n\n\n\n“pinguins que têm 1 mm a mais de bico pesam, em média, X g a mais”\n“aumentar o bico em 1 mm aumenta a massa em X g”\n\n\n“sítios 1 km mais distantes do parque têm, em média, Y atropelamentos a menos”\n“afastar o sítio do parque reduz a mortalidade em Y”\n\n\n\nA linguagem causal exige um argumento causal — delineamento experimental ou um DAG defensável (Encontro 5). O modelo, sozinho, não fornece esse argumento."
+  },
+  {
+    "objectID": "slides/e02.html#paradoxo-de-simpson",
+    "href": "slides/e02.html#paradoxo-de-simpson",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Paradoxo de Simpson",
+    "text": "Paradoxo de Simpson\n\n\n\n\n\n\n\n\n\nIgnorando a espécie (linha tracejada), a relação é negativa. Dentro de cada espécie, é positiva. A estrutura do modelo decide o sinal do resultado."
+  },
+  {
+    "objectID": "slides/e02.html#o-padrão-do-r-contr.treatment",
+    "href": "slides/e02.html#o-padrão-do-r-contr.treatment",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "O padrão do R: contr.treatment",
+    "text": "O padrão do R: contr.treatment\n\nm_esp &lt;- lm(body_mass_g ~ species, data = pinguins)\ncoef(m_esp)\n\n     (Intercept) speciesChinstrap    speciesGentoo \n      3706.16438         26.92385       1386.27259 \n\n\nAdelie é o nível de referência (primeiro em ordem alfabética). Os coeficientes são diferenças em relação a ele; o intercepto é a média de Adelie."
+  },
+  {
+    "objectID": "slides/e02.html#soma-zero-contr.sum",
+    "href": "slides/e02.html#soma-zero-contr.sum",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Soma zero: contr.sum",
+    "text": "Soma zero: contr.sum\n\nm_sum &lt;- lm(body_mass_g ~ species, data = pinguins,\n            contrasts = list(species = \"contr.sum\"))\ncoef(m_sum)\n\n(Intercept)    species1    species2 \n  4177.2299   -471.0655   -444.1416 \n\nmean(tapply(pinguins$body_mass_g, pinguins$species, mean))\n\n[1] 4177.23\n\n\nAgora o intercepto é a média das médias de grupo, e os coeficientes são desvios em relação a ela."
+  },
+  {
+    "objectID": "slides/e02.html#por-que-isso-importa",
+    "href": "slides/e02.html#por-que-isso-importa",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Por que isso importa",
+    "text": "Por que isso importa\n\nO ajuste é idêntico — mesmos valores preditos, mesmo \\(R^2\\), mesmos resíduos. O que muda é o significado de cada número na tabela.\n\n\nall.equal(fitted(m_esp), fitted(m_sum))\n\n[1] TRUE\n\n\nDuas consequências práticas:\n\nem modelos com interação, o coeficiente do efeito principal em contr.treatment é o efeito no nível de referência do outro fator — não o efeito médio;\nsomas de quadrados do tipo III só fazem sentido com contrastes de soma zero (Encontro 3)."
+  },
+  {
+    "objectID": "slides/e02.html#ordem-dos-níveis-não-é-detalhe",
+    "href": "slides/e02.html#ordem-dos-níveis-não-é-detalhe",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Ordem dos níveis não é detalhe",
+    "text": "Ordem dos níveis não é detalhe\n\npinguins &lt;- pinguins |&gt; mutate(species2 = relevel(species, ref = \"Gentoo\"))\ncoef(lm(body_mass_g ~ species2, data = pinguins))\n\n      (Intercept)    species2Adelie species2Chinstrap \n         5092.437         -1386.273         -1359.349 \n\n\nTrocando a referência, todos os coeficientes mudam. O modelo é o mesmo. Escolha a referência que torna a tabela interpretável — o controle, a condição basal, a espécie focal."
+  },
+  {
+    "objectID": "slides/e02.html#por-que-mostrar-isso-agora",
+    "href": "slides/e02.html#por-que-mostrar-isso-agora",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Por que mostrar isso agora",
+    "text": "Por que mostrar isso agora\nO livro-texto do curso ajusta quase tudo em bayesiano. Vale ver, desde já, que é o mesmo modelo — e começar a usar a notação que vai valer até o fim do curso.\n\nlibrary(brms)\n\nm_bayes &lt;- brm(body_mass_g ~ bill_length_mm, data = pinguins,\n               chains = 4, iter = 2000, seed = 2026,\n               file = \"../cache/e02_bico\")   # compila uma vez, reusa depois\nsummary(m_bayes)\n\n\nA fórmula é exatamente a mesma que você escreveria em lm(). E a mesma que você vai escrever em lmer(), glmmTMB() e brm() nos Encontros 7 e 8 — só acrescentando (1 | grupo)."
+  },
+  {
+    "objectID": "slides/e02.html#uma-notação-quatro-pacotes",
+    "href": "slides/e02.html#uma-notação-quatro-pacotes",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Uma notação, quatro pacotes",
+    "text": "Uma notação, quatro pacotes\n\nlm       (massa ~ svl,                  data = d)                     # gaussiano\nglm      (massa ~ svl, family = Gamma,  data = d)                     # GLM\nlme4::lmer   (massa ~ svl + (1 | poca),               data = d)       # LMM\nglmmTMB::glmmTMB(massa ~ svl + (1 | poca), family = Gamma, data = d)  # GLMM\nbrms::brm    (massa ~ svl + (1 | poca), family = Gamma, data = d)     # bayesiano\n\n\nÉ por isso que escolhemos brms e não outro pacote bayesiano: o custo de transferência entre as cinco linhas acima é quase zero. Referência prática: Kurz, Statistical Rethinking recoded (https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/)."
+  },
+  {
+    "objectID": "slides/e02.html#o-preço-compilação",
+    "href": "slides/e02.html#o-preço-compilação",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "O preço: compilação",
+    "text": "O preço: compilação\nO brms traduz cada modelo para um programa Stan e compila em C++.\n\nprimeira vez na vida da máquina: alguns minutos;\ncada modelo novo: dezenas de segundos;\nmesmo modelo de novo, com file = \"cache/...\": instantâneo.\n\n\nPor isso todos os modelos brms deste curso já estão em cache no repositório. Nas suas análises, use sempre file = — vocês vão agradecer na terceira vez que renderizarem o relatório."
+  },
+  {
+    "objectID": "slides/e02.html#o-que-muda-e-o-que-não-muda",
+    "href": "slides/e02.html#o-que-muda-e-o-que-não-muda",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "O que muda e o que não muda",
+    "text": "O que muda e o que não muda\n\n\n\n\n\n\n\n\n\nlm()\nbrm()\n\n\n\n\nEstimativa pontual\nidêntica, na prática\nmediana da posterior\n\n\nIncerteza\nerro-padrão, IC de 95 %\ndesvio-padrão da posterior, intervalo de credibilidade\n\n\nPriors\nnenhuma (implicitamente planas)\nfracamente informativas por padrão\n\n\nO que você pode dizer\n“95 % dos ICs construídos assim conteriam o valor”\n“há 95 % de probabilidade de o parâmetro estar aqui”\n\n\nAmostra pequena\nestimativa instável\na prior regulariza\n\n\n\n\nCom bastante dado e priors fracas, os dois dão praticamente o mesmo número. A diferença aparece quando o dado é pouco — que é a situação de boa parte da ecologia de campo."
+  },
+  {
+    "objectID": "slides/e02.html#o-que-você-ganha-de-graça",
+    "href": "slides/e02.html#o-que-você-ganha-de-graça",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "O que você ganha de graça",
+    "text": "O que você ganha de graça\n\n# distribuição preditiva posterior — o que o modelo acha\n# que seriam novos dados\npp_check(m_bayes, ndraws = 50)\n\n# incerteza sobre qualquer quantidade derivada, sem fórmula:\nposterior &lt;- as_draws_df(m_bayes)\nquantile(posterior$b_bill_length_mm * 10, c(.025, .5, .975))\n\nPropagar incerteza para uma quantidade derivada — “massa esperada de um pinguim com bico 10 mm maior” — é uma linha de código, não uma derivação.\nVoltamos a isso no Encontro 8, com GLMM."
+  },
+  {
+    "objectID": "slides/e02.html#o-que-é-e-o-que-não-é",
+    "href": "slides/e02.html#o-que-é-e-o-que-não-é",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "O que é (e o que não é)",
+    "text": "O que é (e o que não é)\n\nround(cor(pinguins[, c(\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\",\n                       \"body_mass_g\")], use = \"complete.obs\"), 2)\n\n                  bill_length_mm bill_depth_mm flipper_length_mm body_mass_g\nbill_length_mm              1.00         -0.23              0.65        0.59\nbill_depth_mm              -0.23          1.00             -0.58       -0.47\nflipper_length_mm           0.65         -0.58              1.00        0.87\nbody_mass_g                 0.59         -0.47              0.87        1.00\n\n\n\nColinearidade não viola premissa nenhuma. Ela torna os coeficientes individualmente mal identificados: o modelo prediz bem e interpreta mal."
+  },
+  {
+    "objectID": "slides/e02.html#vif",
+    "href": "slides/e02.html#vif",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "VIF",
+    "text": "VIF\n\ncar::vif(m_mult)\n\n   bill_length_mm flipper_length_mm \n         1.743782          1.743782 \n\n\nRegras práticas: acima de 5 desconfie, acima de 10 preocupe-se. Mas a decisão é biológica, não mecânica:\n\nas duas preditoras medem coisas distintas na sua hipótese? → mantenha e relate a incerteza;\nsão proxies da mesma coisa? → escolha uma, pelo argumento, não pelo p."
+  },
+  {
+    "objectID": "slides/e02.html#os-quatro-gráficos",
+    "href": "slides/e02.html#os-quatro-gráficos",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Os quatro gráficos",
+    "text": "Os quatro gráficos\n\npar(mfrow = c(2, 2), mar = c(4, 4, 2, 1))\nplot(m_mult)"
+  },
+  {
+    "objectID": "slides/e02.html#o-que-procurar-em-cada-um",
+    "href": "slides/e02.html#o-que-procurar-em-cada-um",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "O que procurar em cada um",
+    "text": "O que procurar em cada um\n\n\n\n\n\n\n\nGráfico\nPergunta\n\n\n\n\nResiduals vs Fitted\nhá padrão? curvatura? → falta termo no modelo\n\n\nQ-Q residuals\ncaudas muito fora da reta? → normalidade do resíduo\n\n\nScale–Location\nleque? → heterocedasticidade\n\n\nResiduals vs Leverage\npontos com distância de Cook alta? → influência"
+  },
+  {
+    "objectID": "slides/e02.html#versão-moderna",
+    "href": "slides/e02.html#versão-moderna",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Versão moderna",
+    "text": "Versão moderna\n\nlibrary(performance)\ncheck_model(m_mult)\n\n\nperformance::check_model() produz os mesmos diagnósticos com intervalos de referência simulados — muito mais fácil de julgar do que “isso parece um padrão?”. A partir do Encontro 6, com GLMs, passamos a usar DHARMa, que é a única forma honesta de diagnosticar resíduos não gaussianos."
+  },
+  {
+    "objectID": "slides/e02.html#resíduo-contra-predito-nunca-contra-observado",
+    "href": "slides/e02.html#resíduo-contra-predito-nunca-contra-observado",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Resíduo contra predito, nunca contra observado",
+    "text": "Resíduo contra predito, nunca contra observado\n\nGráfico de resíduo contra o valor observado mostra uma correlação negativa mesmo quando o modelo está perfeito. É artefato, não diagnóstico. (ROS, cap. 11.)"
+  },
+  {
+    "objectID": "slides/e02.html#alavancagem-não-é-outlier",
+    "href": "slides/e02.html#alavancagem-não-é-outlier",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Alavancagem não é outlier",
+    "text": "Alavancagem não é outlier\n\nOutlier: resíduo grande. Está longe do que o modelo previu.\nAlavancagem: valor extremo na preditora. Puxa a reta.\nInfluência: as duas coisas juntas — distância de Cook.\n\n\nUma observação influente não deve ser removida por ser influente. Deve ser investigada; e o resultado do modelo com e sem ela deve ser relatado."
+  },
+  {
+    "objectID": "slides/e02.html#o-que-fica-de-hoje",
+    "href": "slides/e02.html#o-que-fica-de-hoje",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "O que fica de hoje",
+    "text": "O que fica de hoje\n\n\\(\\mathbf{y} = \\mathbf{X}\\boldsymbol{\\beta} + \\boldsymbol{\\varepsilon}\\) — só a matriz \\(\\mathbf{X}\\) muda entre os “testes”.\nSimular dados falsos e recuperar os parâmetros é a forma mais barata de saber se você entendeu o modelo.\nA normalidade exigida é a do resíduo.\nCoeficiente é comparação, com unidade — não efeito causal.\nCodificação de fatores muda o significado da tabela, não o ajuste.\nColinearidade é problema de interpretação, não de premissa."
+  },
+  {
+    "objectID": "slides/e02.html#prática-o-resto-do-bloco",
+    "href": "slides/e02.html#prática-o-resto-do-bloco",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Prática (o resto do bloco)",
+    "text": "Prática (o resto do bloco)\n\nAjuste um lm() nos seus dados.\nEscreva a matriz de delineamento com model.matrix() e explique em uma frase o que cada coluna significa.\nInterprete cada coeficiente com unidade.\nRode os quatro gráficos de diagnóstico e escreva o que viu.\nTroque o nível de referência e confira que o ajuste não muda."
+  },
+  {
+    "objectID": "slides/e02.html#para-amanhã",
+    "href": "slides/e02.html#para-amanhã",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Para amanhã",
+    "text": "Para amanhã\nLeitura: Quinn & Keough (2023), caps. 8 e 9.\nAmanhã de manhã: mais colunas na matriz de delineamento — ANOVA, ANCOVA e interações. Nenhum conceito novo de inferência."
+  },
+  {
+    "objectID": "slides/e02.html#referências",
+    "href": "slides/e02.html#referências",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Referências",
+    "text": "Referências\n\n\nAgresti, A. 2015. Foundations of Linear and Generalized Linear Models. Wiley. Caps. 1–3.\nGelman, A., Hill, J. & Vehtari, A. 2020. Regression and Other Stories. Cambridge University Press. Parte I.\nLindeløv, J.K. Common statistical tests are linear models. https://lindeloev.github.io/tests-as-linear/\nExemplos e código do ROS: https://avehtari.github.io/ROS-Examples/\nHorst, A.M., Hill, A.P. & Gorman, K.B. 2020. palmerpenguins: Palmer Archipelago (Antarctica) penguin data. Pacote R.\nda Silva, F.R. et al. 2022. Análises Ecológicas no R, cap. 7."
+  }
+]

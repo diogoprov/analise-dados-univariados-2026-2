@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html lang="pt"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
+
+  <meta name="author" content="Diogo B. Provete">
+  <title>Análise de Dados Univariados – O modelo linear como arcabouço unificador</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-767eba1032040cdc5b63624daf3aadd0.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+<meta property="og:title" content="O modelo linear como arcabouço unificador – Análise de Dados Univariados">
+<meta property="og:description" content="Encontro 2 · Análise de Dados Univariados · PPGBA/UFMS">
+<meta property="og:site_name" content="Análise de Dados Univariados">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">O modelo linear como arcabouço unificador</h1>
+  <p class="subtitle">Encontro 2 · Análise de Dados Univariados · PPGBA/UFMS</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Diogo B. Provete 
+</div>
+</div>
+</div>
+
+  <p class="date">21 de setembro de 2026</p>
+</section>
+<section id="a-tese-deste-encontro" class="slide level2 secao">
+<h2>A tese deste encontro</h2>
+<div class="definicao">
+<p>Teste t, ANOVA, ANCOVA, correlação e regressão <strong>não são cinco procedimentos</strong>. São um modelo, com matrizes de delineamento diferentes.</p>
+</div>
+<p>Se isso for verdade, três coisas mudam:</p>
+<ol type="1">
+<li>você deixa de decorar uma árvore de decisão de testes;</li>
+<li>o diagnóstico passa a ser <strong>um só</strong>;</li>
+<li>estender o modelo (GLM, GLMM) vira uma sequência natural, não um assunto novo.</li>
+</ol>
+</section>
+<section id="de-onde-vem-este-curso" class="slide level2">
+<h2>De onde vem este curso</h2>
+<p>Duas fontes sustentam os Encontros 2 e 3:</p>
+<p><strong>Gelman, Hill &amp; Vehtari (2020), <em>Regression and Other Stories</em></strong> — a postura: regressão é uma ferramenta de <strong>comparação e predição</strong>, não uma máquina de produzir valores de <em>p</em>. Simular, ajustar, prever, checar.</p>
+<p><strong>Lindeløv, <em>Common statistical tests are linear models</em></strong> — a demonstração: a tabela que mostra cada teste clássico como um <code>lm()</code> com uma matriz de delineamento específica.</p>
+<div class="nota">
+<p>O ROS ajusta quase tudo com <code>stan_glm()</code>. Neste curso usamos <code>lm()</code> e <code>glm()</code> como padrão — que é o que vocês vão encontrar na literatura e nos laboratórios — e, quando mostramos a versão bayesiana, usamos <code>brms</code>, cuja sintaxe é idêntica à do <code>lme4</code> e do <code>glmmTMB</code> que veremos nos Encontros 7 e 8. Uma notação só para o curso inteiro.</p>
+</div>
+</section>
+<section id="hoje" class="slide level2">
+<h2>Hoje</h2>
+<ol type="1">
+<li>Anatomia do modelo linear — e onde mora a premissa de normalidade</li>
+<li>Simular para entender: dados falsos e recuperação de parâmetros</li>
+<li>Teste t é <code>lm()</code>: a matriz de delineamento escrita à mão</li>
+<li>Correlação e regressão</li>
+<li><strong>Intervalo</strong></li>
+<li>Interpretar coeficientes: comparação, não efeito</li>
+<li>Codificação de fatores: <code>contr.treatment</code> e <code>contr.sum</code></li>
+<li>A mesma regressão em <code>brms</code></li>
+<li>Colinearidade e diagnóstico de resíduos</li>
+</ol>
+</section>
+<section class="slide level2">
+
+</section>
+<section>
+<section id="anatomia" class="title-slide slide level1 secao center">
+<h1>1. Anatomia</h1>
+
+</section>
+<section id="a-equação" class="slide level2">
+<h2>A equação</h2>
+<p><span class="math display">\[
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,
+\qquad \varepsilon_i \sim \mathcal{N}(0, \sigma^2)
+\]</span></p>
+<p>Ou, em forma matricial, para o modelo inteiro de uma vez:</p>
+<p><span class="math display">\[
+\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+\]</span></p>
+<div class="definicao">
+<p><span class="math inline">\(\mathbf{X}\)</span> é a <strong>matriz de delineamento</strong>. É ela — e só ela — que muda entre um teste t e uma regressão.</p>
+</div>
+</section>
+<section id="onde-mora-a-premissa-de-normalidade" class="slide level2">
+<h2>Onde mora a premissa de normalidade</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-2-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="definicao">
+<p>O modelo linear <strong>não assume que y é normal</strong>. Assume que o <strong>resíduo</strong> é. Testar normalidade da variável resposta e decidir a análise a partir disso é um erro comum e caro.</p>
+</div>
+</section>
+<section id="as-quatro-premissas-na-ordem-que-importa" class="slide level2">
+<h2>As quatro premissas, na ordem que importa</h2>
+<ol type="1">
+<li><strong>Linearidade</strong> — a relação é aditiva na escala em que foi escrita.</li>
+<li><strong>Independência</strong> — os resíduos não carregam informação uns dos outros. <em>Vem do delineamento, não do gráfico.</em></li>
+<li><strong>Homocedasticidade</strong> — a variância do resíduo não depende do predito.</li>
+<li><strong>Normalidade do resíduo</strong> — a menos importante das quatro, e a única que quase todo mundo testa.</li>
+</ol>
+<div class="nota">
+<p>Em amostras razoáveis, violar (4) modestamente é quase inofensivo. Violar (2) invalida tudo.</p>
+</div>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="simular-para-entender" class="title-slide slide level1 secao center">
+<h1>2. Simular para entender</h1>
+
+</section>
+<section id="o-hábito-mais-útil-do-ros" class="slide level2">
+<h2>O hábito mais útil do ROS</h2>
+<div class="definicao">
+<p>Antes de ajustar um modelo a dados reais, <strong>simule dados em que você sabe a resposta</strong> e confira se o modelo a recupera.</p>
+</div>
+<p>Se o modelo não recupera parâmetros que você mesmo escolheu, o problema não está nos dados — está no seu entendimento do modelo.</p>
+</section>
+<section id="simular-ajustar-recuperar" class="slide level2">
+<h2>Simular, ajustar, recuperar</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb1-2"><a></a></span>
+<span id="cb1-3"><a></a>n <span class="ot">&lt;-</span> <span class="dv">120</span></span>
+<span id="cb1-4"><a></a>comprimento <span class="ot">&lt;-</span> <span class="fu">runif</span>(n, <span class="dv">20</span>, <span class="dv">60</span>)               <span class="co"># comprimento rostro-cloacal, mm</span></span>
+<span id="cb1-5"><a></a>massa <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="fl">0.45</span> <span class="sc">*</span> comprimento <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">2</span>)   <span class="co"># verdade: b0 = 3, b1 = 0,45</span></span>
+<span id="cb1-6"><a></a></span>
+<span id="cb1-7"><a></a><span class="fu">coef</span>(<span class="fu">lm</span>(massa <span class="sc">~</span> comprimento))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept) comprimento 
+  4.3298505   0.4173157 </code></pre>
+</div>
+</div>
+<p>O ajuste devolve algo próximo de 3 e de 0,45. <strong>Nós sabemos que está certo porque nós escrevemos a verdade.</strong></p>
+</section>
+<section id="e-quanto-varia-de-amostra-para-amostra" class="slide level2">
+<h2>E quanto varia de amostra para amostra?</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>simula_uma <span class="ot">&lt;-</span> <span class="cf">function</span>(i) {</span>
+<span id="cb3-2"><a></a>  x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">120</span>, <span class="dv">20</span>, <span class="dv">60</span>)</span>
+<span id="cb3-3"><a></a>  y <span class="ot">&lt;-</span> <span class="dv">3</span> <span class="sc">+</span> <span class="fl">0.45</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">120</span>, <span class="dv">0</span>, <span class="dv">2</span>)</span>
+<span id="cb3-4"><a></a>  <span class="fu">coef</span>(<span class="fu">lm</span>(y <span class="sc">~</span> x))[<span class="dv">2</span>]</span>
+<span id="cb3-5"><a></a>}</span>
+<span id="cb3-6"><a></a></span>
+<span id="cb3-7"><a></a>inclinacoes <span class="ot">&lt;-</span> purrr<span class="sc">::</span><span class="fu">map_dbl</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">500</span>, simula_uma)</span>
+<span id="cb3-8"><a></a></span>
+<span id="cb3-9"><a></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(inclinacoes), <span class="fu">aes</span>(inclinacoes)) <span class="sc">+</span></span>
+<span id="cb3-10"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"#1c6e8c"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb3-11"><a></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.45</span>, <span class="at">colour =</span> <span class="st">"#c08a3e"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-12"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Inclinação estimada"</span>, <span class="at">y =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-4-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A linha dourada é a verdade. O espalhamento <strong>é</strong> o erro-padrão — não uma fórmula decorada, mas uma quantidade que você pode ver.</p>
+</section>
+<section id="para-que-serve-na-prática" class="slide level2">
+<h2>Para que serve na prática</h2>
+<ul>
+<li><strong>Planejar amostragem</strong>: com <span class="math inline">\(n = 20\)</span>, quão larga fica essa distribuição? É a forma honesta de avaliar poder (ROS, cap. 16).</li>
+<li><strong>Depurar</strong>: se o modelo não recupera o que você simulou, você entendeu a fórmula errado.</li>
+<li><strong>Entender um método novo</strong>: antes de usar GLMM nos seus dados, simule um conjunto com estrutura hierárquica conhecida.</li>
+</ul>
+<div class="nota">
+<p>Vamos usar este mesmo truque no Encontro 4 (distribuições), no 6 (excesso de zeros) e no 7 (efeitos aleatórios).</p>
+</div>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="teste-t-é-lm" class="title-slide slide level1 secao center">
+<h1>3. Teste t é <code>lm()</code></h1>
+
+</section>
+<section id="a-pergunta" class="slide level2">
+<h2>A pergunta</h2>
+<p>Machos e fêmeas de <em>Pygoscelis adeliae</em> diferem no comprimento do bico?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a></a>adelie <span class="ot">&lt;-</span> pinguins <span class="sc">|&gt;</span> <span class="fu">filter</span>(species <span class="sc">==</span> <span class="st">"Adelie"</span>)</span>
+<span id="cb4-2"><a></a></span>
+<span id="cb4-3"><a></a><span class="fu">ggplot</span>(adelie, <span class="fu">aes</span>(sex, bill_length_mm, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
+<span id="cb4-4"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> .<span class="dv">7</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb4-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>)) <span class="sc">+</span></span>
+<span id="cb4-6"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Comprimento do bico (mm)"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-5-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="do-jeito-que-vocês-aprenderam" class="slide level2">
+<h2>Do jeito que vocês aprenderam</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">t.test</span>(bill_length_mm <span class="sc">~</span> sex, <span class="at">data =</span> adelie, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Two Sample t-test
+
+data:  bill_length_mm by sex
+t = -8.7765, df = 144, p-value = 4.44e-15
+alternative hypothesis: true difference in means between group female and group male is not equal to 0
+95 percent confidence interval:
+ -3.838435 -2.427319
+sample estimates:
+mean in group female   mean in group male 
+            37.25753             40.39041 </code></pre>
+</div>
+</div>
+</section>
+<section id="do-jeito-que-vamos-usar" class="slide level2">
+<h2>Do jeito que vamos usar</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>m_t <span class="ot">&lt;-</span> <span class="fu">lm</span>(bill_length_mm <span class="sc">~</span> sex, <span class="at">data =</span> adelie)</span>
+<span id="cb7-2"><a></a><span class="fu">summary</span>(m_t)<span class="sc">$</span>coefficients</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             Estimate Std. Error   t value      Pr(&gt;|t|)
+(Intercept) 37.257534  0.2524088 147.60791 4.653163e-159
+sexmale      3.132877  0.3569599   8.77655  4.440460e-15</code></pre>
+</div>
+</div>
+<div class="definicao">
+<p>Comparem: a estimativa de <code>sexmale</code> é exatamente a diferença entre as médias; o valor de <em>t</em> e o valor de <em>p</em> são os mesmos do <code>t.test()</code>. Não é coincidência — é o mesmo cálculo.</p>
+</div>
+</section>
+<section id="por-que-são-iguais-a-matriz-de-delineamento" class="slide level2">
+<h2>Por que são iguais: a matriz de delineamento</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(m_t)</span>
+<span id="cb9-2"><a></a><span class="fu">head</span>(X, <span class="dv">8</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  (Intercept) sexmale
+1           1       1
+2           1       0
+3           1       0
+4           1       0
+5           1       1
+6           1       0
+7           1       1
+8           1       0</code></pre>
+</div>
+</div>
+<p>Uma coluna de 1 (o intercepto) e uma coluna 0/1 que marca <code>male</code>.</p>
+</section>
+<section id="lendo-a-matriz" class="slide level2">
+<h2>Lendo a matriz</h2>
+<p>Para uma fêmea, a linha é <span class="math inline">\((1, 0)\)</span>:</p>
+<p><span class="math display">\[\hat{y} = \beta_0 \cdot 1 + \beta_1 \cdot 0 = \beta_0\]</span></p>
+<p>Para um macho, <span class="math inline">\((1, 1)\)</span>:</p>
+<p><span class="math display">\[\hat{y} = \beta_0 + \beta_1\]</span></p>
+<div class="definicao">
+<p><span class="math inline">\(\beta_0\)</span> = média das fêmeas. <span class="math inline">\(\beta_1\)</span> = <strong>diferença</strong> macho − fêmea. O “teste t” é o teste de que <span class="math inline">\(\beta_1 = 0\)</span>.</p>
+</div>
+</section>
+<section id="confirmando-na-mão" class="slide level2">
+<h2>Confirmando na mão</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>medias <span class="ot">&lt;-</span> adelie <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a></a>  <span class="fu">group_by</span>(sex) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(bill_length_mm))</span>
+<span id="cb11-4"><a></a>medias</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 2
+  sex    media
+  &lt;fct&gt;  &lt;dbl&gt;
+1 female  37.3
+2 male    40.4</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">coef</span>(m_t)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)     sexmale 
+  37.257534    3.132877 </code></pre>
+</div>
+</div>
+</section>
+<section id="o-mapa-completo" class="slide level2">
+<h2>O mapa completo</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Teste clássico</th>
+<th>O mesmo modelo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>teste t de uma amostra</td>
+<td><code>lm(y ~ 1)</code></td>
+</tr>
+<tr class="even">
+<td>teste t de duas amostras</td>
+<td><code>lm(y ~ grupo)</code></td>
+</tr>
+<tr class="odd">
+<td>teste t pareado</td>
+<td><code>lm(diferença ~ 1)</code></td>
+</tr>
+<tr class="even">
+<td>ANOVA de um fator</td>
+<td><code>lm(y ~ fator)</code></td>
+</tr>
+<tr class="odd">
+<td>ANOVA de dois fatores</td>
+<td><code>lm(y ~ a * b)</code></td>
+</tr>
+<tr class="even">
+<td>ANCOVA</td>
+<td><code>lm(y ~ fator + x)</code></td>
+</tr>
+<tr class="odd">
+<td>correlação de Pearson</td>
+<td><code>lm(y ~ x)</code> padronizado</td>
+</tr>
+<tr class="even">
+<td>regressão múltipla</td>
+<td><code>lm(y ~ x1 + x2 + ...)</code></td>
+</tr>
+</tbody>
+</table>
+<div class="nota">
+<p>Detalhamento em <a href="https://lindeloev.github.io/tests-as-linear/">Lindeløv, <em>Common statistical tests are linear models</em></a>.</p>
+</div>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="correlação-e-regressão" class="title-slide slide level1 secao center">
+<h1>4. Correlação e regressão</h1>
+
+</section>
+<section id="a-mesma-informação-ênfases-diferentes" class="slide level2">
+<h2>A mesma informação, ênfases diferentes</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>r <span class="ot">&lt;-</span> <span class="fu">cor</span>(pinguins<span class="sc">$</span>bill_length_mm, pinguins<span class="sc">$</span>body_mass_g)</span>
+<span id="cb15-2"><a></a>r</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5894511</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>m_reg <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> bill_length_mm, <span class="at">data =</span> pinguins)</span>
+<span id="cb17-2"><a></a><span class="fu">summary</span>(m_reg)<span class="sc">$</span>r.squared</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3474526</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>r<span class="sc">^</span><span class="dv">2</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3474526</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(R^2\)</span> da regressão simples <strong>é</strong> o quadrado da correlação.</p>
+</section>
+<section id="o-que-muda" class="slide level2">
+<h2>O que muda</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th>Correlação</th>
+<th>Regressão</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Simetria</td>
+<td><span class="math inline">\(r_{xy} = r_{yx}\)</span></td>
+<td><span class="math inline">\(y \sim x \neq x \sim y\)</span></td>
+</tr>
+<tr class="even">
+<td>Unidade</td>
+<td>adimensional</td>
+<td>unidade de <span class="math inline">\(y\)</span> por unidade de <span class="math inline">\(x\)</span></td>
+</tr>
+<tr class="odd">
+<td>Predição</td>
+<td>não</td>
+<td>sim</td>
+</tr>
+<tr class="even">
+<td>Papel das variáveis</td>
+<td>simétrico</td>
+<td>resposta e preditora</td>
+</tr>
+</tbody>
+</table>
+<div class="definicao">
+<p>Se a sua pergunta tem uma direção — “o que a temperatura faz com a massa?” —, você quer regressão. Correlação é para quando as duas variáveis têm o mesmo estatuto.</p>
+</div>
+</section>
+<section id="pearson-spearman" class="slide level2">
+<h2>Pearson × Spearman</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">cor</span>(pinguins<span class="sc">$</span>bill_length_mm, pinguins<span class="sc">$</span>body_mass_g, <span class="at">method =</span> <span class="st">"pearson"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5894511</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">cor</span>(pinguins<span class="sc">$</span>bill_length_mm, pinguins<span class="sc">$</span>body_mass_g, <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5764804</code></pre>
+</div>
+</div>
+<ul>
+<li><strong>Pearson</strong> mede associação <strong>linear</strong>; sensível a outliers.</li>
+<li><strong>Spearman</strong> é Pearson <strong>nos postos</strong>: mede associação <strong>monotônica</strong>, robusta a outliers e a não linearidade.</li>
+</ul>
+<p>Diferença grande entre as duas é sinal de não linearidade ou de outlier influente — vale olhar o gráfico antes de escolher.</p>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="interpretar-coeficientes" class="title-slide slide level1 secao center">
+<h1>5. Interpretar coeficientes</h1>
+
+</section>
+<section id="regressão-simples" class="slide level2">
+<h2>Regressão simples</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">coef</span>(m_reg)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   (Intercept) bill_length_mm 
+     388.84516       86.79176 </code></pre>
+</div>
+</div>
+<div class="definicao">
+<p>A cada <strong>1 mm</strong> a mais de bico, a massa esperada aumenta 86.8 <strong>g</strong>.</p>
+</div>
+<p>Repare que a interpretação só existe <strong>com unidade</strong>. Coeficiente sem unidade é número solto.</p>
+</section>
+<section id="e-o-intercepto" class="slide level2">
+<h2>E o intercepto?</h2>
+<p>389 g é a massa esperada de um pinguim com bico de <strong>0 mm</strong> — que não existe.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>pinguins <span class="ot">&lt;-</span> pinguins <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">bico_c =</span> bill_length_mm <span class="sc">-</span> <span class="fu">mean</span>(bill_length_mm))</span>
+<span id="cb27-2"><a></a><span class="fu">coef</span>(<span class="fu">lm</span>(body_mass_g <span class="sc">~</span> bico_c, <span class="at">data =</span> pinguins))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)      bico_c 
+ 4207.05706    86.79176 </code></pre>
+</div>
+</div>
+<p>Centrando a preditora, o intercepto passa a ser a massa esperada de um pinguim <strong>de bico médio</strong>. A inclinação não muda.</p>
+</section>
+<section id="regressão-múltipla-o-que-controlar-significa" class="slide level2">
+<h2>Regressão múltipla: o que “controlar” significa</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a>m_mult <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> bill_length_mm <span class="sc">+</span> flipper_length_mm, <span class="at">data =</span> pinguins)</span>
+<span id="cb29-2"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(m_mult), <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      (Intercept)    bill_length_mm flipper_length_mm 
+         -5836.30              4.96             48.89 </code></pre>
+</div>
+</div>
+<div class="definicao">
+<p>Cada coeficiente é o efeito daquela preditora <strong>mantendo as demais constantes</strong>. Note que o efeito do bico caiu bastante em relação ao modelo simples — porque bico e nadadeira medem, em parte, a mesma coisa.</p>
+</div>
+</section>
+<section id="efeito-marginal-visualmente" class="slide level2">
+<h2>Efeito marginal, visualmente</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">ggplot</span>(pinguins, <span class="fu">aes</span>(bill_length_mm, body_mass_g, <span class="at">colour =</span> species)) <span class="sc">+</span></span>
+<span id="cb31-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb31-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb31-4"><a></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>, <span class="st">"#6b8f71"</span>)) <span class="sc">+</span></span>
+<span id="cb31-5"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Comprimento do bico (mm)"</span>, <span class="at">y =</span> <span class="st">"Massa (g)"</span>, <span class="at">colour =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-15-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="comparação-não-efeito" class="slide level2">
+<h2>Comparação, não efeito</h2>
+<div class="definicao">
+<p>Em dados observacionais, um coeficiente é uma <strong>comparação entre unidades que diferem naquela variável</strong> — não o que aconteceria se você mudasse a variável numa mesma unidade.</p>
+</div>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Escreva</th>
+<th>Não escreva</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“pinguins que têm 1 mm a mais de bico pesam, em média, X g a mais”</td>
+<td>“aumentar o bico em 1 mm aumenta a massa em X g”</td>
+</tr>
+<tr class="even">
+<td>“sítios 1 km mais distantes do parque têm, em média, Y atropelamentos a menos”</td>
+<td>“afastar o sítio do parque reduz a mortalidade em Y”</td>
+</tr>
+</tbody>
+</table>
+<p>A linguagem causal exige um argumento causal — delineamento experimental ou um DAG defensável (Encontro 5). O modelo, sozinho, não fornece esse argumento.</p>
+</section>
+<section id="paradoxo-de-simpson" class="slide level2">
+<h2>Paradoxo de Simpson</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-16-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Ignorando a espécie (linha tracejada), a relação é negativa. Dentro de cada espécie, é positiva. <strong>A estrutura do modelo decide o sinal do resultado.</strong></p>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="codificação-de-fatores" class="title-slide slide level1 secao center">
+<h1>6. Codificação de fatores</h1>
+
+</section>
+<section id="o-padrão-do-r-contr.treatment" class="slide level2">
+<h2>O padrão do R: <code>contr.treatment</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a>m_esp <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species, <span class="at">data =</span> pinguins)</span>
+<span id="cb32-2"><a></a><span class="fu">coef</span>(m_esp)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     (Intercept) speciesChinstrap    speciesGentoo 
+      3706.16438         26.92385       1386.27259 </code></pre>
+</div>
+</div>
+<p><code>Adelie</code> é o nível de referência (primeiro em ordem alfabética). Os coeficientes são <strong>diferenças em relação a ele</strong>; o intercepto é a média de <code>Adelie</code>.</p>
+</section>
+<section id="soma-zero-contr.sum" class="slide level2">
+<h2>Soma zero: <code>contr.sum</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>m_sum <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species, <span class="at">data =</span> pinguins,</span>
+<span id="cb34-2"><a></a>            <span class="at">contrasts =</span> <span class="fu">list</span>(<span class="at">species =</span> <span class="st">"contr.sum"</span>))</span>
+<span id="cb34-3"><a></a><span class="fu">coef</span>(m_sum)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)    species1    species2 
+  4177.2299   -471.0655   -444.1416 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="fu">mean</span>(<span class="fu">tapply</span>(pinguins<span class="sc">$</span>body_mass_g, pinguins<span class="sc">$</span>species, mean))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4177.23</code></pre>
+</div>
+</div>
+<p>Agora o intercepto é a <strong>média das médias de grupo</strong>, e os coeficientes são desvios em relação a ela.</p>
+</section>
+<section id="por-que-isso-importa" class="slide level2">
+<h2>Por que isso importa</h2>
+<div class="definicao">
+<p>O ajuste é <strong>idêntico</strong> — mesmos valores preditos, mesmo <span class="math inline">\(R^2\)</span>, mesmos resíduos. O que muda é o <strong>significado de cada número</strong> na tabela.</p>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="fu">all.equal</span>(<span class="fu">fitted</span>(m_esp), <span class="fu">fitted</span>(m_sum))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+</div>
+<p>Duas consequências práticas:</p>
+<ul>
+<li>em modelos <strong>com interação</strong>, o coeficiente do efeito principal em <code>contr.treatment</code> é o efeito <strong>no nível de referência do outro fator</strong> — não o efeito médio;</li>
+<li>somas de quadrados do tipo III só fazem sentido com contrastes de soma zero (Encontro 3).</li>
+</ul>
+</section>
+<section id="ordem-dos-níveis-não-é-detalhe" class="slide level2">
+<h2>Ordem dos níveis não é detalhe</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>pinguins <span class="ot">&lt;-</span> pinguins <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">species2 =</span> <span class="fu">relevel</span>(species, <span class="at">ref =</span> <span class="st">"Gentoo"</span>))</span>
+<span id="cb40-2"><a></a><span class="fu">coef</span>(<span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species2, <span class="at">data =</span> pinguins))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      (Intercept)    species2Adelie species2Chinstrap 
+         5092.437         -1386.273         -1359.349 </code></pre>
+</div>
+</div>
+<p>Trocando a referência, todos os coeficientes mudam. O modelo é o mesmo. <strong>Escolha a referência que torna a tabela interpretável</strong> — o controle, a condição basal, a espécie focal.</p>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="a-mesma-regressão-em-brms" class="title-slide slide level1 secao center">
+<h1>7. A mesma regressão, em <code>brms</code></h1>
+
+</section>
+<section id="por-que-mostrar-isso-agora" class="slide level2">
+<h2>Por que mostrar isso agora</h2>
+<p>O livro-texto do curso ajusta quase tudo em bayesiano. Vale ver, desde já, que é <strong>o mesmo modelo</strong> — e começar a usar a notação que vai valer até o fim do curso.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">library</span>(brms)</span>
+<span id="cb42-2"><a></a></span>
+<span id="cb42-3"><a></a>m_bayes <span class="ot">&lt;-</span> <span class="fu">brm</span>(body_mass_g <span class="sc">~</span> bill_length_mm, <span class="at">data =</span> pinguins,</span>
+<span id="cb42-4"><a></a>               <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">seed =</span> <span class="dv">2026</span>,</span>
+<span id="cb42-5"><a></a>               <span class="at">file =</span> <span class="st">"../cache/e02_bico"</span>)   <span class="co"># compila uma vez, reusa depois</span></span>
+<span id="cb42-6"><a></a><span class="fu">summary</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="definicao">
+<p>A fórmula é exatamente a mesma que você escreveria em <code>lm()</code>. E a mesma que você vai escrever em <code>lmer()</code>, <code>glmmTMB()</code> e <code>brm()</code> nos Encontros 7 e 8 — só acrescentando <code>(1 | grupo)</code>.</p>
+</div>
+</section>
+<section id="uma-notação-quatro-pacotes" class="slide level2">
+<h2>Uma notação, quatro pacotes</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">lm</span>       (massa <span class="sc">~</span> svl,                  <span class="at">data =</span> d)                     <span class="co"># gaussiano</span></span>
+<span id="cb43-2"><a></a><span class="fu">glm</span>      (massa <span class="sc">~</span> svl, <span class="at">family =</span> Gamma,  <span class="at">data =</span> d)                     <span class="co"># GLM</span></span>
+<span id="cb43-3"><a></a>lme4<span class="sc">::</span><span class="fu">lmer</span>   (massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca),               <span class="at">data =</span> d)       <span class="co"># LMM</span></span>
+<span id="cb43-4"><a></a>glmmTMB<span class="sc">::</span><span class="fu">glmmTMB</span>(massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca), <span class="at">family =</span> Gamma, <span class="at">data =</span> d)  <span class="co"># GLMM</span></span>
+<span id="cb43-5"><a></a>brms<span class="sc">::</span><span class="fu">brm</span>    (massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca), <span class="at">family =</span> Gamma, <span class="at">data =</span> d)     <span class="co"># bayesiano</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="nota">
+<p>É por isso que escolhemos <code>brms</code> e não outro pacote bayesiano: o custo de transferência entre as cinco linhas acima é quase zero. Referência prática: Kurz, <em>Statistical Rethinking recoded</em> (<a href="https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/" class="uri">https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/</a>).</p>
+</div>
+</section>
+<section id="o-preço-compilação" class="slide level2">
+<h2>O preço: compilação</h2>
+<p>O <code>brms</code> traduz cada modelo para um programa Stan e <strong>compila em C++</strong>.</p>
+<ul>
+<li>primeira vez na vida da máquina: alguns minutos;</li>
+<li>cada modelo <strong>novo</strong>: dezenas de segundos;</li>
+<li>mesmo modelo de novo, com <code>file = "cache/..."</code>: instantâneo.</li>
+</ul>
+<div class="definicao">
+<p>Por isso todos os modelos <code>brms</code> deste curso já estão em cache no repositório. Nas suas análises, use sempre <code>file =</code> — vocês vão agradecer na terceira vez que renderizarem o relatório.</p>
+</div>
+</section>
+<section id="o-que-muda-e-o-que-não-muda" class="slide level2">
+<h2>O que muda e o que não muda</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th><code>lm()</code></th>
+<th><code>brm()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Estimativa pontual</td>
+<td>idêntica, na prática</td>
+<td>mediana da posterior</td>
+</tr>
+<tr class="even">
+<td>Incerteza</td>
+<td>erro-padrão, IC de 95 %</td>
+<td>desvio-padrão da posterior, intervalo de credibilidade</td>
+</tr>
+<tr class="odd">
+<td>Priors</td>
+<td>nenhuma (implicitamente planas)</td>
+<td>fracamente informativas por padrão</td>
+</tr>
+<tr class="even">
+<td>O que você pode dizer</td>
+<td>“95 % dos ICs construídos assim conteriam o valor”</td>
+<td>“há 95 % de probabilidade de o parâmetro estar aqui”</td>
+</tr>
+<tr class="odd">
+<td>Amostra pequena</td>
+<td>estimativa instável</td>
+<td>a prior regulariza</td>
+</tr>
+</tbody>
+</table>
+<div class="definicao">
+<p>Com bastante dado e priors fracas, os dois dão praticamente o mesmo número. A diferença aparece quando o dado é pouco — que é a situação de boa parte da ecologia de campo.</p>
+</div>
+</section>
+<section id="o-que-você-ganha-de-graça" class="slide level2">
+<h2>O que você ganha de graça</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="co"># distribuição preditiva posterior — o que o modelo acha</span></span>
+<span id="cb44-2"><a></a><span class="co"># que seriam novos dados</span></span>
+<span id="cb44-3"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">ndraws =</span> <span class="dv">50</span>)</span>
+<span id="cb44-4"><a></a></span>
+<span id="cb44-5"><a></a><span class="co"># incerteza sobre qualquer quantidade derivada, sem fórmula:</span></span>
+<span id="cb44-6"><a></a>posterior <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(m_bayes)</span>
+<span id="cb44-7"><a></a><span class="fu">quantile</span>(posterior<span class="sc">$</span>b_bill_length_mm <span class="sc">*</span> <span class="dv">10</span>, <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Propagar incerteza para uma quantidade derivada — “massa esperada de um pinguim com bico 10 mm maior” — é uma linha de código, não uma derivação.</p>
+<p>Voltamos a isso no Encontro 8, com GLMM.</p>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="colinearidade" class="title-slide slide level1 secao center">
+<h1>8. Colinearidade</h1>
+
+</section>
+<section id="o-que-é-e-o-que-não-é" class="slide level2">
+<h2>O que é (e o que não é)</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="fu">round</span>(<span class="fu">cor</span>(pinguins[, <span class="fu">c</span>(<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>,</span>
+<span id="cb45-2"><a></a>                       <span class="st">"body_mass_g"</span>)], <span class="at">use =</span> <span class="st">"complete.obs"</span>), <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+bill_length_mm              1.00         -0.23              0.65        0.59
+bill_depth_mm              -0.23          1.00             -0.58       -0.47
+flipper_length_mm           0.65         -0.58              1.00        0.87
+body_mass_g                 0.59         -0.47              0.87        1.00</code></pre>
+</div>
+</div>
+<div class="definicao">
+<p>Colinearidade <strong>não viola premissa nenhuma</strong>. Ela torna os coeficientes individualmente mal identificados: o modelo prediz bem e interpreta mal.</p>
+</div>
+</section>
+<section id="vif" class="slide level2">
+<h2>VIF</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>car<span class="sc">::</span><span class="fu">vif</span>(m_mult)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   bill_length_mm flipper_length_mm 
+         1.743782          1.743782 </code></pre>
+</div>
+</div>
+<p>Regras práticas: acima de 5 desconfie, acima de 10 preocupe-se. Mas a decisão é <strong>biológica</strong>, não mecânica:</p>
+<ul>
+<li>as duas preditoras medem coisas distintas na sua hipótese? → mantenha e relate a incerteza;</li>
+<li>são proxies da mesma coisa? → escolha uma, pelo argumento, não pelo <em>p</em>.</li>
+</ul>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="diagnóstico" class="title-slide slide level1 secao center">
+<h1>9. Diagnóstico</h1>
+
+</section>
+<section id="os-quatro-gráficos" class="slide level2">
+<h2>Os quatro gráficos</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb49-2"><a></a><span class="fu">plot</span>(m_mult)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-26-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="o-que-procurar-em-cada-um" class="slide level2">
+<h2>O que procurar em cada um</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Gráfico</th>
+<th>Pergunta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Residuals vs Fitted</td>
+<td>há padrão? curvatura? → falta termo no modelo</td>
+</tr>
+<tr class="even">
+<td>Q-Q residuals</td>
+<td>caudas muito fora da reta? → normalidade do resíduo</td>
+</tr>
+<tr class="odd">
+<td>Scale–Location</td>
+<td>leque? → heterocedasticidade</td>
+</tr>
+<tr class="even">
+<td>Residuals vs Leverage</td>
+<td>pontos com distância de Cook alta? → influência</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="versão-moderna" class="slide level2">
+<h2>Versão moderna</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a><span class="fu">library</span>(performance)</span>
+<span id="cb50-2"><a></a><span class="fu">check_model</span>(m_mult)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="nota">
+<p><code>performance::check_model()</code> produz os mesmos diagnósticos com intervalos de referência simulados — muito mais fácil de julgar do que “isso parece um padrão?”. A partir do Encontro 6, com GLMs, passamos a usar <code>DHARMa</code>, que é a única forma honesta de diagnosticar resíduos não gaussianos.</p>
+</div>
+</section>
+<section id="resíduo-contra-predito-nunca-contra-observado" class="slide level2">
+<h2>Resíduo contra predito, nunca contra observado</h2>
+<div class="definicao">
+<p>Gráfico de resíduo contra o valor <strong>observado</strong> mostra uma correlação negativa mesmo quando o modelo está perfeito. É artefato, não diagnóstico. (ROS, cap. 11.)</p>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-28-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="alavancagem-não-é-outlier" class="slide level2">
+<h2>Alavancagem não é outlier</h2>
+<ul>
+<li><strong>Outlier</strong>: resíduo grande. Está longe do que o modelo previu.</li>
+<li><strong>Alavancagem</strong>: valor extremo <strong>na preditora</strong>. Puxa a reta.</li>
+<li><strong>Influência</strong>: as duas coisas juntas — distância de Cook.</li>
+</ul>
+<div class="definicao">
+<p>Uma observação influente não deve ser removida por ser influente. Deve ser <strong>investigada</strong>; e o resultado do modelo com e sem ela deve ser relatado.</p>
+</div>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="fechamento" class="title-slide slide level1 secao center">
+<h1>Fechamento</h1>
+
+</section>
+<section id="o-que-fica-de-hoje" class="slide level2">
+<h2>O que fica de hoje</h2>
+<ol type="1">
+<li><span class="math inline">\(\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}\)</span> — só a matriz <span class="math inline">\(\mathbf{X}\)</span> muda entre os “testes”.</li>
+<li>Simular dados falsos e recuperar os parâmetros é a forma mais barata de saber se você entendeu o modelo.</li>
+<li>A normalidade exigida é a <strong>do resíduo</strong>.</li>
+<li>Coeficiente é <strong>comparação</strong>, com unidade — não efeito causal.</li>
+<li>Codificação de fatores muda o significado da tabela, não o ajuste.</li>
+<li>Colinearidade é problema de interpretação, não de premissa.</li>
+</ol>
+</section>
+<section id="prática-o-resto-do-bloco" class="slide level2">
+<h2>Prática (o resto do bloco)</h2>
+<ol type="1">
+<li>Ajuste um <code>lm()</code> nos <strong>seus</strong> dados.</li>
+<li>Escreva a matriz de delineamento com <code>model.matrix()</code> e explique em uma frase o que cada coluna significa.</li>
+<li>Interprete cada coeficiente <strong>com unidade</strong>.</li>
+<li>Rode os quatro gráficos de diagnóstico e escreva o que viu.</li>
+<li>Troque o nível de referência e confira que o ajuste não muda.</li>
+</ol>
+</section>
+<section id="para-amanhã" class="slide level2">
+<h2>Para amanhã</h2>
+<p><strong>Leitura:</strong> Quinn &amp; Keough (2023), caps. 8 e 9.</p>
+<p><strong>Amanhã de manhã:</strong> mais colunas na matriz de delineamento — ANOVA, ANCOVA e interações. Nenhum conceito novo de inferência.</p>
+</section>
+<section id="referências" class="slide level2">
+<h2>Referências</h2>
+<div class="nota">
+<ul>
+<li>Agresti, A. 2015. <em>Foundations of Linear and Generalized Linear Models</em>. Wiley. Caps. 1–3.</li>
+<li>Gelman, A., Hill, J. &amp; Vehtari, A. 2020. <em>Regression and Other Stories</em>. Cambridge University Press. Parte I.</li>
+<li>Lindeløv, J.K. <em>Common statistical tests are linear models</em>. <a href="https://lindeloev.github.io/tests-as-linear/" class="uri">https://lindeloev.github.io/tests-as-linear/</a></li>
+<li>Exemplos e código do ROS: <a href="https://avehtari.github.io/ROS-Examples/" class="uri">https://avehtari.github.io/ROS-Examples/</a></li>
+<li>Horst, A.M., Hill, A.P. &amp; Gorman, K.B. 2020. palmerpenguins: Palmer Archipelago (Antarctica) penguin data. Pacote R.</li>
+<li>da Silva, F.R. et al.&nbsp;2022. <em>Análises Ecológicas no R</em>, cap. 7.</li>
+</ul>
+</div>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>Análise de Dados Univariados · PPGBA/UFMS · 2026/2</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1250,
+
+        height: 750,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copiada");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copiada");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/diogoprov\.github\.io\/analise-dados-univariados-2026-2\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
