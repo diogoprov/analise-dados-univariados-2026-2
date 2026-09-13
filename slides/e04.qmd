@@ -1,0 +1,514 @@
+---
+title: "Distribuições de probabilidade e a família exponencial"
+subtitle: "Encontro 4 · Análise de Dados Univariados · PPGBA/UFMS"
+author: "Diogo B. Provete"
+date: 2026-09-22
+date-format: "D [de] MMMM [de] YYYY"
+lang: pt
+format:
+  revealjs:
+    theme: [default, theme.scss]
+    slide-number: c/t
+    show-slide-number: all
+    auto-stretch: false
+    preview-links: auto
+    history: false
+    footer: "Análise de Dados Univariados · PPGBA/UFMS · 2026/2"
+    code-overflow: wrap
+    fig-align: center
+    width: 1250
+    height: 750
+execute:
+  echo: true
+  warning: false
+  message: false
+  fig-width: 7
+  fig-height: 3.6
+---
+
+```{r}
+#| echo: false
+library(tidyverse)
+theme_set(theme_minimal(base_size = 14))
+penta <- read_tsv("../dados/Planilha_Pentastomida.txt", show_col_types = FALSE) |>
+  rename(id = 1) |> drop_na(Raillietiella_mottae, CRC, Especie)
+uv <- read_delim("../dados/UV.csv", delim = ";", show_col_types = FALSE)
+lagartos <- read_tsv("../dados/camila_cauda_lagartos.txt", show_col_types = FALSE)
+```
+
+## A pergunta que organiza a tarde {.secao}
+
+::: {.definicao}
+Que **processo** plausivelmente gerou a minha variável resposta?
+:::
+
+Até agora assumimos sempre o mesmo: ruído gaussiano em torno de uma
+média. Essa suposição é razoável para algumas medidas e absurda para
+outras.
+
+Hoje construímos o vocabulário para fazer escolhas melhores — e a ponte
+para o GLM, que começa amanhã.
+
+---
+
+## Hoje
+
+1. *Productive failure*
+2. Variável aleatória: massa e densidade de probabilidade
+3. As distribuições que importam em ecologia
+4. A relação média–variância
+5. **Intervalo**
+6. A família exponencial
+7. Função de ligação — e por que não é transformar a resposta
+8. Correlação: Pearson e Spearman
+
+---
+
+## *Productive failure*
+
+Contagens de *Raillietiella mottae* (Pentastomida) em 195 lagartos de
+duas espécies, com comprimento rostro-cloacal.
+
+```{r}
+#| echo: false
+#| fig-height: 2.6
+ggplot(penta, aes(Raillietiella_mottae)) +
+  geom_bar(fill = "#1c6e8c") +
+  labs(x = "Parasitas por hospedeiro", y = "Nº de lagartos")
+```
+
+**Em grupos:** a espécie difere na carga parasitária? Que análise? E o que
+incomoda vocês nesse histograma?
+
+---
+
+# 1. Variável aleatória {.secao}
+
+---
+
+## Duas famílias de resposta
+
+::: {.definicao}
+**Discreta** — conta coisas. Assume valores isolados: 0, 1, 2, … Tem
+*função de massa*: $P(Y = y)$ é um número que faz sentido.
+
+**Contínua** — mede coisas. $P(Y = 3{,}2)$ é zero; o que faz sentido é
+$P(3{,}1 < Y < 3{,}3)$. Tem *função de densidade*.
+:::
+
+Isso não é preciosismo: define que distribuições estão disponíveis.
+
+---
+
+## O que "a distribuição" descreve
+
+Não os seus dados. **O processo** que você supõe ter gerado os dados.
+
+```{r}
+#| fig-height: 3.0
+#| echo: false
+set.seed(1)
+tibble(n = c(rep("n = 20", 20), rep("n = 200", 200), rep("n = 2000", 2000)),
+       x = c(rpois(20, 3), rpois(200, 3), rpois(2000, 3))) |>
+  mutate(n = factor(n, c("n = 20", "n = 200", "n = 2000"))) |>
+  ggplot(aes(x)) +
+  geom_bar(fill = "#1c6e8c") +
+  facet_wrap(~n, scales = "free_y") +
+  labs(x = "Contagem", y = NULL)
+```
+
+Três amostras do **mesmo** processo Poisson com média 3. A amostra
+pequena não "parece" Poisson — e ainda assim é.
+
+---
+
+# 2. As distribuições que importam {.secao}
+
+---
+
+## Mapa rápido
+
+| Sua resposta é… | Distribuição | Parâmetros |
+|---|---|---|
+| medida contínua, simétrica | Normal | $\mu$, $\sigma$ |
+| medida contínua **positiva**, assimétrica (massa, tempo) | Gamma, log-normal | forma, taxa |
+| sucesso/fracasso | Bernoulli | $p$ |
+| $k$ sucessos em $n$ tentativas | Binomial | $n$, $p$ |
+| contagem sem teto | Poisson | $\lambda$ |
+| contagem sem teto, mais dispersa | Binomial negativa | $\mu$, $\theta$ |
+| proporção contínua entre 0 e 1 (cobertura, %) | Beta | $\alpha$, $\beta$ |
+
+---
+
+## Normal
+
+```{r}
+#| fig-height: 3.0
+tibble(x = seq(-4, 12, .05)) |>
+  mutate(`σ = 1` = dnorm(x, 4, 1), `σ = 2` = dnorm(x, 4, 2),
+         `σ = 3` = dnorm(x, 4, 3)) |>
+  pivot_longer(-x) |>
+  ggplot(aes(x, value, colour = name)) +
+  geom_line(linewidth = 1) +
+  scale_colour_manual(values = c("#1c6e8c", "#c08a3e", "#6b8f71")) +
+  labs(x = NULL, y = "Densidade", colour = NULL)
+```
+
+Média e variância são **parâmetros independentes**. Guardem isso: é a
+exceção, não a regra.
+
+---
+
+## Poisson
+
+```{r}
+#| fig-height: 3.0
+crossing(lambda = c(1, 3, 10), k = 0:22) |>
+  mutate(p = dpois(k, lambda), lambda = factor(lambda)) |>
+  ggplot(aes(k, p, fill = lambda)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c("#1c6e8c", "#c08a3e", "#6b8f71")) +
+  labs(x = "Contagem", y = "P(Y = k)", fill = "λ")
+```
+
+::: {.definicao}
+Um parâmetro só: $\mathrm{E}[Y] = \mathrm{Var}[Y] = \lambda$. A variância
+**não é livre** — é igual à média por construção.
+:::
+
+---
+
+## Binomial
+
+```{r}
+#| fig-height: 3.0
+crossing(p = c(.2, .5, .8), k = 0:20) |>
+  mutate(prob = dbinom(k, 20, p), p = factor(p)) |>
+  ggplot(aes(k, prob, fill = p)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c("#1c6e8c", "#c08a3e", "#6b8f71")) +
+  labs(x = "Sucessos em 20 tentativas", y = NULL, fill = "p")
+```
+
+Nos dados de UV: `Eosinophil` sucessos em `Total_Cell` = 100 células.
+
+---
+
+## Binomial negativa
+
+```{r}
+#| fig-height: 2.9
+crossing(theta = c(0.5, 2, 50), k = 0:25) |>
+  mutate(p = dnbinom(k, size = theta, mu = 5), theta = factor(theta)) |>
+  ggplot(aes(k, p, fill = theta)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c("#1c6e8c", "#c08a3e", "#6b8f71")) +
+  labs(x = "Contagem", y = NULL, fill = "θ")
+```
+
+Mesma média (5), dispersões diferentes. Com $\theta \to \infty$ ela
+converge para a Poisson. É a Poisson com uma válvula de escape.
+
+---
+
+## Gamma
+
+```{r}
+#| fig-height: 3.0
+tibble(x = seq(0.01, 20, .05)) |>
+  mutate(`forma 1` = dgamma(x, 1, .3), `forma 3` = dgamma(x, 3, .6),
+         `forma 9` = dgamma(x, 9, 1.2)) |>
+  pivot_longer(-x) |>
+  ggplot(aes(x, value, colour = name)) +
+  geom_line(linewidth = 1) +
+  scale_colour_manual(values = c("#1c6e8c", "#c08a3e", "#6b8f71")) +
+  labs(x = NULL, y = "Densidade", colour = NULL)
+```
+
+Estritamente positiva e assimétrica: biomassa, tempo até um evento,
+concentração. Quase sempre melhor do que "log-transformar e usar Normal".
+
+---
+
+# 3. A relação média–variância {.secao}
+
+---
+
+## A ideia que amarra o curso
+
+| Distribuição | Variância |
+|---|---|
+| Normal | $\sigma^2$ — livre |
+| Poisson | $\mu$ |
+| Binomial | $n p (1-p)$ |
+| Binomial negativa | $\mu + \mu^2/\theta$ |
+| Gamma | $\mu^2 / \text{forma}$ |
+
+::: {.definicao}
+Em quase toda distribuição que não seja a Normal, **a variância é função
+da média**. Por isso a heterocedasticidade que vimos no Encontro 1 muitas
+vezes não é um defeito a corrigir: é o processo dizendo qual distribuição
+usar.
+:::
+
+---
+
+## Vendo isso nos dados
+
+```{r}
+#| fig-height: 3.1
+penta |>
+  mutate(classe = cut(CRC, breaks = 6)) |>
+  group_by(classe) |>
+  summarise(media = mean(Raillietiella_mottae),
+            variancia = var(Raillietiella_mottae), n = n()) |>
+  ggplot(aes(media, variancia)) +
+  geom_point(size = 3, colour = "#1c6e8c") +
+  geom_abline(slope = 1, intercept = 0, colour = "#c08a3e", linetype = 2) +
+  labs(x = "Média da classe", y = "Variância da classe")
+```
+
+A linha tracejada é variância = média (Poisson). Os pontos estão **acima**
+dela: sobredispersão. Amanhã à tarde tratamos disso.
+
+---
+
+## Simular para decidir
+
+```{r}
+#| fig-height: 2.9
+set.seed(2026)
+obs <- penta$Raillietiella_mottae
+bind_rows(
+  tibble(valor = obs,                             fonte = "Observado"),
+  tibble(valor = rpois(length(obs), mean(obs)),   fonte = "Simulado: Poisson"),
+  tibble(valor = rnbinom(length(obs), mu = mean(obs), size = .3),
+         fonte = "Simulado: Binomial negativa")
+) |>
+  ggplot(aes(valor)) + geom_bar(fill = "#1c6e8c") +
+  facet_wrap(~fonte) + coord_cartesian(xlim = c(0, 8)) +
+  labs(x = NULL, y = NULL)
+```
+
+O mesmo truque do Encontro 2: simule sob cada hipótese e veja qual se
+parece com o que você tem.
+
+---
+
+# 4. A família exponencial {.secao}
+
+---
+
+## O que elas têm em comum
+
+Normal, Poisson, Binomial, Gamma, binomial negativa (com $\theta$ fixo) e
+Beta podem ser escritas na mesma forma geral:
+
+$$
+f(y \mid \theta, \phi) =
+\exp\!\left\{ \frac{y\theta - b(\theta)}{a(\phi)} + c(y, \phi) \right\}
+$$
+
+::: {.definicao}
+Não é preciso decorar. O que importa é a consequência: como todas
+compartilham essa estrutura, **um único algoritmo** ajusta todas — o
+mesmo `glm()`, com um argumento `family` diferente.
+:::
+
+---
+
+## Os três ingredientes de um GLM
+
+1. **Componente aleatório** — a distribuição de $Y$ na família
+   exponencial.
+2. **Preditor linear** — $\eta = \mathbf{X}\boldsymbol{\beta}$, exatamente
+   o mesmo dos Encontros 2 e 3.
+3. **Função de ligação** — $g(\mu) = \eta$, que conecta os dois.
+
+::: {.nota}
+O modelo linear gaussiano é o caso em que a família é Normal e a ligação
+é a identidade. Vocês já sabem GLM; só tinham visto um caso dele.
+:::
+
+---
+
+# 5. Função de ligação {.secao}
+
+---
+
+## O problema que ela resolve
+
+O preditor linear $\mathbf{X}\boldsymbol{\beta}$ varia de $-\infty$ a
+$+\infty$. Mas:
+
+- uma **contagem esperada** não pode ser negativa;
+- uma **probabilidade** tem de ficar entre 0 e 1.
+
+```{r}
+#| fig-height: 2.7
+#| echo: false
+tibble(eta = seq(-4, 4, .05)) |>
+  mutate(`log → exp(η)` = exp(eta), `logit → 1/(1+e⁻ᵑ)` = plogis(eta)) |>
+  pivot_longer(-eta) |>
+  ggplot(aes(eta, value)) + geom_line(colour = "#1c6e8c", linewidth = 1) +
+  facet_wrap(~name, scales = "free_y") +
+  labs(x = "η (preditor linear)", y = "μ (escala da resposta)")
+```
+
+---
+
+## Ligações canônicas
+
+| Família | Ligação | $g(\mu)$ | Inversa |
+|---|---|---|---|
+| Normal | identidade | $\mu$ | $\eta$ |
+| Poisson | log | $\log \mu$ | $e^{\eta}$ |
+| Binomial | logit | $\log\frac{\mu}{1-\mu}$ | $\frac{1}{1+e^{-\eta}}$ |
+| Gamma | inversa | $1/\mu$ | $1/\eta$ |
+
+::: {.nota}
+"Canônica" significa que ela cai naturalmente da álgebra da família.
+Nada impede usar outra — `binomial(link = "probit")`, por exemplo — mas a
+canônica costuma ter as melhores propriedades numéricas.
+:::
+
+---
+
+## Ligar **não** é transformar a resposta
+
+::: {.definicao}
+`lm(log(y) ~ x)` modela **a média do log** de $y$.
+
+`glm(y ~ x, family = poisson(link = "log"))` modela **o log da média** de
+$y$.
+
+São coisas diferentes, e a diferença importa.
+:::
+
+```{r}
+set.seed(7)
+y <- rpois(300, exp(1 + .05 * (x <- runif(300, 0, 40))))
+c(lm_log_y = coef(lm(log(y + 0.5) ~ x))[2],
+  glm_log_mu = coef(glm(y ~ x, family = poisson))[2])
+```
+
+---
+
+## Três razões para preferir a ligação
+
+1. **Zeros.** `log(0)` é indefinido; some 0,5 e você inventou dado.
+2. **Variância.** Transformar muda a distribuição do erro de um jeito que
+   você não controla; a ligação deixa a distribuição intacta.
+3. **Interpretação.** O coeficiente do GLM é sobre a média — que é o que
+   a pergunta biológica quer.
+
+::: {.nota}
+Isto vale sobretudo para contagens e proporções. Para medidas contínuas
+positivas, transformar às vezes é razoável — mas a Gamma normalmente é
+melhor.
+:::
+
+---
+
+# 6. Correlação {.secao}
+
+---
+
+## Pearson e Spearman
+
+```{r}
+lag <- lagartos |> drop_na(SVL, Autotomized_tail_length)
+c(pearson  = cor(lag$SVL, lag$Autotomized_tail_length),
+  spearman = cor(lag$SVL, lag$Autotomized_tail_length, method = "spearman"))
+```
+
+- **Pearson** — associação **linear**, nas unidades originais.
+- **Spearman** — Pearson **nos postos**: associação **monotônica**,
+  robusta a outliers e a curvatura.
+
+---
+
+## Quando elas divergem
+
+```{r}
+#| fig-height: 2.8
+#| echo: false
+set.seed(3)
+d <- tibble(x = 1:60, y = exp(x / 12) + rnorm(60, 0, 2))
+ggplot(d, aes(x, y)) + geom_point(colour = "#1c6e8c") +
+  labs(subtitle = sprintf("Pearson = %.2f   ·   Spearman = %.2f",
+                          cor(d$x, d$y), cor(d$x, d$y, method = "spearman")))
+```
+
+Relação perfeitamente monotônica, mas não linear: Spearman próximo de 1,
+Pearson menor. **Divergência grande é sinal para olhar o gráfico**, não
+para escolher a maior.
+
+---
+
+## E o principal
+
+::: {.definicao}
+Correlação é uma estatística descritiva de **duas** variáveis. Ela não
+controla nada, não prediz nada e não acomoda covariáveis.
+:::
+
+Quando a pergunta tem direção ou mais de uma preditora, você quer um
+modelo — que é o assunto do curso inteiro.
+
+---
+
+# Fechamento {.secao}
+
+---
+
+## O que fica de hoje
+
+1. A distribuição descreve o **processo gerador**, não a sua amostra.
+2. Fora da Normal, a **variância é função da média** — é isso que explica
+   a heterocedasticidade do Encontro 1.
+3. A família exponencial permite um algoritmo único: `glm(..., family =)`.
+4. A ligação mantém a média na escala certa — e **não** é transformar a
+   resposta.
+5. Simular sob cada hipótese é a forma mais barata de escolher a
+   distribuição.
+
+---
+
+## Prática (o resto do bloco)
+
+1. Classifique a resposta do **seu** conjunto de dados: discreta ou
+   contínua? limitada? quantos zeros?
+2. Calcule média e variância por classe de uma preditora e faça o
+   gráfico variância × média.
+3. Simule dados sob duas distribuições candidatas e compare com o
+   observado.
+4. Escreva uma frase justificando a distribuição que você usaria — e
+   guarde: é o item 3 do *checklist* de Davis & Kay no trabalho final.
+
+---
+
+## Para amanhã
+
+**Leitura:** *Análises Ecológicas no R*, cap. 8
+(<https://analises-ecologicas.com/cap8>), seções "Como um GLM funciona?"
+e "Como escolher a distribuição correta para seus dados?".
+
+**Amanhã de manhã:** o GLM propriamente dito — verossimilhança, logística
+e Poisson.
+
+---
+
+## Referências
+
+::: {.nota}
+- Agresti, A. 2015. *Foundations of Linear and Generalized Linear
+  Models*. Wiley. Cap. 4.
+- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. &
+  Vancine, M.A. 2022. *Análises Ecológicas no R*, cap. 8.
+- Gelman, A., Hill, J. & Vehtari, A. 2020. *Regression and Other
+  Stories*. Cap. 15.
+- Zuur, A.F. et al. 2009. *Mixed Effects Models and Extensions in Ecology
+  with R*. Springer.
+- Dados de pentastomídeos: cap. 8 de *Análises Ecológicas no R*.
+:::
