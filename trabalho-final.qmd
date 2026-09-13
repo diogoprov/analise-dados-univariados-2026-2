@@ -1,0 +1,151 @@
+---
+title: "Trabalho final"
+subtitle: "Relatório reproduzível de uma análise própria"
+toc: true
+---
+
+::: {.aula-meta}
+**Entrega:** a combinar com a turma no Encontro 1 · **Formato:** `.qmd` +
+`.html` renderizado + dados (ou link para eles)
+:::
+
+## O que é
+
+Uma análise completa de um conjunto de dados seu — idealmente do seu
+mestrado ou doutorado — escrita como documento Quarto que qualquer pessoa
+consiga renderizar do zero e obter exatamente os seus resultados.
+
+Não é um relatório sobre a disciplina. É a análise que você precisaria
+fazer de qualquer jeito, feita direito e documentada.
+
+## Estrutura exigida
+
+A espinha é o *checklist* de **Davis & Kay (2023)**: quatro seções que
+toda descrição de método estatístico deve conter.
+
+### 1. Objetivo
+
+Qual é a pergunta? Formule de modo que a resposta seja um parâmetro
+estimável, não uma vaga "relação entre X e Y". Diga se a análise é
+**confirmatória** (a hipótese existia antes de você olhar os dados) ou
+**exploratória**. As duas são legítimas; apresentá-las trocadas não é.
+
+### 2. Variáveis
+
+Resposta e preditoras, com unidade, escala de medida e amplitude
+observada. Para cada preditora, diga **por que** ela está no modelo — e,
+se couber, desenhe o DAG (`dagitty`) que justifica a escolha. Variável no
+modelo por estar no banco de dados não é justificativa.
+
+### 3. Método estatístico
+
+Distribuição assumida para a resposta e função de ligação, com a razão
+biológica da escolha. Estrutura de efeitos aleatórios, se houver, e o que
+cada um representa em termos de delineamento amostral. Como a
+sobredispersão e o excesso de zeros foram verificados. Critério de
+comparação de modelos, se houver comparação.
+
+### 4. Implementação
+
+Versão do R, versões dos pacotes principais, semente aleatória. Uma
+chamada `sessionInfo()` ou `sessioninfo::session_info()` ao final resolve.
+
+## Seções adicionais
+
+Além do *checklist*, o relatório deve conter:
+
+**Análise exploratória** seguindo o protocolo de Zuur & Ieno (2016):
+outliers, homogeneidade de variância, distribuição da resposta, excesso
+de zeros, colinearidade entre preditoras, relações entre resposta e
+preditoras, interações, independência.
+
+**Diagnóstico do modelo** com `DHARMa` — resíduos quantílicos
+simulados, teste de dispersão, teste de zeros inflados. Mostre os
+gráficos e comente o que eles dizem, mesmo (e principalmente) quando o
+ajuste não é bom.
+
+**Interpretação biológica.** Traduza os coeficientes para a escala da
+resposta e diga o que significam para o organismo ou o sistema. Um
+parágrafo de conclusão que um leitor da sua área entenda sem olhar a
+tabela.
+
+## Extensão bayesiana (opcional, recomendada)
+
+Reajuste o mesmo modelo em `brms` e relate segundo o **BARG** (Kruschke
+2021): preâmbulo mais os seis passos. Comparar as duas estimativas —
+e explicar por que diferem, ou por que não diferem — vale mais do que
+qualquer análise adicional.
+
+## Critérios de avaliação
+
+| Critério | O que se espera |
+|:--|:--|
+| Adequação do modelo | A distribuição e a estrutura de efeitos correspondem ao que os dados são e a como foram coletados |
+| Diagnóstico | Os problemas foram procurados, encontrados e discutidos — não escondidos |
+| Justificativa | Cada escolha analítica tem uma razão explícita, biológica ou estatística |
+| Reprodutibilidade | O documento renderiza do zero em outra máquina |
+| Interpretação | Os resultados são traduzidos para linguagem biológica, sem exagerar o que os dados sustentam |
+| Honestidade | Limitações declaradas; análises exploratórias não apresentadas como confirmatórias |
+
+Um modelo que não ajustou bem, com diagnóstico honesto e discussão do
+porquê, vale mais do que um modelo aparentemente perfeito com o
+diagnóstico omitido.
+
+## Uso de modelos de linguagem
+
+Permitido e esperado — com declaração. Ao final do relatório, informe:
+
+- qual modelo e qual versão;
+- que porções do código foram geradas ou modificadas com auxílio dele;
+- os *prompts* das partes críticas, como material suplementar.
+
+A responsabilidade pelo código é sua, como se o tivesse escrito. Regra
+prática do curso: **o LLM escreve o código; você escreve a ciência.**
+
+## Autoria
+
+Em trabalhos em grupo, as iniciais dos autores nos Métodos seguem o
+**MeRIT** (Nakagawa et al. 2023) — quem fez o quê, explicitamente.
+
+## Esqueleto para copiar
+
+````markdown
+---
+title: "Efeito de <preditora> sobre <resposta> em <sistema>"
+author: "Seu Nome"
+date: today
+format:
+  html:
+    toc: true
+    code-fold: show
+    embed-resources: true
+execute:
+  warning: false
+---
+
+## 1. Objetivo
+
+## 2. Variáveis
+
+## 3. Método estatístico
+
+## 4. Implementação
+
+## Análise exploratória (Zuur & Ieno 2016)
+
+## Ajuste do modelo
+
+## Diagnóstico (DHARMa)
+
+## Resultados e interpretação biológica
+
+## Limitações
+
+## Declaração de uso de IA
+
+## Informações da sessão
+
+```{{r}}
+sessioninfo::session_info()
+```
+````

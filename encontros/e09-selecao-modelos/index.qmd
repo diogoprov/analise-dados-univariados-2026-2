@@ -1,0 +1,53 @@
+---
+title: "E9 — Teoria da informação e seleção de modelos"
+order: 9
+description: "Divergência de Kullback–Leibler e AIC. AICc, BIC, pesos de Akaike e razões de evidência. Model averaging. Crítica ao dredge. LOO e WAIC."
+---
+
+::: {.aula-meta}
+**Sexta, 25 de setembro de 2026** · <span class="bloco">manhã</span> · 4,5 h
+:::
+
+O encontro sobre a pergunta que vem depois de ajustar vários modelos —
+e sobre por que ela é mais perigosa do que parece.
+
+## Slides
+
+[{{< fa solid display >}} Abrir slides](../../slides/e09.html){.btn .btn-outline-primary}
+
+## Conteúdo
+
+### Bloco 1 — teoria da informação (3,5 h)
+
+1. **Contexto** — Akaike (1974), Burnham & Anderson (2002), e a virada de
+   "testar hipóteses" para "comparar modelos".
+2. **Divergência de Kullback–Leibler** — a distância entre o modelo e a
+   realidade, e por que o AIC é uma estimativa dela.
+3. **AIC, AICc e BIC** — o que cada um penaliza, quando usar, e por que
+   não se comparam modelos ajustados a conjuntos de dados diferentes.
+4. **Pesos de Akaike e razões de evidência** — como se leem, o que não
+   dizem.
+5. ***Model averaging*** com `MuMIn::model.avg()` — e as condições em que
+   faz sentido.
+6. **Crítica ao garimpo** — por que `dredge()` sobre 20 preditoras não é
+   análise, e o que fazer no lugar: conjunto de modelos definido *a
+   priori* a partir de hipóteses biológicas.
+7. **Relato** segundo Gerstner et al. (2017).
+
+### Bloco 2 — bayesiano (45 min)
+
+8. **WAIC e PSIS-LOO** com `loo::loo_compare()`.
+9. Quando LOO é preferível a AIC em modelos hierárquicos.
+10. **Fecho** — Burnham & Anderson *versus* Gelman, Hill & Vehtari: não
+    selecionar, mediar.
+
+## Leituras
+
+- **Obrigatória:** Burnham & Anderson (2002), caps. 2 a 4.
+- **Complementar:** Gelman, Hill & Vehtari (2020), cap. 11.
+- **Apoio:** Kurz, *Statistical Rethinking with brms*, cap. 7 —
+  "Ulysses' Compass".
+
+---
+
+*Volta para o [índice do curso](../../index.qmd).*

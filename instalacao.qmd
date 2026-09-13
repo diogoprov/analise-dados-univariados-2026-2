@@ -1,0 +1,144 @@
+---
+title: "Preparação do ambiente"
+subtitle: "Faça isto antes de 21 de setembro"
+toc: true
+---
+
+::: {.callout-important}
+## Não deixe para o primeiro dia
+
+A instalação do `brms` compila código C++ e pode levar de 10 a 40 minutos
+na primeira vez, dependendo da máquina e da conexão. Se você chegar na
+segunda-feira sem isso pronto, vai perder a prática do Encontro 8.
+
+Se travar em algum passo, mande um e-mail **antes** do curso:
+[diogo.provete@ufms.br](mailto:diogo.provete@ufms.br).
+:::
+
+## 1. R e RStudio
+
+Instale, nesta ordem:
+
+1. **R** ≥ 4.4 — <https://cran.r-project.org>
+2. **RStudio Desktop** — <https://posit.co/download/rstudio-desktop/>
+3. **Quarto** ≥ 1.5 — <https://quarto.org/docs/get-started/>
+
+Se você já tem R instalado há mais de um ano, atualize. Vários pacotes
+que usaremos (`glmmTMB`, `brms`, `DHARMa`) exigem versões recentes.
+
+### Compilador C++
+
+O `brms` precisa compilar modelos. Antes de instalá-lo:
+
+- **macOS**: abra o Terminal e rode `xcode-select --install`.
+- **Windows**: instale o **Rtools** na versão correspondente ao seu R,
+  a partir do CRAN.
+- **Linux**: instale `build-essential` (Debian/Ubuntu) ou o grupo de
+  ferramentas de desenvolvimento da sua distribuição.
+
+## 2. Pacotes
+
+Rode o bloco abaixo no console do R. Ele instala apenas o que estiver
+faltando.
+
+```{r}
+#| eval: false
+pacotes <- c(
+  # manipulação e visualização
+  "tidyverse", "here", "janitor", "palmerpenguins", "patchwork",
+  "GGally", "ggeffects", "broom", "broom.mixed", "knitr", "rmarkdown",
+  # modelos lineares e GLM
+  "car", "emmeans", "MASS", "performance", "see", "sjPlot", "marginaleffects",
+  # GLMM, zeros inflados e ordinais
+  "lme4", "glmmTMB", "DHARMa", "ordinal", "pscl", "lmtest",
+  # seleção de modelos
+  "MuMIn", "AICcmodavg",
+  # raciocínio causal
+  "dagitty", "ggdag"
+)
+
+faltando <- setdiff(pacotes, rownames(installed.packages()))
+if (length(faltando)) install.packages(faltando)
+```
+
+### `brms` e Stan
+
+Instale em separado, porque é o passo demorado:
+
+```{r}
+#| eval: false
+install.packages("brms")   # puxa rstan e StanHeaders
+install.packages("loo")
+install.packages("bayesplot")
+```
+
+Teste a compilação com um modelo mínimo. **A primeira execução demora**;
+as seguintes, não.
+
+```{r}
+#| eval: false
+library(brms)
+
+teste <- brm(mpg ~ wt, data = mtcars, chains = 2, iter = 1000, refresh = 0)
+summary(teste)
+```
+
+Se `summary()` imprimir uma tabela com `Rhat` igual a 1.00, está pronto.
+
+::: {.callout-tip}
+## Alternativa mais rápida: `cmdstanr`
+
+Se a instalação do `rstan` der problema — o que acontece com alguma
+frequência no Windows —, o caminho alternativo é o `cmdstanr`, que baixa
+um Stan pré-compilado. As instruções oficiais estão em
+<https://mc-stan.org/cmdstanr/>. Depois, use `backend = "cmdstanr"` nas
+chamadas a `brm()`.
+:::
+
+### Opcional — Encontro 10
+
+Só para quem quiser acompanhar a prática de JSDM. É pesado; não é
+obrigatório.
+
+```{r}
+#| eval: false
+install.packages(c("Hmsc", "mvabund", "gllvm"))
+```
+
+## 3. Verificação
+
+Rode este bloco e confira se nenhuma linha acusa falha:
+
+```{r}
+#| eval: false
+essenciais <- c("tidyverse", "lme4", "glmmTMB", "DHARMa", "emmeans",
+                "performance", "MuMIn", "ordinal", "brms")
+
+resultado <- vapply(essenciais, function(p) {
+  ok <- requireNamespace(p, quietly = TRUE)
+  cat(sprintf("%-12s %s\n", p, if (ok) "OK" else "FALTANDO"))
+  ok
+}, logical(1))
+
+if (all(resultado)) cat("\nAmbiente pronto.\n") else cat("\nInstale os pacotes marcados como FALTANDO.\n")
+```
+
+## 4. Projeto do curso
+
+Crie um projeto do RStudio para a disciplina e, dentro dele, as pastas
+`dados/`, `scripts/` e `figuras/`. Baixe os conjuntos de dados da página
+de cada encontro para `dados/`.
+
+Quem usa git pode simplesmente clonar o repositório do curso:
+
+```bash
+git clone https://github.com/diogoprov/analise-dados-univariados-2026-2.git
+```
+
+## 5. O que trazer
+
+- Notebook com o ambiente acima funcionando;
+- **um conjunto de dados seu** — de preferência o do seu mestrado ou
+  doutorado, ainda que parcial. Ele é a matéria-prima do
+  [trabalho final](trabalho-final.qmd) e dos exercícios;
+- a leitura pré-curso feita: Popovic et al. (2024).

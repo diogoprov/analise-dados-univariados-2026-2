@@ -1,0 +1,83 @@
+---
+title: "Análise de Dados Univariados"
+subtitle: "Disciplina de pós-graduação — PPG em Biologia Animal, UFMS (45 h, intensiva)"
+toc: true
+listing:
+  - id: cronograma
+    contents: "encontros/*/index.qmd"
+    type: table
+    sort: "order asc"
+    fields: [order, title, description]
+    field-display-names:
+      order: "Enc."
+      title: "Tópico"
+      description: "Conteúdo"
+    sort-ui: false
+    filter-ui: false
+    page-size: 20
+---
+
+::: {.callout-tip appearance="minimal"}
+Disciplina **ANÁLISE DE DADOS UNIVARIADOS** (45 h) do Programa de
+Pós-Graduação em Biologia Animal da UFMS, oferecida no formato
+**intensivo** de **21 a 25 de setembro de 2026**, em dois blocos diários
+de 4,5 h. Esta página reúne os materiais públicos do curso — slides,
+scripts R, conjuntos de dados e leituras.
+:::
+
+## O curso em uma frase
+
+Praticamente tudo o que você aprendeu como "teste estatístico" é um
+**modelo linear** com uma matriz de delineamento diferente. A partir daí,
+o caminho é sempre o mesmo: relaxar uma premissa de cada vez —
+distribuição da resposta (GLM), independência das observações (GLMM),
+incerteza sobre qual modelo usar (seleção de modelos) e incerteza sobre
+os próprios parâmetros (inferência bayesiana).
+
+## Cronograma
+
+::: {#cronograma}
+:::
+
+## Antes do primeiro dia
+
+1. Siga o roteiro de **[instalação](instalacao.qmd)**. Chegue com R,
+   RStudio, Quarto e os pacotes já funcionando — inclusive o `brms`, que
+   precisa compilar código C++ na primeira execução e pode levar alguns
+   minutos.
+2. Leia **Popovic et al. (2024)**, *Four principles for improved
+   statistical ecology* — discutimos os quatro princípios nos primeiros
+   30 min do Encontro 1.
+3. Traga **um conjunto de dados seu** (ou de um repositório aberto). Ele
+   será a base do [trabalho final](trabalho-final.qmd) e vamos usá-lo nos
+   exercícios sempre que possível.
+
+## Como este material está organizado
+
+Cada encontro tem uma página própria com os slides, o script da prática,
+os dados usados e as leituras. Os slides são documentos Quarto — o código
+R que aparece neles foi de fato executado na renderização, e você pode
+copiá-lo e rodar.
+
+Todo o material está em <https://github.com/diogoprov/analise-dados-univariados-2026-2>.
+Correções e sugestões são bem-vindas via *issue* ou *pull request*.
+
+## Metodologia
+
+Cada encontro abre com **20 min de *productive failure*** (Kay et al.
+2026): apresento uma pergunta ecológica e um conjunto de dados, e vocês,
+em grupos pequenos e deliberadamente heterogêneos quanto à formação
+quantitativa, propõem uma análise **antes** de eu apresentar o método. O
+objetivo não é acertar — é explicitar premissas e dificuldades. Depois
+disso, exposição e prática em R.
+
+## Avaliação
+
+Um **relatório Quarto reproduzível** com dados próprios ou de repositório
+aberto. Ver [trabalho final](trabalho-final.qmd) para a estrutura
+esperada e os critérios.
+
+## Contato
+
+Prof. Diogo B. Provete — [diogo.provete@ufms.br](mailto:diogo.provete@ufms.br)
+· [Biodiversity Synthesis Lab](https://provetelab.org)

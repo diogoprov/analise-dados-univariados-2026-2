@@ -1,0 +1,48 @@
+---
+title: "E4 — Distribuições de probabilidade e a família exponencial"
+order: 4
+description: "Normal, Gamma, Binomial, Poisson e binomial negativa como família exponencial. Simulação em R. O que a função de ligação resolve. Pearson e Spearman."
+---
+
+::: {.aula-meta}
+**Terça, 22 de setembro de 2026** · <span class="bloco">tarde</span> · 4,5 h
+:::
+
+A ponte entre o modelo linear e o GLM. A pergunta que organiza o
+encontro: *que processo gerador de dados a minha variável resposta
+plausivelmente tem?*
+
+## Slides
+
+[{{< fa solid display >}} Abrir slides](../../slides/e04.html){.btn .btn-outline-primary}
+
+## Conteúdo
+
+1. **Variável aleatória, função de densidade e de massa** — o mínimo
+   necessário, sem formalismo desnecessário.
+2. **As distribuições que importam em ecologia** — Normal, Gamma,
+   Binomial, Poisson, binomial negativa, Beta. Para cada uma: que tipo de
+   medida gera, quais parâmetros tem, como se parece.
+3. **Simulação em R** — `rnorm()`, `rpois()`, `rnbinom()`, `rgamma()`,
+   `rbinom()`. Simular antes de ajustar é a melhor forma de entender um
+   modelo.
+4. **A família exponencial** — o que essas distribuições têm em comum e
+   por que isso permite um único algoritmo de ajuste.
+5. **Função de ligação** — o problema que ela resolve, e por que não é a
+   mesma coisa que transformar a variável resposta.
+6. **Correlação** — Pearson e Spearman, o que cada uma assume.
+
+## Leituras
+
+- **Obrigatória:** Agresti (2015), cap. 4.
+- **Complementar:** Field (2022).
+- **Conceitual, opcional:** Kurz, *Statistical Rethinking with brms*,
+  cap. 10 — "Big Entropy and the Generalized Linear Model".
+
+## Recursos externos
+
+- [Bioestatística — aula 05, probabilidade](https://provetelab.org/teaching/bioestatistica/aula-05-probabilidade/)
+
+---
+
+*Volta para o [índice do curso](../../index.qmd).*

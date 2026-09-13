@@ -1,0 +1,60 @@
+/*-- scss:defaults --*/
+// Tema revealjs — Análise de Dados Univariados (PPGBA/UFMS)
+// Herda a paleta do Biodiversity Synthesis Lab.
+
+$accent:       #1c6e8c;
+$accent-dark:  #144f64;
+$body-bg:      #faf7f0;
+$body-color:   #2d3748;
+$link-color:   $accent;
+$border-color: #e3dccd;
+
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                         "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$presentation-font-size-root: 34px;
+$presentation-heading-color: $accent-dark;
+$presentation-heading-font-weight: 600;
+$code-block-font-size: 0.62em;
+
+/*-- scss:rules --*/
+.reveal .slide-background { background-color: $body-bg; }
+
+.reveal h1, .reveal h2 { letter-spacing: -.3px; }
+
+.reveal h2 {
+  border-bottom: 2px solid rgba(28, 110, 140, .25);
+  padding-bottom: .18em;
+  margin-bottom: .5em;
+}
+
+.reveal pre code {
+  background-color: #fdfcf8;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  max-height: 520px;
+}
+
+.reveal .slide-number { background-color: transparent; color: #9aa5b1; }
+
+// Slide de seção
+.reveal section.secao h2 {
+  border: none;
+  color: $accent;
+  font-size: 1.7em;
+}
+
+// Destaque de definição
+.reveal .definicao {
+  background-color: #f3eee3;
+  border-left: 4px solid $accent;
+  padding: .5em .8em;
+  border-radius: 0 4px 4px 0;
+}
+
+// Texto menor para notas laterais
+.reveal .nota { font-size: .72em; color: #6c757d; }
+
+// Referência no rodapé do slide
+.reveal .ref { font-size: .55em; color: #6c757d; font-style: italic; }
+
+.reveal table { font-size: .72em; }

@@ -1,0 +1,55 @@
+---
+title: "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais"
+order: 6
+description: "Resíduos quantílicos com DHARMa. Sobredispersão: quasi-Poisson e binomial negativa. Modelos ZIP, ZINB e hurdle com `glmmTMB`. Regressão ordinal com `ordinal::clm`."
+---
+
+::: {.aula-meta}
+**Quarta, 23 de setembro de 2026** · <span class="bloco">tarde</span> · 4,5 h
+:::
+
+O encontro em que os modelos do E5 falham — e o que fazer a respeito.
+Diagnóstico primeiro, remédio depois.
+
+## Slides
+
+[{{< fa solid display >}} Abrir slides](../../slides/e06.html){.btn .btn-outline-primary}
+
+## Conteúdo
+
+1. **Por que os resíduos comuns não servem para GLM** — e o que são
+   resíduos quantílicos simulados. `DHARMa` do início ao fim.
+2. **Sobredispersão** — como detectar (`check_overdispersion()`), o que
+   causa, e as três saídas: quasi-Poisson, binomial negativa, ou efeito
+   aleatório em nível de observação. Quando cada uma é honesta.
+3. **Excesso de zeros** — zero estrutural *versus* zero amostral, que é
+   uma distinção biológica, não estatística. ZIP, ZINB e *hurdle* com
+   `glmmTMB(ziformula = ~ .)`. Como escolher.
+4. **Respostas ordinais** — o modelo de *odds* proporcionais com
+   `ordinal::clm()` e `clmm()`; por que tratar escala ordinal como
+   contínua distorce o resultado.
+5. **Relato** — o que precisa aparecer no texto do artigo.
+
+## Dados
+
+- [`RoadKills.txt`](../../dados/RoadKills.txt) — sobredispersão.
+- [`ParasiteCod.txt`](../../dados/ParasiteCod.txt) — excesso de zeros
+  (Zuur et al. 2009).
+- [`NA.csv`](../../dados/NA.csv) — índice melanofórico, resposta ordinal.
+
+## Leituras
+
+- **Obrigatória:** Zuur et al. (2009), cap. 11.
+- **Complementar, bayesiano:** Kurz, *Statistical Rethinking with brms*,
+  cap. 12 — "Monsters and Mixtures", que cobre sobredispersão, zeros
+  inflados e ordinais no arcabouço bayesiano.
+
+## Recursos externos
+
+- [`DHARMa` — vinheta](https://cran.r-project.org/package=DHARMa)
+- [`glmmTMB` — vinhetas](https://cran.r-project.org/package=glmmTMB)
+- [*Análises Ecológicas no R* — cap. 8](https://analises-ecologicas.com/cap8)
+
+---
+
+*Volta para o [índice do curso](../../index.qmd).*

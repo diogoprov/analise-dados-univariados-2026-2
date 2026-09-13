@@ -1,0 +1,72 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - "*.qmd"
+    - "encontros/*/index.qmd"
+    - "slides/*.qmd"
+    - "!README.md"
+    - "!slides/_template.qmd"
+
+website:
+  title: "Análise de Dados Univariados"
+  description: "Modelos lineares, GLM, GLMM, seleção de modelos e introdução bayesiana para pós-graduação em ecologia. PPGBA/UFMS, 2026/2."
+  site-url: "https://diogoprov.github.io/analise-dados-univariados-2026-2/"
+  open-graph: true
+  repo-url: "https://github.com/diogoprov/analise-dados-univariados-2026-2"
+
+  navbar:
+    background: light
+    pinned: true
+    collapse-below: lg
+    title: "Análise de Dados Univariados"
+    left:
+      - href: index.qmd
+        text: Início
+      - href: programa.qmd
+        text: Programa
+      - href: instalacao.qmd
+        text: Instalação
+      - href: trabalho-final.qmd
+        text: Trabalho final
+    right:
+      - icon: github
+        href: "https://github.com/diogoprov/analise-dados-univariados-2026-2"
+        aria-label: GitHub
+      - icon: house-door
+        href: "https://provetelab.org/teaching/"
+        aria-label: Biodiversity Synthesis Lab
+
+  page-footer:
+    background: light
+    left: |
+      © Diogo B. Provete · Biodiversity Synthesis Lab · Instituto de Biociências, UFMS
+    center: |
+      Conteúdo sob [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt-br)
+    right: |
+      Built with [Quarto](https://quarto.org).
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-location: right
+    toc-depth: 3
+    anchor-sections: true
+    smooth-scroll: true
+    link-external-newwindow: true
+    code-link: false
+    df-print: paged
+    include-in-header:
+      - text: |
+          <link rel="stylesheet"
+                href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+lang: pt
+execute:
+  freeze: auto
+  warning: false
+  message: false
+
+editor: source

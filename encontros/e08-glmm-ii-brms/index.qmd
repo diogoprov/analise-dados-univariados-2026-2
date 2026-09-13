@@ -1,0 +1,68 @@
+---
+title: "E8 — GLMM II: `lme4`, `glmmTMB` e a ponte bayesiana"
+order: 8
+description: "Ajuste e diagnóstico de GLMM. Convergência. `lme4` versus `glmmTMB`. O mesmo modelo reajustado em `brms`: priors, MCMC, `pp_check()` e relato BARG."
+---
+
+::: {.aula-meta}
+**Quinta, 24 de setembro de 2026** · <span class="bloco">tarde</span> · 4,5 h
+:::
+
+Dois blocos. No primeiro, GLMM na prática, com todos os problemas reais.
+No segundo, o mesmo modelo, os mesmos dados, outro arcabouço.
+
+## Slides
+
+[{{< fa solid display >}} Abrir slides](../../slides/e08.html){.btn .btn-outline-primary}
+
+## Conteúdo
+
+### Bloco 1 — frequentista (3 h)
+
+1. GLMM com resposta não normal: `glmer()` e `glmmTMB()`.
+2. **Quando usar `glmmTMB` em vez de `lme4`** — zeros inflados,
+   dispersão modelada, famílias adicionais.
+3. **Convergência** — o que os avisos significam, e o que fazer:
+   reescalar preditoras, simplificar a estrutura aleatória, trocar o
+   otimizador.
+4. Diagnóstico com `DHARMa` em modelos mistos.
+5. $R^2$ marginal e condicional (Nakagawa) e relato segundo Davis & Kay
+   (2023).
+
+### Bloco 2 — a ponte bayesiana (1,5 h)
+
+6. **A sintaxe do `brms` é a do `lme4`** — o custo de transferência é
+   quase zero.
+7. **Priors fracamente informativas** — o que são, por que o padrão
+   importa, análise de sensibilidade.
+8. **Diagnóstico de MCMC** — $\hat{R}$, ESS, transições divergentes.
+9. **`pp_check()`** — checagem preditiva posterior, que é o análogo
+   honesto do diagnóstico de resíduos.
+10. **Intervalo de credibilidade *versus* intervalo de confiança** — o
+    que cada um permite dizer.
+11. **Relato BARG** (Kruschke 2021).
+
+::: {.callout-warning}
+Traga o `brms` já compilado. Os modelos desta aula estão em cache
+(`file = "cache/..."`), mas o seu primeiro `brm()` na máquina de vocês
+vai compilar do zero.
+:::
+
+## Dados
+
+- [`RIKZ.txt`](../../dados/RIKZ.txt) — o mesmo do E7, agora nos dois
+  arcabouços.
+- Exemplo dos girinos de McElreath, via Kurz cap. 13.
+
+## Leituras
+
+- **Obrigatória:** Gelman, Hill & Vehtari (2020), caps. 9 e 10.
+- **Complementar:** Harrison et al. (2018).
+- **Relato:** Kruschke, J.K. 2021. Bayesian Analysis Reporting Guidelines.
+  *Nature Human Behaviour*. doi:10.1038/s41562-021-01177-7
+- **Apoio prático:** Kurz, *Statistical Rethinking with brms*, cap. 13 —
+  "Models with Memory".
+
+---
+
+*Volta para o [índice do curso](../../index.qmd).*

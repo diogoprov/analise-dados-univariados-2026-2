@@ -1,0 +1,572 @@
+---
+title: "O modelo linear como arcabouço unificador"
+subtitle: "Encontro 2 · Análise de Dados Univariados · PPGBA/UFMS"
+author: "Diogo B. Provete"
+date: 2026-09-21
+date-format: "D [de] MMMM [de] YYYY"
+lang: pt
+format:
+  revealjs:
+    theme: [default, theme.scss]
+    slide-number: c/t
+    show-slide-number: all
+    preview-links: auto
+    history: false
+    footer: "Análise de Dados Univariados · PPGBA/UFMS · 2026/2"
+    code-overflow: wrap
+    fig-align: center
+    width: 1250
+    height: 750
+execute:
+  echo: true
+  warning: false
+  message: false
+  fig-width: 7
+  fig-height: 4
+---
+
+```{r}
+#| echo: false
+library(tidyverse)
+library(palmerpenguins)
+theme_set(theme_minimal(base_size = 14))
+pinguins <- penguins |> drop_na(bill_length_mm, body_mass_g, species, sex)
+```
+
+## A tese deste encontro {.secao}
+
+::: {.definicao}
+Teste t, ANOVA, ANCOVA, correlação e regressão **não são cinco
+procedimentos**. São um modelo, com matrizes de delineamento diferentes.
+:::
+
+Se isso for verdade, três coisas mudam:
+
+1. você deixa de decorar uma árvore de decisão de testes;
+2. o diagnóstico passa a ser **um só**;
+3. estender o modelo (GLM, GLMM) vira uma sequência natural, não um
+   assunto novo.
+
+---
+
+## Hoje
+
+1. Anatomia do modelo linear — e onde mora a premissa de normalidade
+2. Teste t é `lm()`: a matriz de delineamento escrita à mão
+3. Correlação e regressão
+4. **Intervalo**
+5. Interpretar coeficientes na escala certa
+6. Codificação de fatores: `contr.treatment` e `contr.sum`
+7. Colinearidade
+8. Diagnóstico de resíduos
+
+---
+
+# 1. Anatomia {.secao}
+
+---
+
+## A equação
+
+$$
+y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,
+\qquad \varepsilon_i \sim \mathcal{N}(0, \sigma^2)
+$$
+
+Ou, em forma matricial, para o modelo inteiro de uma vez:
+
+$$
+\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+$$
+
+::: {.definicao}
+$\mathbf{X}$ é a **matriz de delineamento**. É ela — e só ela — que muda
+entre um teste t e uma regressão.
+:::
+
+---
+
+## Onde mora a premissa de normalidade
+
+```{r}
+#| echo: false
+#| fig-height: 3.4
+set.seed(42)
+d <- tibble(x = runif(300, 0, 10), y = 2 + 1.5 * x + rnorm(300, 0, 2))
+bind_rows(
+  tibble(valor = d$y,              tipo = "Resposta y (bimodal, nada normal)"),
+  tibble(valor = resid(lm(y ~ x, d)), tipo = "Resíduo (normal — é o que importa)")
+) |>
+  ggplot(aes(valor)) +
+  geom_histogram(bins = 30, fill = "#1c6e8c", colour = "white") +
+  facet_wrap(~tipo, scales = "free") +
+  labs(x = NULL, y = NULL)
+```
+
+::: {.definicao}
+O modelo linear **não assume que y é normal**. Assume que o **resíduo**
+é. Testar normalidade da variável resposta e decidir a análise a partir
+disso é um erro comum e caro.
+:::
+
+---
+
+## As quatro premissas, na ordem que importa
+
+1. **Linearidade** — a relação é aditiva na escala em que foi escrita.
+2. **Independência** — os resíduos não carregam informação uns dos
+   outros. *Vem do delineamento, não do gráfico.*
+3. **Homocedasticidade** — a variância do resíduo não depende do
+   predito.
+4. **Normalidade do resíduo** — a menos importante das quatro, e a única
+   que quase todo mundo testa.
+
+::: {.nota}
+Em amostras razoáveis, violar (4) modestamente é quase inofensivo.
+Violar (2) invalida tudo.
+:::
+
+---
+
+# 2. Teste t é `lm()` {.secao}
+
+---
+
+## A pergunta
+
+Machos e fêmeas de *Pygoscelis adeliae* diferem no comprimento do bico?
+
+```{r}
+#| fig-height: 3.2
+adelie <- pinguins |> filter(species == "Adelie")
+
+ggplot(adelie, aes(sex, bill_length_mm, fill = sex)) +
+  geom_boxplot(alpha = .7, show.legend = FALSE) +
+  scale_fill_manual(values = c("#1c6e8c", "#c08a3e")) +
+  labs(x = NULL, y = "Comprimento do bico (mm)")
+```
+
+---
+
+## Do jeito que vocês aprenderam
+
+```{r}
+t.test(bill_length_mm ~ sex, data = adelie, var.equal = TRUE)
+```
+
+---
+
+## Do jeito que vamos usar
+
+```{r}
+m_t <- lm(bill_length_mm ~ sex, data = adelie)
+summary(m_t)$coefficients
+```
+
+::: {.definicao}
+Comparem: a estimativa de `sexmale` é exatamente a diferença entre as
+médias; o valor de *t* e o valor de *p* são os mesmos do `t.test()`. Não
+é coincidência — é o mesmo cálculo.
+:::
+
+---
+
+## Por que são iguais: a matriz de delineamento
+
+```{r}
+X <- model.matrix(m_t)
+head(X, 8)
+```
+
+Uma coluna de 1 (o intercepto) e uma coluna 0/1 que marca `male`.
+
+---
+
+## Lendo a matriz
+
+Para uma fêmea, a linha é $(1, 0)$:
+
+$$\hat{y} = \beta_0 \cdot 1 + \beta_1 \cdot 0 = \beta_0$$
+
+Para um macho, $(1, 1)$:
+
+$$\hat{y} = \beta_0 + \beta_1$$
+
+::: {.definicao}
+$\beta_0$ = média das fêmeas. $\beta_1$ = **diferença** macho − fêmea.
+O "teste t" é o teste de que $\beta_1 = 0$.
+:::
+
+---
+
+## Confirmando na mão
+
+```{r}
+medias <- adelie |>
+  group_by(sex) |>
+  summarise(media = mean(bill_length_mm))
+medias
+
+coef(m_t)
+```
+
+---
+
+## O mapa completo
+
+| Teste clássico | O mesmo modelo |
+|---|---|
+| teste t de uma amostra | `lm(y ~ 1)` |
+| teste t de duas amostras | `lm(y ~ grupo)` |
+| teste t pareado | `lm(diferença ~ 1)` |
+| ANOVA de um fator | `lm(y ~ fator)` |
+| ANOVA de dois fatores | `lm(y ~ a * b)` |
+| ANCOVA | `lm(y ~ fator + x)` |
+| correlação de Pearson | `lm(y ~ x)` padronizado |
+| regressão múltipla | `lm(y ~ x1 + x2 + ...)` |
+
+::: {.nota}
+Detalhamento em [Lindeløv, *Common statistical tests are linear
+models*](https://lindeloev.github.io/tests-as-linear/).
+:::
+
+---
+
+# 3. Correlação e regressão {.secao}
+
+---
+
+## A mesma informação, ênfases diferentes
+
+```{r}
+r <- cor(pinguins$bill_length_mm, pinguins$body_mass_g)
+r
+
+m_reg <- lm(body_mass_g ~ bill_length_mm, data = pinguins)
+summary(m_reg)$r.squared
+r^2
+```
+
+$R^2$ da regressão simples **é** o quadrado da correlação.
+
+---
+
+## O que muda
+
+| | Correlação | Regressão |
+|---|---|---|
+| Simetria | $r_{xy} = r_{yx}$ | $y \sim x \neq x \sim y$ |
+| Unidade | adimensional | unidade de $y$ por unidade de $x$ |
+| Predição | não | sim |
+| Papel das variáveis | simétrico | resposta e preditora |
+
+::: {.definicao}
+Se a sua pergunta tem uma direção — "o que a temperatura faz com a
+massa?" —, você quer regressão. Correlação é para quando as duas
+variáveis têm o mesmo estatuto.
+:::
+
+---
+
+## Pearson × Spearman
+
+```{r}
+cor(pinguins$bill_length_mm, pinguins$body_mass_g, method = "pearson")
+cor(pinguins$bill_length_mm, pinguins$body_mass_g, method = "spearman")
+```
+
+- **Pearson** mede associação **linear**; sensível a outliers.
+- **Spearman** é Pearson **nos postos**: mede associação **monotônica**,
+  robusta a outliers e a não linearidade.
+
+Diferença grande entre as duas é sinal de não linearidade ou de outlier
+influente — vale olhar o gráfico antes de escolher.
+
+---
+
+# 4. Interpretar coeficientes {.secao}
+
+---
+
+## Regressão simples
+
+```{r}
+coef(m_reg)
+```
+
+::: {.definicao}
+A cada **1 mm** a mais de bico, a massa esperada aumenta
+`r round(coef(m_reg)[2], 1)` **g**.
+:::
+
+Repare que a interpretação só existe **com unidade**. Coeficiente sem
+unidade é número solto.
+
+---
+
+## E o intercepto?
+
+`r round(coef(m_reg)[1], 0)` g é a massa esperada de um pinguim com bico
+de **0 mm** — que não existe.
+
+```{r}
+pinguins <- pinguins |> mutate(bico_c = bill_length_mm - mean(bill_length_mm))
+coef(lm(body_mass_g ~ bico_c, data = pinguins))
+```
+
+Centrando a preditora, o intercepto passa a ser a massa esperada de um
+pinguim **de bico médio**. A inclinação não muda.
+
+---
+
+## Regressão múltipla: o que "controlar" significa
+
+```{r}
+m_mult <- lm(body_mass_g ~ bill_length_mm + flipper_length_mm, data = pinguins)
+round(coef(m_mult), 2)
+```
+
+::: {.definicao}
+Cada coeficiente é o efeito daquela preditora **mantendo as demais
+constantes**. Note que o efeito do bico caiu bastante em relação ao
+modelo simples — porque bico e nadadeira medem, em parte, a mesma coisa.
+:::
+
+---
+
+## Efeito marginal, visualmente
+
+```{r}
+#| fig-height: 3.3
+ggplot(pinguins, aes(bill_length_mm, body_mass_g, colour = species)) +
+  geom_point(alpha = .6) +
+  geom_smooth(method = "lm", se = FALSE) +
+  scale_colour_manual(values = c("#1c6e8c", "#c08a3e", "#6b8f71")) +
+  labs(x = "Comprimento do bico (mm)", y = "Massa (g)", colour = NULL)
+```
+
+---
+
+## Paradoxo de Simpson
+
+```{r}
+#| fig-height: 3.0
+#| echo: false
+ggplot(pinguins, aes(bill_depth_mm, body_mass_g)) +
+  geom_point(aes(colour = species), alpha = .6) +
+  geom_smooth(method = "lm", se = FALSE, colour = "grey30", linetype = 2) +
+  geom_smooth(aes(colour = species), method = "lm", se = FALSE) +
+  scale_colour_manual(values = c("#1c6e8c", "#c08a3e", "#6b8f71")) +
+  labs(x = "Profundidade do bico (mm)", y = "Massa (g)", colour = NULL)
+```
+
+Ignorando a espécie (linha tracejada), a relação é negativa. Dentro de
+cada espécie, é positiva. **A estrutura do modelo decide o sinal do
+resultado.**
+
+---
+
+# 5. Codificação de fatores {.secao}
+
+---
+
+## O padrão do R: `contr.treatment`
+
+```{r}
+m_esp <- lm(body_mass_g ~ species, data = pinguins)
+coef(m_esp)
+```
+
+`Adelie` é o nível de referência (primeiro em ordem alfabética). Os
+coeficientes são **diferenças em relação a ele**; o intercepto é a média
+de `Adelie`.
+
+---
+
+## Soma zero: `contr.sum`
+
+```{r}
+m_sum <- lm(body_mass_g ~ species, data = pinguins,
+            contrasts = list(species = "contr.sum"))
+coef(m_sum)
+mean(tapply(pinguins$body_mass_g, pinguins$species, mean))
+```
+
+Agora o intercepto é a **média das médias de grupo**, e os coeficientes
+são desvios em relação a ela.
+
+---
+
+## Por que isso importa
+
+::: {.definicao}
+O ajuste é **idêntico** — mesmos valores preditos, mesmo $R^2$, mesmos
+resíduos. O que muda é o **significado de cada número** na tabela.
+:::
+
+```{r}
+all.equal(fitted(m_esp), fitted(m_sum))
+```
+
+Duas consequências práticas:
+
+- em modelos **com interação**, o coeficiente do efeito principal em
+  `contr.treatment` é o efeito **no nível de referência do outro fator** —
+  não o efeito médio;
+- somas de quadrados do tipo III só fazem sentido com contrastes de soma
+  zero (Encontro 3).
+
+---
+
+## Ordem dos níveis não é detalhe
+
+```{r}
+pinguins <- pinguins |> mutate(species2 = relevel(species, ref = "Gentoo"))
+coef(lm(body_mass_g ~ species2, data = pinguins))
+```
+
+Trocando a referência, todos os coeficientes mudam. O modelo é o mesmo.
+**Escolha a referência que torna a tabela interpretável** — o controle, a
+condição basal, a espécie focal.
+
+---
+
+# 6. Colinearidade {.secao}
+
+---
+
+## O que é (e o que não é)
+
+```{r}
+round(cor(pinguins[, c("bill_length_mm", "bill_depth_mm", "flipper_length_mm",
+                       "body_mass_g")], use = "complete.obs"), 2)
+```
+
+::: {.definicao}
+Colinearidade **não viola premissa nenhuma**. Ela torna os coeficientes
+individualmente mal identificados: o modelo prediz bem e interpreta mal.
+:::
+
+---
+
+## VIF
+
+```{r}
+car::vif(m_mult)
+```
+
+Regras práticas: acima de 5 desconfie, acima de 10 preocupe-se. Mas a
+decisão é **biológica**, não mecânica:
+
+- as duas preditoras medem coisas distintas na sua hipótese? → mantenha e
+  relate a incerteza;
+- são proxies da mesma coisa? → escolha uma, pelo argumento, não pelo *p*.
+
+---
+
+# 7. Diagnóstico {.secao}
+
+---
+
+## Os quatro gráficos
+
+```{r}
+#| fig-height: 4.2
+#| echo: true
+par(mfrow = c(2, 2), mar = c(4, 4, 2, 1))
+plot(m_mult)
+```
+
+---
+
+## O que procurar em cada um
+
+| Gráfico | Pergunta |
+|---|---|
+| Residuals vs Fitted | há padrão? curvatura? → falta termo no modelo |
+| Q-Q residuals | caudas muito fora da reta? → normalidade do resíduo |
+| Scale–Location | leque? → heterocedasticidade |
+| Residuals vs Leverage | pontos com distância de Cook alta? → influência |
+
+---
+
+## Versão moderna
+
+```{r}
+#| fig-height: 4.0
+#| eval: false
+library(performance)
+check_model(m_mult)
+```
+
+::: {.nota}
+`performance::check_model()` produz os mesmos diagnósticos com intervalos
+de referência simulados — muito mais fácil de julgar do que "isso parece
+um padrão?". A partir do Encontro 6, com GLMs, passamos a usar `DHARMa`,
+que é a única forma honesta de diagnosticar resíduos não gaussianos.
+:::
+
+---
+
+## Alavancagem não é outlier
+
+- **Outlier**: resíduo grande. Está longe do que o modelo previu.
+- **Alavancagem**: valor extremo **na preditora**. Puxa a reta.
+- **Influência**: as duas coisas juntas — distância de Cook.
+
+::: {.definicao}
+Uma observação influente não deve ser removida por ser influente. Deve
+ser **investigada**; e o resultado do modelo com e sem ela deve ser
+relatado.
+:::
+
+---
+
+# Fechamento {.secao}
+
+---
+
+## O que fica de hoje
+
+1. $\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}$
+   — só a matriz $\mathbf{X}$ muda entre os "testes".
+2. A normalidade exigida é a **do resíduo**.
+3. Coeficiente se interpreta **com unidade**, na escala da resposta.
+4. Codificação de fatores muda o significado da tabela, não o ajuste.
+5. Colinearidade é problema de interpretação, não de premissa.
+
+---
+
+## Prática (o resto do bloco)
+
+1. Ajuste um `lm()` nos **seus** dados.
+2. Escreva a matriz de delineamento com `model.matrix()` e explique em
+   uma frase o que cada coluna significa.
+3. Interprete cada coeficiente **com unidade**.
+4. Rode os quatro gráficos de diagnóstico e escreva o que viu.
+5. Troque o nível de referência e confira que o ajuste não muda.
+
+---
+
+## Para amanhã
+
+**Leitura:** Quinn & Keough (2023), caps. 8 e 9.
+
+**Amanhã de manhã:** mais colunas na matriz de delineamento — ANOVA,
+ANCOVA e interações. Nenhum conceito novo de inferência.
+
+---
+
+## Referências
+
+::: {.nota}
+- Agresti, A. 2015. *Foundations of Linear and Generalized Linear
+  Models*. Wiley. Caps. 1–3.
+- Gelman, A., Hill, J. & Vehtari, A. 2020. *Regression and Other
+  Stories*. Cambridge University Press. Parte I.
+- Lindeløv, J.K. *Common statistical tests are linear models*.
+  <https://lindeloev.github.io/tests-as-linear/>
+- Horst, A.M., Hill, A.P. & Gorman, K.B. 2020. palmerpenguins: Palmer
+  Archipelago (Antarctica) penguin data. Pacote R.
+- da Silva, F.R. et al. 2022. *Análises Ecológicas no R*, cap. 7.
+:::

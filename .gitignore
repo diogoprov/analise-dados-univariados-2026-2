@@ -1,0 +1,23 @@
+# Quarto
+/.quarto/
+_freeze/
+_site/
+**/*.quarto_ipynb
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.Renviron
+
+# Cache de modelos brms/Stan (regenerável, pesado)
+cache/*.rds
+
+# macOS / OneDrive
+.DS_Store
+*.DS_Store
+Icon?
+
+# Material de origem pesado (pptx antigos) — não versionar
+material-antigo/

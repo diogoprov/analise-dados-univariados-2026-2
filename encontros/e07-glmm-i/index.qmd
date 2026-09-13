@@ -1,0 +1,53 @@
+---
+title: "E7 — GLMM I: por que efeitos aleatórios"
+order: 7
+description: "Pseudorreplicação. O que um efeito aleatório é e o que estima. Intercepto e inclinação aleatórios. Anatomia de `lmer` e `glmer`. ICC e graus de liberdade."
+---
+
+::: {.aula-meta}
+**Quinta, 24 de setembro de 2026** · <span class="bloco">manhã</span> · 4,5 h
+:::
+
+O encontro sobre a premissa que quase todo delineamento ecológico viola:
+independência das observações.
+
+## Slides
+
+[{{< fa solid display >}} Abrir slides](../../slides/e07.html){.btn .btn-outline-primary}
+
+## Conteúdo
+
+1. **Pseudorreplicação** (Hurlbert 1984) — reconhecer no seu próprio
+   delineamento. A estrutura do modelo deve espelhar a estrutura da
+   amostragem.
+2. **O que um efeito aleatório é** — não "uma variável que não interessa",
+   mas um conjunto de níveis amostrados de uma população de níveis, cuja
+   *variância* é o que se estima.
+3. **Fixo ou aleatório?** — os critérios, e por que a resposta depende da
+   pergunta, não do dado.
+4. **Intercepto aleatório e inclinação aleatória** — o que cada um
+   permite, desenhado.
+5. **Anatomia de `lmer`** — `(1 | grupo)`, `(x | grupo)`, `(1 | a/b)`.
+   *Shrinkage* e por que estimativas de grupos pequenos são puxadas para
+   a média.
+6. **ICC**, variância dos efeitos aleatórios, e o problema dos graus de
+   liberdade — aproximação de Kenward–Roger e Satterthwaite.
+
+## Dados
+
+- [`RIKZ.txt`](../../dados/RIKZ.txt) — riqueza de invertebrados em
+  transectos de nove praias (Zuur et al. 2009).
+- [`Owls.txt`](../../dados/Owls.txt) — vocalização de ninhegos por ninho.
+
+## Leituras
+
+- **Obrigatória:** Bolker, B.M. et al. 2009. Generalized linear mixed
+  models: a practical guide for ecology and evolution. *Trends in Ecology
+  & Evolution*.
+- **Checklist:** Harrison, X.A. et al. 2018. A brief introduction to
+  mixed effects modelling and multi-model inference in ecology. *PeerJ*.
+- **Complementar:** Zuur et al. (2009), cap. 5.
+
+---
+
+*Volta para o [índice do curso](../../index.qmd).*

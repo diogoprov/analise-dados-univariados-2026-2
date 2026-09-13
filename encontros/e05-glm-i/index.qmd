@@ -1,0 +1,56 @@
+---
+title: "E5 — GLM I: verossimilhança, binomial e Poisson"
+order: 5
+description: "Máxima verossimilhança. Regressão logística e de Poisson. Escala do preditor linear versus escala da resposta. DAGs e raciocínio causal na escolha de covariáveis."
+---
+
+::: {.aula-meta}
+**Quarta, 23 de setembro de 2026** · <span class="bloco">manhã</span> · 4,5 h
+:::
+
+O primeiro encontro com modelos cuja resposta não é contínua e ilimitada
+— e com a pergunta que decide a qualidade de qualquer análise
+observacional: *que covariáveis entram no modelo, e por quê?*
+
+## Slides
+
+[{{< fa solid display >}} Abrir slides](../../slides/e05.html){.btn .btn-outline-primary}
+
+## Conteúdo
+
+1. **Máxima verossimilhança** — a ideia, com uma superfície de
+   verossimilhança desenhada em R. *Deviance* e teste de razão de
+   verossimilhanças.
+2. **GLM binomial** — proporções e dados binários; *odds*, log-*odds*,
+   razão de chances *versus* risco relativo; separação completa e a
+   correção de Firth.
+3. **GLM Poisson** — contagens; o log como ligação canônica; *offset*
+   para esforço amostral desigual.
+4. **Interpretar na escala certa** — o coeficiente está em log; a
+   biologia está na escala da resposta. `ggeffects` e
+   `marginaleffects`.
+5. **DAGs e raciocínio causal** (60 min) — `dagitty`, critério *backdoor*,
+   *confounders* (controlar) *versus* colisores (**não** controlar). Por
+   que seleção estatística de variáveis não substitui pensar sobre
+   causalidade.
+
+## Dados
+
+- [`RoadKills.txt`](../../dados/RoadKills.txt) — anfíbios atropelados em
+  52 sítios em Portugal (Zuur et al. 2009).
+- [`UV.csv`](../../dados/UV.csv) — resposta binomial, contagem de células.
+
+## Leituras
+
+- **Obrigatória:** Agresti (2015), caps. 5 e 6.
+- **Complementar:** Zuur et al. (2009), caps. 8 e 9.
+- **Causalidade:** Arif, S. & MacNeil, M.A. 2023. *Ecological
+  Monographs* — inferência causal em ecologia.
+
+## Recursos externos
+
+- [*Análises Ecológicas no R* — cap. 8](https://analises-ecologicas.com/cap8)
+
+---
+
+*Volta para o [índice do curso](../../index.qmd).*

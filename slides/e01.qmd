@@ -1,0 +1,747 @@
+---
+title: "EDA, reprodutibilidade e literacia em IA"
+subtitle: "Encontro 1 · Análise de Dados Univariados · PPGBA/UFMS"
+author: "Diogo B. Provete"
+date: 2026-09-21
+date-format: "D [de] MMMM [de] YYYY"
+lang: pt
+format:
+  revealjs:
+    theme: [default, theme.scss]
+    slide-number: c/t
+    show-slide-number: all
+    preview-links: auto
+    history: false
+    footer: "Análise de Dados Univariados · PPGBA/UFMS · 2026/2"
+    code-overflow: wrap
+    fig-align: center
+    width: 1250
+    height: 750
+execute:
+  echo: true
+  warning: false
+  message: false
+  fig-width: 7
+  fig-height: 4
+---
+
+## Bem-vindos {.secao}
+
+**Análise de Dados Univariados** — 45 h, cinco dias.
+
+Quatro coisas que este curso vai tentar fazer com vocês:
+
+1. mostrar que o que vocês aprenderam como uma coleção de testes é **um
+   modelo só**;
+2. dar critério para escolher a distribuição da resposta, em vez de
+   transformar os dados até que fiquem normais;
+3. tornar o diagnóstico de modelo um hábito, não uma formalidade;
+4. deixar vocês capazes de ler um artigo com GLMM e saber se ele está
+   certo.
+
+---
+
+## O curso em uma frase
+
+::: {.definicao}
+Praticamente tudo que você aprendeu como "teste estatístico" é um
+**modelo linear** com uma matriz de delineamento diferente.
+:::
+
+A partir daí, o caminho é sempre relaxar **uma premissa de cada vez**:
+
+| Relaxamos | Chegamos em |
+|---|---|
+| a distribuição da resposta | GLM |
+| a independência das observações | GLMM |
+| a certeza sobre qual modelo usar | seleção de modelos |
+| a certeza sobre os parâmetros | inferência bayesiana |
+
+---
+
+## Como as aulas funcionam
+
+Cada encontro abre com **20 minutos de *productive failure***:
+
+1. eu apresento uma pergunta e um conjunto de dados;
+2. vocês, em grupos de 3 ou 4, escrevem como analisariam — **antes** de
+   eu ensinar o método;
+3. cada grupo apresenta em 1 minuto;
+4. só então eu mostro o método formal.
+
+::: {.nota}
+O objetivo não é acertar. É explicitar o que vocês já assumem sem
+perceber. Grupos são montados com formação quantitativa deliberadamente
+heterogênea.
+:::
+
+---
+
+## Combinado
+
+- **Perguntem durante**, não no fim. Se uma coisa não fez sentido para
+  você, não fez sentido para mais três pessoas na sala.
+- Erro de modelo em aula é material didático, não constrangimento.
+- O trabalho final usa **os dados de vocês**. Quanto mais cedo vocês os
+  trouxerem para as práticas, melhor.
+- Tudo está em
+  [diogoprov.github.io/analise-dados-univariados-2026-2](https://diogoprov.github.io/analise-dados-univariados-2026-2/).
+
+---
+
+## Hoje
+
+1. *Productive failure* de abertura — 20 min
+2. Os quatro princípios de Popovic et al. (2024) — 30 min
+3. Pergunta focada, HARKing e pré-registro — 30 min
+4. **Intervalo**
+5. Exploração de dados: o protocolo em oito passos — 90 min
+6. Fluxo reprodutível: projeto, Quarto, git — 45 min
+7. Uso saudável de LLMs em estatística — 60 min
+
+---
+
+# 1. Productive failure {.secao}
+
+---
+
+## O problema
+
+Vocês têm contagens de anfíbios mortos por atropelamento em **52 sítios**
+ao longo de uma rodovia em Portugal, com variáveis da paisagem em cada
+sítio: distância ao parque mais próximo, distância a áreas urbanas,
+cobertura de diferentes tipos de vegetação, densidade de estradas.
+
+::: {.definicao}
+**Pergunta:** quais características da paisagem explicam a mortalidade de
+anfíbios na estrada?
+:::
+
+**Em grupos, por 10 minutos, escrevam:**
+
+1. qual análise vocês fariam;
+2. que premissas ela assume;
+3. o que poderia dar errado.
+
+---
+
+## Os dados
+
+```{r}
+#| echo: true
+RK <- read.delim("../dados/RoadKills.txt")
+dim(RK)
+RK[1:4, c("TOT.N", "D.PARK", "OPEN.L", "L.WAT.C")]
+```
+
+::: {.nota}
+Dados de Zuur, Ieno & Smith, usados em *Mixed Effects Models and
+Extensions in Ecology with R* (2009). Voltaremos a eles no Encontro 5.
+:::
+
+---
+
+## Uma coisa que vocês já viram
+
+```{r}
+#| echo: false
+#| fig-height: 3.6
+library(ggplot2)
+ggplot(RK, aes(TOT.N)) +
+  geom_histogram(bins = 20, fill = "#1c6e8c", colour = "white") +
+  labs(x = "Anfíbios mortos por sítio", y = "Frequência") +
+  theme_minimal(base_size = 15)
+```
+
+Contagem. Só inteiros não negativos. Variância cresce com a média. Cauda
+longa à direita.
+
+**Uma regressão linear comum é apropriada aqui?** Guardem a resposta.
+
+---
+
+# 2. Quatro princípios {.secao}
+
+::: {.nota}
+Popovic, G. et al. 2024. Four principles for improved statistical
+ecology. *Methods in Ecology and Evolution* 15:266–281.
+:::
+
+---
+
+## Por que começar por aqui
+
+Um levantamento honesto da literatura ecológica encontra os mesmos quatro
+problemas repetidamente. Eles não são de matemática — são de **prática**.
+
+1. Pergunta focada
+2. Modelagem da dependência
+3. Tamanhos de efeito
+4. Reprodutibilidade
+
+Este curso inteiro é uma tentativa de instalar esses quatro hábitos.
+
+---
+
+## Princípio 1 — Pergunta focada
+
+Uma pergunta que a análise pode responder com **um parâmetro**.
+
+| Em vez de | Escreva |
+|---|---|
+| "investigar a relação entre urbanização e anuros" | "qual a mudança esperada na riqueza de anuros por 10 % de aumento em área impermeabilizada?" |
+| "verificar se há efeito do tratamento" | "qual a diferença média de massa entre tratamento e controle, e com que incerteza?" |
+
+::: {.nota}
+A segunda coluna já determina o modelo. A primeira permite justificar
+qualquer coisa depois.
+:::
+
+---
+
+## Princípio 2 — Modelar a dependência
+
+Observações do mesmo transecto, da mesma poça, do mesmo indivíduo, do
+mesmo ano **não são independentes**.
+
+Ignorar isso não é um detalhe técnico: inflaciona a confiança em efeitos
+que talvez não existam.
+
+→ É o Encontro 7 inteiro.
+
+---
+
+## Princípio 3 — Tamanhos de efeito
+
+Um valor de *p* responde "consigo distinguir de zero?".
+
+A biologia quer saber **quanto**, **em que direção** e **com que
+incerteza**.
+
+::: {.definicao}
+Coeficiente com unidade e intervalo, na escala da resposta. Sempre.
+:::
+
+---
+
+## Princípio 4 — Reprodutibilidade
+
+Código e dados disponíveis, ambiente declarado, análise que roda do zero
+em outra máquina.
+
+Não é burocracia de revisor. É a única forma de você mesmo conseguir
+refazer a análise quando o revisor pedir uma alteração — dezoito meses
+depois.
+
+→ Bloco 6 de hoje.
+
+---
+
+# 3. A pergunta vem antes {.secao}
+
+---
+
+## HARKing
+
+::: {.definicao}
+***Hypothesizing After the Results are Known*** — formular a hipótese
+depois de ver o resultado, e apresentá-la como se fosse anterior.
+:::
+
+O problema não é olhar os dados. É **apresentar como confirmatório** o
+que foi exploratório.
+
+Consequência estatística direta: o valor de *p* deixa de significar o
+que ele afirma significar.
+
+---
+
+## p-hacking
+
+Não é fraude deliberada, na maior parte das vezes. É a soma de decisões
+razoáveis tomadas uma de cada vez:
+
+- excluir aquele outlier estranho;
+- testar com e sem a covariável;
+- transformar a resposta se não der significativo;
+- parar de coletar quando *p* < 0,05;
+- analisar três respostas e reportar a que "funcionou".
+
+::: {.nota}
+Cada passo é defensável isoladamente. Juntos, garantem um resultado
+significativo a partir de ruído.
+:::
+
+---
+
+## Confirmatório × exploratório
+
+| | Confirmatório | Exploratório |
+|---|---|---|
+| Hipótese | anterior aos dados | emerge dos dados |
+| Nº de modelos | poucos, definidos *a priori* | muitos |
+| Valor de *p* | interpretável | descritivo |
+| O que produz | um teste | uma hipótese para testar depois |
+
+**As duas são ciência legítima.** O que não é legítimo é trocar o rótulo.
+
+---
+
+## PICO / FINER
+
+Duas estruturas emprestadas da área biomédica para afiar a pergunta:
+
+**PICO** — População, Intervenção (ou exposição), Comparação, *Outcome*.
+
+**FINER** — *Feasible, Interesting, Novel, Ethical, Relevant*.
+
+::: {.definicao}
+Exercício de 5 min: escrevam a pergunta do capítulo de vocês no formato
+PICO. Quem não conseguir preencher os quatro campos descobriu algo
+importante sobre o próprio projeto.
+:::
+
+---
+
+## Pré-registro
+
+Registrar pergunta, delineamento e plano de análise **antes** de coletar
+ou de analisar.
+
+- [OSF](https://osf.io/) e [AsPredicted](https://aspredicted.org/) —
+  gratuitos, poucos minutos;
+- não impede análise exploratória — apenas separa claramente as duas;
+- em ecologia observacional, registrar **antes de olhar os dados** já
+  resolve a maior parte do problema.
+
+---
+
+# 4. Exploração de dados {.secao}
+
+::: {.nota}
+Protocolo de Zuur, Ieno & Elphick (2010), *Methods in Ecology and
+Evolution*; apresentação dos resultados segundo Zuur & Ieno (2016).
+:::
+
+---
+
+## Por que existe um protocolo
+
+Sem protocolo, exploração vira caça ao resultado.
+
+Com protocolo, é uma **lista de verificação**: oito perguntas, na mesma
+ordem, sempre — antes de ajustar qualquer modelo.
+
+::: {.definicao}
+Explorar dados serve para detectar problemas, não para escolher a
+hipótese.
+:::
+
+---
+
+## Os oito passos
+
+1. Há **outliers** na resposta e nas preditoras?
+2. A **variância** é homogênea?
+3. Qual a **distribuição** da resposta?
+4. Há **excesso de zeros**?
+5. Há **colinearidade** entre preditoras?
+6. Como é a **relação** entre resposta e preditoras?
+7. Há **interações** plausíveis?
+8. As observações são **independentes**?
+
+---
+
+## Passo 1 — Outliers
+
+O gráfico de Cleveland é mais informativo que o boxplot: mostra cada
+observação contra a ordem no arquivo.
+
+```{r}
+#| fig-height: 3.4
+library(tidyverse)
+dados <- read_csv("../dados/dados_com_outliers_e_faltantes.csv")
+
+dados |>
+  mutate(ordem = row_number()) |>
+  ggplot(aes(x = y, y = ordem)) +
+  geom_point(colour = "#1c6e8c") +
+  labs(x = "Valor observado", y = "Ordem no arquivo") +
+  theme_minimal(base_size = 14)
+```
+
+---
+
+## Outlier não é erro
+
+Três perguntas, nesta ordem:
+
+1. É **erro de digitação ou de medida**? → corrija ou remova, e documente.
+2. É uma observação **legítima e extrema**? → mantenha, e escolha um
+   modelo que a acomode.
+3. Está **influenciando o ajuste** desproporcionalmente? → é uma questão
+   de alavancagem, não de exclusão (Encontro 2).
+
+::: {.nota}
+Remover observações porque incomodam o modelo é a forma mais comum de
+p-hacking em ecologia.
+:::
+
+---
+
+## Passo 2 — Homogeneidade de variância
+
+```{r}
+#| fig-height: 3.4
+het <- read_csv("../dados/dados_heterocedasticidade.csv")
+
+ggplot(het, aes(x, y)) +
+  geom_point(alpha = .6, colour = "#1c6e8c") +
+  geom_smooth(method = "lm", se = FALSE, colour = "#144f64") +
+  labs(x = "Preditora", y = "Resposta") +
+  theme_minimal(base_size = 14)
+```
+
+O leque é visível a olho nu. Guardem: no Encontro 4 isso deixa de ser um
+problema a corrigir e passa a ser uma **informação sobre a distribuição**.
+
+---
+
+## Passo 3 — Distribuição da resposta
+
+```{r}
+#| fig-height: 3.2
+nn <- read_csv("../dados/dados_nao_normais.csv")
+
+ggplot(nn, aes(y)) +
+  geom_histogram(bins = 25, fill = "#1c6e8c", colour = "white") +
+  theme_minimal(base_size = 14) +
+  labs(x = "Resposta", y = "Frequência")
+```
+
+::: {.definicao}
+Atenção: o modelo linear **não** assume que a resposta é normal. Assume
+que o **resíduo** é. Voltaremos a isso no Encontro 2 — é um dos
+mal-entendidos mais caros da estatística aplicada.
+:::
+
+---
+
+## Passo 4 — Excesso de zeros
+
+```{r}
+#| fig-height: 3.2
+ggplot(RK, aes(TOT.N)) +
+  geom_bar(fill = "#1c6e8c") +
+  labs(x = "Anfíbios mortos", y = "Nº de sítios") +
+  theme_minimal(base_size = 14)
+```
+
+Quantos zeros são "demais" depende da distribuição assumida — é uma
+pergunta sobre o modelo, não sobre os dados. Encontro 6.
+
+---
+
+## Passo 5 — Colinearidade
+
+```{r}
+#| fig-height: 3.2
+RK |>
+  select(D.PARK, OPEN.L, L.WAT.C, MONT.S) |>
+  cor(use = "complete.obs") |>
+  round(2)
+```
+
+Preditoras muito correlacionadas não violam premissa nenhuma — elas
+tornam os coeficientes **individualmente não identificáveis**. O modelo
+prediz bem e interpreta mal.
+
+---
+
+## Passos 6 e 7 — Relações e interações
+
+```{r}
+#| fig-height: 3.3
+ggplot(RK, aes(D.PARK, TOT.N)) +
+  geom_point(colour = "#1c6e8c") +
+  geom_smooth(method = "loess", se = FALSE, colour = "#144f64") +
+  labs(x = "Distância ao parque (m)", y = "Anfíbios mortos") +
+  theme_minimal(base_size = 14)
+```
+
+Decrescente e claramente não linear. Uma reta ajustada aqui erraria de
+forma sistemática, não aleatória.
+
+---
+
+## Passo 8 — Independência
+
+A pergunta que **não** se responde com gráfico: responde-se olhando o
+**delineamento amostral**.
+
+- As observações vêm dos mesmos sítios em datas diferentes?
+- Do mesmo indivíduo?
+- De sítios vizinhos no espaço?
+
+Se a resposta for sim para alguma, você precisa de efeitos aleatórios
+(Encontro 7) ou de uma estrutura de correlação.
+
+---
+
+## O que NÃO fazer na exploração
+
+- Testar normalidade com Shapiro–Wilk e decidir o modelo a partir disso.
+- Rodar todas as correlações e escolher as significativas.
+- Decidir a hipótese depois de ver os gráficos e apresentá-la como
+  anterior.
+- Remover observações até o pressuposto "passar".
+
+---
+
+# 5. Fluxo reprodutível {.secao}
+
+---
+
+## O problema concreto
+
+Você submete. Volta em 14 meses com "refaça a Figura 3 excluindo os
+juvenis".
+
+E então: em qual das sete pastas está o script que gerou a Figura 3? Que
+versão dos dados ela usou? Por que o número na tabela não bate com o do
+texto?
+
+::: {.definicao}
+Reprodutibilidade é, antes de tudo, um favor que você faz a si mesmo.
+:::
+
+---
+
+## Um projeto, um diretório
+
+```
+meu-projeto/
+├── meu-projeto.Rproj
+├── dados/
+│   ├── brutos/          # nunca editados, nunca sobrescritos
+│   └── processados/
+├── scripts/
+├── figuras/
+└── relatorio.qmd
+```
+
+Regra que resolve metade dos problemas: **dados brutos são
+somente-leitura**. Toda limpeza acontece em código.
+
+---
+
+## Caminhos
+
+```{r}
+#| eval: false
+# Nunca:
+read.csv("/Users/diogo/Documents/projeto-final-v3/dados.csv")
+
+# Sempre:
+library(here)
+read_csv(here("dados", "brutos", "anuros.csv"))
+```
+
+`here()` resolve a partir da raiz do projeto. O script roda na sua
+máquina, na do orientando e no GitHub Actions.
+
+---
+
+## Quarto
+
+Texto, código e resultado no mesmo arquivo. O número do texto **é** o
+número que o código calculou.
+
+````markdown
+A riqueza média foi de `r knitr::inline_expr('round(mean(dados$riqueza), 1)')` espécies.
+````
+
+Nunca mais copiar e colar um resultado — e nunca mais esquecer de
+atualizar o texto quando o dado muda.
+
+---
+
+## git, em três comandos
+
+```bash
+git add .
+git commit -m "Adiciona diagnóstico do modelo Poisson"
+git push
+```
+
+O que você ganha:
+
+- histórico de **por que** cada mudança foi feita;
+- liberdade para experimentar sem medo de quebrar o que funcionava;
+- colaboração sem `analise_final_v2_REALFINAL.R`.
+
+::: {.nota}
+Detalhes em [Happy Git with R](https://happygitwithr.com/).
+:::
+
+---
+
+## FAIR
+
+Dados e código devem ser:
+
+- **F**indable — com identificador persistente (DOI);
+- **A**ccessible — em repositório público (Zenodo, Dryad, OSF);
+- **I**nteroperable — em formato aberto (`.csv`, não `.xlsx` com macro);
+- **R**eusable — com licença e dicionário de variáveis.
+
+Depositar dados aumenta citação e é exigido por um número crescente de
+periódicos.
+
+---
+
+# 6. LLMs em estatística {.secao}
+
+::: {.nota}
+Cooper, N. et al. 2024. Harnessing large language models for coding,
+teaching and inclusion. *Methods in Ecology and Evolution* 15:1757–1763.
+:::
+
+---
+
+## O ponto de partida
+
+Vocês já estão usando. Fingir que não é abdicar de formar critério.
+
+O objetivo deste bloco não é proibir nem endossar. É responder: **para
+que servem, para que não servem, e como declarar o uso.**
+
+---
+
+## O que um LLM faz
+
+Prediz a próxima palavra a partir de um corpus gigantesco.
+
+Ele **não sabe estatística**. Ele sabe como textos sobre estatística
+costumam continuar.
+
+::: {.definicao}
+Consequência direta: é bom em código frequente (`ggplot2`, `dplyr`,
+`lm()`) e ruim em métodos raros ou recentes. Alucinação não é bug — é o
+comportamento esperado de um sistema que prefere plausibilidade a
+verdade.
+:::
+
+---
+
+## Onde ajudam
+
+1. **Explicar código herdado** — o script sem comentários do orientando
+   anterior.
+2. **Comentar código próprio antigo** — aquele de seis meses atrás.
+3. **Traduzir** — exemplo em Python para R; `nlme` para `glmmTMB`.
+4. **Depurar erros crípticos** — são especialmente bons nas mensagens de
+   erro do `lme4`.
+5. **Otimizar** — um laço `for` virando `purrr::map()`.
+6. **Sugerir testes** — para quem começa a escrever funções.
+
+---
+
+## Onde fazem mal
+
+- **Interpretação estatística.** Vão inventar a interpretação de uma
+  variância de efeito aleatório com toda a segurança do mundo.
+- **Métodos ecológicos raros.** `Hmsc`, `mvabund`, `gllvm`, `glmmTMB`
+  com `ziformula` complexa — sub-representados no corpus, alta taxa de
+  alucinação.
+- **Matemática e lógica.** Confundem *log-odds* com *odds*, invertem
+  fórmulas.
+- **Reprodutibilidade.** Mesmo *prompt*, resposta diferente. Versão do
+  modelo agora faz parte do método.
+
+::: {.definicao}
+Terceirize o código. Nunca terceirize o pensamento estatístico.
+:::
+
+---
+
+## Como usar bem
+
+- **Contexto sempre.** Não "faça um GLM"; sim "tenho contagem de girinos
+  em 30 poças, com temperatura e área como covariáveis; quero GLM Poisson
+  com `glmmTMB` e poça como efeito aleatório".
+- **Cole o erro inteiro**, não a paráfrase.
+- **Peça três alternativas** — divergência entre elas é sinal de
+  alucinação.
+- **Peça explicação linha a linha antes de rodar.** Se você não consegue
+  acompanhar, não está pronto para usar aquele código.
+- **Teste em 20 linhas simuladas** antes de escalar.
+
+---
+
+## Declaração e responsabilidade
+
+- Declarar **modelo, versão e que parte do código** foi gerada.
+- *Prompts* críticos vão como material suplementar.
+- **O autor responde pelo código** como se o tivesse escrito. Não existe
+  "o ChatGPT errou".
+- IA **não pode ser coautora** — política vigente em praticamente todos os
+  periódicos da área.
+
+Vale igual no trabalho final desta disciplina.
+
+---
+
+## A frase para levar
+
+::: {.definicao}
+**O LLM escreve o código; você escreve a ciência.**
+:::
+
+---
+
+# Fechamento {.secao}
+
+---
+
+## O que fica de hoje
+
+1. A pergunta vem antes dos dados — e o rótulo confirmatório/exploratório
+   é honestidade básica.
+2. Exploração de dados é **lista de verificação**, não caça ao resultado.
+3. Reprodutibilidade é um favor ao seu eu futuro.
+4. LLM é ferramenta de código, não de interpretação.
+
+---
+
+## Para amanhã
+
+**Leitura:** Gelman, Hill & Vehtari (2020), *Regression and Other
+Stories*, Parte I.
+
+**Exercício:** rode o protocolo de oito passos nos **seus** dados e
+escreva meia página sobre o que encontrou. Traga amanhã — vamos usar nas
+práticas.
+
+**Amanhã de manhã:** teste t, correlação e regressão deixam de ser três
+coisas.
+
+---
+
+## Referências
+
+::: {.nota}
+- Cooper, N. et al. 2024. Harnessing large language models for coding,
+  teaching and inclusion. *Methods in Ecology and Evolution* 15:1757–1763.
+- Kay, M. et al. 2026. A century of inertia in quantitative ecology
+  education. *Methods in Ecology and Evolution*.
+- Popovic, G. et al. 2024. Four principles for improved statistical
+  ecology. *Methods in Ecology and Evolution* 15:266–281.
+- Zuur, A.F., Ieno, E.N. & Elphick, C.S. 2010. A protocol for data
+  exploration to avoid common statistical problems. *Methods in Ecology
+  and Evolution* 1:3–14.
+- Zuur, A.F. & Ieno, E.N. 2016. A protocol for conducting and presenting
+  results of regression-type analyses. *Methods in Ecology and
+  Evolution*.
+- da Silva, F.R. et al. 2022. *Análises Ecológicas no R*. NUPEEA.
+:::

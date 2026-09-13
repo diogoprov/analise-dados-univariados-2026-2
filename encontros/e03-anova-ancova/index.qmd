@@ -1,0 +1,50 @@
+---
+title: "E3 — ANOVA, ANCOVA e interações como modelos lineares"
+order: 3
+description: "ANOVA de um e dois fatores, ANCOVA e interações escritas como `lm()`. Somas de quadrados tipo I, II e III. Comparações planejadas com `emmeans`."
+---
+
+::: {.aula-meta}
+**Terça, 22 de setembro de 2026** · <span class="bloco">manhã</span> · 4,5 h
+:::
+
+Continuação direta do Encontro 2: mais colunas na matriz de delineamento,
+nenhum conceito novo de inferência.
+
+## Slides
+
+[{{< fa solid display >}} Abrir slides](../../slides/e03.html){.btn .btn-outline-primary}
+
+## Conteúdo
+
+1. **ANOVA de um fator** como `lm()` com $k-1$ colunas *dummy*; a tabela
+   de ANOVA como decomposição da soma de quadrados do mesmo ajuste.
+2. **Dois fatores e interação** — o que uma interação é na matriz de
+   delineamento, e o que ela significa biologicamente.
+3. **ANCOVA** — fator mais covariável contínua; a premissa de
+   homogeneidade de inclinações é literalmente a ausência de interação.
+4. **Somas de quadrados I, II e III** com `car::Anova()` — quando dão
+   resultados diferentes e qual usar em delineamento desbalanceado.
+5. **Comparações planejadas e post-hoc** com `emmeans` — e por que
+   comparação planejada é quase sempre melhor do que varrer todos os
+   pares.
+6. **Relato** segundo o *checklist* de Davis & Kay (2023).
+
+## Dados
+
+- [`anova_dois_fatores.csv`](../../dados/anova_dois_fatores.csv)
+- [`Cap7_exercicio1.csv`](../../dados/Cap7_exercicio1.csv)
+
+## Leituras
+
+- **Obrigatória:** Quinn & Keough (2023), caps. 8 e 9.
+- **Complementar:** Gelman, Hill & Vehtari (2020), caps. 10 a 12.
+
+## Recursos externos
+
+- [*Análises Ecológicas no R* — cap. 7](https://analises-ecologicas.com/cap7)
+- [`emmeans` — vinhetas](https://cran.r-project.org/package=emmeans)
+
+---
+
+*Volta para o [índice do curso](../../index.qmd).*

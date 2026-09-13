@@ -1,0 +1,170 @@
+---
+title: "Programa da disciplina"
+subtitle: "Análise de Dados Univariados — PPGBA/UFMS, 2026/2"
+toc: true
+toc-depth: 2
+---
+
+::: {.aula-meta}
+**45 h** · **21 a 25 de setembro de 2026** · dois blocos diários de 4,5 h ·
+**Docente:** Diogo B. Provete
+:::
+
+## Ementa
+
+Análise exploratória de dados e reprodutibilidade. Testes estatísticos
+clássicos redefinidos como modelos lineares. Distribuições de
+probabilidade e a família exponencial. Correlação de Pearson e Spearman.
+Teoria de decisão, erros do tipo I e II. Introdução aos modelos lineares
+generalizados (GLM), incluindo modelos para dados de contagem, binários,
+com excesso de zeros e ordinais. Modelos lineares generalizados mistos
+(GLMM) e suas aplicações em ecologia. Teoria da informação e seleção de
+modelos. Rudimentos de métodos multivariados baseados em modelos e
+modelos conjuntos de distribuição de espécies (JSDM).
+
+## Objetivos
+
+Ao fim da disciplina, o(a) aluno(a) deve ser capaz de:
+
+1. **reconhecer** que testes t, ANOVA, ANCOVA e regressão são o mesmo
+   modelo linear com matrizes de delineamento distintas, e escrever
+   qualquer um deles com `lm()`;
+2. **escolher** a distribuição e a função de ligação adequadas à natureza
+   da variável resposta, justificando a escolha em termos biológicos e
+   estatísticos;
+3. **ajustar e diagnosticar** GLMs e GLMMs em R, identificando
+   sobredispersão, excesso de zeros e problemas de convergência;
+4. **comparar modelos** com critérios de teoria da informação, entendendo
+   os limites da prática de seleção;
+5. **ler e interpretar** uma análise bayesiana simples ajustada com
+   `brms`, incluindo diagnóstico de convergência;
+6. **relatar** uma análise de forma reproduzível e completa, segundo
+   protocolos publicados.
+
+## Duas espinhas dorsais
+
+**Tudo é modelo linear.** Os testes clássicos entram como casos
+particulares de `lm()` com matrizes de delineamento distintas, seguindo
+[Lindeløv](https://lindeloev.github.io/tests-as-linear/) e Gelman, Hill &
+Vehtari (2020).
+
+**A ponte bayesiana é distribuída, não paralela.** Em vez de um bloco
+bayesiano isolado no fim, a mesma pergunta e os mesmos dados são
+ajustados nos dois arcabouços: ao final do Encontro 8 (GLMM em `brms`) e
+no bloco de LOO/WAIC do Encontro 9.
+
+## Cronograma
+
+| Dia | Data | Manhã (4,5 h) | Tarde (4,5 h) |
+|:--|:--|:--|:--|
+| 1 | seg 21/09 | **E1** — EDA, reprodutibilidade e literacia em IA | **E2** — O modelo linear como arcabouço unificador |
+| 2 | ter 22/09 | **E3** — ANOVA, ANCOVA e interações como `lm()` | **E4** — Distribuições e a família exponencial |
+| 3 | qua 23/09 | **E5** — GLM I: verossimilhança, binomial e Poisson | **E6** — GLM II: diagnóstico, sobredispersão, zeros e ordinais |
+| 4 | qui 24/09 | **E7** — GLMM I: por que efeitos aleatórios | **E8** — GLMM II: `lme4`/`glmmTMB` e a ponte com `brms` |
+| 5 | sex 25/09 | **E9** — Teoria da informação e seleção de modelos | **E10** — Multivariados baseados em modelos e JSDM |
+
+O detalhamento de cada encontro está na [página inicial](index.qmd).
+
+## Pré-requisitos
+
+Familiaridade com R no nível da disciplina *Introdução à Linguagem R*
+(PPGEC/UFMS) — objetos, pacotes, `tidyverse`, `ggplot2`. Quem não cursou
+deve percorrer os [capítulos 4 a 6 de *Análises Ecológicas no
+R*](https://analises-ecologicas.com) antes do primeiro dia.
+
+Não se pressupõe conhecimento prévio de GLM, GLMM ou estatística
+bayesiana.
+
+## Metodologia
+
+Aulas expositivas intercaladas com prática em R. Cada encontro abre com
+20 min de ***productive failure*** (Kay et al. 2026, Box 1): pergunta
+ecológica e dados apresentados **antes** do método, proposta de análise
+escrita em grupos pequenos e apresentação de 1 min por grupo. Os grupos
+são formados deliberadamente com formação quantitativa heterogênea.
+
+Cada encontro tem uma leitura obrigatória e uma opcional, indicadas na
+página do encontro.
+
+## Avaliação
+
+**Relatório Quarto reproduzível** com dados próprios ou de repositório
+aberto, contendo:
+
+1. objetivo, variáveis, método estatístico e implementação, seguindo o
+   *checklist* de Davis & Kay (2023);
+2. análise exploratória seguindo o protocolo de Zuur & Ieno (2016);
+3. ajuste de GLM ou GLMM apropriado à natureza da resposta;
+4. diagnóstico com `DHARMa`;
+5. comparação de modelos com justificativa;
+6. interpretação em linguagem biológica.
+
+**Extensão bayesiana opcional (recomendada):** reajuste em `brms` com
+relato segundo o BARG (Kruschke 2021).
+
+Em trabalhos feitos em grupo, as iniciais dos autores nos Métodos seguem
+o **MeRIT** (Nakagawa et al. 2023).
+
+O uso de modelos de linguagem deve ser declarado conforme discutido no
+Encontro 1 — modelo, versão, que porção do código foi gerada e quem
+responde por ela.
+
+## Bibliografia
+
+### Obrigatória
+
+- Bolker, B.M. et al. 2009. Generalized linear mixed models: a practical
+  guide for ecology and evolution. *Trends in Ecology & Evolution*.
+- Burnham, K.P. & Anderson, D.R. 2002. *Model Selection and Multimodel
+  Inference: a practical information-theoretic approach*. 2ª ed.
+  Springer. — caps. 2–4.
+- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** &
+  Vancine, M.A. 2022. *Análises Ecológicas no R*. NUPEEA.
+  <https://analises-ecologicas.com> — caps. 4–9.
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. *Regression and Other
+  Stories*. Cambridge University Press.
+- Ovaskainen, O. & Abrego, N. 2020. *Joint Species Distribution
+  Modelling*. Cambridge University Press. — caps. 1–5.
+- Popovic, G. et al. 2024. Four principles for improved statistical
+  ecology. *Methods in Ecology and Evolution* 15:266–281. — **leitura
+  pré-curso**.
+
+### Complementar
+
+- Agresti, A. 2015. *Foundations of Linear and Generalized Linear
+  Models*. Wiley.
+- Cooper, N. et al. 2024. Harnessing large language models for coding,
+  teaching and inclusion. *Methods in Ecology and Evolution*
+  15:1757–1763.
+- Davis, S. & Kay, M. 2023. *Ecosphere*. doi:10.1002/ecs2.4539 —
+  *checklist* de relato estatístico.
+- Field, A. 2022. *Discovering Statistics Using R*. Sage.
+- Gotelli, N.J. & Ellison, A.M. 2011. *Princípios de Estatística em
+  Ecologia*. Artmed.
+- Harrison, X.A. et al. 2018. A brief introduction to mixed effects
+  modelling and multi-model inference in ecology. *PeerJ*.
+- Kay, M. et al. 2026. A century of inertia in quantitative ecology
+  education. *Methods in Ecology and Evolution*.
+- Kruschke, J.K. 2021. Bayesian Analysis Reporting Guidelines. *Nature
+  Human Behaviour*. doi:10.1038/s41562-021-01177-7
+- Kurz, A.S. *Statistical Rethinking with brms, ggplot2, and the
+  tidyverse*, 2ª ed.
+  <https://bookdown.org/content/70a06054-8138-4d90-aaa0-895f57aab1b4/>
+- McElreath, R. 2020. *Statistical Rethinking*. 2ª ed. CRC Press.
+- Quinn, G.P. & Keough, M.J. 2023. *Experimental Design and Data
+  Analysis for Biologists*. 2ª ed. Cambridge University Press.
+- Zuur, A.F. et al. 2009. *Mixed Effects Models and Extensions in
+  Ecology with R*. Springer.
+- Zuur, A.F. & Ieno, E.N. 2016. A protocol for conducting and presenting
+  results of regression-type analyses. *Methods in Ecology and
+  Evolution*.
+
+### Recursos online
+
+- [*tests-as-linear* — Jonas Kristoffer Lindeløv](https://lindeloev.github.io/tests-as-linear/)
+- [Canal do YouTube @DiogoBProvete](https://www.youtube.com/@DiogoBProvete) —
+  estatística para as ciências da vida, em português.
+- [Introdução à Linguagem R](https://provetelab.org/teaching/intro-r/) —
+  disciplina pré-requisito.
+- [Análises multidimensionais](https://provetelab.org/teaching/multidimensionais/) —
+  continuação natural deste curso.

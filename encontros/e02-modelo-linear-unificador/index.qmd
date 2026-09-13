@@ -1,0 +1,54 @@
+---
+title: "E2 — O modelo linear como arcabouço unificador"
+order: 2
+description: "Teste t e regressão como o mesmo `lm()`. Matriz de delineamento explicitada. Dummy e effect coding, `contr.treatment` e `contr.sum`. Interpretação de coeficientes."
+---
+
+::: {.aula-meta}
+**Segunda, 21 de setembro de 2026** · <span class="bloco">tarde</span> · 4,5 h
+:::
+
+O encontro que reorganiza o que você já sabe. Teste t, correlação e
+regressão deixam de ser três procedimentos e passam a ser um modelo só,
+com matrizes de delineamento diferentes.
+
+## Slides
+
+[{{< fa solid display >}} Abrir slides](../../slides/e02.html){.btn .btn-outline-primary}
+
+## Conteúdo
+
+1. **Anatomia de um modelo linear** — $y = X\beta + \varepsilon$, o que
+   cada peça significa e onde entra a premissa de normalidade (no
+   resíduo, não nos dados).
+2. **Teste t é `lm(y ~ grupo)`** — a matriz de delineamento 0/1 escrita à
+   mão, ao lado da saída de `t.test()`. Mesmos números.
+3. **Correlação e regressão** — o que muda e o que não muda; Pearson
+   *versus* Spearman.
+4. **Codificação de fatores** — `contr.treatment` (padrão do R) e
+   `contr.sum`; por que o intercepto significa coisas diferentes em cada
+   um, e por que isso derruba interpretações.
+5. **Interpretação de coeficientes** — na escala da resposta, com unidade.
+6. **Colinearidade** — VIF, e por que ela não é um problema de "violação
+   de premissa", mas de identificabilidade.
+
+## Prática
+
+Exercícios com `palmerpenguins` e com os dados de diagnóstico. Quem
+trouxe dados próprios já ajusta o primeiro `lm()` neles.
+
+## Leituras
+
+- **Obrigatória:** Gelman, Hill & Vehtari (2020), *Regression and Other
+  Stories*, Parte I.
+- **Complementar:** Agresti (2015), caps. 1 a 3.
+- **Apoio:** [Lindeløv, *Common statistical tests are linear models*](https://lindeloev.github.io/tests-as-linear/)
+
+## Recursos externos
+
+- [*Análises Ecológicas no R* — cap. 7](https://analises-ecologicas.com/cap7)
+- [Vídeo: modelos lineares](https://youtu.be/qXJSlaRW1oU) — canal @DiogoBProvete
+
+---
+
+*Volta para o [índice do curso](../../index.qmd).*
