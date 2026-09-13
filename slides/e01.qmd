@@ -10,6 +10,7 @@ format:
     theme: [default, theme.scss]
     slide-number: c/t
     show-slide-number: all
+    auto-stretch: false
     preview-links: auto
     history: false
     footer: "Análise de Dados Univariados · PPGBA/UFMS · 2026/2"
@@ -360,12 +361,13 @@ observação contra a ordem no arquivo.
 ```{r}
 #| fig-height: 3.4
 library(tidyverse)
-dados <- read_csv("../dados/dados_com_outliers_e_faltantes.csv")
+dados <- read_delim("../dados/dados_com_outliers_e_faltantes.csv", delim = ";")
 
 dados |>
   mutate(ordem = row_number()) |>
-  ggplot(aes(x = y, y = ordem)) +
-  geom_point(colour = "#1c6e8c") +
+  ggplot(aes(x = Pontuacao, y = ordem, colour = Grupo)) +
+  geom_point() +
+  scale_colour_manual(values = c("#1c6e8c", "#c08a3e")) +
   labs(x = "Valor observado", y = "Ordem no arquivo") +
   theme_minimal(base_size = 14)
 ```
@@ -392,18 +394,41 @@ p-hacking em ecologia.
 ## Passo 2 — Homogeneidade de variância
 
 ```{r}
-#| fig-height: 3.4
-het <- read_csv("../dados/dados_heterocedasticidade.csv")
+#| fig-height: 3.2
+het <- read_delim("../dados/dados_heterocedasticidade.csv", delim = ";")
 
-ggplot(het, aes(x, y)) +
-  geom_point(alpha = .6, colour = "#1c6e8c") +
-  geom_smooth(method = "lm", se = FALSE, colour = "#144f64") +
-  labs(x = "Preditora", y = "Resposta") +
-  theme_minimal(base_size = 14)
+ggplot(het, aes(Dificuldade, Desempenho, fill = Metodo)) +
+  geom_boxplot(alpha = .75) +
+  scale_fill_manual(values = c("#1c6e8c", "#c08a3e", "#6b8f71")) +
+  theme_minimal(base_size = 14) +
+  labs(x = "Dificuldade", y = "Desempenho")
 ```
 
-O leque é visível a olho nu. Guardem: no Encontro 4 isso deixa de ser um
-problema a corrigir e passa a ser uma **informação sobre a distribuição**.
+---
+
+## Passo 2 — quanto difere?
+
+```{r}
+het |>
+  group_by(Metodo, Dificuldade) |>
+  summarise(media = round(mean(Desempenho), 1),
+            dp    = round(sd(Desempenho), 1), .groups = "drop")
+```
+
+Olhem a coluna `dp`: as médias de `M1` e `M2` são parecidas, mas a
+dispersão de `M2` é várias vezes maior. A variância **depende do nível da
+preditora** — exatamente o que o modelo linear supõe que não acontece.
+
+::: {.nota}
+Repare que um teste de médias aqui responderia "não há diferença" e
+perderia o achado mais interessante do conjunto de dados.
+:::
+
+::: {.definicao}
+Guardem: no Encontro 4 isso deixa de ser um problema a corrigir e passa a
+ser uma **informação sobre a distribuição** — em muitas famílias da
+família exponencial, a variância é função da média por construção.
+:::
 
 ---
 
@@ -411,12 +436,13 @@ problema a corrigir e passa a ser uma **informação sobre a distribuição**.
 
 ```{r}
 #| fig-height: 3.2
-nn <- read_csv("../dados/dados_nao_normais.csv")
+nn <- read_delim("../dados/dados_nao_normais.csv", delim = ";")
 
-ggplot(nn, aes(y)) +
-  geom_histogram(bins = 25, fill = "#1c6e8c", colour = "white") +
+ggplot(nn, aes(Tempo_Reacao, fill = Tratamento)) +
+  geom_histogram(bins = 25, colour = "white", alpha = .8) +
+  scale_fill_manual(values = c("#1c6e8c", "#c08a3e")) +
   theme_minimal(base_size = 14) +
-  labs(x = "Resposta", y = "Frequência")
+  labs(x = "Tempo de reação", y = "Frequência")
 ```
 
 ::: {.definicao}

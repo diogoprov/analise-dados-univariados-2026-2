@@ -10,6 +10,7 @@ format:
     theme: [default, theme.scss]
     slide-number: c/t
     show-slide-number: all
+    auto-stretch: false
     preview-links: auto
     history: false
     footer: "Análise de Dados Univariados · PPGBA/UFMS · 2026/2"
