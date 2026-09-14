@@ -624,7 +624,6 @@ já obtida.
 ## Na prática
 
 ```{r}
-#| eval: false
 library(brms)
 library(loo)
 
@@ -665,7 +664,7 @@ níveis?" não tem resposta única — está entre 1 e 9, conforme o
 O PSIS-LOO avisa quando a aproximação falha, observação por observação.
 
 ```{r}
-#| eval: false
+#| fig-height: 3.4
 loo_a <- loo(m_a)
 print(loo_a)        # valores de k-hat; > 0,7 é problema
 plot(loo_a)

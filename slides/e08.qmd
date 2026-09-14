@@ -238,7 +238,6 @@ Relate os dois.
 ## A mesma fórmula
 
 ```{r}
-#| eval: false
 library(brms)
 
 m_bayes <- brm(Richness ~ NAP + (1 | Beach),
@@ -320,7 +319,7 @@ evidência os seus dados carregam.
 | `max_treedepth` atingido | ineficiência | `max_treedepth = 15` |
 
 ```{r}
-#| eval: false
+#| fig-height: 5.0
 plot(m_bayes)                 # traços das cadeias
 mcmc_plot(m_bayes, type = "rhat")
 mcmc_plot(m_bayes, type = "neff")
@@ -331,7 +330,7 @@ mcmc_plot(m_bayes, type = "neff")
 ## Checagem preditiva posterior
 
 ```{r}
-#| eval: false
+#| fig-height: 4.6
 pp_check(m_bayes, ndraws = 100)
 pp_check(m_bayes, type = "stat", stat = "max")
 pp_check(m_bayes, type = "stat", stat = \(y) mean(y == 0))

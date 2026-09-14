@@ -578,7 +578,6 @@ que é **o mesmo modelo** — e começar a usar a notação que vai valer até o
 fim do curso.
 
 ```{r}
-#| eval: false
 library(brms)
 
 m_bayes <- brm(body_mass_g ~ bill_length_mm, data = pinguins,
@@ -652,7 +651,7 @@ boa parte da ecologia de campo.
 ## O que você ganha de graça
 
 ```{r}
-#| eval: false
+#| fig-height: 3.2
 # distribuição preditiva posterior — o que o modelo acha
 # que seriam novos dados
 pp_check(m_bayes, ndraws = 50)
