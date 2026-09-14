@@ -606,13 +606,10 @@ MONT.S      -0.111084050  0.1332850330</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>global <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> OPEN.L <span class="sc">+</span> MONT.S <span class="sc">+</span> L.WAT.C <span class="sc">+</span></span>
 <span id="cb15-2"><a></a>                         D.WAT.RES <span class="sc">+</span> URBAN <span class="sc">+</span> N.PATCH <span class="sc">+</span> P.EDGE, <span class="at">data =</span> RK)</span>
 <span id="cb15-3"><a></a></span>
-<span id="cb15-4"><a></a><span class="co"># o dredge() exige na.action = "na.fail"; devolvemos a opção logo depois,</span></span>
-<span id="cb15-5"><a></a><span class="co"># senão ela vale para o resto do documento</span></span>
-<span id="cb15-6"><a></a>antigo <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">na.action =</span> <span class="st">"na.fail"</span>)</span>
-<span id="cb15-7"><a></a>garimpo <span class="ot">&lt;-</span> MuMIn<span class="sc">::</span><span class="fu">dredge</span>(global)          <span class="co"># 256 modelos</span></span>
-<span id="cb15-8"><a></a><span class="fu">options</span>(antigo)</span>
-<span id="cb15-9"><a></a></span>
-<span id="cb15-10"><a></a><span class="fu">head</span>(garimpo, <span class="dv">5</span>)                          <span class="co"># as cinco melhores</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-4"><a></a>antigo  <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">na.action =</span> <span class="st">"na.fail"</span>)   <span class="co"># o dredge() exige; desfazemos abaixo</span></span>
+<span id="cb15-5"><a></a>garimpo <span class="ot">&lt;-</span> MuMIn<span class="sc">::</span><span class="fu">dredge</span>(global)           <span class="co"># 256 modelos</span></span>
+<span id="cb15-6"><a></a><span class="fu">options</span>(antigo)</span>
+<span id="cb15-7"><a></a><span class="fu">head</span>(garimpo, <span class="dv">5</span>)                           <span class="co"># as cinco melhores</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Global model call: MASS::glm.nb(formula = TOT.N ~ D.PARK_km + OPEN.L + MONT.S + 
     L.WAT.C + D.WAT.RES + URBAN + N.PATCH + P.EDGE, data = RK, 

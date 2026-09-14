@@ -470,13 +470,10 @@ diferentes em modelos diferentes.
 global <- MASS::glm.nb(TOT.N ~ D.PARK_km + OPEN.L + MONT.S + L.WAT.C +
                          D.WAT.RES + URBAN + N.PATCH + P.EDGE, data = RK)
 
-# o dredge() exige na.action = "na.fail"; devolvemos a opção logo depois,
-# senão ela vale para o resto do documento
-antigo <- options(na.action = "na.fail")
-garimpo <- MuMIn::dredge(global)          # 256 modelos
+antigo  <- options(na.action = "na.fail")   # o dredge() exige; desfazemos abaixo
+garimpo <- MuMIn::dredge(global)           # 256 modelos
 options(antigo)
-
-head(garimpo, 5)                          # as cinco melhores
+head(garimpo, 5)                           # as cinco melhores
 ```
 
 ::: {.definicao}

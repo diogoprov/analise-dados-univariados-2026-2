@@ -209,7 +209,7 @@ certo porque nós escrevemos a verdade.**
 ## E quanto varia de amostra para amostra? {.smaller}
 
 ```{r}
-#| fig-height: 2.7
+#| fig-height: 2.4
 simula_uma <- function(i) {
   x <- runif(120, 20, 60)
   y <- 3 + 0.45 * x + rnorm(120, 0, 2)
@@ -659,7 +659,7 @@ boa parte da ecologia de campo.
 ## O que você ganha de graça {.smaller}
 
 ```{r}
-#| fig-height: 2.8
+#| fig-height: 2.4
 # distribuição preditiva posterior — o que o modelo acha
 # que seriam novos dados
 pp_check(m_bayes, ndraws = 50)
@@ -740,7 +740,11 @@ plot(m_mult)
 ```{r}
 #| fig-height: 4.4
 library(performance)
-check_model(m_mult)
+
+# o plot() explicito e obrigatorio: check_model() devolve o objeto de forma
+# invisivel, e o knitr so imprime o resultado visivel do ultimo comando --
+# sem ele o chunk roda, nao desenha nada e nao reclama
+plot(check_model(m_mult))
 ```
 
 ---
