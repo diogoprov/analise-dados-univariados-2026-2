@@ -286,6 +286,28 @@ argumentos de MCMC.
 
 ---
 
+## E o que ele devolve
+
+```{r}
+summary(m_bayes)
+```
+
+---
+
+## Lendo a saída
+
+::: {.definicao}
+`Rhat` em 1,00 e `ESS` na casa dos milhares: as quatro cadeias
+convergiram, e a amostra da posterior é utilizável. Guardem esses dois
+números — no próximo slide eles reaparecem de outro jeito.
+:::
+
+A estimativa de `NAP` é praticamente a mesma do `glmer` do bloco 1. O que
+muda é o que está em volta dela: em lugar de erro-padrão e intervalo de
+confiança, um desvio da posterior e um intervalo de credibilidade.
+
+---
+
 ## O que acontece se insistirmos na NB
 
 Ajustando o mesmo modelo com `family = negbinomial()` nestes dados:
