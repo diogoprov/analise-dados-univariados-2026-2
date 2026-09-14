@@ -737,12 +737,14 @@ plot(m_mult)
 
 ## Versão moderna {.smaller}
 
+<!-- NAO baixe o fig-height abaixo de 5: os seis paineis do check_model()
+     nao cabem num dispositivo menor, o grid desiste e o knitr descarta a
+     figura sem erro nem aviso. Medido em 14/09; ver
+     claude/armadilhas-do-render.md no projeto. -->
+
 ```{r}
 #| fig-height: 5.2
 library(performance)
-
-# fig-height >= 5 e obrigatorio: os seis paineis nao cabem num dispositivo
-# menor, o grid desiste e o knitr descarta a figura sem erro nem aviso
 plot(check_model(m_mult))
 ```
 

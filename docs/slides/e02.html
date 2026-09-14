@@ -1033,12 +1033,13 @@ body_mass_g                 0.59         -0.47              0.87        1.00</co
 </section>
 <section id="versão-moderna" class="slide level2 smaller">
 <h2>Versão moderna</h2>
+<!-- NAO baixe o fig-height abaixo de 5: os seis paineis do check_model()
+     nao cabem num dispositivo menor, o grid desiste e o knitr descarta a
+     figura sem erro nem aviso. Medido em 14/09; ver
+     claude/armadilhas-do-render.md no projeto. -->
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a><span class="fu">library</span>(performance)</span>
-<span id="cb54-2"><a></a></span>
-<span id="cb54-3"><a></a><span class="co"># fig-height &gt;= 5 e obrigatorio: os seis paineis nao cabem num dispositivo</span></span>
-<span id="cb54-4"><a></a><span class="co"># menor, o grid desiste e o knitr descarta a figura sem erro nem aviso</span></span>
-<span id="cb54-5"><a></a><span class="fu">plot</span>(<span class="fu">check_model</span>(m_mult))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb54-2"><a></a><span class="fu">plot</span>(<span class="fu">check_model</span>(m_mult))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
