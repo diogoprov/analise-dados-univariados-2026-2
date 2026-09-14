@@ -735,14 +735,17 @@ plot(m_mult)
 
 ---
 
-## Versão moderna
+## Versão moderna {.smaller}
 
 ```{r}
-#| fig-height: 4.0
-#| eval: false
+#| fig-height: 4.4
 library(performance)
 check_model(m_mult)
 ```
+
+---
+
+## Por que esta é melhor
 
 ::: {.nota}
 `performance::check_model()` produz os mesmos diagnósticos com intervalos

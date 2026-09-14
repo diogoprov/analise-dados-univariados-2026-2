@@ -196,18 +196,32 @@ significam nada.
 
 ---
 
-## Diagnóstico
+## Diagnóstico {.smaller}
 
 ```{r}
-#| eval: false
+#| fig-height: 3.2
 library(DHARMa)
 
+set.seed(2026)            # o DHARMa simula: sem semente, cada render difere
 res <- simulateResiduals(m_nb, n = 1000)
 plot(res)
-testDispersion(res)
-testZeroInflation(res)
+```
 
-# resíduos agrupados por praia — detecta estrutura não modelada
+---
+
+## Dispersão e zeros {.smaller}
+
+```{r}
+testDispersion(res, plot = FALSE)
+testZeroInflation(res, plot = FALSE)
+```
+
+---
+
+## Resíduos praia a praia {.smaller}
+
+```{r}
+#| fig-height: 3.0
 plotResiduals(res, form = rikz$Beach)
 ```
 
@@ -361,10 +375,9 @@ técnico a contornar aumentando iterações.
 
 ---
 
-## Priors
+## Priors {.smaller}
 
 ```{r}
-#| eval: false
 get_prior(Richness ~ NAP + (1 | Beach), family = poisson(), data = rikz)
 
 priors <- c(prior(normal(0, 1),     class = "b"),

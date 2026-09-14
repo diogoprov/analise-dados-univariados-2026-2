@@ -1031,12 +1031,15 @@ body_mass_g                 0.59         -0.47              0.87        1.00</co
 </tbody>
 </table>
 </section>
-<section id="versão-moderna" class="slide level2">
+<section id="versão-moderna" class="slide level2 smaller">
 <h2>Versão moderna</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a><span class="fu">library</span>(performance)</span>
 <span id="cb54-2"><a></a><span class="fu">check_model</span>(m_mult)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+</section>
+<section id="por-que-esta-é-melhor" class="slide level2">
+<h2>Por que esta é melhor</h2>
 <div class="nota">
 <p><code>performance::check_model()</code> produz os mesmos diagnósticos com intervalos de referência simulados — muito mais fácil de julgar do que “isso parece um padrão?”. A partir do Encontro 6, com GLMs, passamos a usar <code>DHARMa</code>, que é a única forma honesta de diagnosticar resíduos não gaussianos.</p>
 </div>

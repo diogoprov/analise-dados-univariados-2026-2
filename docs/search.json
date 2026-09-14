@@ -207,7 +207,14 @@
     "href": "slides/e09.html#model-averaging",
     "title": "Teoria da informação e seleção de modelos",
     "section": "Model averaging",
-    "text": "Model averaging\nQuando vários modelos têm suporte parecido, escolher um e ignorar os outros descarta incerteza real.\n\nlibrary(MuMIn)\n\nmed &lt;- model.avg(modelos, fit = TRUE)\nsummary(med)\nconfint(med)\n\n\nDuas formas de média: condicional (só sobre os modelos em que o termo aparece) e completa (contando zero onde ele não aparece). Diga qual usou — elas dão respostas diferentes."
+    "text": "Model averaging\nQuando vários modelos têm suporte parecido, escolher um e ignorar os outros descarta incerteza real.\n\nlibrary(MuMIn)\n\nmed &lt;- model.avg(modelos, fit = TRUE)\n\n\nDuas formas de média: condicional (só sobre os modelos em que o termo aparece) e completa (contando zero onde ele não aparece). Diga qual usou — elas dão respostas diferentes."
+  },
+  {
+    "objectID": "slides/e09.html#os-coeficientes-médios",
+    "href": "slides/e09.html#os-coeficientes-médios",
+    "title": "Teoria da informação e seleção de modelos",
+    "section": "Os coeficientes médios",
+    "text": "Os coeficientes médios\n\nround(coef(med), 3)       # médias condicionais\n\n(Intercept)   D.PARK_km     L.WAT.C   D.WAT.RES      OPEN.L      MONT.S \n      4.332      -0.118       0.130      -0.001      -0.015       0.011 \n\nconfint(med)              # intervalos, propagando a incerteza entre modelos\n\n                   2.5 %        97.5 %\n(Intercept)  3.962566290  4.7008441736\nD.PARK_km   -0.141374075 -0.0949463300\nL.WAT.C     -0.036890677  0.2968332596\nD.WAT.RES   -0.001472483 -0.0002413064\nOPEN.L      -0.024687381 -0.0051434794\nMONT.S      -0.111084050  0.1332850330\n\n\n\nsummary(med) traz o relatório completo, com as duas formas de média e o peso de cada modelo. Aqui ficam só os números que entram no texto."
   },
   {
     "objectID": "slides/e09.html#quando-mediar-faz-sentido",
@@ -221,7 +228,7 @@
     "href": "slides/e09.html#o-garimpo",
     "title": "Teoria da informação e seleção de modelos",
     "section": "O garimpo",
-    "text": "O garimpo\n\nglobal &lt;- MASS::glm.nb(TOT.N ~ D.PARK_km + OPEN.L + MONT.S + L.WAT.C +\n                         D.WAT.RES + URBAN + N.PATCH + P.EDGE, data = RK)\nMuMIn::dredge(global)     # 256 modelos\n\n\nCom 8 preditoras são 256 modelos; com 20, mais de um milhão. Alguns vão ter AICc ótimo por acaso."
+    "text": "O garimpo\n\nglobal &lt;- MASS::glm.nb(TOT.N ~ D.PARK_km + OPEN.L + MONT.S + L.WAT.C +\n                         D.WAT.RES + URBAN + N.PATCH + P.EDGE, data = RK)\n\n# o dredge() exige na.action = \"na.fail\"; devolvemos a opção logo depois,\n# senão ela vale para o resto do documento\nantigo &lt;- options(na.action = \"na.fail\")\ngarimpo &lt;- MuMIn::dredge(global)          # 256 modelos\noptions(antigo)\n\nhead(garimpo, 5)                          # as cinco melhores\n\nGlobal model call: MASS::glm.nb(formula = TOT.N ~ D.PARK_km + OPEN.L + MONT.S + \n    L.WAT.C + D.WAT.RES + URBAN + N.PATCH + P.EDGE, data = RK, \n    init.theta = 9.712099248, link = log)\n---\nModel selection table \n    (Int) D.PAR_km D.WAT.RES L.WAT.C    MON.S    N.PAT     OPE.L    P.EDG\n116 3.616  -0.1282 0.0004501                  -0.03522 -0.009345 0.007271\n120 3.697  -0.1311 0.0004407 0.08841          -0.03322 -0.009714 0.006469\n244 3.629  -0.1298 0.0004750                  -0.03739 -0.009061 0.007375\n124 3.621  -0.1283 0.0004416         0.009768 -0.03476 -0.009165 0.007163\n114 3.784  -0.1138                            -0.03480 -0.009577 0.007155\n         URB df   logLik  AICc delta weight\n116           7 -176.593 369.7  0.00  0.448\n120           8 -175.963 371.3  1.54  0.207\n244 0.009038  8 -176.320 372.0  2.26  0.145\n124           8 -176.535 372.4  2.69  0.117\n114           6 -179.612 373.1  3.36  0.083\nModels ranked by AICc(x) \n\n\n\nCom 8 preditoras são 256 modelos; com 20, mais de um milhão. Alguns vão ter AICc ótimo por acaso."
   },
   {
     "objectID": "slides/e09.html#o-caso-mais-bem-documentado-stepwise",
@@ -746,7 +753,7 @@
     "href": "slides/e05.html#na-prática",
     "title": "GLM I: verossimilhança, binomial e Poisson",
     "section": "Na prática",
-    "text": "Na prática\n\nlibrary(dagitty)\n\ng &lt;- dagitty('dag {\n  Precipitacao -&gt; Area\n  Precipitacao -&gt; Riqueza\n  Area -&gt; Riqueza\n  Area -&gt; Deteccao\n  Riqueza -&gt; Deteccao\n}')\n\nadjustmentSets(g, exposure = \"Area\", outcome = \"Riqueza\")\n\n\nDesenhe o DAG antes de rodar o modelo. Ele diz o que incluir — e a resposta quase nunca é “tudo”."
+    "text": "Na prática\n\nlibrary(dagitty)\n\ng &lt;- dagitty('dag {\n  Precipitacao -&gt; Area\n  Precipitacao -&gt; Riqueza\n  Area -&gt; Riqueza\n  Area -&gt; Deteccao\n  Riqueza -&gt; Deteccao\n}')\n\nadjustmentSets(g, exposure = \"Area\", outcome = \"Riqueza\")\n\n{ Precipitacao }\n\n\n\nDesenhe o DAG antes de rodar o modelo. Ele diz o que incluir — e a resposta quase nunca é “tudo”."
   },
   {
     "objectID": "slides/e05.html#e-por-que-seleção-automática-não-resolve",
@@ -2251,7 +2258,14 @@
     "href": "slides/e02.html#versão-moderna",
     "title": "O modelo linear como arcabouço unificador",
     "section": "Versão moderna",
-    "text": "Versão moderna\n\nlibrary(performance)\ncheck_model(m_mult)\n\n\nperformance::check_model() produz os mesmos diagnósticos com intervalos de referência simulados — muito mais fácil de julgar do que “isso parece um padrão?”. A partir do Encontro 6, com GLMs, passamos a usar DHARMa, que é a única forma honesta de diagnosticar resíduos não gaussianos."
+    "text": "Versão moderna\n\nlibrary(performance)\ncheck_model(m_mult)"
+  },
+  {
+    "objectID": "slides/e02.html#por-que-esta-é-melhor",
+    "href": "slides/e02.html#por-que-esta-é-melhor",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Por que esta é melhor",
+    "text": "Por que esta é melhor\n\nperformance::check_model() produz os mesmos diagnósticos com intervalos de referência simulados — muito mais fácil de julgar do que “isso parece um padrão?”. A partir do Encontro 6, com GLMs, passamos a usar DHARMa, que é a única forma honesta de diagnosticar resíduos não gaussianos."
   },
   {
     "objectID": "slides/e02.html#resíduo-contra-predito-nunca-contra-observado",
@@ -2545,7 +2559,14 @@
     "href": "slides/e06.html#com-o-dharma",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Com o DHARMa",
-    "text": "Com o DHARMa\n\nlibrary(DHARMa)\n\nres &lt;- simulateResiduals(m_rk, n = 1000)\nplot(res)                 # QQ uniforme + resíduo contra predito\ntestDispersion(res)       # sobredispersão\ntestZeroInflation(res)    # excesso de zeros\ntestOutliers(res)\n\n\nTrês razões para usar o DHARMa em vez dos gráficos do plot(): funciona para qualquer família, funciona para modelos mistos (Encontros 7 e 8), e devolve testes com valor de p em vez de “parece um padrão?”."
+    "text": "Com o DHARMa\n\nlibrary(DHARMa)\n\nset.seed(2026)            # o DHARMa simula: sem semente, cada render difere\nres &lt;- simulateResiduals(m_rk, n = 1000)\nplot(res)                 # QQ uniforme + resíduo contra predito\n\n\n\n\n\n\n\n\n\nTrês razões para usar o DHARMa em vez dos gráficos do plot(): funciona para qualquer família, funciona para modelos mistos (Encontros 7 e 8), e devolve testes com valor de p em vez de “parece um padrão?”."
+  },
+  {
+    "objectID": "slides/e06.html#os-mesmos-diagnósticos-com-valor-de-p",
+    "href": "slides/e06.html#os-mesmos-diagnósticos-com-valor-de-p",
+    "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Os mesmos diagnósticos, com valor de p",
+    "text": "Os mesmos diagnósticos, com valor de p\n\ntestDispersion(res, plot = FALSE)       # sobredispersão\n\n\n    DHARMa nonparametric dispersion test via sd of residuals fitted vs.\n    simulated\n\ndata:  simulationOutput\ndispersion = 11.132, p-value &lt; 2.2e-16\nalternative hypothesis: two.sided\n\ntestZeroInflation(res, plot = FALSE)    # excesso de zeros\n\n\n    DHARMa zero-inflation test via comparison to expected zeros with\n    simulation under H0 = fitted model\n\ndata:  simulationOutput\nratioObsSim = 0, p-value = 1\nalternative hypothesis: two.sided\n\ntestOutliers(res, plot = FALSE)\n\n\n    DHARMa bootstrapped outlier test\n\ndata:  res\noutliers at both margin(s) = 8, observations = 52, p-value &lt; 2.2e-16\nalternative hypothesis: two.sided\n percent confidence interval:\n 0.00000000 0.01923077\nsample estimates:\noutlier frequency (expected: 0.00365384615384615 ) \n                                         0.1538462"
   },
   {
     "objectID": "slides/e06.html#lendo-os-gráficos-do-dharma",
@@ -2657,7 +2678,7 @@
     "href": "slides/e06.html#a-rota-robusta",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "A rota robusta",
-    "text": "A rota robusta\n\nlibrary(DHARMa)\n\nres &lt;- simulateResiduals(ziP, n = 1000)\ntestZeroInflation(res)\n\nO DHARMa simula conjuntos de dados a partir do modelo ajustado inteiro, parte zi incluída, e compara a proporção de zeros simulada com a observada. Por ser baseado em simulação, não depende de alguém ter derivado a fórmula certa para cada família."
+    "text": "A rota robusta\n\nlibrary(DHARMa)\n\nset.seed(2026)\nres &lt;- simulateResiduals(ziP, n = 1000)\ntestZeroInflation(res, plot = FALSE)\n\n\n    DHARMa zero-inflation test via comparison to expected zeros with\n    simulation under H0 = fitted model\n\ndata:  simulationOutput\nratioObsSim = 1.0028, p-value = 1\nalternative hypothesis: two.sided\n\n\nO DHARMa simula conjuntos de dados a partir do modelo ajustado inteiro, parte zi incluída, e compara a proporção de zeros simulada com a observada. Por ser baseado em simulação, não depende de alguém ter derivado a fórmula certa para cada família."
   },
   {
     "objectID": "slides/e06.html#lendo-as-duas-tabelas",
@@ -2702,11 +2723,18 @@
     "text": "Com medidas repetidas\n\nm_ordm &lt;- clmm(Black ~ Treatment * Time + (1 | Animal),\n               data = mela, link = \"logit\")\n\n\nCada animal foi medido em vários tempos: as observações não são independentes. O (1 | Animal) é o assunto de amanhã de manhã — e o clmm é a forma padrão de fazer GLMM ordinal, porque nem lme4 nem glmmTMB cobrem bem odds proporcionais."
   },
   {
+    "objectID": "slides/e06.html#o-que-o-clmm-devolve",
+    "href": "slides/e06.html#o-que-o-clmm-devolve",
+    "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "O que o clmm devolve",
+    "text": "O que o clmm devolve\n\nsummary(m_ordm)\n\nCumulative Link Mixed Model fitted with the Laplace approximation\n\nformula: Black ~ Treatment * Time + (1 | Animal)\ndata:    mela\n\n link  threshold nobs logLik AIC    niter     max.grad cond.H \n logit flexible  80   -39.53 101.07 613(2984) 4.61e-06 5.6e+02\n\nRandom effects:\n Groups Name        Variance Std.Dev.\n Animal (Intercept) 7.451    2.73    \nNumber of groups:  Animal 10 \n\nCoefficients:\n                       Estimate Std. Error z value Pr(&gt;|z|)    \nTreatmentNA10uM          0.8333     1.3031   0.639 0.522527    \nTime1h                  -0.9228     1.3780  -0.670 0.503075    \nTime2h                  -0.9318     1.3825  -0.674 0.500333    \nTime3h                  -0.9228     1.3780  -0.670 0.503078    \nTreatmentNA10uM:Time1h -10.1693     2.8920  -3.516 0.000437 ***\nTreatmentNA10uM:Time2h -13.1611     3.3510  -3.927 8.58e-05 ***\nTreatmentNA10uM:Time3h -16.6791     4.0302  -4.139 3.50e-05 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nThreshold coefficients:\n    Estimate Std. Error z value\n2|3  -12.314      3.048  -4.040\n3|4   -6.974      2.185  -3.191\n4|5    1.441      1.317   1.094"
+  },
+  {
     "objectID": "slides/e06.html#verificando-a-premissa",
     "href": "slides/e06.html#verificando-a-premissa",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Verificando a premissa",
-    "text": "Verificando a premissa\nA premissa de odds proporcionais é que o efeito da preditora é o mesmo em todos os limiares. Se não for, o ordinal permite relaxá-la:\n\nnominal_test(m_ord)          # testa a premissa termo a termo\nclm(Black ~ Time, nominal = ~ Treatment, data = mela)   # efeito por limiar"
+    "text": "Verificando a premissa\nA premissa de odds proporcionais é que o efeito da preditora é o mesmo em todos os limiares. Se não for, o ordinal permite relaxá-la:\n\nnominal_test(m_ord)          # testa a premissa termo a termo\n\nTests of nominal effects\n\nformula: Black ~ Treatment + Time\n          Df  logLik    AIC    LRT Pr(&gt;Chi)   \n&lt;none&gt;       -71.054 156.11                   \nTreatment  2 -65.608 149.22 10.891 0.004315 **\nTime                                          \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n# se ela falhar para um termo, esse termo pode variar por limiar:\nm_nom &lt;- clm(Black ~ Time, nominal = ~ Treatment, data = mela)"
   },
   {
     "objectID": "slides/e06.html#o-texto-mínimo",
@@ -2825,7 +2853,21 @@
     "href": "slides/e08.html#diagnóstico",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Diagnóstico",
-    "text": "Diagnóstico\n\nlibrary(DHARMa)\n\nres &lt;- simulateResiduals(m_nb, n = 1000)\nplot(res)\ntestDispersion(res)\ntestZeroInflation(res)\n\n# resíduos agrupados por praia — detecta estrutura não modelada\nplotResiduals(res, form = rikz$Beach)\n\n\nplotResiduals(res, form = ...) é o teste que mais rende em modelos mistos: se os resíduos ainda têm padrão dentro de um grupo, falta algo na estrutura aleatória."
+    "text": "Diagnóstico\n\nlibrary(DHARMa)\n\nset.seed(2026)            # o DHARMa simula: sem semente, cada render difere\nres &lt;- simulateResiduals(m_nb, n = 1000)\nplot(res)"
+  },
+  {
+    "objectID": "slides/e08.html#dispersão-e-zeros",
+    "href": "slides/e08.html#dispersão-e-zeros",
+    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "Dispersão e zeros",
+    "text": "Dispersão e zeros\n\ntestDispersion(res, plot = FALSE)\n\n\n    DHARMa nonparametric dispersion test via sd of residuals fitted vs.\n    simulated\n\ndata:  simulationOutput\ndispersion = 0.95663, p-value = 0.894\nalternative hypothesis: two.sided\n\ntestZeroInflation(res, plot = FALSE)\n\n\n    DHARMa zero-inflation test via comparison to expected zeros with\n    simulation under H0 = fitted model\n\ndata:  simulationOutput\nratioObsSim = 1.032, p-value = 1\nalternative hypothesis: two.sided"
+  },
+  {
+    "objectID": "slides/e08.html#resíduos-praia-a-praia",
+    "href": "slides/e08.html#resíduos-praia-a-praia",
+    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "Resíduos praia a praia",
+    "text": "Resíduos praia a praia\n\nplotResiduals(res, form = rikz$Beach)\n\n\n\n\n\n\n\n\n\nplotResiduals(res, form = ...) é o teste que mais rende em modelos mistos: se os resíduos ainda têm padrão dentro de um grupo, falta algo na estrutura aleatória."
   },
   {
     "objectID": "slides/e08.html#r2-marginal-e-condicional",
@@ -2888,7 +2930,7 @@
     "href": "slides/e08.html#priors",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Priors",
-    "text": "Priors\n\nget_prior(Richness ~ NAP + (1 | Beach), family = poisson(), data = rikz)\n\npriors &lt;- c(prior(normal(0, 1),     class = \"b\"),\n            prior(normal(2, 1),     class = \"Intercept\"),\n            prior(exponential(1),   class = \"sd\"))\n\n\nFracamente informativa não é “sem informação”. É dizer ao modelo que um coeficiente de 500 na escala log é absurdo — o que você sabe, e os dados nem sempre conseguem dizer sozinhos."
+    "text": "Priors\n\nget_prior(Richness ~ NAP + (1 | Beach), family = poisson(), data = rikz)\n\n                  prior     class      coef group resp dpar nlpar lb ub tag\n                 (flat)         b                                          \n                 (flat)         b       NAP                                \n student_t(3, 1.4, 2.5) Intercept                                          \n   student_t(3, 0, 2.5)        sd                                  0       \n   student_t(3, 0, 2.5)        sd           Beach                  0       \n   student_t(3, 0, 2.5)        sd Intercept Beach                  0       \n       source\n      default\n (vectorized)\n      default\n      default\n (vectorized)\n (vectorized)\n\npriors &lt;- c(prior(normal(0, 1),     class = \"b\"),\n            prior(normal(2, 1),     class = \"Intercept\"),\n            prior(exponential(1),   class = \"sd\"))\n\n\nFracamente informativa não é “sem informação”. É dizer ao modelo que um coeficiente de 500 na escala log é absurdo — o que você sabe, e os dados nem sempre conseguem dizer sozinhos."
   },
   {
     "objectID": "slides/e08.html#sensibilidade-à-prior",

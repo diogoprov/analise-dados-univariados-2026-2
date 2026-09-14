@@ -531,12 +531,33 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">library</span>(MuMIn)</span>
 <span id="cb10-2"><a></a></span>
-<span id="cb10-3"><a></a>med <span class="ot">&lt;-</span> <span class="fu">model.avg</span>(modelos, <span class="at">fit =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-4"><a></a><span class="fu">summary</span>(med)</span>
-<span id="cb10-5"><a></a><span class="fu">confint</span>(med)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-3"><a></a>med <span class="ot">&lt;-</span> <span class="fu">model.avg</span>(modelos, <span class="at">fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="nota">
 <p>Duas formas de média: <strong>condicional</strong> (só sobre os modelos em que o termo aparece) e <strong>completa</strong> (contando zero onde ele não aparece). Diga qual usou — elas dão respostas diferentes.</p>
+</div>
+</section>
+<section id="os-coeficientes-médios" class="slide level2 smaller">
+<h2>Os coeficientes médios</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(med), <span class="dv">3</span>)       <span class="co"># médias condicionais</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept)   D.PARK_km     L.WAT.C   D.WAT.RES      OPEN.L      MONT.S 
+      4.332      -0.118       0.130      -0.001      -0.015       0.011 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">confint</span>(med)              <span class="co"># intervalos, propagando a incerteza entre modelos</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   2.5 %        97.5 %
+(Intercept)  3.962566290  4.7008441736
+D.PARK_km   -0.141374075 -0.0949463300
+L.WAT.C     -0.036890677  0.2968332596
+D.WAT.RES   -0.001472483 -0.0002413064
+OPEN.L      -0.024687381 -0.0051434794
+MONT.S      -0.111084050  0.1332850330</code></pre>
+</div>
+</div>
+<div class="nota">
+<p><code>summary(med)</code> traz o relatório completo, com as duas formas de média e o peso de cada modelo. Aqui ficam só os números que entram no texto.</p>
 </div>
 </section>
 <section id="quando-mediar-faz-sentido" class="slide level2">
@@ -579,12 +600,39 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <h1>5. O que não fazer</h1>
 
 </section>
-<section id="o-garimpo" class="slide level2">
+<section id="o-garimpo" class="slide level2 smaller">
 <h2>O garimpo</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>global <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> OPEN.L <span class="sc">+</span> MONT.S <span class="sc">+</span> L.WAT.C <span class="sc">+</span></span>
-<span id="cb11-2"><a></a>                         D.WAT.RES <span class="sc">+</span> URBAN <span class="sc">+</span> N.PATCH <span class="sc">+</span> P.EDGE, <span class="at">data =</span> RK)</span>
-<span id="cb11-3"><a></a>MuMIn<span class="sc">::</span><span class="fu">dredge</span>(global)     <span class="co"># 256 modelos</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>global <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> OPEN.L <span class="sc">+</span> MONT.S <span class="sc">+</span> L.WAT.C <span class="sc">+</span></span>
+<span id="cb15-2"><a></a>                         D.WAT.RES <span class="sc">+</span> URBAN <span class="sc">+</span> N.PATCH <span class="sc">+</span> P.EDGE, <span class="at">data =</span> RK)</span>
+<span id="cb15-3"><a></a></span>
+<span id="cb15-4"><a></a><span class="co"># o dredge() exige na.action = "na.fail"; devolvemos a opção logo depois,</span></span>
+<span id="cb15-5"><a></a><span class="co"># senão ela vale para o resto do documento</span></span>
+<span id="cb15-6"><a></a>antigo <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">na.action =</span> <span class="st">"na.fail"</span>)</span>
+<span id="cb15-7"><a></a>garimpo <span class="ot">&lt;-</span> MuMIn<span class="sc">::</span><span class="fu">dredge</span>(global)          <span class="co"># 256 modelos</span></span>
+<span id="cb15-8"><a></a><span class="fu">options</span>(antigo)</span>
+<span id="cb15-9"><a></a></span>
+<span id="cb15-10"><a></a><span class="fu">head</span>(garimpo, <span class="dv">5</span>)                          <span class="co"># as cinco melhores</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Global model call: MASS::glm.nb(formula = TOT.N ~ D.PARK_km + OPEN.L + MONT.S + 
+    L.WAT.C + D.WAT.RES + URBAN + N.PATCH + P.EDGE, data = RK, 
+    init.theta = 9.712099248, link = log)
+---
+Model selection table 
+    (Int) D.PAR_km D.WAT.RES L.WAT.C    MON.S    N.PAT     OPE.L    P.EDG
+116 3.616  -0.1282 0.0004501                  -0.03522 -0.009345 0.007271
+120 3.697  -0.1311 0.0004407 0.08841          -0.03322 -0.009714 0.006469
+244 3.629  -0.1298 0.0004750                  -0.03739 -0.009061 0.007375
+124 3.621  -0.1283 0.0004416         0.009768 -0.03476 -0.009165 0.007163
+114 3.784  -0.1138                            -0.03480 -0.009577 0.007155
+         URB df   logLik  AICc delta weight
+116           7 -176.593 369.7  0.00  0.448
+120           8 -175.963 371.3  1.54  0.207
+244 0.009038  8 -176.320 372.0  2.26  0.145
+124           8 -176.535 372.4  2.69  0.117
+114           6 -179.612 373.1  3.36  0.083
+Models ranked by AICc(x) </code></pre>
+</div>
 </div>
 <div class="definicao">
 <p>Com 8 preditoras são 256 modelos; com 20, mais de um milhão. Alguns vão ter AICc ótimo <strong>por acaso</strong>.</p>
@@ -728,15 +776,15 @@ Chain 1:   Gradient evaluated at the initial value is not finite.</code></pre>
 <section id="na-prática-1" class="slide level2">
 <h2>Na prática</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">library</span>(brms)</span>
-<span id="cb13-2"><a></a><span class="fu">library</span>(loo)</span>
-<span id="cb13-3"><a></a></span>
-<span id="cb13-4"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
-<span id="cb13-5"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_a"</span>)</span>
-<span id="cb13-6"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> L.WAT.C, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
-<span id="cb13-7"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_b"</span>)</span>
-<span id="cb13-8"><a></a></span>
-<span id="cb13-9"><a></a><span class="fu">loo_compare</span>(<span class="fu">loo</span>(m_a), <span class="fu">loo</span>(m_b))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">library</span>(brms)</span>
+<span id="cb18-2"><a></a><span class="fu">library</span>(loo)</span>
+<span id="cb18-3"><a></a></span>
+<span id="cb18-4"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
+<span id="cb18-5"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_a"</span>)</span>
+<span id="cb18-6"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> L.WAT.C, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
+<span id="cb18-7"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_b"</span>)</span>
+<span id="cb18-8"><a></a></span>
+<span id="cb18-9"><a></a><span class="fu">loo_compare</span>(<span class="fu">loo</span>(m_a), <span class="fu">loo</span>(m_b))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> model elpd_diff se_diff p_worse diag_diff diag_elpd
    m_b       0.0     0.0      NA                    
@@ -797,8 +845,8 @@ Chain 1:   Gradient evaluated at the initial value is not finite.</code></pre>
 <h2>A vantagem do <span class="math inline">\(\hat{k}\)</span></h2>
 <p>O PSIS-LOO avisa quando a aproximação falha, observação por observação.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>loo_a <span class="ot">&lt;-</span> <span class="fu">loo</span>(m_a)</span>
-<span id="cb15-2"><a></a><span class="fu">print</span>(loo_a)        <span class="co"># valores de k-hat; &gt; 0,7 é problema</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>loo_a <span class="ot">&lt;-</span> <span class="fu">loo</span>(m_a)</span>
+<span id="cb20-2"><a></a><span class="fu">print</span>(loo_a)        <span class="co"># valores de k-hat; &gt; 0,7 é problema</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Computed from 4000 by 52 log-likelihood matrix.
@@ -819,11 +867,11 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 <section id="onde-a-aproximação-falha" class="slide level2 smaller">
 <h2>Onde a aproximação falha</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">plot</span>(loo_a)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">plot</span>(loo_a)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e09_files/figure-revealjs/unnamed-chunk-14-1.png" width="672"></p>
+<p><img data-src="e09_files/figure-revealjs/unnamed-chunk-15-1.png" width="672"></p>
 </figure>
 </div>
 </div>

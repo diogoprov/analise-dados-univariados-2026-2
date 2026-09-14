@@ -165,17 +165,15 @@ o modelo prevê variação de menos.
 
 ---
 
-## Com o `DHARMa`
+## Com o `DHARMa` {.smaller}
 
 ```{r}
-#| eval: false
+#| fig-height: 3.2
 library(DHARMa)
 
+set.seed(2026)            # o DHARMa simula: sem semente, cada render difere
 res <- simulateResiduals(m_rk, n = 1000)
 plot(res)                 # QQ uniforme + resíduo contra predito
-testDispersion(res)       # sobredispersão
-testZeroInflation(res)    # excesso de zeros
-testOutliers(res)
 ```
 
 ::: {.nota}
@@ -183,6 +181,16 @@ Três razões para usar o `DHARMa` em vez dos gráficos do `plot()`:
 funciona para qualquer família, funciona para modelos mistos (Encontros 7
 e 8), e devolve testes com valor de *p* em vez de "parece um padrão?".
 :::
+
+---
+
+## Os mesmos diagnósticos, com valor de *p* {.smaller}
+
+```{r}
+testDispersion(res, plot = FALSE)       # sobredispersão
+testZeroInflation(res, plot = FALSE)    # excesso de zeros
+testOutliers(res, plot = FALSE)
+```
 
 ---
 
@@ -438,14 +446,14 @@ contando** antes de aceitar o veredito.
 
 ---
 
-## A rota robusta
+## A rota robusta {.smaller}
 
 ```{r}
-#| eval: false
 library(DHARMa)
 
+set.seed(2026)
 res <- simulateResiduals(ziP, n = 1000)
-testZeroInflation(res)
+testZeroInflation(res, plot = FALSE)
 ```
 
 O `DHARMa` simula conjuntos de dados a partir do modelo ajustado
@@ -546,7 +554,6 @@ adjacentes; os demais são os efeitos das preditoras.
 ## Com medidas repetidas
 
 ```{r}
-#| eval: false
 m_ordm <- clmm(Black ~ Treatment * Time + (1 | Animal),
                data = mela, link = "logit")
 ```
@@ -560,15 +567,24 @@ independentes. O `(1 | Animal)` é o assunto de amanhã de manhã — e o
 
 ---
 
-## Verificando a premissa
+## O que o `clmm` devolve {.smaller}
+
+```{r}
+summary(m_ordm)
+```
+
+---
+
+## Verificando a premissa {.smaller}
 
 A premissa de *odds* proporcionais é que o efeito da preditora é o mesmo
 em todos os limiares. Se não for, o `ordinal` permite relaxá-la:
 
 ```{r}
-#| eval: false
 nominal_test(m_ord)          # testa a premissa termo a termo
-clm(Black ~ Time, nominal = ~ Treatment, data = mela)   # efeito por limiar
+
+# se ela falhar para um termo, esse termo pode variar por limiar:
+m_nom <- clm(Black ~ Time, nominal = ~ Treatment, data = mela)
 ```
 
 ---

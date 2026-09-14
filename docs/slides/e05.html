@@ -688,7 +688,7 @@ scale(CRC)                       1.038      0.245   4.237    0.000</code></pre>
 </div>
 <p>Área e riqueza são independentes <strong>por construção</strong>. Condicionar na detecção cria uma associação negativa do nada.</p>
 </section>
-<section id="na-prática" class="slide level2">
+<section id="na-prática" class="slide level2 smaller">
 <h2>Na prática</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">library</span>(dagitty)</span>
@@ -702,6 +702,9 @@ scale(CRC)                       1.038      0.245   4.237    0.000</code></pre>
 <span id="cb29-9"><a></a><span class="st">}'</span>)</span>
 <span id="cb29-10"><a></a></span>
 <span id="cb29-11"><a></a><span class="fu">adjustmentSets</span>(g, <span class="at">exposure =</span> <span class="st">"Area"</span>, <span class="at">outcome =</span> <span class="st">"Riqueza"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{ Precipitacao }</code></pre>
+</div>
 </div>
 <div class="definicao">
 <p>Desenhe o DAG <strong>antes</strong> de rodar o modelo. Ele diz o que incluir — e a resposta quase nunca é “tudo”.</p>
