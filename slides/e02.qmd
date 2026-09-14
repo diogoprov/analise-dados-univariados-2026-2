@@ -18,6 +18,11 @@ format:
     fig-align: center
     width: 1250
     height: 750
+knitr:
+  opts_chunk:
+    dev.args:
+      bg: "#faf7f0"
+
 execute:
   echo: true
   warning: false
@@ -33,6 +38,22 @@ library(palmerpenguins)
 theme_set(theme_minimal(base_size = 14))
 pinguins <- penguins |> drop_na(bill_length_mm, body_mass_g, species, sex)
 ```
+
+## Onde estamos no ciclo PPDAC
+
+```{r}
+#| echo: false
+#| fig-width: 5.6
+#| fig-height: 4.5
+#| out-width: "42%"
+#| fig-align: center
+source("../R/ppdac.R")
+ppdac_plot(destaque = c("An\u00e1lise"))
+```
+
+O modelo é a etapa **Análise** do ciclo. Mas repare: a matriz de delineamento que vamos escrever hoje é decidida na etapa **Plano** — pela forma como os dados foram coletados.
+
+---
 
 ## A tese deste encontro {.secao}
 
@@ -806,14 +827,9 @@ ANCOVA e interações. Nenhum conceito novo de inferência.
 ## Referências
 
 ::: {.nota}
-- Agresti, A. 2015. *Foundations of Linear and Generalized Linear
-  Models*. Wiley. Caps. 1–3.
-- Gelman, A., Hill, J. & Vehtari, A. 2020. *Regression and Other
-  Stories*. Cambridge University Press. Parte I.
-- Lindeløv, J.K. *Common statistical tests are linear models*.
-  <https://lindeloev.github.io/tests-as-linear/>
-- Exemplos e código do ROS: <https://avehtari.github.io/ROS-Examples/>
-- Horst, A.M., Hill, A.P. & Gorman, K.B. 2020. palmerpenguins: Palmer
-  Archipelago (Antarctica) penguin data. Pacote R.
-- da Silva, F.R. et al. 2022. *Análises Ecológicas no R*, cap. 7.
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
+- Lindeløv, J.K. [*Common statistical tests are linear models*](https://lindeloev.github.io/tests-as-linear/).
+- Agresti, A. 2015. [*Foundations of Linear and Generalized Linear Models*](https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034). Wiley.
+- Horst, A.M.; Hill, A.P. & Gorman, K.B. 2020. [`palmerpenguins`: Palmer Archipelago (Antarctica) penguin data](https://doi.org/10.5281/zenodo.3960218).
+- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
 :::

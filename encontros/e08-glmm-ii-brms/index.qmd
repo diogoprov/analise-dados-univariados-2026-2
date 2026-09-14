@@ -56,13 +56,14 @@ vai compilar do zero.
 
 ## Leituras
 
-- **Obrigatória:** Gelman, Hill & Vehtari (2020), caps. 9 e 10.
-- **Complementar:** Harrison et al. (2018).
-- **Relato:** Kruschke, J.K. 2021. Bayesian Analysis Reporting Guidelines.
-  *Nature Human Behaviour*. doi:10.1038/s41562-021-01177-7
-- **Apoio prático:** Kurz, *Statistical Rethinking with brms*, cap. 13 —
-  "Models with Memory".
+**Obrigatória**
 
----
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
 
-*Volta para o [índice do curso](../../index.qmd).*
+**Complementar**
+
+- Harrison, X.A. et al. 2018. [A brief introduction to mixed effects modelling and multi-model inference in ecology](https://doi.org/10.7717/peerj.4794). *PeerJ* 6:e4794.
+- Kruschke, J.K. 2021. [Bayesian Analysis Reporting Guidelines](https://doi.org/10.1038/s41562-021-01177-7). *Nature Human Behaviour*.
+- Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
+- Brooks, M.E. et al. 2017. [glmmTMB balances speed and flexibility among packages for zero-inflated generalized linear mixed modeling](https://doi.org/10.32614/RJ-2017-066). *The R Journal* 9:378–400.
+

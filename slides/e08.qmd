@@ -1,0 +1,437 @@
+---
+title: "GLMM II: `lme4`, `glmmTMB` e a ponte bayesiana"
+subtitle: "Encontro 8 · Análise de Dados Univariados · PPGBA/UFMS"
+author: "Diogo B. Provete"
+date: 2026-09-24
+date-format: "D [de] MMMM [de] YYYY"
+lang: pt
+format:
+  revealjs:
+    theme: [default, theme.scss]
+    slide-number: c/t
+    show-slide-number: all
+    auto-stretch: false
+    preview-links: auto
+    history: false
+    footer: "Análise de Dados Univariados · PPGBA/UFMS · 2026/2"
+    code-overflow: wrap
+    fig-align: center
+    width: 1250
+    height: 750
+knitr:
+  opts_chunk:
+    dev.args:
+      bg: "#faf7f0"
+
+execute:
+  echo: true
+  warning: false
+  message: false
+  fig-width: 7
+  fig-height: 3.6
+---
+
+```{r}
+#| echo: false
+library(tidyverse)
+library(lme4)
+library(glmmTMB)
+theme_set(theme_minimal(base_size = 14))
+rikz <- read.table("../dados/RIKZ.txt", header = TRUE, row.names = 1) |>
+  mutate(Beach = factor(Beach))
+```
+
+## Onde estamos no ciclo PPDAC
+
+```{r}
+#| echo: false
+#| fig-width: 5.6
+#| fig-height: 4.5
+#| out-width: "42%"
+#| fig-align: center
+source("../R/ppdac.R")
+ppdac_plot(destaque = c("An\u00e1lise", "Conclus\u00e3o"))
+```
+
+Fechamos a **Análise** e entramos na **Conclusão**: o que posso afirmar, e com que incerteza.
+
+---
+
+## Dois blocos {.secao}
+
+**Bloco 1 (≈ 3 h)** — GLMM na prática: resposta não gaussiana, escolha do
+pacote, convergência, diagnóstico, relato.
+
+**Bloco 2 (≈ 1,5 h)** — o mesmo modelo, os mesmos dados, em `brms`.
+
+::: {.definicao}
+A fórmula não muda. É esse o ponto: vocês já sabem escrever o modelo
+bayesiano.
+:::
+
+---
+
+# Bloco 1 — GLMM frequentista {.secao}
+
+---
+
+## Riqueza é contagem
+
+```{r}
+m_gauss <- lmer(Richness ~ NAP + (1 | Beach), data = rikz)
+min(predict(m_gauss))
+```
+
+O modelo gaussiano do encontro passado prevê **riqueza negativa**. Para
+uma contagem, isso é um defeito estrutural, não um detalhe.
+
+---
+
+## GLMM de Poisson
+
+```{r}
+m_pois <- glmer(Richness ~ NAP + (1 | Beach), family = poisson, data = rikz)
+round(summary(m_pois)$coefficients, 3)
+```
+
+```{r}
+c(razao_deviance = round(deviance(m_pois) / df.residual(m_pois), 2))
+```
+
+---
+
+## Sobredispersão em modelo misto
+
+A tabela de causas do Encontro 6 vale aqui — com uma a mais: **a
+estrutura aleatória pode estar incompleta**.
+
+Três remédios:
+
+1. binomial negativa: `glmer.nb()` ou `glmmTMB(family = nbinom2)`;
+2. efeito aleatório em nível de observação (OLRE): `(1 | id_obs)`;
+3. modelar a dispersão diretamente: `glmmTMB(dispformula = ~ .)`.
+
+---
+
+## Comparando
+
+```{r}
+rikz$obs <- factor(seq_len(nrow(rikz)))
+m_olre <- glmer(Richness ~ NAP + (1 | Beach) + (1 | obs),
+                family = poisson, data = rikz)
+m_nb   <- glmmTMB(Richness ~ NAP + (1 | Beach), family = nbinom2, data = rikz)
+
+AIC(m_pois, m_olre, m_nb)
+```
+
+---
+
+## `lme4` ou `glmmTMB`?
+
+| Precisa de… | Use |
+|---|---|
+| LMM ou GLMM padrão (gaussiano, Poisson, binomial) | `lme4` |
+| binomial negativa estável | `glmmTMB` |
+| zeros inflados **com** efeito aleatório | `glmmTMB` |
+| dispersão modelada por covariáveis | `glmmTMB` |
+| resposta Beta (proporção contínua) | `glmmTMB` |
+| ordinal com efeito aleatório | `ordinal::clmm` |
+
+::: {.nota}
+O `nlme` ainda é preferível quando você precisa de **estrutura de
+correlação** explícita — temporal ou espacial. Fora isso, `lme4` e
+`glmmTMB` cobrem quase tudo.
+:::
+
+---
+
+## Convergência: o que os avisos dizem
+
+`Model failed to converge with max|grad| = ...`
+
+Na ordem de eficácia:
+
+1. **Reescale as preditoras contínuas** — `scale()`. Resolve a maioria
+   dos casos.
+2. **Simplifique a estrutura aleatória** — tirar a inclinação aleatória,
+   ou a correlação entre intercepto e inclinação: `(1 | g) + (0 + x | g)`.
+3. **Troque o otimizador** — `control = glmerControl(optimizer = "bobyqa")`.
+4. **Aumente as iterações** — `optCtrl = list(maxfun = 1e5)`.
+
+---
+
+## Variância zero ou correlação ±1
+
+```{r}
+#| eval: false
+m <- lmer(y ~ x + (x | g), data = d)
+# Warning: boundary (singular) fit
+```
+
+::: {.definicao}
+Ajuste singular significa que **os dados não sustentam aquela estrutura
+aleatória** — não que o modelo está errado. A resposta é simplificar a
+estrutura, não forçar o ajuste.
+:::
+
+Forçar a convergência de um modelo singular produz números que não
+significam nada.
+
+---
+
+## Diagnóstico
+
+```{r}
+#| eval: false
+library(DHARMa)
+
+res <- simulateResiduals(m_nb, n = 1000)
+plot(res)
+testDispersion(res)
+testZeroInflation(res)
+
+# resíduos agrupados por praia — detecta estrutura não modelada
+plotResiduals(res, form = rikz$Beach)
+```
+
+::: {.nota}
+`plotResiduals(res, form = ...)` é o teste que mais rende em modelos
+mistos: se os resíduos ainda têm padrão dentro de um grupo, falta algo na
+estrutura aleatória.
+:::
+
+---
+
+## $R^2$ marginal e condicional
+
+```{r}
+performance::r2_nakagawa(m_pois)
+```
+
+::: {.definicao}
+**Marginal** — variação explicada só pelos efeitos fixos.
+**Condicional** — pelos fixos **e** aleatórios juntos.
+
+A diferença entre os dois é o quanto a estrutura de agrupamento explica.
+Relate os dois.
+:::
+
+---
+
+## O que relatar (Davis & Kay 2023)
+
+> "Ajustamos um GLMM com distribuição binomial negativa e ligação log
+> (`glmmTMB` 1.1.x), com NAP como efeito fixo e intercepto aleatório por
+> praia (9 praias, 45 amostras). A estrutura aleatória reflete que as
+> amostras foram coletadas em transectos dentro de praias. Diagnóstico
+> com resíduos quantílicos simulados (`DHARMa`, 1000 simulações).
+> $R^2$ marginal = …, condicional = …."
+
+**Sempre diga o que o efeito aleatório representa no delineamento.**
+
+---
+
+# Bloco 2 — A ponte bayesiana {.secao}
+
+---
+
+## A mesma fórmula
+
+```{r}
+#| eval: false
+library(brms)
+
+m_bayes <- brm(Richness ~ NAP + (1 | Beach),
+               family = negbinomial(), data = rikz,
+               chains = 4, iter = 2000, seed = 2026,
+               file = "../cache/e08_rikz_nb")
+```
+
+Compare com a linha do bloco 1:
+
+```{r}
+#| eval: false
+glmmTMB(Richness ~ NAP + (1 | Beach), family = nbinom2, data = rikz)
+```
+
+::: {.definicao}
+A fórmula é **idêntica**. O custo de transferência é a família e três
+argumentos de MCMC.
+:::
+
+---
+
+## Por que atravessar a ponte
+
+1. **Amostra pequena e poucos níveis** — a prior regulariza onde o
+   máximo de verossimilhança colapsa em ajuste singular.
+2. **Incerteza de quantidades derivadas** — sem *delta method*.
+3. **Graus de liberdade** — o problema do encontro passado simplesmente
+   não existe.
+4. **Modelos que o frequentista não ajusta** — estruturas complexas,
+   filogenia, medidas com erro.
+
+---
+
+## Priors
+
+```{r}
+#| eval: false
+get_prior(Richness ~ NAP + (1 | Beach), family = negbinomial(), data = rikz)
+
+priors <- c(prior(normal(0, 1),     class = "b"),
+            prior(normal(2, 1),     class = "Intercept"),
+            prior(exponential(1),   class = "sd"))
+```
+
+::: {.definicao}
+**Fracamente informativa** não é "sem informação". É dizer ao modelo que
+um coeficiente de 500 na escala log é absurdo — o que você sabe, e os
+dados nem sempre conseguem dizer sozinhos.
+:::
+
+---
+
+## Sensibilidade à prior
+
+O teste honesto: ajuste com duas priors razoavelmente diferentes e veja
+se a conclusão muda.
+
+```{r}
+#| eval: false
+m_a <- brm(..., prior = prior(normal(0, 1),  class = "b"), file = "../cache/pa")
+m_b <- brm(..., prior = prior(normal(0, 10), class = "b"), file = "../cache/pb")
+
+fixef(m_a); fixef(m_b)
+```
+
+Se mudar muito, **diga isso no artigo**. É informação sobre quanta
+evidência os seus dados carregam.
+
+---
+
+## Diagnóstico de MCMC
+
+| Sinal | Significa | O que fazer |
+|---|---|---|
+| $\hat{R} > 1{,}01$ | cadeias não convergiram | mais iterações; reparametrizar |
+| ESS baixo (< 400) | amostras autocorrelacionadas | mais iterações |
+| transições divergentes | geometria difícil | `adapt_delta = 0.99`; priors mais informativas |
+| `max_treedepth` atingido | ineficiência | `max_treedepth = 15` |
+
+```{r}
+#| eval: false
+plot(m_bayes)                 # traços das cadeias
+mcmc_plot(m_bayes, type = "rhat")
+mcmc_plot(m_bayes, type = "neff")
+```
+
+---
+
+## Checagem preditiva posterior
+
+```{r}
+#| eval: false
+pp_check(m_bayes, ndraws = 100)
+pp_check(m_bayes, type = "stat", stat = "max")
+pp_check(m_bayes, type = "stat", stat = \(y) mean(y == 0))
+```
+
+::: {.definicao}
+`pp_check()` pergunta: dados simulados pelo modelo se parecem com os
+dados reais? É o análogo honesto do diagnóstico de resíduos — e você pode
+checar **qualquer estatística** que interesse, como a proporção de zeros.
+:::
+
+---
+
+## Intervalo de credibilidade × de confiança
+
+| | Confiança (95 %) | Credibilidade (95 %) |
+|---|---|---|
+| O que é aleatório | o intervalo | o parâmetro |
+| Frase correta | "95 % dos intervalos construídos assim conteriam o valor" | "há 95 % de probabilidade de o parâmetro estar aqui" |
+| Como quase todo mundo interpreta | como se fosse o da direita | — |
+
+::: {.nota}
+Boa parte das pessoas já interpreta o IC frequentista como se fosse
+bayesiano. O ajuste bayesiano apenas torna a interpretação correta.
+:::
+
+---
+
+## Relato BARG
+
+Kruschke (2021) — preâmbulo mais seis passos. O mínimo que precisa
+aparecer:
+
+1. o modelo, com todas as priors explicitadas;
+2. justificativa das priors, e análise de sensibilidade;
+3. diagnóstico de convergência ($\hat{R}$, ESS, divergências);
+4. checagem preditiva posterior;
+5. o resumo da posterior — mediana e intervalo, não só o ponto;
+6. software, versões e semente.
+
+---
+
+## A tabela de tradução
+
+| Frequentista | Bayesiano (`brms`) |
+|---|---|
+| `lmer(y ~ x + (1\|g))` | `brm(y ~ x + (1\|g))` |
+| `glmer(..., family = poisson)` | `brm(..., family = poisson())` |
+| `glmmTMB(..., family = nbinom2)` | `brm(..., family = negbinomial())` |
+| `glmmTMB(..., ziformula = ~1)` | `brm(..., family = zero_inflated_poisson())` |
+| `clmm(...)` | `brm(..., family = cumulative())` |
+| `confint()` | `posterior_interval()` |
+| `DHARMa::simulateResiduals()` | `pp_check()` |
+| `AIC()` | `loo()` — Encontro 9 |
+
+---
+
+# Fechamento {.secao}
+
+---
+
+## O que fica de hoje
+
+1. Riqueza é contagem: GLMM de Poisson ou NB, não gaussiano.
+2. Ajuste singular = os dados não sustentam aquela estrutura aleatória.
+3. Reescalar preditoras resolve a maioria dos problemas de convergência.
+4. Relate $R^2$ marginal **e** condicional, e diga o que o efeito
+   aleatório representa.
+5. `brm()` usa a mesma fórmula — a ponte custa três argumentos.
+
+---
+
+## Prática (o resto do bloco)
+
+1. Ajuste um GLMM aos seus dados com a família adequada.
+2. Diagnostique com `DHARMa`, incluindo `plotResiduals(form = grupo)`.
+3. Calcule $R^2$ marginal e condicional.
+4. Reajuste o mesmo modelo em `brm()`, com `file = "cache/..."`.
+5. Compare as estimativas. Se diferirem, proponha uma explicação.
+
+---
+
+## Para amanhã
+
+**Leitura:** Burnham & Anderson (2002), caps. 2 a 4.
+
+**Amanhã de manhã:** vocês vão ter vários modelos plausíveis. Como
+escolher — e por que "escolher" talvez não seja a pergunta certa.
+
+---
+
+## Referências
+
+::: {.nota}
+- Bolker, B.M. et al. 2009. [Generalized linear mixed models: a practical guide for ecology and evolution](https://doi.org/10.1016/j.tree.2008.10.008). *Trends in Ecology & Evolution* 24:127–135.
+- Harrison, X.A. et al. 2018. [A brief introduction to mixed effects modelling and multi-model inference in ecology](https://doi.org/10.7717/peerj.4794). *PeerJ* 6:e4794.
+- Brooks, M.E. et al. 2017. [glmmTMB balances speed and flexibility among packages for zero-inflated generalized linear mixed modeling](https://doi.org/10.32614/RJ-2017-066). *The R Journal* 9:378–400.
+- Bürkner, P.-C. 2017. [brms: an R package for Bayesian multilevel models using Stan](https://doi.org/10.18637/jss.v080.i01). *Journal of Statistical Software* 80(1).
+- Nakagawa, S. & Schielzeth, H. 2013. [A general and simple method for obtaining R² from generalized linear mixed-effects models](https://doi.org/10.1111/j.2041-210x.2012.00261.x). *Methods in Ecology and Evolution* 4:133–142.
+- Kruschke, J.K. 2021. [Bayesian Analysis Reporting Guidelines](https://doi.org/10.1038/s41562-021-01177-7). *Nature Human Behaviour*.
+- Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
+- Hartig, F. [`DHARMa`: residual diagnostics for hierarchical regression models](https://cran.r-project.org/package=DHARMa).
+:::

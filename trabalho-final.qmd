@@ -20,7 +20,7 @@ fazer de qualquer jeito, feita direito e documentada.
 
 ## Estrutura exigida
 
-A espinha é o *checklist* de **Davis & Kay (2023)**: quatro seções que
+A espinha é o *checklist* de [**Davis & Kay (2023)**](https://doi.org/10.1002/ecs2.4539): quatro seções que
 toda descrição de método estatístico deve conter.
 
 ### 1. Objetivo
@@ -54,7 +54,7 @@ chamada `sessionInfo()` ou `sessioninfo::session_info()` ao final resolve.
 
 Além do *checklist*, o relatório deve conter:
 
-**Análise exploratória** seguindo o protocolo de Zuur & Ieno (2016):
+**Análise exploratória** seguindo o [protocolo de Zuur & Ieno (2016)](https://doi.org/10.1111/2041-210X.12577):
 outliers, homogeneidade de variância, distribuição da resposta, excesso
 de zeros, colinearidade entre preditoras, relações entre resposta e
 preditoras, interações, independência.
@@ -71,8 +71,8 @@ tabela.
 
 ## Extensão bayesiana (opcional, recomendada)
 
-Reajuste o mesmo modelo em `brms` e relate segundo o **BARG** (Kruschke
-2021): preâmbulo mais os seis passos. Comparar as duas estimativas —
+Reajuste o mesmo modelo em `brms` e relate segundo o **BARG** ([Kruschke
+2021](https://doi.org/10.1038/s41562-021-01177-7)): preâmbulo mais os seis passos. Comparar as duas estimativas —
 e explicar por que diferem, ou por que não diferem — vale mais do que
 qualquer análise adicional.
 
@@ -105,7 +105,7 @@ prática do curso: **o LLM escreve o código; você escreve a ciência.**
 ## Autoria
 
 Em trabalhos em grupo, as iniciais dos autores nos Métodos seguem o
-**MeRIT** (Nakagawa et al. 2023) — quem fez o quê, explicitamente.
+[**MeRIT** (Nakagawa et al. 2023)](https://doi.org/10.1038/s41467-023-37039-1) — quem fez o quê, explicitamente.
 
 ## Esqueleto para copiar
 

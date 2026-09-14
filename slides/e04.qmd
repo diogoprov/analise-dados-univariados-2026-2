@@ -18,6 +18,11 @@ format:
     fig-align: center
     width: 1250
     height: 750
+knitr:
+  opts_chunk:
+    dev.args:
+      bg: "#faf7f0"
+
 execute:
   echo: true
   warning: false
@@ -35,6 +40,22 @@ penta <- read_tsv("../dados/Planilha_Pentastomida.txt", show_col_types = FALSE) 
 uv <- read_delim("../dados/UV.csv", delim = ";", show_col_types = FALSE)
 lagartos <- read_tsv("../dados/camila_cauda_lagartos.txt", show_col_types = FALSE)
 ```
+
+## Onde estamos no ciclo PPDAC
+
+```{r}
+#| echo: false
+#| fig-width: 5.6
+#| fig-height: 4.5
+#| out-width: "42%"
+#| fig-align: center
+source("../R/ppdac.R")
+ppdac_plot(destaque = c("Dados", "An\u00e1lise"))
+```
+
+A ponte entre **Dados** e **Análise**: a distribuição que escolhemos é uma afirmação sobre o processo que gerou os dados, não sobre a tabela que temos.
+
+---
 
 ## A pergunta que organiza a tarde {.secao}
 
@@ -502,13 +523,8 @@ e Poisson.
 ## Referências
 
 ::: {.nota}
-- Agresti, A. 2015. *Foundations of Linear and Generalized Linear
-  Models*. Wiley. Cap. 4.
-- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. &
-  Vancine, M.A. 2022. *Análises Ecológicas no R*, cap. 8.
-- Gelman, A., Hill, J. & Vehtari, A. 2020. *Regression and Other
-  Stories*. Cap. 15.
-- Zuur, A.F. et al. 2009. *Mixed Effects Models and Extensions in Ecology
-  with R*. Springer.
-- Dados de pentastomídeos: cap. 8 de *Análises Ecológicas no R*.
+- Agresti, A. 2015. [*Foundations of Linear and Generalized Linear Models*](https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034). Wiley.
+- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
+- Zuur, A.F. et al. 2009. [*Mixed Effects Models and Extensions in Ecology with R*](https://doi.org/10.1007/978-0-387-87458-6). Springer.
 :::

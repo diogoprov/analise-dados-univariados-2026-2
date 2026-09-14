@@ -39,10 +39,14 @@ trouxe dados próprios já ajusta o primeiro `lm()` neles.
 
 ## Leituras
 
-- **Obrigatória:** Gelman, Hill & Vehtari (2020), *Regression and Other
-  Stories*, Parte I.
-- **Complementar:** Agresti (2015), caps. 1 a 3.
-- **Apoio:** [Lindeløv, *Common statistical tests are linear models*](https://lindeloev.github.io/tests-as-linear/)
+**Obrigatória**
+
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
+
+**Complementar**
+
+- Agresti, A. 2015. [*Foundations of Linear and Generalized Linear Models*](https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034). Wiley.
+- Lindeløv, J.K. [*Common statistical tests are linear models*](https://lindeloev.github.io/tests-as-linear/).
 
 ## Recursos externos
 

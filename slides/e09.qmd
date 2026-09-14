@@ -1,0 +1,643 @@
+---
+title: "Teoria da informação e seleção de modelos"
+subtitle: "Encontro 9 · Análise de Dados Univariados · PPGBA/UFMS"
+author: "Diogo B. Provete"
+date: 2026-09-25
+date-format: "D [de] MMMM [de] YYYY"
+lang: pt
+format:
+  revealjs:
+    theme: [default, theme.scss]
+    slide-number: c/t
+    show-slide-number: all
+    auto-stretch: false
+    preview-links: auto
+    history: false
+    footer: "Análise de Dados Univariados · PPGBA/UFMS · 2026/2"
+    code-overflow: wrap
+    fig-align: center
+    width: 1250
+    height: 750
+knitr:
+  opts_chunk:
+    dev.args:
+      bg: "#faf7f0"
+
+execute:
+  echo: true
+  warning: false
+  message: false
+  fig-width: 7
+  fig-height: 3.6
+---
+
+```{r}
+#| echo: false
+library(tidyverse)
+theme_set(theme_minimal(base_size = 14))
+RK <- read.delim("../dados/RoadKills.txt")
+```
+
+## Onde estamos no ciclo PPDAC
+
+```{r}
+#| echo: false
+#| fig-width: 5.6
+#| fig-height: 4.5
+#| out-width: "42%"
+#| fig-align: center
+source("../R/ppdac.R")
+ppdac_plot(destaque = c("Conclus\u00e3o", "Problema"))
+```
+
+**Conclusão** — e a volta ao **Problema**: o conjunto de modelos candidatos é uma lista de hipóteses biológicas, não um espaço de busca.
+
+---
+
+## A pergunta de hoje {.secao}
+
+Vocês ajustaram cinco modelos plausíveis. Todos rodam. Todos têm
+diagnóstico aceitável.
+
+::: {.definicao}
+**Qual reportar?** E, antes disso: por que essa pergunta é mais perigosa
+do que parece?
+:::
+
+---
+
+## Hoje
+
+**Bloco 1 (≈ 3,5 h)**
+
+1. *Productive failure*
+2. De testar hipóteses a comparar modelos
+3. Divergência de Kullback–Leibler
+4. AIC: o que é e o que não é
+5. **Intervalo**
+6. AICc, BIC e quando usar cada um
+7. Pesos de Akaike e razões de evidência
+8. *Model averaging*
+9. O que não fazer: a crítica ao garimpo
+
+**Bloco 2 (≈ 45 min)** — WAIC, PSIS-LOO e o fecho bayesiano
+
+---
+
+## *Productive failure*
+
+Nos dados de atropelamento há 20 variáveis de paisagem e 52 sítios.
+
+::: {.definicao}
+**Em grupos, 10 minutos:** como vocês decidiriam quais variáveis entram
+no modelo final? Escrevam o procedimento, passo a passo.
+:::
+
+Guardem o que escreveram. Vamos voltar a ele no fim da manhã.
+
+---
+
+# 1. De testar a comparar {.secao}
+
+---
+
+## O ritual
+
+O procedimento padrão do século XX: hipótese nula, valor de *p*, limiar
+de 0,05, rejeita ou não rejeita.
+
+Três problemas em ecologia:
+
+1. **A nula raramente é interessante.** "O efeito da área é exatamente
+   zero" quase nunca é uma hipótese biológica séria.
+2. **Não compara alternativas.** Rejeitar a nula não diz qual das suas
+   hipóteses é melhor.
+3. **Confunde tamanho de efeito com tamanho de amostra.** Com $n$ grande,
+   qualquer efeito fica significativo.
+
+---
+
+## A alternativa
+
+::: {.definicao}
+Formular **várias hipóteses** como modelos concorrentes, definidos
+*a priori*, e perguntar qual deles descreve melhor os dados — com uma
+medida de quanto melhor.
+:::
+
+Não é uma correção técnica ao valor de *p*. É outra pergunta.
+
+::: {.nota}
+Chamberlin propôs isso em 1890, sob o nome de "múltiplas hipóteses de
+trabalho". Akaike deu a ela uma métrica em 1974.
+:::
+
+---
+
+# 2. Divergência de Kullback–Leibler {.secao}
+
+---
+
+## A ideia
+
+::: {.definicao}
+$$
+D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
+$$
+
+Quanta informação se perde ao usar o modelo $g$ para representar o
+processo real $f$.
+:::
+
+É uma distância dirigida: de $f$ (a verdade) até $g$ (o seu modelo).
+
+---
+
+## Vendo a perda
+
+```{r}
+#| fig-height: 3.0
+#| echo: false
+x <- seq(0, 20, .1)
+verdade <- dgamma(x, shape = 4, rate = .8)
+tibble(x,
+       `Verdade (Gamma)`   = verdade,
+       `Modelo A (Normal)` = dnorm(x, 5, 2.5),
+       `Modelo B (Normal)` = dnorm(x, 8, 4)) |>
+  pivot_longer(-x) |>
+  ggplot(aes(x, value, colour = name, linetype = name)) +
+  geom_line(linewidth = 1) +
+  scale_colour_manual(values = c("#1c6e8c", "#c08a3e", "#2d3748")) +
+  scale_linetype_manual(values = c(2, 2, 1)) +
+  labs(x = NULL, y = "Densidade", colour = NULL, linetype = NULL)
+```
+
+O modelo A perde menos informação que o B. A divergência KL quantifica
+isso.
+
+---
+
+## O problema prático
+
+Para calcular $D_{KL}$ você precisa conhecer $f$ — a verdade. Se a
+conhecesse, não estaria modelando.
+
+::: {.definicao}
+**A contribuição de Akaike (1974):** embora $D_{KL}$ seja incalculável,
+a **diferença** de $D_{KL}$ entre dois modelos pode ser estimada a partir
+dos dados. E o estimador é simples.
+:::
+
+---
+
+## AIC
+
+$$
+\mathrm{AIC} = -2\log \hat{L} + 2K
+$$
+
+- $\log \hat{L}$ — log-verossimilhança maximizada: quão bem o modelo
+  ajusta.
+- $K$ — número de parâmetros estimados, **inclusive** a variância residual
+  e o $\theta$ da binomial negativa.
+
+::: {.definicao}
+O termo $2K$ não é uma penalidade arbitrária por complexidade. Ele é a
+correção do viés do próprio $\log \hat{L}$ como estimador da divergência.
+:::
+
+---
+
+## Por que mais parâmetros não é melhor
+
+```{r}
+#| fig-height: 3.0
+#| echo: false
+set.seed(9)
+d <- tibble(x = runif(15, 0, 10)) |> mutate(y = 2 + 1.2*x + rnorm(15, 0, 3))
+nd <- tibble(x = seq(0, 10, .05))
+map_dfr(c(1, 3, 10), \(g) nd |> mutate(fit = predict(lm(y ~ poly(x, g), d), nd),
+                                       grau = paste("grau", g))) |>
+  ggplot(aes(x, fit)) +
+  geom_line(colour = "#1c6e8c", linewidth = 1) +
+  geom_point(data = d, aes(x, y), colour = "#c08a3e") +
+  facet_wrap(~grau) + coord_cartesian(ylim = c(-5, 25)) +
+  labs(x = NULL, y = NULL)
+```
+
+O polinômio de grau 10 ajusta **melhor** estes 15 pontos e prediz
+**pior** os próximos 15. O AIC existe para arbitrar esse conflito.
+
+---
+
+## Na prática
+
+```{r}
+m1 <- glm(TOT.N ~ D.PARK, family = poisson, data = RK)
+m2 <- MASS::glm.nb(TOT.N ~ D.PARK, data = RK)
+c(logLik_pois = round(as.numeric(logLik(m1)), 1), K_pois = attr(logLik(m1), "df"),
+  AIC_pois = round(AIC(m1)),
+  logLik_nb = round(as.numeric(logLik(m2)), 1), K_nb = attr(logLik(m2), "df"),
+  AIC_nb = round(AIC(m2)))
+```
+
+A NB gasta **um** parâmetro a mais e ganha centenas de unidades de AIC.
+
+---
+
+## O que o AIC não é
+
+::: {.definicao}
+- **Não é** um teste. Não há limiar, não há significância.
+- **Não mede ajuste absoluto.** Um conjunto de modelos ruins tem um
+  melhor entre eles, e ele continua ruim.
+- **Não é comparável entre conjuntos de dados diferentes** — nem entre
+  respostas transformadas de formas diferentes.
+- **Não substitui diagnóstico.** Sempre diagnostique o modelo escolhido.
+:::
+
+---
+
+# 3. AICc e BIC {.secao}
+
+---
+
+## AICc: amostra pequena
+
+$$
+\mathrm{AICc} = \mathrm{AIC} + \frac{2K(K+1)}{n - K - 1}
+$$
+
+```{r}
+aicc <- function(m) {
+  k <- attr(logLik(m), "df"); n <- nobs(m)
+  AIC(m) + (2*k*(k+1)) / (n - k - 1)
+}
+c(AIC = round(AIC(m2), 1), AICc = round(aicc(m2), 1), n = nobs(m2))
+```
+
+::: {.definicao}
+Regra prática de Burnham & Anderson: use AICc sempre que $n/K < 40$. Como
+AICc converge para AIC quando $n$ cresce, **use AICc sempre** — não há
+custo.
+:::
+
+---
+
+## BIC responde outra pergunta
+
+$$
+\mathrm{BIC} = -2\log \hat{L} + K\log n
+$$
+
+| | AIC | BIC |
+|---|---|---|
+| Objetivo | melhor **predição** | identificar o modelo **verdadeiro** |
+| Pressupõe que a verdade está no conjunto? | não | sim |
+| Penalidade | $2K$ | $K \log n$ — mais severa com $n$ grande |
+| Tende a escolher | modelos maiores | modelos menores |
+
+::: {.nota}
+Em ecologia, a premissa do BIC — de que o modelo verdadeiro está entre os
+candidatos — raramente é defensável. Por isso o AICc é o padrão da área.
+:::
+
+---
+
+# 4. Pesos de Akaike {.secao}
+
+---
+
+## Um conjunto definido *a priori*
+
+```{r}
+modelos <- list(
+  nulo       = MASS::glm.nb(TOT.N ~ 1, data = RK),
+  parque     = MASS::glm.nb(TOT.N ~ D.PARK, data = RK),
+  habitat    = MASS::glm.nb(TOT.N ~ OPEN.L + MONT.S, data = RK),
+  agua       = MASS::glm.nb(TOT.N ~ L.WAT.C + D.WAT.RES, data = RK),
+  parque_agua = MASS::glm.nb(TOT.N ~ D.PARK + L.WAT.C, data = RK)
+)
+```
+
+Cada modelo é uma **hipótese biológica**: a mortalidade é explicada pela
+proximidade à área-fonte, pela composição do habitat, pela presença de
+água, ou por uma combinação.
+
+---
+
+## Calculando à mão
+
+```{r}
+tab <- tibble(
+  modelo = names(modelos),
+  K      = map_dbl(modelos, \(m) attr(logLik(m), "df")),
+  AICc   = map_dbl(modelos, aicc)
+) |>
+  arrange(AICc) |>
+  mutate(delta = AICc - min(AICc),
+         vero_rel = exp(-0.5 * delta),
+         peso = vero_rel / sum(vero_rel))
+
+tab |> mutate(across(c(AICc, delta), \(x) round(x, 1)),
+              peso = round(peso, 3)) |>
+  dplyr::select(modelo, K, AICc, delta, peso)
+```
+
+---
+
+## Como se leem
+
+- $\Delta_i$ — distância ao melhor modelo. Convenção frouxa de Burnham &
+  Anderson: $\Delta < 2$ tem suporte substancial; 4–7, bem menos;
+  $> 10$, essencialmente nenhum.
+- **Peso** $w_i$ — probabilidade de que o modelo $i$ seja o melhor do
+  conjunto, **no sentido de KL e dado aquele conjunto**.
+- **Razão de evidência** $w_i / w_j$ — quantas vezes um modelo é mais
+  plausível que o outro.
+
+```{r}
+round(tab$peso[1] / tab$peso[2], 1)
+```
+
+---
+
+## A ressalva que quase nunca aparece
+
+::: {.definicao}
+Os pesos somam 1 **dentro do conjunto que você escolheu**. Se todos os
+modelos são ruins, o melhor deles ainda recebe peso alto.
+:::
+
+Um peso de 0,95 diz "este é claramente o melhor entre os cinco que
+propus" — não "este modelo está certo". A qualidade do conjunto é
+responsabilidade sua, e é uma questão biológica.
+
+---
+
+## *Model averaging*
+
+Quando vários modelos têm suporte parecido, escolher um e ignorar os
+outros descarta incerteza real.
+
+```{r}
+#| eval: false
+library(MuMIn)
+
+med <- model.avg(modelos, fit = TRUE)
+summary(med)
+confint(med)
+```
+
+::: {.nota}
+Duas formas de média: **condicional** (só sobre os modelos em que o termo
+aparece) e **completa** (contando zero onde ele não aparece). Diga qual
+usou — elas dão respostas diferentes.
+:::
+
+---
+
+## Quando mediar faz sentido
+
+| Situação | O que fazer |
+|---|---|
+| Um modelo com $w > 0{,}9$ | reporte-o; mencione os demais |
+| Vários com $\Delta < 2$ | mediar, ou reportar todos |
+| Objetivo é **predição** | mediar costuma ajudar |
+| Objetivo é **estimar um efeito** | mediar coeficientes é controverso |
+
+::: {.definicao}
+Mediar coeficientes de modelos com preditoras colineares produz números
+difíceis de interpretar: o mesmo símbolo $\beta$ significa coisas
+diferentes em modelos diferentes.
+:::
+
+---
+
+# 5. O que não fazer {.secao}
+
+---
+
+## O garimpo
+
+```{r}
+#| eval: false
+global <- MASS::glm.nb(TOT.N ~ D.PARK + OPEN.L + MONT.S + L.WAT.C +
+                         D.WAT.RES + URBAN + N.PATCH + P.EDGE, data = RK)
+MuMIn::dredge(global)     # 256 modelos
+```
+
+::: {.definicao}
+Com 8 preditoras são 256 modelos; com 20, mais de um milhão. Alguns vão
+ter AICc ótimo **por acaso**.
+:::
+
+---
+
+## Por que é um problema
+
+1. **Os pesos deixam de significar o que dizem.** Eles pressupõem um
+   conjunto definido antes de ver os dados.
+2. **É HARKing com outro nome.** A hipótese passa a ser escolhida pelos
+   dados e apresentada como anterior.
+3. **Não replica.** O modelo "melhor" de uma varredura costuma não ser o
+   melhor num conjunto novo.
+4. **Ignora causalidade.** O garimpo inclui colisores com prazer —
+   Encontro 5.
+
+---
+
+## Voltando ao *productive failure*
+
+Peguem o que escreveram no começo da manhã.
+
+::: {.definicao}
+Quantos de vocês descreveram alguma forma de "testar todas as
+combinações e ficar com a melhor"?
+:::
+
+Não é um erro de vocês: é o procedimento que a maioria dos artigos de
+ecologia usa. O ponto do encontro é que há uma alternativa melhor — e ela
+exige pensar **antes**.
+
+---
+
+## O que fazer no lugar
+
+1. Escreva as **hipóteses biológicas**, em palavras, antes de tocar nos
+   dados.
+2. Traduza cada uma em **um** modelo. Normalmente são 4 a 8, não 256.
+3. Inclua o modelo nulo e, se fizer sentido, um modelo global.
+4. Use DAGs (Encontro 5) para decidir covariáveis de controle — elas
+   entram em **todos** os modelos, não são candidatas.
+5. Compare, reporte a tabela **inteira**, e diagnostique o escolhido.
+
+---
+
+## Relato
+
+Seguindo Gerstner et al. (2017) e Burnham & Anderson:
+
+- a **tabela completa**: $K$, AICc, $\Delta_i$, $w_i$ para todos os
+  modelos — não só o vencedor;
+- o critério usado e **por que** (AICc, e não AIC ou BIC);
+- se houve média de modelos, qual tipo;
+- os **coeficientes com intervalo** do modelo reportado;
+- o diagnóstico do modelo escolhido.
+
+::: {.nota}
+Reportar só o modelo vencedor é como reportar só a análise que deu certo.
+:::
+
+---
+
+# Bloco 2 — o fecho bayesiano {.secao}
+
+---
+
+## Validação cruzada como alternativa
+
+::: {.definicao}
+A pergunta que o AIC responde por aproximação — "quão bem este modelo
+prediria dados novos?" — pode ser respondida **diretamente**, deixando
+observações de fora e predizendo-as.
+:::
+
+**LOO** (*leave-one-out*) faz isso com cada observação. Refazer o ajuste
+$n$ vezes seria caro; o **PSIS-LOO** aproxima tudo a partir da posterior
+já obtida.
+
+---
+
+## Na prática
+
+```{r}
+#| eval: false
+library(brms)
+library(loo)
+
+m_a <- brm(TOT.N ~ D.PARK, family = negbinomial(), data = RK,
+           file = "../cache/e09_a")
+m_b <- brm(TOT.N ~ D.PARK + L.WAT.C, family = negbinomial(), data = RK,
+           file = "../cache/e09_b")
+
+loo_compare(loo(m_a), loo(m_b))
+```
+
+A saída dá a diferença de *expected log predictive density* e o seu
+erro-padrão. **Se a diferença é menor que duas vezes o erro-padrão, os
+modelos são indistinguíveis.**
+
+---
+
+## WAIC, LOO e AIC
+
+| | AIC | WAIC | PSIS-LOO |
+|---|---|---|---|
+| Usa | máximo de verossimilhança | posterior inteira | posterior inteira |
+| Conta parâmetros | $K$, na mão | efetivo, estimado | efetivo, estimado |
+| Modelos hierárquicos | conta mal os parâmetros | lida bem | lida bem |
+| Diagnóstico de falha | nenhum | limitado | $\hat{k}$ de Pareto |
+
+::: {.definicao}
+Em modelos mistos, "quantos parâmetros é um efeito aleatório com 9
+níveis?" não tem resposta única — está entre 1 e 9, conforme o
+*shrinkage*. O AIC precisa de um número; LOO e WAIC estimam o
+**número efetivo**.
+:::
+
+---
+
+## A vantagem do $\hat{k}$
+
+O PSIS-LOO avisa quando a aproximação falha, observação por observação.
+
+```{r}
+#| eval: false
+loo_a <- loo(m_a)
+print(loo_a)        # valores de k-hat; > 0,7 é problema
+plot(loo_a)
+```
+
+Nenhum critério de informação frequentista faz isso. Você descobre não só
+que o modelo é pior, mas **quais observações** ele não consegue predizer.
+
+---
+
+## Não selecionar, mediar
+
+::: {.definicao}
+Gelman, Hill & Vehtari argumentam que a pergunta "qual modelo escolher" é
+frequentemente a pergunta errada. Em vez de escolher, **expanda** o
+modelo para conter as alternativas e deixe os dados regularizarem.
+:::
+
+Um efeito aleatório já faz isso: em vez de escolher entre "praias iguais"
+e "praias diferentes", o *shrinkage* posiciona o modelo continuamente
+entre os dois extremos.
+
+---
+
+## As duas escolas, lado a lado
+
+| | Burnham & Anderson | Gelman, Hill & Vehtari |
+|---|---|---|
+| Postura | comparar um conjunto pequeno | expandir um modelo |
+| Ferramenta | AICc e pesos | priors e regularização |
+| Risco | conjunto mal escolhido | modelo grande demais |
+| Concordam em | não varrer o espaço de modelos; a hipótese vem antes |
+
+::: {.nota}
+Vocês não precisam escolher uma escola hoje. Precisam saber que existem
+duas, e não misturar o vocabulário das duas na mesma seção de métodos.
+:::
+
+---
+
+# Fechamento {.secao}
+
+---
+
+## O que fica de hoje
+
+1. AIC estima a **perda relativa de informação**; não é um teste.
+2. Use **AICc** sempre — converge para o AIC quando $n$ cresce.
+3. Pesos somam 1 **dentro do conjunto** que você propôs.
+4. O conjunto de modelos é uma hipótese biológica, definida antes.
+5. Varrer combinações destrói o significado dos pesos.
+6. Em modelos hierárquicos, LOO conta parâmetros melhor que o AIC.
+7. Reporte a tabela inteira, com $K$, $\Delta_i$ e $w_i$.
+
+---
+
+## Prática (o resto do bloco)
+
+1. Escreva de 3 a 5 hipóteses biológicas para os **seus** dados, em
+   palavras.
+2. Traduza cada uma em um modelo. Inclua o nulo.
+3. Monte a tabela de AICc, $\Delta_i$ e pesos — pode ser à mão, como
+   fizemos.
+4. Escreva o parágrafo de resultados a partir da tabela.
+5. Diagnostique o modelo mais bem apoiado.
+
+---
+
+## À tarde
+
+**Clínica Estatística.** Tragam os dados carregados e a pergunta escrita.
+Depois, cinco minutos de apresentação por pessoa.
+
+---
+
+## Referências
+
+::: {.nota}
+- Akaike, H. 1974. [A new look at the statistical model identification](https://doi.org/10.1109/TAC.1974.1100705). *IEEE Transactions on Automatic Control* 19:716–723.
+- Burnham, K.P. & Anderson, D.R. 2002. [*Model Selection and Multimodel Inference*](https://doi.org/10.1007/b97636). 2ª ed. Springer.
+- Chamberlin, T.C. 1890. [The method of multiple working hypotheses](https://doi.org/10.1126/science.ns-15.366.92). *Science* ns-15:92–96.
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
+- Gerstner, K. et al. 2017. [Will your paper be used in a meta-analysis? Make the reach of your research broader and longer lasting](https://doi.org/10.1111/2041-210X.12758). *Methods in Ecology and Evolution* 8:777–784.
+- Vehtari, A.; Gelman, A. & Gabry, J. 2017. [Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC](https://doi.org/10.1007/s11222-016-9696-4). *Statistics and Computing* 27:1413–1432.
+- Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
+- Bartoń, K. [`MuMIn`: multi-model inference](https://cran.r-project.org/package=MuMIn).
+:::

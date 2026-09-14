@@ -1,0 +1,592 @@
+---
+title: "GLM I: verossimilhança, binomial e Poisson"
+subtitle: "Encontro 5 · Análise de Dados Univariados · PPGBA/UFMS"
+author: "Diogo B. Provete"
+date: 2026-09-23
+date-format: "D [de] MMMM [de] YYYY"
+lang: pt
+format:
+  revealjs:
+    theme: [default, theme.scss]
+    slide-number: c/t
+    show-slide-number: all
+    auto-stretch: false
+    preview-links: auto
+    history: false
+    footer: "Análise de Dados Univariados · PPGBA/UFMS · 2026/2"
+    code-overflow: wrap
+    fig-align: center
+    width: 1250
+    height: 750
+knitr:
+  opts_chunk:
+    dev.args:
+      bg: "#faf7f0"
+
+execute:
+  echo: true
+  warning: false
+  message: false
+  fig-width: 7
+  fig-height: 3.6
+---
+
+```{r}
+#| echo: false
+library(tidyverse)
+theme_set(theme_minimal(base_size = 14))
+lagartos <- read_tsv("../dados/camila_cauda_lagartos.txt", show_col_types = FALSE) |>
+  drop_na(SVL, Tail_state, Sex) |> mutate(Sex = factor(Sex))
+uv <- read_delim("../dados/UV.csv", delim = ";", show_col_types = FALSE) |>
+  mutate(UV = factor(UV), Pigmentation = factor(Pigmentation))
+penta <- read_tsv("../dados/Planilha_Pentastomida.txt", show_col_types = FALSE) |>
+  rename(id = 1) |> drop_na(Raillietiella_mottae, CRC, Especie) |>
+  mutate(Especie = factor(Especie))
+RK <- read.delim("../dados/RoadKills.txt")
+```
+
+## Onde estamos no ciclo PPDAC
+
+```{r}
+#| echo: false
+#| fig-width: 5.6
+#| fig-height: 4.5
+#| out-width: "42%"
+#| fig-align: center
+source("../R/ppdac.R")
+ppdac_plot(destaque = c("An\u00e1lise"))
+```
+
+**Análise** — mas a pergunta "que covariáveis entram" é um retorno à etapa **Problema**: depende do que você quer estimar, não do que melhora o ajuste.
+
+---
+
+## Onde estamos {.secao}
+
+Ontem à tarde montamos o vocabulário. Hoje usamos.
+
+::: {.definicao}
+GLM = preditor linear (Encontros 2 e 3) + distribuição da família
+exponencial (Encontro 4) + função de ligação entre os dois.
+:::
+
+Nenhuma peça é nova. O que é novo é o algoritmo que as junta: **máxima
+verossimilhança** no lugar de mínimos quadrados.
+
+---
+
+## Hoje
+
+1. *Productive failure*
+2. Máxima verossimilhança — o que o computador procura
+3. *Deviance* e teste de razão de verossimilhanças
+4. GLM binomial: probabilidades e proporções
+5. **Intervalo**
+6. GLM Poisson: contagens e *offset*
+7. Interpretar na escala da resposta
+8. DAGs: que covariáveis entram no modelo
+
+---
+
+## *Productive failure*
+
+Nos 223 lagartos, `Tail_state` indica se o indivíduo tinha ou não a cauda
+autotomizada (0/1).
+
+::: {.definicao}
+**Pergunta:** lagartos maiores têm maior probabilidade de já ter perdido
+a cauda?
+:::
+
+**Em grupos, 10 minutos:** que análise? E o que acontece se vocês
+simplesmente ajustarem `lm(Tail_state ~ SVL)`?
+
+---
+
+## Por que `lm()` não serve aqui
+
+```{r}
+#| fig-height: 3.0
+#| echo: false
+ggplot(lagartos, aes(SVL, Tail_state)) +
+  geom_jitter(height = .03, alpha = .4, colour = "#1c6e8c") +
+  geom_smooth(method = "lm", se = FALSE, colour = "#c08a3e") +
+  labs(x = "SVL (mm)", y = "Cauda autotomizada (0/1)")
+```
+
+A reta prevê valores fora de [0, 1]; o resíduo só pode assumir dois
+valores para cada $x$; a variância depende da média. Três premissas
+violadas de uma vez.
+
+---
+
+# 1. Máxima verossimilhança {.secao}
+
+---
+
+## A ideia
+
+::: {.definicao}
+**Verossimilhança**: dado um valor candidato para os parâmetros, qual a
+probabilidade de observar exatamente os dados que eu observei?
+
+A estimativa de máxima verossimilhança é o valor que torna os dados
+observados **mais prováveis**.
+:::
+
+Mínimos quadrados é um caso particular: com erro gaussiano, minimizar a
+soma dos quadrados **é** maximizar a verossimilhança.
+
+---
+
+## Vendo a superfície
+
+```{r}
+#| fig-height: 3.1
+y <- lagartos$Tail_state
+x <- lagartos$SVL
+
+log_vero <- function(b0, b1) {
+  p <- plogis(b0 + b1 * x)
+  sum(dbinom(y, size = 1, prob = p, log = TRUE))
+}
+
+grade <- crossing(b0 = seq(-6, 2, .12), b1 = seq(-.05, .2, .004)) |>
+  mutate(ll = map2_dbl(b0, b1, log_vero))
+
+ggplot(grade, aes(b0, b1, fill = ll)) +
+  geom_raster() +
+  scale_fill_viridis_c(option = "mako") +
+  labs(x = expression(beta[0]), y = expression(beta[1]), fill = "log L")
+```
+
+---
+
+## O pico é o que o `glm()` devolve
+
+```{r}
+grade |> slice_max(ll, n = 1)
+
+coef(glm(Tail_state ~ SVL, family = binomial, data = lagartos))
+```
+
+::: {.nota}
+A busca em grade serve só para enxergar. O `glm()` usa mínimos quadrados
+reponderados iterativamente, que chega no mesmo lugar com muito menos
+esforço.
+:::
+
+---
+
+## *Deviance*
+
+::: {.definicao}
+$$D = 2\left[\log L_{\text{saturado}} - \log L_{\text{modelo}}\right]$$
+
+Distância entre o seu modelo e um modelo que acerta todas as observações.
+É a generalização da soma de quadrados residual.
+:::
+
+```{r}
+m_bin <- glm(Tail_state ~ SVL, family = binomial, data = lagartos)
+c(nula = m_bin$null.deviance, residual = m_bin$deviance, AIC = AIC(m_bin))
+```
+
+---
+
+## Teste de razão de verossimilhanças
+
+```{r}
+m0 <- glm(Tail_state ~ 1, family = binomial, data = lagartos)
+anova(m0, m_bin, test = "LRT")
+```
+
+::: {.definicao}
+A diferença de *deviance* entre dois modelos aninhados segue
+aproximadamente uma $\chi^2$ com graus de liberdade igual à diferença de
+parâmetros. É o análogo do teste *F* do modelo linear.
+:::
+
+---
+
+# 2. GLM binomial {.secao}
+
+---
+
+## Duas formas de resposta binomial
+
+**Bernoulli** — uma linha por indivíduo, resposta 0/1:
+
+```{r}
+#| eval: false
+glm(Tail_state ~ SVL, family = binomial, data = lagartos)
+```
+
+**Binomial agregada** — sucessos e fracassos por unidade:
+
+```{r}
+#| eval: false
+glm(cbind(Eosinophil, Total_Cell - Eosinophil) ~ UV * Pigmentation,
+    family = binomial, data = uv)
+```
+
+::: {.nota}
+A segunda forma é a dos dados de UV: 100 células por lâmina, das quais
+algumas são eosinófilos. Escrever `Eosinophil/Total_Cell ~ ...` sem o
+argumento `weights` joga fora a informação do tamanho amostral.
+:::
+
+---
+
+## Ajustando
+
+```{r}
+summary(m_bin)$coefficients
+```
+
+O coeficiente de `SVL` está em **log-*odds* por milímetro**. Ninguém
+pensa em log-*odds*. Vamos traduzir.
+
+---
+
+## *Odds*, log-*odds*, probabilidade
+
+| Escala | Valor | Interpretação |
+|---|---|---|
+| log-*odds* ($\eta$) | $-\infty$ a $+\infty$ | escala do preditor linear |
+| *odds* ($e^{\eta}$) | 0 a $+\infty$ | razão sucesso/fracasso |
+| probabilidade | 0 a 1 | o que a pergunta quer |
+
+```{r}
+b <- coef(m_bin)
+c(log_odds_por_mm = b[2], odds_ratio_por_mm = exp(b[2]),
+  odds_ratio_por_5mm = exp(b[2] * 5))
+```
+
+---
+
+## A curva ajustada
+
+```{r}
+#| fig-height: 3.1
+novo <- tibble(SVL = seq(min(lagartos$SVL), max(lagartos$SVL), length.out = 100))
+pred <- predict(m_bin, newdata = novo, type = "link", se.fit = TRUE)
+novo <- novo |> mutate(p = plogis(pred$fit),
+                       lo = plogis(pred$fit - 1.96 * pred$se.fit),
+                       hi = plogis(pred$fit + 1.96 * pred$se.fit))
+
+ggplot(lagartos, aes(SVL, Tail_state)) +
+  geom_jitter(height = .03, alpha = .3, colour = "#1c6e8c") +
+  geom_ribbon(data = novo, aes(y = p, ymin = lo, ymax = hi), alpha = .2) +
+  geom_line(data = novo, aes(y = p), colour = "#c08a3e", linewidth = 1) +
+  labs(x = "SVL (mm)", y = "P(cauda autotomizada)")
+```
+
+---
+
+## Construa o intervalo na escala do link
+
+::: {.definicao}
+Calcule a predição e o erro-padrão **na escala do preditor linear**, some
+e subtraia, e só então aplique a inversa da ligação. Fazer o contrário
+produz intervalos que saem de [0, 1].
+:::
+
+É exatamente o que o código do slide anterior faz: `type = "link"`,
+depois `plogis()`.
+
+---
+
+## Razão de chances não é risco relativo
+
+```{r}
+p_30 <- plogis(b[1] + b[2] * 30)
+p_35 <- plogis(b[1] + b[2] * 35)
+c(prob_30mm = p_30, prob_35mm = p_35,
+  razao_de_chances = (p_35/(1-p_35)) / (p_30/(1-p_30)),
+  risco_relativo = p_35 / p_30)
+```
+
+::: {.definicao}
+Os dois números diferem, e a diferença cresce quando a probabilidade
+base é alta. Diga qual você está relatando.
+:::
+
+---
+
+## Proporções: os dados de UV
+
+```{r}
+m_uv <- glm(cbind(Eosinophil, Total_Cell - Eosinophil) ~ UV * Pigmentation,
+            family = binomial, data = uv)
+anova(m_uv, test = "LRT")
+```
+
+---
+
+## Separação completa
+
+Quando um preditor separa perfeitamente sucessos de fracassos, a
+verossimilhança não tem máximo finito: o coeficiente "quer" ir para o
+infinito.
+
+**Sinais**: estimativa gigantesca, erro-padrão ainda maior, aviso de
+`fitted probabilities numerically 0 or 1 occurred`.
+
+**Soluções**: regressão logística penalizada de Firth (`logistf`), ou
+priors fracamente informativas num ajuste bayesiano — que é o argumento
+do ROS, cap. 13.
+
+---
+
+# 3. GLM Poisson {.secao}
+
+---
+
+## Contagens de parasitas
+
+```{r}
+m_pois <- glm(Raillietiella_mottae ~ Especie + scale(CRC),
+              family = poisson, data = penta)
+round(summary(m_pois)$coefficients, 3)
+```
+
+Coeficiente em **log da contagem esperada**. Exponenciando:
+
+```{r}
+round(exp(coef(m_pois)), 3)
+```
+
+`Phyllopezus pollicaris` tem uma contagem esperada
+`r round(exp(coef(m_pois)[2]), 2)` vez a de `Hemidactylus agrius`.
+
+---
+
+## Multiplicativo, não aditivo
+
+::: {.definicao}
+Com ligação log, os efeitos **multiplicam** a média em vez de somar. Um
+coeficiente de 0,7 significa "multiplica a contagem esperada por
+$e^{0{,}7} \approx 2$", não "soma 0,7 parasitas".
+:::
+
+Isso costuma ser biologicamente mais plausível: o efeito de uma
+covariável escala com o tamanho da população, não é um acréscimo fixo.
+
+---
+
+## *Offset*: quando o esforço varia
+
+Se os sítios foram amostrados por tempos diferentes, a contagem bruta não
+é comparável. Você quer modelar uma **taxa**.
+
+$$
+\log\!\left(\frac{\mu_i}{\text{esforço}_i}\right) = \mathbf{x}_i\boldsymbol{\beta}
+\quad\Longleftrightarrow\quad
+\log \mu_i = \mathbf{x}_i\boldsymbol{\beta} + \log(\text{esforço}_i)
+$$
+
+```{r}
+#| eval: false
+glm(contagem ~ tratamento + offset(log(horas_de_busca)),
+    family = poisson, data = dados)
+```
+
+::: {.nota}
+`offset()` é um termo com coeficiente **fixado em 1** — não estimado. É
+diferente de incluir `log(esforço)` como preditora comum.
+:::
+
+---
+
+## O primeiro aviso
+
+```{r}
+m_rk <- glm(TOT.N ~ D.PARK, family = poisson, data = RK)
+c(deviance = deviance(m_rk), gl = df.residual(m_rk),
+  razao = deviance(m_rk) / df.residual(m_rk))
+```
+
+::: {.definicao}
+Na Poisson, a *deviance* residual deveria ser da ordem dos graus de
+liberdade. Aqui é quase **8 vezes** maior. Isso se chama sobredispersão,
+e é o assunto da tarde.
+:::
+
+---
+
+# 4. Interpretar na escala certa {.secao}
+
+---
+
+## A regra
+
+```{r}
+#| fig-height: 3.0
+nv <- tibble(D.PARK = seq(0, 25000, length.out = 120))
+pr <- predict(m_rk, newdata = nv, type = "link", se.fit = TRUE)
+nv <- nv |> mutate(mu = exp(pr$fit),
+                   lo = exp(pr$fit - 1.96*pr$se.fit),
+                   hi = exp(pr$fit + 1.96*pr$se.fit))
+
+ggplot(RK, aes(D.PARK, TOT.N)) +
+  geom_point(colour = "#1c6e8c", alpha = .7) +
+  geom_ribbon(data = nv, aes(y = mu, ymin = lo, ymax = hi), alpha = .2) +
+  geom_line(data = nv, aes(y = mu), colour = "#c08a3e", linewidth = 1) +
+  labs(x = "Distância ao parque (m)", y = "Anfíbios mortos")
+```
+
+---
+
+## O que relatar
+
+::: {.definicao}
+Nunca só o coeficiente em escala de link. Relate uma **comparação
+concreta**, na escala da resposta, com intervalo.
+:::
+
+> "A mortalidade esperada cai de X para Y indivíduos entre sítios
+> adjacentes ao parque e sítios a 10 km dele (IC 95 %: …)."
+
+Um revisor consegue julgar essa frase. `β = −0,0001` ele não consegue.
+
+---
+
+# 5. Que covariáveis entram {.secao}
+
+---
+
+## A pergunta que a estatística não responde sozinha
+
+O `glm()` aceita qualquer conjunto de preditoras. A escolha é **sua**, e
+ela decide se o coeficiente significa alguma coisa.
+
+::: {.definicao}
+Controlar por mais variáveis **não** é sempre melhor. Há variáveis que,
+incluídas, introduzem viés onde não havia.
+:::
+
+---
+
+## Três papéis, três decisões
+
+```{mermaid}
+%%| fig-height: 3.2
+flowchart LR
+  A[Área da poça] --> B[Riqueza de anuros]
+  C[Precipitação] --> A
+  C --> B
+  B --> D[Detecção do observador]
+  A --> D
+```
+
+- **Precipitação** é um *confounder*: causa as duas → **controlar**.
+- **Detecção** é um colisor: é causada pelas duas → **não controlar**.
+
+---
+
+## Colisor: o viés que você cria
+
+```{r}
+#| fig-height: 2.7
+#| echo: false
+set.seed(11)
+n <- 400
+area <- rnorm(n); riqueza <- rnorm(n)             # independentes por construção
+colisor <- area + riqueza + rnorm(n, 0, .4)
+d <- tibble(area, riqueza, sel = colisor > quantile(colisor, .66))
+ggplot(d, aes(area, riqueza)) +
+  geom_point(alpha = .25, colour = "grey60") +
+  geom_point(data = filter(d, sel), colour = "#1c6e8c") +
+  geom_smooth(data = filter(d, sel), method = "lm", se = FALSE, colour = "#c08a3e") +
+  labs(x = "Área", y = "Riqueza",
+       subtitle = "Cinza: todos os dados (sem associação). Azul: só os detectados.")
+```
+
+Área e riqueza são independentes **por construção**. Condicionar na
+detecção cria uma associação negativa do nada.
+
+---
+
+## Na prática
+
+```{r}
+#| eval: false
+library(dagitty)
+
+g <- dagitty('dag {
+  Precipitacao -> Area
+  Precipitacao -> Riqueza
+  Area -> Riqueza
+  Area -> Deteccao
+  Riqueza -> Deteccao
+}')
+
+adjustmentSets(g, exposure = "Area", outcome = "Riqueza")
+```
+
+::: {.definicao}
+Desenhe o DAG **antes** de rodar o modelo. Ele diz o que incluir — e a
+resposta quase nunca é "tudo".
+:::
+
+---
+
+## E por que seleção automática não resolve
+
+Um procedimento *stepwise* escolhe variáveis por ajuste, não por papel
+causal. Ele inclui colisores com prazer, porque colisores melhoram a
+predição dentro da amostra.
+
+::: {.nota}
+Predizer e estimar um efeito são objetivos diferentes, e pedem modelos
+diferentes. Voltamos a isso no Encontro 9.
+:::
+
+---
+
+# Fechamento {.secao}
+
+---
+
+## O que fica de hoje
+
+1. GLM ajusta por **máxima verossimilhança**; *deviance* faz o papel da
+   soma de quadrados.
+2. Binomial para 0/1 e proporções; use `cbind(sucesso, fracasso)`.
+3. Poisson para contagens; `offset(log(esforço))` para taxas.
+4. Construa intervalos **na escala do link** e depois transforme.
+5. Relate comparações na escala da resposta, não coeficientes crus.
+6. Que covariáveis incluir é uma pergunta causal, não estatística.
+
+---
+
+## Prática (o resto do bloco)
+
+1. Ajuste um GLM binomial ou Poisson nos seus dados.
+2. Traduza cada coeficiente para a escala da resposta.
+3. Faça o gráfico da curva ajustada com banda de incerteza.
+4. Calcule *deviance* residual / graus de liberdade. Está perto de 1?
+5. Desenhe o DAG do seu sistema e verifique se as covariáveis do seu
+   modelo são as que ele recomenda.
+
+---
+
+## Para a tarde
+
+**Leitura:** *Análises Ecológicas no R*, cap. 8, seções sobre Poisson e
+quasi-verossimilhança.
+
+**À tarde:** o que fazer quando a razão do slide 22 dá 7,8.
+
+---
+
+## Referências
+
+::: {.nota}
+- Agresti, A. 2015. [*Foundations of Linear and Generalized Linear Models*](https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034). Wiley.
+- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
+- Zuur, A.F. et al. 2009. [*Mixed Effects Models and Extensions in Ecology with R*](https://doi.org/10.1007/978-0-387-87458-6). Springer.
+- Arif, S. & MacNeil, M.A. 2023. [Applying the structural causal model framework for observational causal inference in ecology](https://doi.org/10.1002/ecm.1554). *Ecological Monographs* 93:e1554.
+:::

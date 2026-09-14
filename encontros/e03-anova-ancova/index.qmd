@@ -37,8 +37,14 @@ nenhum conceito novo de inferência.
 
 ## Leituras
 
-- **Obrigatória:** Quinn & Keough (2023), caps. 8 e 9.
-- **Complementar:** Gelman, Hill & Vehtari (2020), caps. 10 a 12.
+**Obrigatória**
+
+- Quinn, G.P. & Keough, M.J. 2023. [*Experimental Design and Data Analysis for Biologists*](https://doi.org/10.1017/9781139568173). 2ª ed. Cambridge University Press.
+
+**Complementar**
+
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
+- Davis, S. & Kay, M. 2023. [Statistical reporting checklist](https://doi.org/10.1002/ecs2.4539). *Ecosphere*.
 
 ## Recursos externos
 

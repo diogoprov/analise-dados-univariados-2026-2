@@ -41,13 +41,13 @@ independência das observações.
 
 ## Leituras
 
-- **Obrigatória:** Bolker, B.M. et al. 2009. Generalized linear mixed
-  models: a practical guide for ecology and evolution. *Trends in Ecology
-  & Evolution*.
-- **Checklist:** Harrison, X.A. et al. 2018. A brief introduction to
-  mixed effects modelling and multi-model inference in ecology. *PeerJ*.
-- **Complementar:** Zuur et al. (2009), cap. 5.
+**Obrigatória**
 
----
+- Bolker, B.M. et al. 2009. [Generalized linear mixed models: a practical guide for ecology and evolution](https://doi.org/10.1016/j.tree.2008.10.008). *Trends in Ecology & Evolution* 24:127–135.
 
-*Volta para o [índice do curso](../../index.qmd).*
+**Complementar**
+
+- Harrison, X.A. et al. 2018. [A brief introduction to mixed effects modelling and multi-model inference in ecology](https://doi.org/10.7717/peerj.4794). *PeerJ* 6:e4794.
+- Hurlbert, S.H. 1984. [Pseudoreplication and the design of ecological field experiments](https://doi.org/10.2307/1942661). *Ecological Monographs* 54:187–211.
+- Zuur, A.F. et al. 2009. [*Mixed Effects Models and Extensions in Ecology with R*](https://doi.org/10.1007/978-0-387-87458-6). Springer.
+

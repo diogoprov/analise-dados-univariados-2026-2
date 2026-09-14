@@ -1,0 +1,234 @@
+---
+title: "Clínica Estatística e encerramento"
+subtitle: "Encontro 10 · Análise de Dados Univariados · PPGBA/UFMS"
+author: "Diogo B. Provete"
+date: 2026-09-25
+date-format: "D [de] MMMM [de] YYYY"
+lang: pt
+format:
+  revealjs:
+    theme: [default, theme.scss]
+    slide-number: c/t
+    show-slide-number: all
+    auto-stretch: false
+    preview-links: auto
+    history: false
+    footer: "Análise de Dados Univariados · PPGBA/UFMS · 2026/2"
+    code-overflow: wrap
+    fig-align: center
+    width: 1250
+    height: 750
+knitr:
+  opts_chunk:
+    dev.args:
+      bg: "#faf7f0"
+
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Onde estamos no ciclo PPDAC
+
+```{r}
+#| echo: false
+#| fig-width: 5.6
+#| fig-height: 4.5
+#| out-width: "42%"
+#| fig-align: center
+source("../R/ppdac.R")
+ppdac_plot(destaque = NULL)
+```
+
+Hoje vocês percorrem o ciclo inteiro nos próprios dados, do **Problema** à **Conclusão**.
+
+---
+
+## A tarde {.secao}
+
+**Bloco 1 (≈ 3 h) — Clínica.** Cerca de 25 min por pessoa, com a turma
+toda acompanhando.
+
+**Bloco 2 (≈ 1 h) — Apresentações.** 5 min cada.
+
+**Bloco 3 (≈ 30 min) — Encerramento.** O que ficou de fora, e para onde
+ir.
+
+::: {.definicao}
+O problema de um costuma ser o problema de três. Fiquem para as consultas
+dos colegas.
+:::
+
+---
+
+## Como usar a sua consulta
+
+Traga, já carregado no R:
+
+1. os **dados**, em `.csv` ou `.txt`;
+2. a **pergunta**, escrita em uma frase, no formato do Encontro 1;
+3. o que você **já tentou** e onde travou.
+
+::: {.nota}
+Vinte e cinco minutos passam rápido. Chegar com o `read_csv()` funcionando
+vale cinco minutos a mais de conversa sobre o modelo.
+:::
+
+---
+
+## Triagem: cinco perguntas
+
+Responda antes de chegar — as respostas determinam o modelo.
+
+1. A resposta é contagem, proporção, binária, ordinal ou contínua?
+2. Há observações agrupadas — mesmo sítio, indivíduo ou data?
+3. O esforço amostral é igual entre unidades?
+4. Quantos zeros há, e o que significam **biologicamente**?
+5. Que covariáveis entram, e por qual argumento?
+
+---
+
+## A árvore de decisão do curso
+
+```{mermaid}
+%%| fig-height: 4.2
+flowchart TD
+  A[Que tipo de resposta?] --> B[Contínua e simétrica]
+  A --> C[Contagem]
+  A --> D[Binária ou proporção]
+  A --> E[Ordinal]
+  B --> B1["lm() / lmer()"]
+  C --> C1{Sobredisperso?}
+  C1 -- não --> C2["glm(poisson)"]
+  C1 -- sim --> C3{Excesso de zeros<br/>depois da NB?}
+  C3 -- não --> C4["glm.nb() / glmmTMB(nbinom2)"]
+  C3 -- sim --> C5["glmmTMB(ziformula=)"]
+  D --> D1["glm(binomial)"]
+  E --> E1["ordinal::clm() / clmm()"]
+  B1 --> F{Observações<br/>agrupadas?}
+  C2 --> F
+  C4 --> F
+  D1 --> F
+  F -- sim --> G["acrescente (1 | grupo)"]
+```
+
+---
+
+## Apresentação: 5 minutos
+
+Três slides, no máximo:
+
+1. **A pergunta** e a estrutura dos dados — o que é uma linha da sua
+   tabela.
+2. **O modelo** e por que ele: distribuição, ligação, estrutura aleatória.
+3. **O diagnóstico** e o que ele mostrou.
+
+::: {.definicao}
+Não é preciso ter resultado bonito. É preciso ter o raciocínio claro. Um
+modelo que não ajustou, com diagnóstico honesto, é uma apresentação
+melhor que um resultado significativo sem diagnóstico.
+:::
+
+---
+
+# Encerramento {.secao}
+
+---
+
+## O arco da semana
+
+| | Relaxamos | Ganhamos |
+|---|---|---|
+| E2–E3 | nada — só reorganizamos | um modelo no lugar de cinco testes |
+| E4–E5 | a resposta ser gaussiana | GLM |
+| E6 | a variância ser a da família | dispersão, zeros, ordinais |
+| E7–E8 | as observações serem independentes | GLMM |
+| E8 | os parâmetros serem fixos | posterior |
+| E9 | haver um modelo certo | comparação e média |
+
+::: {.definicao}
+Uma premissa por vez. Nenhum salto conceitual — só relaxamentos
+sucessivos do mesmo objeto.
+:::
+
+---
+
+## O que ficou de fora
+
+**Multivariados baseados em modelos e JSDM.** Quando a resposta é uma
+matriz de espécies, o GLM vira `mvabund::manyglm()`, e o modelo conjunto
+de distribuição (`Hmsc`, `gllvm`) acrescenta efeitos aleatórios residuais
+que descrevem associação entre espécies.
+
+- [*Análises Ecológicas no R*, cap. 9](https://analises-ecologicas.com/cap9)
+- [Vídeo sobre JSDM](https://youtu.be/x5SlBncka3I)
+- [Análises multidimensionais](https://provetelab.org/teaching/multidimensionais/) —
+  a disciplina que cobre isso inteiro
+- Ovaskainen & Abrego (2020), *Joint Species Distribution Modelling*
+
+---
+
+## Outros caminhos
+
+- **Dependência espacial e temporal** — `nlme` com estruturas de
+  correlação; INLA; modelos autorregressivos.
+- **Comparativos filogenéticos** — `phylolm`, `MCMCglmm`, `brms` com
+  matriz de covariância filogenética.
+- **Ocupação e detecção imperfeita** — `unmarked`, `spOccupancy`.
+- **Inferência causal** — DAGs além do critério *backdoor*; Arif &
+  MacNeil (2023).
+- **Bayesiano a sério** — McElreath, *Statistical Rethinking*, e o
+  recodificado do Kurz em `brms`.
+
+---
+
+## O trabalho final
+
+Estrutura, critérios e esqueleto em
+[provetelab.org/analise-dados-univariados-2026-2/trabalho-final](https://provetelab.org/analise-dados-univariados-2026-2/trabalho-final.html).
+
+Combinemos agora o prazo.
+
+::: {.nota}
+Lembrete: declarar o uso de modelos de linguagem — modelo, versão, que
+parte do código, e os *prompts* críticos. A responsabilidade pelo código é
+de quem assina.
+:::
+
+---
+
+## Três coisas para levar
+
+::: {.definicao}
+1. **A pergunta vem antes do modelo**, e o modelo antes do teste.
+2. **A estrutura do modelo espelha a estrutura da amostragem** — não a
+   forma do histograma.
+3. **Diagnóstico honesto vale mais que resultado bonito.**
+:::
+
+---
+
+## Obrigado
+
+O material fica no ar e continua sendo atualizado:
+
+[provetelab.org/analise-dados-univariados-2026-2](https://provetelab.org/analise-dados-univariados-2026-2/)
+
+Correções e sugestões por *issue* ou *pull request* no
+[repositório](https://github.com/diogoprov/analise-dados-univariados-2026-2).
+
+Dúvidas depois do curso: [diogo.provete@ufms.br](mailto:diogo.provete@ufms.br)
+
+---
+
+## Referências
+
+::: {.nota}
+- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
+- Ovaskainen, O. & Abrego, N. 2020. [*Joint Species Distribution Modelling*](https://doi.org/10.1017/9781108591720). Cambridge University Press.
+- Davis, S. & Kay, M. 2023. [Statistical reporting checklist](https://doi.org/10.1002/ecs2.4539). *Ecosphere*.
+- Nakagawa, S. et al. 2023. [Method Reporting with Initials for Transparency (MeRIT)](https://doi.org/10.1038/s41467-023-37039-1). *Nature Communications* 14:1788.
+- Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
+- Wild, C.J. & Pfannkuch, M. 1999. [Statistical thinking in empirical enquiry](https://doi.org/10.1111/j.1751-5823.1999.tb00442.x). *International Statistical Review* 67:223–248. — origem do ciclo PPDAC.
+:::

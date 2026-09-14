@@ -1,7 +1,7 @@
 ---
 title: "E1 — EDA, reprodutibilidade e literacia em IA"
 order: 1
-description: "Análise exploratória segundo Zuur & Ieno (2016). Fluxo Quarto + git. Pergunta focada, PICO e pré-registro. Uso responsável de LLMs em estatística."
+description: "Ciclo PPDAC e raciocínio estatístico. Análise exploratória segundo Zuur & Ieno (2016). Fluxo Quarto + git. Pergunta focada, PICO e pré-registro. Uso responsável de LLMs em estatística."
 ---
 
 ::: {.aula-meta}
@@ -20,16 +20,18 @@ outra pessoa — inclusive você daqui a dois anos — consiga refazer.
 
 1. **Productive failure de abertura** (20 min) — uma pergunta, um conjunto
    de dados, nenhuma instrução.
-2. **Os quatro princípios** de Popovic et al. (2024) como moldura do curso
+2. **O ciclo PPDAC** (30 min) — Problema, Plano, Dados, Análise,
+   Conclusão: onde cada parte do curso se encaixa.
+3. **Os quatro princípios** de Popovic et al. (2024) como moldura do curso
    (30 min).
-3. **Pergunta focada, PICO e pré-registro** (30 min) — HARKing, p-hacking,
+4. **Pergunta focada, PICO e pré-registro** (30 min) — HARKing, p-hacking,
    a distinção entre análise confirmatória e exploratória, e o custo real
    de mudar a hipótese depois de ver os dados.
-4. **EDA segundo Zuur & Ieno (2016)** — o protocolo em oito passos, com
+5. **EDA segundo Zuur & Ieno (2016)** — o protocolo em oito passos, com
    dados problemáticos de verdade.
-5. **Fluxo reprodutível** — projeto do RStudio, `here`, Quarto, git,
+6. **Fluxo reprodutível** — projeto do RStudio, `here`, Quarto, git,
    princípios FAIR.
-6. **Uso saudável de LLMs em estatística** (60 min) — onde ajudam, onde
+7. **Uso saudável de LLMs em estatística** (60 min) — onde ajudam, onde
    fazem mal, como declarar.
 
 ## Dados
@@ -38,17 +40,26 @@ outra pessoa — inclusive você daqui a dois anos — consiga refazer.
 - [`dados_heterocedasticidade.csv`](../../dados/dados_heterocedasticidade.csv)
 - [`dados_nao_normais.csv`](../../dados/dados_nao_normais.csv)
 
+## Preparação prévia (sala de aula invertida)
+
+- Vídeos do canal [@DiogoBProvete](https://www.youtube.com/@DiogoBProvete)
+  sobre **ciclo PPDAC**, **teste de hipótese** e **distribuições de
+  probabilidade**.
+- [*Análises Ecológicas no R*, caps. 4 a 6](https://analises-ecologicas.com).
+- [Roteiro de instalação](../../instalacao.qmd) concluído, com o `brms`
+  compilando.
+
 ## Leituras
 
-- **Obrigatória, pré-aula:** Popovic, G. et al. 2024. Four principles for
-  improved statistical ecology. *Methods in Ecology and Evolution*
-  15:266–281.
-- **Complementar:** Cooper, N. et al. 2024. Harnessing large language
-  models for coding, teaching and inclusion. *Methods in Ecology and
-  Evolution* 15:1757–1763.
-- **Para quem se vê orientando:** Kay, M. et al. 2026. A century of
-  inertia in quantitative ecology education. *Methods in Ecology and
-  Evolution*.
+**Obrigatória**
+
+- Popovic, G. et al. 2024. [Four principles for improved statistical ecology](https://doi.org/10.1111/2041-210X.14270). *Methods in Ecology and Evolution* 15:266–281.
+
+**Complementar**
+
+- Cooper, N. et al. 2024. [Harnessing large language models for coding, teaching and inclusion to empower research in ecology and evolution](https://doi.org/10.1111/2041-210X.14325). *Methods in Ecology and Evolution* 15:1757–1763.
+- Kay, M. et al. 2026. [A century of inertia in quantitative ecology education](https://doi.org/10.1111/2041-210X.70405). *Methods in Ecology and Evolution*.
+- Wild, C.J. & Pfannkuch, M. 1999. [Statistical thinking in empirical enquiry](https://doi.org/10.1111/j.1751-5823.1999.tb00442.x). *International Statistical Review* 67:223–248. — origem do ciclo PPDAC.
 
 ## Recursos externos
 

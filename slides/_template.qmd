@@ -18,6 +18,11 @@ format:
     fig-align: center
     width: 1250
     height: 750
+knitr:
+  opts_chunk:
+    dev.args:
+      bg: "#faf7f0"
+
 execute:
   echo: true
   warning: false

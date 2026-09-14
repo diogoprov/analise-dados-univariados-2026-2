@@ -4,7 +4,7 @@ Materiais da disciplina **Análise de Dados Univariados**, oferecida no formato
 intensivo de **21 a 25 de setembro de 2026** no Programa de Pós-Graduação em
 Biologia Animal da UFMS.
 
-Site: <https://diogoprov.github.io/analise-dados-univariados-2026-2/>
+Site: <https://provetelab.org/analise-dados-univariados-2026-2/>
 
 ## Estrutura
 

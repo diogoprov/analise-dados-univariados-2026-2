@@ -39,10 +39,15 @@ Diagnóstico primeiro, remédio depois.
 
 ## Leituras
 
-- **Obrigatória:** Zuur et al. (2009), cap. 11.
-- **Complementar, bayesiano:** Kurz, *Statistical Rethinking with brms*,
-  cap. 12 — "Monsters and Mixtures", que cobre sobredispersão, zeros
-  inflados e ordinais no arcabouço bayesiano.
+**Obrigatória**
+
+- Zuur, A.F. et al. 2009. [*Mixed Effects Models and Extensions in Ecology with R*](https://doi.org/10.1007/978-0-387-87458-6). Springer.
+
+**Complementar**
+
+- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
+- Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
+- Hartig, F. [`DHARMa`: residual diagnostics for hierarchical regression models](https://cran.r-project.org/package=DHARMa).
 
 ## Recursos externos
 

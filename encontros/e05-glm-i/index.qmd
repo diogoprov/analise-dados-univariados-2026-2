@@ -42,10 +42,15 @@ observacional: *que covariáveis entram no modelo, e por quê?*
 
 ## Leituras
 
-- **Obrigatória:** Agresti (2015), caps. 5 e 6.
-- **Complementar:** Zuur et al. (2009), caps. 8 e 9.
-- **Causalidade:** Arif, S. & MacNeil, M.A. 2023. *Ecological
-  Monographs* — inferência causal em ecologia.
+**Obrigatória**
+
+- Agresti, A. 2015. [*Foundations of Linear and Generalized Linear Models*](https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034). Wiley.
+
+**Complementar**
+
+- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
+- Zuur, A.F. et al. 2009. [*Mixed Effects Models and Extensions in Ecology with R*](https://doi.org/10.1007/978-0-387-87458-6). Springer.
+- Arif, S. & MacNeil, M.A. 2023. [Applying the structural causal model framework for observational causal inference in ecology](https://doi.org/10.1002/ecm.1554). *Ecological Monographs* 93:e1554.
 
 ## Recursos externos
 

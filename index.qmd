@@ -34,6 +34,22 @@ distribuição da resposta (GLM), independência das observações (GLMM),
 incerteza sobre qual modelo usar (seleção de modelos) e incerteza sobre
 os próprios parâmetros (inferência bayesiana).
 
+## Como pensamos aqui: o ciclo PPDAC
+
+```{r}
+#| echo: false
+#| fig-width: 6.6
+#| fig-height: 5.3
+#| out-width: "60%"
+#| fig-align: center
+source("R/ppdac.R")
+ppdac_plot()
+```
+
+**P**roblema → **P**lano → **D**ados → **A**nálise → **C**onclusão
+([Wild & Pfannkuch 1999](https://doi.org/10.1111/j.1751-5823.1999.tb00442.x)). Todo encontro começa indicando em que etapa do
+ciclo ele vive. Detalhes no [programa](programa.qmd).
+
 ## Cronograma
 
 ::: {#cronograma}
@@ -45,8 +61,8 @@ os próprios parâmetros (inferência bayesiana).
    RStudio, Quarto e os pacotes já funcionando — inclusive o `brms`, que
    precisa compilar código C++ na primeira execução e pode levar alguns
    minutos.
-2. Leia **Popovic et al. (2024)**, *Four principles for improved
-   statistical ecology* — discutimos os quatro princípios nos primeiros
+2. Leia [**Popovic et al. (2024)**, *Four principles for improved
+   statistical ecology*](https://doi.org/10.1111/2041-210X.14270) — discutimos os quatro princípios nos primeiros
    30 min do Encontro 1.
 3. Traga **um conjunto de dados seu** (ou de um repositório aberto). Ele
    será a base do [trabalho final](trabalho-final.qmd) e vamos usá-lo nos
@@ -64,8 +80,8 @@ Correções e sugestões são bem-vindas via *issue* ou *pull request*.
 
 ## Metodologia
 
-Cada encontro abre com **20 min de *productive failure*** (Kay et al.
-2026): apresento uma pergunta ecológica e um conjunto de dados, e vocês,
+Cada encontro abre com **20 min de *productive failure*** ([Kay et al.
+2026](https://doi.org/10.1111/2041-210X.70405)): apresento uma pergunta ecológica e um conjunto de dados, e vocês,
 em grupos pequenos e deliberadamente heterogêneos quanto à formação
 quantitativa, propõem uma análise **antes** de eu apresentar o método. O
 objetivo não é acertar — é explicitar premissas e dificuldades. Depois

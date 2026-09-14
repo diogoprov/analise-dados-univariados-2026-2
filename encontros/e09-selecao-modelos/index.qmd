@@ -43,11 +43,14 @@ e sobre por que ela é mais perigosa do que parece.
 
 ## Leituras
 
-- **Obrigatória:** Burnham & Anderson (2002), caps. 2 a 4.
-- **Complementar:** Gelman, Hill & Vehtari (2020), cap. 11.
-- **Apoio:** Kurz, *Statistical Rethinking with brms*, cap. 7 —
-  "Ulysses' Compass".
+**Obrigatória**
 
----
+- Burnham, K.P. & Anderson, D.R. 2002. [*Model Selection and Multimodel Inference*](https://doi.org/10.1007/b97636). 2ª ed. Springer.
 
-*Volta para o [índice do curso](../../index.qmd).*
+**Complementar**
+
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
+- Vehtari, A.; Gelman, A. & Gabry, J. 2017. [Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC](https://doi.org/10.1007/s11222-016-9696-4). *Statistics and Computing* 27:1413–1432.
+- Gerstner, K. et al. 2017. [Will your paper be used in a meta-analysis? Make the reach of your research broader and longer lasting](https://doi.org/10.1111/2041-210X.12758). *Methods in Ecology and Evolution* 8:777–784.
+- Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
+

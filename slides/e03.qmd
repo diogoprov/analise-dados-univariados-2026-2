@@ -18,6 +18,11 @@ format:
     fig-align: center
     width: 1250
     height: 750
+knitr:
+  opts_chunk:
+    dev.args:
+      bg: "#faf7f0"
+
 execute:
   echo: true
   warning: false
@@ -35,6 +40,22 @@ pinguins <- penguins |> drop_na(body_mass_g, species, sex, flipper_length_mm)
 lagartos <- read_tsv("../dados/camila_cauda_lagartos.txt", show_col_types = FALSE) |>
   drop_na(SVL, Autotomized_tail_length, Sex)
 ```
+
+## Onde estamos no ciclo PPDAC
+
+```{r}
+#| echo: false
+#| fig-width: 5.6
+#| fig-height: 4.5
+#| out-width: "42%"
+#| fig-align: center
+source("../R/ppdac.R")
+ppdac_plot(destaque = c("An\u00e1lise"))
+```
+
+Continuamos na **Análise**. O que muda hoje vem inteiramente do **Plano**: quantos fatores, balanceado ou não, com ou sem covariável.
+
+---
 
 ## Onde paramos {.secao}
 
@@ -563,14 +584,10 @@ confint(pairs(emmeans(m_int, ~ sex | species)))[, c(1, 2, 3, 6, 7)]
 ## Referências
 
 ::: {.nota}
-- Agresti, A. 2015. *Foundations of Linear and Generalized Linear
-  Models*. Wiley.
-- Davis, S. & Kay, M. 2023. *Ecosphere*. doi:10.1002/ecs2.4539
-- Gelman, A., Hill, J. & Vehtari, A. 2020. *Regression and Other
-  Stories*. Cambridge University Press. Caps. 10–12.
-- Lenth, R. `emmeans`: estimated marginal means.
-  <https://cran.r-project.org/package=emmeans>
-- Quinn, G.P. & Keough, M.J. 2023. *Experimental Design and Data
-  Analysis for Biologists*. 2ª ed. Caps. 8–9.
-- da Silva, F.R. et al. 2022. *Análises Ecológicas no R*, cap. 7.
+- Quinn, G.P. & Keough, M.J. 2023. [*Experimental Design and Data Analysis for Biologists*](https://doi.org/10.1017/9781139568173). 2ª ed. Cambridge University Press.
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
+- Agresti, A. 2015. [*Foundations of Linear and Generalized Linear Models*](https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034). Wiley.
+- Davis, S. & Kay, M. 2023. [Statistical reporting checklist](https://doi.org/10.1002/ecs2.4539). *Ecosphere*.
+- Lenth, R. [`emmeans`: estimated marginal means](https://cran.r-project.org/package=emmeans).
+- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
 :::

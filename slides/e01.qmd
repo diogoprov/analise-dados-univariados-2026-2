@@ -18,6 +18,11 @@ format:
     fig-align: center
     width: 1250
     height: 750
+knitr:
+  opts_chunk:
+    dev.args:
+      bg: "#faf7f0"
+
 execute:
   echo: true
   warning: false
@@ -86,19 +91,20 @@ heterogênea.
 - O trabalho final usa **os dados de vocês**. Quanto mais cedo vocês os
   trouxerem para as práticas, melhor.
 - Tudo está em
-  [diogoprov.github.io/analise-dados-univariados-2026-2](https://diogoprov.github.io/analise-dados-univariados-2026-2/).
+  [provetelab.org/analise-dados-univariados-2026-2](https://provetelab.org/analise-dados-univariados-2026-2/).
 
 ---
 
 ## Hoje
 
 1. *Productive failure* de abertura — 20 min
-2. Os quatro princípios de Popovic et al. (2024) — 30 min
-3. Pergunta focada, HARKing e pré-registro — 30 min
-4. **Intervalo**
-5. Exploração de dados: o protocolo em oito passos — 90 min
-6. Fluxo reprodutível: projeto, Quarto, git — 45 min
-7. Uso saudável de LLMs em estatística — 60 min
+2. O ciclo PPDAC — 30 min
+3. Os quatro princípios de Popovic et al. (2024) — 30 min
+4. Pergunta focada, HARKing e pré-registro — 30 min
+5. **Intervalo**
+6. Exploração de dados: o protocolo em oito passos — 90 min
+7. Fluxo reprodutível: projeto, Quarto, git — 45 min
+8. Uso saudável de LLMs em estatística — 60 min
 
 ---
 
@@ -161,7 +167,71 @@ longa à direita.
 
 ---
 
-# 2. Quatro princípios {.secao}
+# 2. O ciclo PPDAC {.secao}
+
+---
+
+## O mapa da disciplina inteira
+
+```{r}
+#| echo: false
+#| fig-width: 6.4
+#| fig-height: 5.1
+#| out-width: "52%"
+#| fig-align: center
+source("../R/ppdac.R")
+ppdac_plot()
+```
+
+::: {.ref}
+Wild, C.J. & Pfannkuch, M. 1999. *International Statistical Review*.
+:::
+
+---
+
+## Onde cada etapa aparece no curso
+
+| Etapa | A pergunta que ela responde | Onde aparece no curso |
+|---|---|---|
+| **Problema** | o que eu quero saber, em termos mensuráveis? | hoje, e no item 1 do trabalho final |
+| **Plano** | que dados respondem isso, e como coletá-los? | hoje (pré-registro); E7 (delineamento e dependência) |
+| **Dados** | o que eu de fato tenho, e em que estado? | hoje (EDA em 8 passos) |
+| **Análise** | que modelo corresponde a esses dados e a essa pergunta? | E2 a E9 |
+| **Conclusão** | o que posso afirmar, e com que incerteza? | E5 (escala da resposta), E9 (seleção) |
+
+---
+
+## Por que um ciclo e não uma lista
+
+```{mermaid}
+%%| fig-height: 2.6
+flowchart LR
+  P1[Problema] --> P2[Plano] --> D[Dados] --> A[Análise] --> C[Conclusão]
+  C -.-> P1
+  A -.-> D
+```
+
+As setas pontilhadas são o ponto: a análise revela problemas nos dados, e
+a conclusão quase sempre reformula o problema. **Isso é legítimo** — o que
+não é legítimo é apagar o percurso e apresentar a última volta do ciclo
+como se tivesse sido a primeira.
+
+---
+
+## Onde a maioria dos trabalhos quebra
+
+::: {.definicao}
+Não é na Análise. É no **Problema** — a pergunta nunca foi escrita de
+forma que um parâmetro pudesse respondê-la — e no **Plano** — a estrutura
+de coleta não permite separar o efeito de interesse.
+:::
+
+Nenhum modelo do Encontro 2 ao 9 conserta isso. É por isso que gastamos a
+primeira manhã aqui.
+
+---
+
+# 3. Quatro princípios {.secao}
 
 ::: {.nota}
 Popovic, G. et al. 2024. Four principles for improved statistical
@@ -238,7 +308,7 @@ depois.
 
 ---
 
-# 3. A pergunta vem antes {.secao}
+# 4. A pergunta vem antes {.secao}
 
 ---
 
@@ -317,7 +387,7 @@ ou de analisar.
 
 ---
 
-# 4. Exploração de dados {.secao}
+# 5. Exploração de dados {.secao}
 
 ::: {.nota}
 Protocolo de Zuur, Ieno & Elphick (2010), *Methods in Ecology and
@@ -524,7 +594,7 @@ Se a resposta for sim para alguma, você precisa de efeitos aleatórios
 
 ---
 
-# 5. Fluxo reprodutível {.secao}
+# 6. Fluxo reprodutível {.secao}
 
 ---
 
@@ -626,7 +696,7 @@ periódicos.
 
 ---
 
-# 6. LLMs em estatística {.secao}
+# 7. LLMs em estatística {.secao}
 
 ::: {.nota}
 Cooper, N. et al. 2024. Harnessing large language models for coding,
@@ -740,6 +810,16 @@ Vale igual no trabalho final desta disciplina.
 
 ---
 
+## O que fica de hoje, em uma linha
+
+::: {.definicao}
+O ciclo PPDAC é o mapa; os quatro princípios são o critério de qualidade;
+o protocolo de oito passos é a lista de verificação. O resto do curso é a
+etapa "Análise".
+:::
+
+---
+
 ## Para amanhã
 
 **Leitura:** Gelman, Hill & Vehtari (2020), *Regression and Other
@@ -757,17 +837,11 @@ coisas.
 ## Referências
 
 ::: {.nota}
-- Cooper, N. et al. 2024. Harnessing large language models for coding,
-  teaching and inclusion. *Methods in Ecology and Evolution* 15:1757–1763.
-- Kay, M. et al. 2026. A century of inertia in quantitative ecology
-  education. *Methods in Ecology and Evolution*.
-- Popovic, G. et al. 2024. Four principles for improved statistical
-  ecology. *Methods in Ecology and Evolution* 15:266–281.
-- Zuur, A.F., Ieno, E.N. & Elphick, C.S. 2010. A protocol for data
-  exploration to avoid common statistical problems. *Methods in Ecology
-  and Evolution* 1:3–14.
-- Zuur, A.F. & Ieno, E.N. 2016. A protocol for conducting and presenting
-  results of regression-type analyses. *Methods in Ecology and
-  Evolution*.
-- da Silva, F.R. et al. 2022. *Análises Ecológicas no R*. NUPEEA.
+- Wild, C.J. & Pfannkuch, M. 1999. [Statistical thinking in empirical enquiry](https://doi.org/10.1111/j.1751-5823.1999.tb00442.x). *International Statistical Review* 67:223–248. — origem do ciclo PPDAC.
+- Popovic, G. et al. 2024. [Four principles for improved statistical ecology](https://doi.org/10.1111/2041-210X.14270). *Methods in Ecology and Evolution* 15:266–281.
+- Cooper, N. et al. 2024. [Harnessing large language models for coding, teaching and inclusion to empower research in ecology and evolution](https://doi.org/10.1111/2041-210X.14325). *Methods in Ecology and Evolution* 15:1757–1763.
+- Kay, M. et al. 2026. [A century of inertia in quantitative ecology education](https://doi.org/10.1111/2041-210X.70405). *Methods in Ecology and Evolution*.
+- Zuur, A.F.; Ieno, E.N. & Elphick, C.S. 2010. [A protocol for data exploration to avoid common statistical problems](https://doi.org/10.1111/j.2041-210X.2009.00001.x). *Methods in Ecology and Evolution* 1:3–14.
+- Zuur, A.F. & Ieno, E.N. 2016. [A protocol for conducting and presenting results of regression-type analyses](https://doi.org/10.1111/2041-210X.12577). *Methods in Ecology and Evolution* 7:636–645.
+- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
 :::
