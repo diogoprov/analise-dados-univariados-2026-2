@@ -330,9 +330,21 @@ mcmc_plot(m_bayes, type = "neff")
 ## Checagem preditiva posterior
 
 ```{r}
-#| fig-height: 4.6
+#| fig-height: 3.6
 pp_check(m_bayes, ndraws = 100)
+```
+
+---
+
+## Checando a estatística que interessa
+
+```{r}
+#| fig-height: 3.2
 pp_check(m_bayes, type = "stat", stat = "max")
+```
+
+```{r}
+#| fig-height: 3.2
 pp_check(m_bayes, type = "stat", stat = \(y) mean(y == 0))
 ```
 

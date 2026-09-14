@@ -26,6 +26,11 @@ suppressPackageStartupMessages({
 
 dir.create("cache", showWarnings = FALSE)
 
+# O padrão de cores em brm() é 1, ou seja, as quatro cadeias rodam em série.
+# Definir mc.cores acelera sem alterar a chamada brm(), que precisa continuar
+# literalmente idêntica à que aparece nos slides.
+options(mc.cores = min(4, parallel::detectCores()))
+
 cronometra <- function(rotulo, expr) {
   t0 <- Sys.time()
   message("\n== ", rotulo, " ...")

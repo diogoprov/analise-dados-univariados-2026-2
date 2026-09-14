@@ -108,8 +108,8 @@ UID:20260925-d5@provetelab.org
 DTSTAMP:20260913T230000Z
 DTSTART;VALUE=DATE:20260925
 DTEND;VALUE=DATE:20260926
-SUMMARY:🎓 Dia 5 — E9 (seleção de modelos) + E10 (JSDM) + combinar trabalho final
-DESCRIPTION:Definir com a turma o prazo de entrega do relatório Quarto
+SUMMARY:🎓 Dia 5 — E9 (seleção de modelos) + E10 (Clínica Estatística)
+DESCRIPTION:Tarde: clínica com os dados dos alunos + apresentações + encerramento\nDefinir com a turma o prazo de entrega do relatório Quarto
 TRANSP:TRANSPARENT
 END:VEVENT
 END:VCALENDAR

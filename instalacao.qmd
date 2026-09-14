@@ -103,10 +103,12 @@ um Stan pré-compilado. As instruções oficiais estão em
 chamadas a `brm()`.
 :::
 
-### Opcional — Encontro 10
+### Opcional — depois do curso
 
-Só para quem quiser acompanhar a prática de JSDM. É pesado; não é
-obrigatório.
+**Não instale agora.** Nenhuma sessão da disciplina usa estes pacotes. Eles
+ficam indicados para quem quiser seguir por conta própria pelo caminho dos
+modelos multivariados e dos modelos conjuntos de distribuição de espécies,
+que mencionamos no encerramento da sexta-feira.
 
 ```{r}
 #| eval: false
