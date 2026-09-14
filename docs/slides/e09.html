@@ -348,8 +348,8 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <section id="na-prática" class="slide level2">
 <h2>Na prática</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>m1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(TOT.N <span class="sc">~</span> D.PARK, <span class="at">family =</span> poisson, <span class="at">data =</span> RK)</span>
-<span id="cb1-2"><a></a>m2 <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK, <span class="at">data =</span> RK)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>m1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(TOT.N <span class="sc">~</span> D.PARK_km, <span class="at">family =</span> poisson, <span class="at">data =</span> RK)</span>
+<span id="cb1-2"><a></a>m2 <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK_km, <span class="at">data =</span> RK)</span>
 <span id="cb1-3"><a></a><span class="fu">c</span>(<span class="at">logLik_pois =</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(<span class="fu">logLik</span>(m1)), <span class="dv">1</span>), <span class="at">K_pois =</span> <span class="fu">attr</span>(<span class="fu">logLik</span>(m1), <span class="st">"df"</span>),</span>
 <span id="cb1-4"><a></a>  <span class="at">AIC_pois =</span> <span class="fu">round</span>(<span class="fu">AIC</span>(m1)),</span>
 <span id="cb1-5"><a></a>  <span class="at">logLik_nb =</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(<span class="fu">logLik</span>(m2)), <span class="dv">1</span>), <span class="at">K_nb =</span> <span class="fu">attr</span>(<span class="fu">logLik</span>(m2), <span class="st">"df"</span>),</span>
@@ -454,10 +454,10 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>modelos <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb5-2"><a></a>  <span class="at">nulo       =</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> RK),</span>
-<span id="cb5-3"><a></a>  <span class="at">parque     =</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK, <span class="at">data =</span> RK),</span>
+<span id="cb5-3"><a></a>  <span class="at">parque     =</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK_km, <span class="at">data =</span> RK),</span>
 <span id="cb5-4"><a></a>  <span class="at">habitat    =</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> OPEN.L <span class="sc">+</span> MONT.S, <span class="at">data =</span> RK),</span>
 <span id="cb5-5"><a></a>  <span class="at">agua       =</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> L.WAT.C <span class="sc">+</span> D.WAT.RES, <span class="at">data =</span> RK),</span>
-<span id="cb5-6"><a></a>  <span class="at">parque_agua =</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK <span class="sc">+</span> L.WAT.C, <span class="at">data =</span> RK)</span>
+<span id="cb5-6"><a></a>  <span class="at">parque_agua =</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> L.WAT.C, <span class="at">data =</span> RK)</span>
 <span id="cb5-7"><a></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Cada modelo é uma <strong>hipótese biológica</strong>: a mortalidade é explicada pela proximidade à área-fonte, pela composição do habitat, pela presença de água, ou por uma combinação.</p>
@@ -582,7 +582,7 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <section id="o-garimpo" class="slide level2">
 <h2>O garimpo</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>global <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK <span class="sc">+</span> OPEN.L <span class="sc">+</span> MONT.S <span class="sc">+</span> L.WAT.C <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>global <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> OPEN.L <span class="sc">+</span> MONT.S <span class="sc">+</span> L.WAT.C <span class="sc">+</span></span>
 <span id="cb11-2"><a></a>                         D.WAT.RES <span class="sc">+</span> URBAN <span class="sc">+</span> N.PATCH <span class="sc">+</span> P.EDGE, <span class="at">data =</span> RK)</span>
 <span id="cb11-3"><a></a>MuMIn<span class="sc">::</span><span class="fu">dredge</span>(global)     <span class="co"># 256 modelos</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -700,6 +700,16 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <p>Reportar só o modelo vencedor é como reportar só a análise que deu certo.</p>
 </div>
 </section>
+<section id="um-detalhe-que-só-aparece-no-mcmc" class="slide level2">
+<h2>Um detalhe que só aparece no MCMC</h2>
+<p><code>D.PARK</code> vem em <strong>metros</strong>, de 250 a 24 885. Com ligação log, o preditor linear na inicialização vira <span class="math inline">\(e^{\beta \cdot 24885}\)</span>, que estoura antes de a cadeia começar:</p>
+<pre><code>Chain 1: Rejecting initial value:
+Chain 1:   Gradient evaluated at the initial value is not finite.</code></pre>
+<div class="definicao">
+<p>Passar a preditora para <strong>km</strong> resolve. E como a mudança é linear, a verossimilhança é idêntica: a tabela de AICc, os deltas e os pesos deste encontro <strong>não mudam</strong>. O que muda é o coeficiente, que passa a ser legível: −0,12 por km em vez de −0,000116 por metro.</p>
+</div>
+<p>O ajuste por máxima verossimilhança tolera a escala ruim em silêncio; o MCMC não. Nesse sentido, o bayesiano é um detector de problemas que já estavam lá.</p>
+</section>
 <section class="slide level2">
 
 </section></section>
@@ -718,15 +728,20 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <section id="na-prática-1" class="slide level2">
 <h2>Na prática</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">library</span>(brms)</span>
-<span id="cb12-2"><a></a><span class="fu">library</span>(loo)</span>
-<span id="cb12-3"><a></a></span>
-<span id="cb12-4"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
-<span id="cb12-5"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_a"</span>)</span>
-<span id="cb12-6"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK <span class="sc">+</span> L.WAT.C, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
-<span id="cb12-7"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_b"</span>)</span>
-<span id="cb12-8"><a></a></span>
-<span id="cb12-9"><a></a><span class="fu">loo_compare</span>(<span class="fu">loo</span>(m_a), <span class="fu">loo</span>(m_b))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">library</span>(brms)</span>
+<span id="cb13-2"><a></a><span class="fu">library</span>(loo)</span>
+<span id="cb13-3"><a></a></span>
+<span id="cb13-4"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
+<span id="cb13-5"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_a"</span>)</span>
+<span id="cb13-6"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> L.WAT.C, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
+<span id="cb13-7"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_b"</span>)</span>
+<span id="cb13-8"><a></a></span>
+<span id="cb13-9"><a></a><span class="fu">loo_compare</span>(<span class="fu">loo</span>(m_a), <span class="fu">loo</span>(m_b))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> model elpd_diff se_diff p_worse diag_diff diag_elpd
+   m_b       0.0     0.0      NA                    
+   m_a      -0.3     1.6    0.57   N &lt; 100          </code></pre>
+</div>
 </div>
 <p>A saída dá a diferença de <em>expected log predictive density</em> e o seu erro-padrão. <strong>Se a diferença é menor que duas vezes o erro-padrão, os modelos são indistinguíveis.</strong></p>
 </section>
@@ -782,9 +797,31 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <h2>A vantagem do <span class="math inline">\(\hat{k}\)</span></h2>
 <p>O PSIS-LOO avisa quando a aproximação falha, observação por observação.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>loo_a <span class="ot">&lt;-</span> <span class="fu">loo</span>(m_a)</span>
-<span id="cb13-2"><a></a><span class="fu">print</span>(loo_a)        <span class="co"># valores de k-hat; &gt; 0,7 é problema</span></span>
-<span id="cb13-3"><a></a><span class="fu">plot</span>(loo_a)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>loo_a <span class="ot">&lt;-</span> <span class="fu">loo</span>(m_a)</span>
+<span id="cb15-2"><a></a><span class="fu">print</span>(loo_a)        <span class="co"># valores de k-hat; &gt; 0,7 é problema</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Computed from 4000 by 52 log-likelihood matrix.
+
+         Estimate   SE
+elpd_loo   -196.8  7.6
+p_loo         3.1  0.7
+looic       393.6 15.1
+------
+MCSE of elpd_loo is 0.0.
+MCSE and ESS estimates assume MCMC draws (r_eff in [0.6, 1.1]).
+
+All Pareto k estimates are good (k &lt; 0.7).
+See help('pareto-k-diagnostic') for details.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">plot</span>(loo_a)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e09_files/figure-revealjs/unnamed-chunk-13-1.png" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <p>Nenhum critério de informação frequentista faz isso. Você descobre não só que o modelo é pior, mas <strong>quais observações</strong> ele não consegue predizer.</p>
 </section>

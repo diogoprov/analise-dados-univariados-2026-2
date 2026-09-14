@@ -189,7 +189,7 @@ ul.task-list li input[type="checkbox"] {
 <ol type="1">
 <li><strong>Por que os resíduos comuns não servem para GLM</strong> — e o que são resíduos quantílicos simulados. <code>DHARMa</code> do início ao fim.</li>
 <li><strong>Sobredispersão</strong> — como detectar (<code>check_overdispersion()</code>), o que causa, e as três saídas: quasi-Poisson, binomial negativa, ou efeito aleatório em nível de observação. Quando cada uma é honesta.</li>
-<li><strong>Excesso de zeros</strong> — zero estrutural <em>versus</em> zero amostral, que é uma distinção biológica, não estatística. ZIP, ZINB e <em>hurdle</em> com <code>glmmTMB(ziformula = ~ .)</code>. Como escolher.</li>
+<li><strong>Excesso de zeros</strong> — zero estrutural <em>versus</em> zero amostral, que é uma distinção biológica, não estatística. ZIP, ZINB e <em>hurdle</em> com <code>glmmTMB(ziformula = ~ .)</code>, seguindo o capítulo 8 do livro. Como escolher — e como conferir que os zeros foram mesmo resolvidos.</li>
 <li><strong>Respostas ordinais</strong> — o modelo de <em>odds</em> proporcionais com <code>ordinal::clm()</code> e <code>clmm()</code>; por que tratar escala ordinal como contínua distorce o resultado.</li>
 <li><strong>Relato</strong> — o que precisa aparecer no texto do artigo.</li>
 </ol>
@@ -198,7 +198,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="dados">Dados</h2>
 <ul>
 <li><a href="../../dados/RoadKills.txt"><code>RoadKills.txt</code></a> — sobredispersão.</li>
-<li><a href="../../dados/ParasiteCod.txt"><code>ParasiteCod.txt</code></a> — excesso de zeros (Zuur et al.&nbsp;2009).</li>
+<li><a href="../../dados/Planilha_Pentastomida.txt"><code>Planilha_Pentastomida.txt</code></a> — <em>Raillietiella mottae</em> em dois lagartos; excesso de zeros. É o mesmo conjunto do <a href="https://analises-ecologicas.com/cap8">capítulo 8 de <em>Análises Ecológicas no R</em></a> e do Encontro 4.</li>
 <li><a href="../../dados/NA.csv"><code>NA.csv</code></a> — índice melanofórico, resposta ordinal.</li>
 </ul>
 </section>

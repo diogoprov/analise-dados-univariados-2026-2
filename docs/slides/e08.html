@@ -295,6 +295,14 @@ m_nb    4 219.4731</code></pre>
 </div>
 </div>
 </section>
+<section id="e-o-que-essa-tabela-diz" class="slide level2">
+<h2>E o que essa tabela diz</h2>
+<div class="definicao">
+<p>Os três modelos ficam a menos de 2 unidades de AIC um do outro, e a razão de <em>deviance</em> do Poisson era 1,15. <strong>Não havia sobredispersão a corrigir.</strong> O remédio não era necessário.</p>
+</div>
+<p>Isso é um resultado, não um fracasso do procedimento. O Poisson com intercepto aleatório já dá conta: a variação que parecia excesso estava na estrutura de praias, e o efeito aleatório a absorveu.</p>
+<p>Guardem esta conclusão. Vamos reencontrá-la à tarde, de um jeito bem mais dramático.</p>
+</section>
 <section id="lme4-ou-glmmtmb" class="slide level2">
 <h2><code>lme4</code> ou <code>glmmTMB</code>?</h2>
 <table class="caption-top">
@@ -393,7 +401,7 @@ m_nb    4 219.4731</code></pre>
 <section id="o-que-relatar-davis-kay-2023" class="slide level2">
 <h2>O que relatar (Davis &amp; Kay 2023)</h2>
 <blockquote>
-<p>“Ajustamos um GLMM com distribuição binomial negativa e ligação log (<code>glmmTMB</code> 1.1.x), com NAP como efeito fixo e intercepto aleatório por praia (9 praias, 45 amostras). A estrutura aleatória reflete que as amostras foram coletadas em transectos dentro de praias. Diagnóstico com resíduos quantílicos simulados (<code>DHARMa</code>, 1000 simulações). <span class="math inline">\(R^2\)</span> marginal = …, condicional = ….”</p>
+<p>“Ajustamos um GLMM de Poisson com ligação log (<code>lme4</code> 1.1.x), com NAP como efeito fixo e intercepto aleatório por praia (9 praias, 45 amostras). A estrutura aleatória reflete que as amostras foram coletadas em transectos dentro de praias. A razão entre <em>deviance</em> residual e graus de liberdade foi 1,15 e a comparação por AIC com alternativas binomial negativa e com efeito aleatório em nível de observação não indicou sobredispersão relevante (ΔAIC &lt; 2). Diagnóstico com resíduos quantílicos simulados (<code>DHARMa</code>, 1000 simulações). <span class="math inline">\(R^2\)</span> marginal = …, condicional = ….”</p>
 </blockquote>
 <p><strong>Sempre diga o que o efeito aleatório representa no delineamento.</strong></p>
 </section>
@@ -411,16 +419,75 @@ m_nb    4 219.4731</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">library</span>(brms)</span>
 <span id="cb13-2"><a></a></span>
 <span id="cb13-3"><a></a>m_bayes <span class="ot">&lt;-</span> <span class="fu">brm</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach),</span>
-<span id="cb13-4"><a></a>               <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> rikz,</span>
+<span id="cb13-4"><a></a>               <span class="at">family =</span> <span class="fu">poisson</span>(), <span class="at">data =</span> rikz,</span>
 <span id="cb13-5"><a></a>               <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">seed =</span> <span class="dv">2026</span>,</span>
-<span id="cb13-6"><a></a>               <span class="at">file =</span> <span class="st">"../cache/e08_rikz_nb"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb13-6"><a></a>               <span class="at">file =</span> <span class="st">"../cache/e08_rikz_pois"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Compare com a linha do bloco 1:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">glmmTMB</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> nbinom2, <span class="at">data =</span> rikz)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">glmer</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> poisson, <span class="at">data =</span> rikz)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="nota">
+<p>Reajustamos o modelo que de fato <strong>escolhemos</strong> de manhã, o Poisson com intercepto aleatório. Não o binomial negativo, que a comparação de AIC mostrou ser desnecessário.</p>
 </div>
 <div class="definicao">
 <p>A fórmula é <strong>idêntica</strong>. O custo de transferência é a família e três argumentos de MCMC.</p>
+</div>
+</section>
+<section id="e-o-que-ele-devolve" class="slide level2 smaller">
+<h2>E o que ele devolve</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">summary</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: poisson 
+  Links: mu = log 
+Formula: Richness ~ NAP + (1 | Beach) 
+   Data: rikz (Number of observations: 45) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Multilevel Hyperparameters:
+~Beach (Number of levels: 9) 
+              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sd(Intercept)     0.61      0.21     0.33     1.16 1.01      829     1313
+
+Regression Coefficients:
+          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept     1.66      0.23     1.22     2.12 1.00      788      941
+NAP          -0.50      0.07    -0.65    -0.36 1.00     2815     2814
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
+</div>
+</section>
+<section id="lendo-a-saída" class="slide level2">
+<h2>Lendo a saída</h2>
+<div class="definicao">
+<p><code>Rhat</code> em 1,00 e <code>ESS</code> na casa dos milhares: as quatro cadeias convergiram, e a amostra da posterior é utilizável. Guardem esses dois números — no próximo slide eles reaparecem de outro jeito.</p>
+</div>
+<p>A estimativa de <code>NAP</code> é praticamente a mesma do <code>glmer</code> do bloco 1. O que muda é o que está em volta dela: em lugar de erro-padrão e intervalo de confiança, um desvio da posterior e um intervalo de credibilidade.</p>
+</section>
+<section id="o-que-acontece-se-insistirmos-na-nb" class="slide level2">
+<h2>O que acontece se insistirmos na NB</h2>
+<p>Ajustando o mesmo modelo com <code>family = negbinomial()</code> nestes dados:</p>
+<pre><code>Further Distributional Parameters:
+                    Estimate      Est.Error  l-95% CI      u-95% CI  Rhat
+shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code></pre>
+<div class="definicao">
+<p>O parâmetro de forma foge para <span class="math inline">\(10^{18}\)</span>, e o <span class="math inline">\(\hat{R}\)</span> de <strong>todo</strong> o modelo vai a 3,2. Não é instabilidade numérica: é a posterior dizendo que <strong>os dados não identificam esse parâmetro</strong>. Quando a dispersão extra tende a zero, a binomial negativa converge para a Poisson, e a forma tende ao infinito sem que a verossimilhança mude.</p>
+</div>
+<p>O <code>glmmTMB</code> devolveu, para o mesmo modelo, um ponto confortável: 15,5. Um número, sem alarme.</p>
+</section>
+<section id="a-mesma-lição-do-encontro-9-adiantada" class="slide level2">
+<h2>A mesma lição do Encontro 9, adiantada</h2>
+<div class="definicao">
+<p>A máxima verossimilhança <strong>escolhe um ponto</strong> e segue em frente. O MCMC percorre a posterior inteira, e por isso encontra a região plana em que o parâmetro não está determinado.</p>
+</div>
+<p>O ajuste bayesiano não criou o problema. Ele <strong>exibiu</strong> um problema que já estava no ajuste frequentista, escondido atrás de uma estimativa pontual.</p>
+<div class="nota">
+<p>Um <span class="math inline">\(\hat{R}\)</span> alto é informação sobre o seu modelo, não um aborrecimento técnico a contornar aumentando iterações.</p>
 </div>
 </section>
 <section id="por-que-atravessar-a-ponte" class="slide level2">
@@ -435,11 +502,11 @@ m_nb    4 219.4731</code></pre>
 <section id="priors" class="slide level2">
 <h2>Priors</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">get_prior</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> rikz)</span>
-<span id="cb15-2"><a></a></span>
-<span id="cb15-3"><a></a>priors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>),     <span class="at">class =</span> <span class="st">"b"</span>),</span>
-<span id="cb15-4"><a></a>            <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">2</span>, <span class="dv">1</span>),     <span class="at">class =</span> <span class="st">"Intercept"</span>),</span>
-<span id="cb15-5"><a></a>            <span class="fu">prior</span>(<span class="fu">exponential</span>(<span class="dv">1</span>),   <span class="at">class =</span> <span class="st">"sd"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">get_prior</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> <span class="fu">poisson</span>(), <span class="at">data =</span> rikz)</span>
+<span id="cb18-2"><a></a></span>
+<span id="cb18-3"><a></a>priors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>),     <span class="at">class =</span> <span class="st">"b"</span>),</span>
+<span id="cb18-4"><a></a>            <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">2</span>, <span class="dv">1</span>),     <span class="at">class =</span> <span class="st">"Intercept"</span>),</span>
+<span id="cb18-5"><a></a>            <span class="fu">prior</span>(<span class="fu">exponential</span>(<span class="dv">1</span>),   <span class="at">class =</span> <span class="st">"sd"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="definicao">
 <p><strong>Fracamente informativa</strong> não é “sem informação”. É dizer ao modelo que um coeficiente de 500 na escala log é absurdo — o que você sabe, e os dados nem sempre conseguem dizer sozinhos.</p>
@@ -449,10 +516,10 @@ m_nb    4 219.4731</code></pre>
 <h2>Sensibilidade à prior</h2>
 <p>O teste honesto: ajuste com duas priors razoavelmente diferentes e veja se a conclusão muda.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(..., <span class="at">prior =</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>),  <span class="at">class =</span> <span class="st">"b"</span>), <span class="at">file =</span> <span class="st">"../cache/pa"</span>)</span>
-<span id="cb16-2"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(..., <span class="at">prior =</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> <span class="st">"b"</span>), <span class="at">file =</span> <span class="st">"../cache/pb"</span>)</span>
-<span id="cb16-3"><a></a></span>
-<span id="cb16-4"><a></a><span class="fu">fixef</span>(m_a); <span class="fu">fixef</span>(m_b)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(..., <span class="at">prior =</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>),  <span class="at">class =</span> <span class="st">"b"</span>), <span class="at">file =</span> <span class="st">"../cache/pa"</span>)</span>
+<span id="cb19-2"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(..., <span class="at">prior =</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> <span class="st">"b"</span>), <span class="at">file =</span> <span class="st">"../cache/pb"</span>)</span>
+<span id="cb19-3"><a></a></span>
+<span id="cb19-4"><a></a><span class="fu">fixef</span>(m_a); <span class="fu">fixef</span>(m_b)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Se mudar muito, <strong>diga isso no artigo</strong>. É informação sobre quanta evidência os seus dados carregam.</p>
 </section>
@@ -495,17 +562,66 @@ m_nb    4 219.4731</code></pre>
 </tbody>
 </table>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">plot</span>(m_bayes)                 <span class="co"># traços das cadeias</span></span>
-<span id="cb17-2"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"rhat"</span>)</span>
-<span id="cb17-3"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"neff"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">plot</span>(m_bayes)                 <span class="co"># traços das cadeias</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-15-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"rhat"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-15-2.png" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"neff"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-15-3.png" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="checagem-preditiva-posterior" class="slide level2">
 <h2>Checagem preditiva posterior</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">ndraws =</span> <span class="dv">100</span>)</span>
-<span id="cb18-2"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> <span class="st">"max"</span>)</span>
-<span id="cb18-3"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> \(y) <span class="fu">mean</span>(y <span class="sc">==</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">ndraws =</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-16-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="checando-a-estatística-que-interessa" class="slide level2">
+<h2>Checando a estatística que interessa</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> <span class="st">"max"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-17-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> \(y) <span class="fu">mean</span>(y <span class="sc">==</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-18-1.png" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 <div class="definicao">
 <p><code>pp_check()</code> pergunta: dados simulados pelo modelo se parecem com os dados reais? É o análogo honesto do diagnóstico de resíduos — e você pode checar <strong>qualquer estatística</strong> que interesse, como a proporção de zeros.</p>

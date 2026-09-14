@@ -144,7 +144,7 @@
     "href": "slides/e09.html#na-prática",
     "title": "Teoria da informação e seleção de modelos",
     "section": "Na prática",
-    "text": "Na prática\n\nm1 &lt;- glm(TOT.N ~ D.PARK, family = poisson, data = RK)\nm2 &lt;- MASS::glm.nb(TOT.N ~ D.PARK, data = RK)\nc(logLik_pois = round(as.numeric(logLik(m1)), 1), K_pois = attr(logLik(m1), \"df\"),\n  AIC_pois = round(AIC(m1)),\n  logLik_nb = round(as.numeric(logLik(m2)), 1), K_nb = attr(logLik(m2), \"df\"),\n  AIC_nb = round(AIC(m2)))\n\nlogLik_pois      K_pois    AIC_pois   logLik_nb        K_nb      AIC_nb \n     -315.1         2.0       634.0      -193.5         3.0       393.0 \n\n\nA NB gasta um parâmetro a mais e ganha centenas de unidades de AIC."
+    "text": "Na prática\n\nm1 &lt;- glm(TOT.N ~ D.PARK_km, family = poisson, data = RK)\nm2 &lt;- MASS::glm.nb(TOT.N ~ D.PARK_km, data = RK)\nc(logLik_pois = round(as.numeric(logLik(m1)), 1), K_pois = attr(logLik(m1), \"df\"),\n  AIC_pois = round(AIC(m1)),\n  logLik_nb = round(as.numeric(logLik(m2)), 1), K_nb = attr(logLik(m2), \"df\"),\n  AIC_nb = round(AIC(m2)))\n\nlogLik_pois      K_pois    AIC_pois   logLik_nb        K_nb      AIC_nb \n     -315.1         2.0       634.0      -193.5         3.0       393.0 \n\n\nA NB gasta um parâmetro a mais e ganha centenas de unidades de AIC."
   },
   {
     "objectID": "slides/e09.html#o-que-o-aic-não-é",
@@ -172,7 +172,7 @@
     "href": "slides/e09.html#um-conjunto-definido-a-priori",
     "title": "Teoria da informação e seleção de modelos",
     "section": "Um conjunto definido a priori",
-    "text": "Um conjunto definido a priori\n\nmodelos &lt;- list(\n  nulo       = MASS::glm.nb(TOT.N ~ 1, data = RK),\n  parque     = MASS::glm.nb(TOT.N ~ D.PARK, data = RK),\n  habitat    = MASS::glm.nb(TOT.N ~ OPEN.L + MONT.S, data = RK),\n  agua       = MASS::glm.nb(TOT.N ~ L.WAT.C + D.WAT.RES, data = RK),\n  parque_agua = MASS::glm.nb(TOT.N ~ D.PARK + L.WAT.C, data = RK)\n)\n\nCada modelo é uma hipótese biológica: a mortalidade é explicada pela proximidade à área-fonte, pela composição do habitat, pela presença de água, ou por uma combinação."
+    "text": "Um conjunto definido a priori\n\nmodelos &lt;- list(\n  nulo       = MASS::glm.nb(TOT.N ~ 1, data = RK),\n  parque     = MASS::glm.nb(TOT.N ~ D.PARK_km, data = RK),\n  habitat    = MASS::glm.nb(TOT.N ~ OPEN.L + MONT.S, data = RK),\n  agua       = MASS::glm.nb(TOT.N ~ L.WAT.C + D.WAT.RES, data = RK),\n  parque_agua = MASS::glm.nb(TOT.N ~ D.PARK_km + L.WAT.C, data = RK)\n)\n\nCada modelo é uma hipótese biológica: a mortalidade é explicada pela proximidade à área-fonte, pela composição do habitat, pela presença de água, ou por uma combinação."
   },
   {
     "objectID": "slides/e09.html#calculando-à-mão",
@@ -221,7 +221,7 @@
     "href": "slides/e09.html#o-garimpo",
     "title": "Teoria da informação e seleção de modelos",
     "section": "O garimpo",
-    "text": "O garimpo\n\nglobal &lt;- MASS::glm.nb(TOT.N ~ D.PARK + OPEN.L + MONT.S + L.WAT.C +\n                         D.WAT.RES + URBAN + N.PATCH + P.EDGE, data = RK)\nMuMIn::dredge(global)     # 256 modelos\n\n\nCom 8 preditoras são 256 modelos; com 20, mais de um milhão. Alguns vão ter AICc ótimo por acaso."
+    "text": "O garimpo\n\nglobal &lt;- MASS::glm.nb(TOT.N ~ D.PARK_km + OPEN.L + MONT.S + L.WAT.C +\n                         D.WAT.RES + URBAN + N.PATCH + P.EDGE, data = RK)\nMuMIn::dredge(global)     # 256 modelos\n\n\nCom 8 preditoras são 256 modelos; com 20, mais de um milhão. Alguns vão ter AICc ótimo por acaso."
   },
   {
     "objectID": "slides/e09.html#o-caso-mais-bem-documentado-stepwise",
@@ -280,6 +280,13 @@
     "text": "Relato\nSeguindo Gerstner et al. (2017) e Burnham & Anderson:\n\na tabela completa: \\(K\\), AICc, \\(\\Delta_i\\), \\(w_i\\) para todos os modelos — não só o vencedor;\no critério usado e por que (AICc, e não AIC ou BIC);\nse houve média de modelos, qual tipo;\nos coeficientes com intervalo do modelo reportado;\no diagnóstico do modelo escolhido.\n\n\nReportar só o modelo vencedor é como reportar só a análise que deu certo."
   },
   {
+    "objectID": "slides/e09.html#um-detalhe-que-só-aparece-no-mcmc",
+    "href": "slides/e09.html#um-detalhe-que-só-aparece-no-mcmc",
+    "title": "Teoria da informação e seleção de modelos",
+    "section": "Um detalhe que só aparece no MCMC",
+    "text": "Um detalhe que só aparece no MCMC\nD.PARK vem em metros, de 250 a 24 885. Com ligação log, o preditor linear na inicialização vira \\(e^{\\beta \\cdot 24885}\\), que estoura antes de a cadeia começar:\nChain 1: Rejecting initial value:\nChain 1:   Gradient evaluated at the initial value is not finite.\n\nPassar a preditora para km resolve. E como a mudança é linear, a verossimilhança é idêntica: a tabela de AICc, os deltas e os pesos deste encontro não mudam. O que muda é o coeficiente, que passa a ser legível: −0,12 por km em vez de −0,000116 por metro.\n\nO ajuste por máxima verossimilhança tolera a escala ruim em silêncio; o MCMC não. Nesse sentido, o bayesiano é um detector de problemas que já estavam lá."
+  },
+  {
     "objectID": "slides/e09.html#validação-cruzada-como-alternativa",
     "href": "slides/e09.html#validação-cruzada-como-alternativa",
     "title": "Teoria da informação e seleção de modelos",
@@ -291,7 +298,7 @@
     "href": "slides/e09.html#na-prática-1",
     "title": "Teoria da informação e seleção de modelos",
     "section": "Na prática",
-    "text": "Na prática\n\nlibrary(brms)\nlibrary(loo)\n\nm_a &lt;- brm(TOT.N ~ D.PARK, family = negbinomial(), data = RK,\n           file = \"../cache/e09_a\")\nm_b &lt;- brm(TOT.N ~ D.PARK + L.WAT.C, family = negbinomial(), data = RK,\n           file = \"../cache/e09_b\")\n\nloo_compare(loo(m_a), loo(m_b))\n\nA saída dá a diferença de expected log predictive density e o seu erro-padrão. Se a diferença é menor que duas vezes o erro-padrão, os modelos são indistinguíveis."
+    "text": "Na prática\n\nlibrary(brms)\nlibrary(loo)\n\nm_a &lt;- brm(TOT.N ~ D.PARK_km, family = negbinomial(), data = RK,\n           file = \"../cache/e09_a\")\nm_b &lt;- brm(TOT.N ~ D.PARK_km + L.WAT.C, family = negbinomial(), data = RK,\n           file = \"../cache/e09_b\")\n\nloo_compare(loo(m_a), loo(m_b))\n\n model elpd_diff se_diff p_worse diag_diff diag_elpd\n   m_b       0.0     0.0      NA                    \n   m_a      -0.3     1.6    0.57   N &lt; 100          \n\n\nA saída dá a diferença de expected log predictive density e o seu erro-padrão. Se a diferença é menor que duas vezes o erro-padrão, os modelos são indistinguíveis."
   },
   {
     "objectID": "slides/e09.html#waic-loo-e-aic",
@@ -305,7 +312,7 @@
     "href": "slides/e09.html#a-vantagem-do-hatk",
     "title": "Teoria da informação e seleção de modelos",
     "section": "A vantagem do \\(\\hat{k}\\)",
-    "text": "A vantagem do \\(\\hat{k}\\)\nO PSIS-LOO avisa quando a aproximação falha, observação por observação.\n\nloo_a &lt;- loo(m_a)\nprint(loo_a)        # valores de k-hat; &gt; 0,7 é problema\nplot(loo_a)\n\nNenhum critério de informação frequentista faz isso. Você descobre não só que o modelo é pior, mas quais observações ele não consegue predizer."
+    "text": "A vantagem do \\(\\hat{k}\\)\nO PSIS-LOO avisa quando a aproximação falha, observação por observação.\n\nloo_a &lt;- loo(m_a)\nprint(loo_a)        # valores de k-hat; &gt; 0,7 é problema\n\n\nComputed from 4000 by 52 log-likelihood matrix.\n\n         Estimate   SE\nelpd_loo   -196.8  7.6\np_loo         3.1  0.7\nlooic       393.6 15.1\n------\nMCSE of elpd_loo is 0.0.\nMCSE and ESS estimates assume MCMC draws (r_eff in [0.6, 1.1]).\n\nAll Pareto k estimates are good (k &lt; 0.7).\nSee help('pareto-k-diagnostic') for details.\n\nplot(loo_a)\n\n\n\n\n\n\n\n\nNenhum critério de informação frequentista faz isso. Você descobre não só que o modelo é pior, mas quais observações ele não consegue predizer."
   },
   {
     "objectID": "slides/e09.html#não-selecionar-mediar",
@@ -1390,7 +1397,7 @@
     "href": "instalacao.html#pacotes",
     "title": "Preparação do ambiente",
     "section": "2. Pacotes",
-    "text": "2. Pacotes\nRode o bloco abaixo no console do R. Ele instala apenas o que estiver faltando.\n\npacotes &lt;- c(\n  # manipulação e visualização\n  \"tidyverse\", \"here\", \"janitor\", \"palmerpenguins\", \"patchwork\",\n  \"GGally\", \"ggeffects\", \"broom\", \"broom.mixed\", \"knitr\", \"rmarkdown\",\n  # modelos lineares e GLM\n  \"car\", \"emmeans\", \"MASS\", \"performance\", \"see\", \"sjPlot\", \"marginaleffects\",\n  # versão bayesiana dos mesmos modelos\n  \"loo\", \"bayesplot\",\n  # GLMM, zeros inflados e ordinais\n  \"lme4\", \"glmmTMB\", \"DHARMa\", \"ordinal\", \"pscl\", \"lmtest\",\n  # seleção de modelos\n  \"MuMIn\", \"AICcmodavg\",\n  # raciocínio causal\n  \"dagitty\", \"ggdag\"\n)\n\nfaltando &lt;- setdiff(pacotes, rownames(installed.packages()))\nif (length(faltando)) install.packages(faltando)\n\n\nbrms e Stan — o passo demorado\nUsamos o brms do Encontro 2 em diante, sempre ao lado do modelo frequentista equivalente. A razão de ser ele, e não outro pacote bayesiano, é que a sintaxe é idêntica à do lme4 e do glmmTMB: y ~ x + (1 | grupo) significa a mesma coisa nos três. Você aprende uma notação só.\nO preço é que o brms compila um programa Stan para cada modelo novo. Por isso ele precisa de compilador C++ e de paciência na primeira execução.\n\ninstall.packages(\"brms\")   # puxa rstan e StanHeaders\n\nTeste a compilação com um modelo mínimo. A primeira execução demora; as seguintes, não.\n\nlibrary(brms)\n\nteste &lt;- brm(mpg ~ wt, data = mtcars, chains = 2, iter = 1000, refresh = 0)\nsummary(teste)\n\nSe summary() imprimir uma tabela com Rhat igual a 1.00, está pronto.\n\n\n\n\n\n\nDicaAlternativa mais rápida: cmdstanr\n\n\n\nSe a instalação do rstan der problema — o que acontece com alguma frequência no Windows —, o caminho alternativo é o cmdstanr, que baixa um Stan pré-compilado. As instruções oficiais estão em https://mc-stan.org/cmdstanr/. Depois, use backend = \"cmdstanr\" nas chamadas a brm().\n\n\n\n\nOpcional — Encontro 10\nSó para quem quiser acompanhar a prática de JSDM. É pesado; não é obrigatório.\n\ninstall.packages(c(\"Hmsc\", \"mvabund\", \"gllvm\"))"
+    "text": "2. Pacotes\nRode o bloco abaixo no console do R. Ele instala apenas o que estiver faltando.\n\npacotes &lt;- c(\n  # manipulação e visualização\n  \"tidyverse\", \"here\", \"janitor\", \"palmerpenguins\", \"patchwork\",\n  \"GGally\", \"ggeffects\", \"broom\", \"broom.mixed\", \"knitr\", \"rmarkdown\",\n  # modelos lineares e GLM\n  \"car\", \"emmeans\", \"MASS\", \"performance\", \"see\", \"sjPlot\", \"marginaleffects\",\n  # versão bayesiana dos mesmos modelos\n  \"loo\", \"bayesplot\",\n  # GLMM, zeros inflados e ordinais\n  \"lme4\", \"glmmTMB\", \"DHARMa\", \"ordinal\", \"pscl\", \"lmtest\",\n  # seleção de modelos\n  \"MuMIn\", \"AICcmodavg\",\n  # raciocínio causal\n  \"dagitty\", \"ggdag\"\n)\n\nfaltando &lt;- setdiff(pacotes, rownames(installed.packages()))\nif (length(faltando)) install.packages(faltando)\n\n\nbrms e Stan — o passo demorado\nUsamos o brms do Encontro 2 em diante, sempre ao lado do modelo frequentista equivalente. A razão de ser ele, e não outro pacote bayesiano, é que a sintaxe é idêntica à do lme4 e do glmmTMB: y ~ x + (1 | grupo) significa a mesma coisa nos três. Você aprende uma notação só.\nO preço é que o brms compila um programa Stan para cada modelo novo. Por isso ele precisa de compilador C++ e de paciência na primeira execução.\n\ninstall.packages(\"brms\")   # puxa rstan e StanHeaders\n\nTeste a compilação com um modelo mínimo. A primeira execução demora; as seguintes, não.\n\nlibrary(brms)\n\nteste &lt;- brm(mpg ~ wt, data = mtcars, chains = 2, iter = 1000, refresh = 0)\nsummary(teste)\n\nSe summary() imprimir uma tabela com Rhat igual a 1.00, está pronto.\n\n\n\n\n\n\nDicaAlternativa mais rápida: cmdstanr\n\n\n\nSe a instalação do rstan der problema — o que acontece com alguma frequência no Windows —, o caminho alternativo é o cmdstanr, que baixa um Stan pré-compilado. As instruções oficiais estão em https://mc-stan.org/cmdstanr/. Depois, use backend = \"cmdstanr\" nas chamadas a brm().\n\n\n\n\nOpcional — conteúdo de JSDM\nNão precisa instalar antes do curso. O bloco de multivariados baseados em modelos e JSDM é opcional nesta oferta: ele aparece como panorama no encerramento da sexta-feira, sem prática em sala. Estes pacotes ficam indicados para quem quiser seguir o assunto depois.\n\ninstall.packages(c(\"Hmsc\", \"mvabund\", \"gllvm\"))"
   },
   {
     "objectID": "instalacao.html#verificação",
@@ -1449,11 +1456,11 @@
     "text": "Slides\n Abrir slides"
   },
   {
-    "objectID": "encontros/e10-clinica/index.html#o-que-ficou-de-fora",
-    "href": "encontros/e10-clinica/index.html#o-que-ficou-de-fora",
+    "objectID": "encontros/e10-clinica/index.html#conteúdo-opcional-multivariados-e-jsdm",
+    "href": "encontros/e10-clinica/index.html#conteúdo-opcional-multivariados-e-jsdm",
     "title": "E10 — Clínica Estatística e apresentação de resultados",
-    "section": "O que ficou de fora",
-    "text": "O que ficou de fora\nO programa original previa um bloco de rudimentos multivariados baseados em modelos e JSDM. Ele foi trocado por esta tarde de clínica. Os ponteiros para quem quiser seguir:\n\nAnálises Ecológicas no R — cap. 9\nVídeo sobre JSDM — canal @DiogoBProvete\nAnálises multidimensionais — disciplina que cobre o assunto inteiro\nOvaskainen, O. & Abrego, N. 2020. Joint Species Distribution Modelling. Cambridge University Press.\n\n\nVolta para o índice do curso."
+    "section": "Conteúdo opcional: multivariados e JSDM",
+    "text": "Conteúdo opcional: multivariados e JSDM\nO bloco de rudimentos multivariados baseados em modelos e JSDM continua na ementa, mas nesta oferta é opcional: entra como panorama no encerramento, sem prática em sala, para liberar a tarde inteira de clínica. Os ponteiros para quem quiser seguir:\n\nAnálises Ecológicas no R — cap. 9\nVídeo sobre JSDM — canal @DiogoBProvete\nAnálises multidimensionais — disciplina que cobre o assunto inteiro\nOvaskainen, O. & Abrego, N. 2020. Joint Species Distribution Modelling. Cambridge University Press.\n\n\nVolta para o índice do curso."
   },
   {
     "objectID": "encontros/e08-glmm-ii-brms/index.html",
@@ -1509,14 +1516,14 @@
     "href": "encontros/e06-glm-ii/index.html#conteúdo",
     "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Conteúdo",
-    "text": "Conteúdo\n\nPor que os resíduos comuns não servem para GLM — e o que são resíduos quantílicos simulados. DHARMa do início ao fim.\nSobredispersão — como detectar (check_overdispersion()), o que causa, e as três saídas: quasi-Poisson, binomial negativa, ou efeito aleatório em nível de observação. Quando cada uma é honesta.\nExcesso de zeros — zero estrutural versus zero amostral, que é uma distinção biológica, não estatística. ZIP, ZINB e hurdle com glmmTMB(ziformula = ~ .). Como escolher.\nRespostas ordinais — o modelo de odds proporcionais com ordinal::clm() e clmm(); por que tratar escala ordinal como contínua distorce o resultado.\nRelato — o que precisa aparecer no texto do artigo."
+    "text": "Conteúdo\n\nPor que os resíduos comuns não servem para GLM — e o que são resíduos quantílicos simulados. DHARMa do início ao fim.\nSobredispersão — como detectar (check_overdispersion()), o que causa, e as três saídas: quasi-Poisson, binomial negativa, ou efeito aleatório em nível de observação. Quando cada uma é honesta.\nExcesso de zeros — zero estrutural versus zero amostral, que é uma distinção biológica, não estatística. ZIP, ZINB e hurdle com glmmTMB(ziformula = ~ .), seguindo o capítulo 8 do livro. Como escolher — e como conferir que os zeros foram mesmo resolvidos.\nRespostas ordinais — o modelo de odds proporcionais com ordinal::clm() e clmm(); por que tratar escala ordinal como contínua distorce o resultado.\nRelato — o que precisa aparecer no texto do artigo."
   },
   {
     "objectID": "encontros/e06-glm-ii/index.html#dados",
     "href": "encontros/e06-glm-ii/index.html#dados",
     "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Dados",
-    "text": "Dados\n\nRoadKills.txt — sobredispersão.\nParasiteCod.txt — excesso de zeros (Zuur et al. 2009).\nNA.csv — índice melanofórico, resposta ordinal."
+    "text": "Dados\n\nRoadKills.txt — sobredispersão.\nPlanilha_Pentastomida.txt — Raillietiella mottae em dois lagartos; excesso de zeros. É o mesmo conjunto do capítulo 8 de Análises Ecológicas no R e do Encontro 4.\nNA.csv — índice melanofórico, resposta ordinal."
   },
   {
     "objectID": "encontros/e06-glm-ii/index.html#leituras",
@@ -1887,7 +1894,7 @@
     "href": "programa.html#ementa",
     "title": "Programa da disciplina",
     "section": "Ementa",
-    "text": "Ementa\nCiclo PPDAC e raciocínio estatístico. Análise exploratória de dados e reprodutibilidade. Testes estatísticos clássicos redefinidos como modelos lineares. Distribuições de probabilidade e a família exponencial. Correlação de Pearson e Spearman. Teoria de decisão, erros do tipo I e II. Introdução aos modelos lineares generalizados (GLM), incluindo modelos para dados de contagem, binários, com excesso de zeros e ordinais. Modelos lineares generalizados mistos (GLMM) e suas aplicações em ecologia. Teoria da informação e seleção de modelos. Rudimentos de métodos multivariados baseados em modelos e modelos conjuntos de distribuição de espécies (JSDM)."
+    "text": "Ementa\nCiclo PPDAC e raciocínio estatístico. Análise exploratória de dados e reprodutibilidade. Testes estatísticos clássicos redefinidos como modelos lineares. Distribuições de probabilidade e a família exponencial. Correlação de Pearson e Spearman. Teoria de decisão, erros do tipo I e II. Introdução aos modelos lineares generalizados (GLM), incluindo modelos para dados de contagem, binários, com excesso de zeros e ordinais. Modelos lineares generalizados mistos (GLMM) e suas aplicações em ecologia. Teoria da informação e seleção de modelos. Rudimentos de métodos multivariados baseados em modelos e modelos conjuntos de distribuição de espécies (JSDM).\n\n\n\n\n\n\nO bloco de multivariados e JSDM é conteúdo opcional nesta oferta. A tarde de sexta-feira é dedicada à Clínica Estatística, e o assunto entra no encerramento como panorama, com indicação de leitura e do vídeo, para quem quiser seguir por conta própria. O aprofundamento é a disciplina de análises multidimensionais."
   },
   {
     "objectID": "programa.html#objetivos",
@@ -2167,14 +2174,14 @@
     "href": "slides/e02.html#por-que-mostrar-isso-agora",
     "title": "O modelo linear como arcabouço unificador",
     "section": "Por que mostrar isso agora",
-    "text": "Por que mostrar isso agora\nO livro-texto do curso ajusta quase tudo em bayesiano. Vale ver, desde já, que é o mesmo modelo — e começar a usar a notação que vai valer até o fim do curso.\n\nlibrary(brms)\n\nm_bayes &lt;- brm(body_mass_g ~ bill_length_mm, data = pinguins,\n               chains = 4, iter = 2000, seed = 2026,\n               file = \"../cache/e02_bico\")   # compila uma vez, reusa depois\nsummary(m_bayes)\n\n\nA fórmula é exatamente a mesma que você escreveria em lm(). E a mesma que você vai escrever em lmer(), glmmTMB() e brm() nos Encontros 7 e 8 — só acrescentando (1 | grupo)."
+    "text": "Por que mostrar isso agora\nO livro-texto do curso ajusta quase tudo em bayesiano. Vale ver, desde já, que é o mesmo modelo — e começar a usar a notação que vai valer até o fim do curso.\n\nlibrary(brms)\n\nm_bayes &lt;- brm(body_mass_g ~ bill_length_mm, data = pinguins,\n               chains = 4, iter = 2000, seed = 2026,\n               file = \"../cache/e02_bico\")   # compila uma vez, reusa depois\nsummary(m_bayes)\n\n Family: gaussian \n  Links: mu = identity \nFormula: body_mass_g ~ bill_length_mm \n   Data: pinguins (Number of observations: 333) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nRegression Coefficients:\n               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nIntercept        386.18    290.99  -187.19   961.06 1.00     4237     2907\nbill_length_mm    86.85      6.57    73.96    99.96 1.00     4234     2828\n\nFurther Distributional Parameters:\n      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsigma   652.73     25.32   605.66   704.80 1.00     4196     3349\n\nDraws were sampled using sampling(NUTS). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1).\n\n\n\nA fórmula é exatamente a mesma que você escreveria em lm(). E a mesma que você vai escrever em lmer(), glmmTMB() e brm() nos Encontros 7 e 8 — só acrescentando (1 | grupo)."
   },
   {
     "objectID": "slides/e02.html#uma-notação-quatro-pacotes",
     "href": "slides/e02.html#uma-notação-quatro-pacotes",
     "title": "O modelo linear como arcabouço unificador",
     "section": "Uma notação, quatro pacotes",
-    "text": "Uma notação, quatro pacotes\n\nlm       (massa ~ svl,                  data = d)                     # gaussiano\nglm      (massa ~ svl, family = Gamma,  data = d)                     # GLM\nlme4::lmer   (massa ~ svl + (1 | poca),               data = d)       # LMM\nglmmTMB::glmmTMB(massa ~ svl + (1 | poca), family = Gamma, data = d)  # GLMM\nbrms::brm    (massa ~ svl + (1 | poca), family = Gamma, data = d)     # bayesiano\n\n\nÉ por isso que escolhemos brms e não outro pacote bayesiano: o custo de transferência entre as cinco linhas acima é quase zero. Referência prática: Kurz, Statistical Rethinking recoded (https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/)."
+    "text": "Uma notação, quatro pacotes\n\n# nomes ilustrativos: este bloco mostra a notação, não roda\nlm       (massa ~ svl,                  data = d)                     # gaussiano\nglm      (massa ~ svl, family = Gamma,  data = d)                     # GLM\nlme4::lmer   (massa ~ svl + (1 | poca),               data = d)       # LMM\nglmmTMB::glmmTMB(massa ~ svl + (1 | poca), family = Gamma, data = d)  # GLMM\nbrms::brm    (massa ~ svl + (1 | poca), family = Gamma, data = d)     # bayesiano\n\n\nÉ por isso que escolhemos brms e não outro pacote bayesiano: o custo de transferência entre as cinco linhas acima é quase zero. Referência prática: Kurz, Statistical Rethinking recoded (https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/)."
   },
   {
     "objectID": "slides/e02.html#o-preço-compilação",
@@ -2195,7 +2202,7 @@
     "href": "slides/e02.html#o-que-você-ganha-de-graça",
     "title": "O modelo linear como arcabouço unificador",
     "section": "O que você ganha de graça",
-    "text": "O que você ganha de graça\n\n# distribuição preditiva posterior — o que o modelo acha\n# que seriam novos dados\npp_check(m_bayes, ndraws = 50)\n\n# incerteza sobre qualquer quantidade derivada, sem fórmula:\nposterior &lt;- as_draws_df(m_bayes)\nquantile(posterior$b_bill_length_mm * 10, c(.025, .5, .975))\n\nPropagar incerteza para uma quantidade derivada — “massa esperada de um pinguim com bico 10 mm maior” — é uma linha de código, não uma derivação.\nVoltamos a isso no Encontro 8, com GLMM."
+    "text": "O que você ganha de graça\n\n# distribuição preditiva posterior — o que o modelo acha\n# que seriam novos dados\npp_check(m_bayes, ndraws = 50)\n\n\n\n\n\n\n\n# incerteza sobre qualquer quantidade derivada, sem fórmula:\nposterior &lt;- as_draws_df(m_bayes)\nquantile(posterior$b_bill_length_mm * 10, c(.025, .5, .975))\n\n    2.5%      50%    97.5% \n739.6205 868.8990 999.5654 \n\n\nPropagar incerteza para uma quantidade derivada — “massa esperada de um pinguim com bico 10 mm maior” — é uma linha de código, não uma derivação.\nVoltamos a isso no Encontro 8, com GLMM."
   },
   {
     "objectID": "slides/e02.html#o-que-é-e-o-que-não-é",
@@ -2496,7 +2503,7 @@
     "href": "slides/e06.html#productive-failure",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Productive failure",
-    "text": "Productive failure\nIntensidade parasitária em bacalhaus, por área e ano.\n\n\n\n\n\n\n\n\n\n55 % dos peixes têm zero parasitas. Em grupos: de onde vêm esses zeros? Todos significam a mesma coisa?"
+    "text": "Productive failure\nDe volta aos pentastomídeos de terça-feira: Raillietiella mottae em 195 lagartos de duas espécies.\n\n\n\n\n\n\n\n\n\n80 % dos lagartos não têm nenhum parasita. Em grupos: de onde vêm esses zeros? Todos significam a mesma coisa?"
   },
   {
     "objectID": "slides/e06.html#os-resíduos-comuns-mentem",
@@ -2573,49 +2580,84 @@
     "href": "slides/e06.html#dois-zeros-muito-diferentes",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Dois zeros muito diferentes",
-    "text": "Dois zeros muito diferentes\n\nZero amostral — a espécie estava lá, você não detectou. Ou o processo podia gerar contagem positiva e gerou zero por acaso.\nZero estrutural — a espécie não podia estar ali. O hospedeiro é imune. O sítio não tem o habitat.\n\nA distinção é biológica. Ela decide o modelo, e não há teste estatístico que a substitua."
+    "text": "Dois zeros muito diferentes\n\nZero amostral — o parasita podia estar ali e não estava, ou estava e não foi detectado. O processo de contagem podia gerar zero, e gerou.\nZero estrutural — o parasita não podia estar ali. O hospedeiro é imune, ou está fora da área de ocorrência do parasita.\n\nA distinção é biológica. Ela decide o modelo, e não há teste estatístico que a substitua."
   },
   {
-    "objectID": "slides/e06.html#zero-inflado-ou-hurdle",
-    "href": "slides/e06.html#zero-inflado-ou-hurdle",
+    "objectID": "slides/e06.html#duas-famílias-de-solução",
+    "href": "slides/e06.html#duas-famílias-de-solução",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
-    "section": "Zero inflado ou hurdle?",
-    "text": "Zero inflado ou hurdle?\nZero-inflado (ZIP/ZINB) — mistura: com probabilidade \\(\\pi\\) o valor é um zero estrutural; caso contrário vem de uma Poisson que também pode gerar zero.\nHurdle — dois processos em sequência: primeiro “é zero ou não é” (binomial), depois “dado que é positivo, quanto” (Poisson truncada).\n\nUse hurdle quando todos os zeros são do mesmo tipo e você quer modelar presença e abundância separadamente. Use ZI quando acredita que existem as duas origens de zero."
+    "section": "Duas famílias de solução",
+    "text": "Duas famílias de solução\nZero-inflado (ZIP, ZINB) — uma mistura: com probabilidade \\(\\pi\\) o valor é um zero estrutural; caso contrário vem de uma Poisson ou binomial negativa que também pode gerar zero.\nHurdle, ou zero-alterado — dois processos em sequência: primeiro “é zero ou não é” (binomial), depois “dado que é positivo, quanto” (Poisson ou binomial negativa truncada).\n\nUse hurdle quando todos os zeros têm a mesma origem e você quer modelar presença e abundância separadamente. Use zero-inflado quando acredita que existem as duas origens de zero."
   },
   {
-    "objectID": "slides/e06.html#diagnóstico-primeiro",
-    "href": "slides/e06.html#diagnóstico-primeiro",
+    "objectID": "slides/e06.html#comece-pelo-modelo-simples",
+    "href": "slides/e06.html#comece-pelo-modelo-simples",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
-    "section": "Diagnóstico primeiro",
-    "text": "Diagnóstico primeiro\n\nm_cod &lt;- glm(Intensity ~ fArea * fYear + Length, family = poisson, data = cod)\nesperado_zeros &lt;- sum(dpois(0, fitted(m_cod)))\nc(zeros_observados = sum(cod$Intensity == 0),\n  zeros_esperados_poisson = round(esperado_zeros))\n\n       zeros_observados zeros_esperados_poisson \n                    651                     142 \n\n\nO modelo prevê 142 zeros; os dados têm 651. Não é uma questão de opinião."
+    "section": "Comece pelo modelo simples",
+    "text": "Comece pelo modelo simples\n\nlibrary(performance)\n\npois_plain &lt;- glm(Raillietiella_mottae ~ CRC + Sexo * Especie,\n                  data = parasitas, family = \"poisson\")\n\ncheck_overdispersion(pois_plain)\n\n# Overdispersion test\n\n       dispersion ratio =   1.932\n  Pearson's Chi-Squared = 367.133\n                p-value = &lt; 0.001"
   },
   {
-    "objectID": "slides/e06.html#ajustando-com-glmmtmb",
-    "href": "slides/e06.html#ajustando-com-glmmtmb",
+    "objectID": "slides/e06.html#e-pergunte-pelos-zeros",
+    "href": "slides/e06.html#e-pergunte-pelos-zeros",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
-    "section": "Ajustando com glmmTMB",
-    "text": "Ajustando com glmmTMB\n\nlibrary(glmmTMB)\n\nzip  &lt;- glmmTMB(Intensity ~ fArea * fYear + Length,\n                ziformula = ~ fArea + Length, family = poisson, data = cod)\nzinb &lt;- glmmTMB(Intensity ~ fArea * fYear + Length,\n                ziformula = ~ fArea + Length, family = nbinom2, data = cod)\n\nAIC(zip, zinb)\n\n     df       AIC\nzip  18 13755.016\nzinb 19  4971.738\n\n\n\nziformula é um segundo modelo, para a probabilidade de zero estrutural. Ele pode ter preditoras próprias — e frequentemente deve ter outras, porque a pergunta “por que o parasita não pode estar aqui” é diferente de “quantos parasitas há”."
+    "section": "E pergunte pelos zeros",
+    "text": "E pergunte pelos zeros\n\ncheck_zeroinflation(pois_plain)\n\n# Check for zero-inflation\n\n   Observed zeros: 156\n  Predicted zeros: 140\n            Ratio: 0.90\n\n\n\nA função compara os zeros observados com o número que a Poisson ajustada esperaria produzir. Não é uma questão de opinião sobre “muitos zeros”: é uma comparação com o que o modelo assume."
   },
   {
-    "objectID": "slides/e06.html#lendo-as-duas-partes",
-    "href": "slides/e06.html#lendo-as-duas-partes",
+    "objectID": "slides/e06.html#os-três-candidatos",
+    "href": "slides/e06.html#os-três-candidatos",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
-    "section": "Lendo as duas partes",
-    "text": "Lendo as duas partes\n\nsummary(zinb)$coefficients$cond[1:3, ]\n\n              Estimate Std. Error    z value     Pr(&gt;|z|)\n(Intercept)  3.7677118  0.3471651 10.8527964 1.934156e-27\nfArea2       0.1075405  0.3259445  0.3299348 7.414492e-01\nfArea3      -0.9080626  0.2658776 -3.4153400 6.370245e-04\n\n\n\nsummary(zinb)$coefficients$zi[1:3, ]\n\n             Estimate Std. Error  z value     Pr(&gt;|z|)\n(Intercept) 0.9203619  0.8066394 1.140983 2.538770e-01\nfArea2      1.8517993  0.4732104 3.913269 9.105505e-05\nfArea3      1.1843191  0.4894589 2.419650 1.553547e-02\n\n\nA primeira tabela está em log da contagem; a segunda em log-odds de ser zero estrutural. Sinais opostos nas duas tabelas não são contradição."
+    "section": "Os três candidatos",
+    "text": "Os três candidatos\n\nlibrary(glmmTMB)\n\nziP  &lt;- glmmTMB(Raillietiella_mottae ~ CRC + Sexo * Especie,\n                ziformula = ~ ., data = parasitas, family = poisson)\n\nziNB &lt;- glmmTMB(Raillietiella_mottae ~ CRC + Sexo * Especie,\n                ziformula = ~ ., data = parasitas, family = nbinom2)\n\nhurNB &lt;- glmmTMB(Raillietiella_mottae ~ CRC + Sexo * Especie,\n                 ziformula = ~ ., data = parasitas,\n                 family = truncated_nbinom2)\n\n\nziformula = ~ . diz “use no modelo dos zeros as mesmas preditoras do modelo das contagens”. No capítulo 8 do livro isso aparece como zi = ~ ., que funciona por correspondência parcial de argumento."
   },
   {
-    "objectID": "slides/e06.html#hurdle-no-mesmo-pacote",
-    "href": "slides/e06.html#hurdle-no-mesmo-pacote",
+    "objectID": "slides/e06.html#o-ziformula-é-um-segundo-modelo",
+    "href": "slides/e06.html#o-ziformula-é-um-segundo-modelo",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
-    "section": "Hurdle no mesmo pacote",
-    "text": "Hurdle no mesmo pacote\n\nhnb &lt;- glmmTMB(Intensity ~ fArea * fYear + Length,\n               ziformula = ~ fArea + Length,\n               family = truncated_nbinom2, data = cod)\nAIC(zinb, hnb)\n\n     df      AIC\nzinb 19 4971.738\nhnb  19 5022.269\n\n\n\nA diferença entre nbinom2 e truncated_nbinom2 com ziformula é exatamente a diferença entre mistura e barreira. A escolha entre elas é a biologia dos zeros — o AIC ajuda, mas não decide sozinho."
+    "section": "O ziformula é um segundo modelo",
+    "text": "O ziformula é um segundo modelo\n\nEle estima a probabilidade de zero estrutural, e pode ter preditoras próprias. Frequentemente deve ter outras: a pergunta “por que o parasita não poderia estar neste hospedeiro” não é a mesma que “quantos parasitas há neste hospedeiro”.\n\nO ~ . é um ponto de partida cômodo, não uma escolha automática."
+  },
+  {
+    "objectID": "slides/e06.html#comparando",
+    "href": "slides/e06.html#comparando",
+    "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Comparando",
+    "text": "Comparando\n\nAIC(pois_plain, ziP, ziNB, hurNB)\n\n           df      AIC\npois_plain  5 319.8933\nziP        10 274.4603\nziNB       11 275.8312\nhurNB      11 277.8095"
+  },
+  {
+    "objectID": "slides/e06.html#confira-se-os-zeros-foram-mesmo-resolvidos",
+    "href": "slides/e06.html#confira-se-os-zeros-foram-mesmo-resolvidos",
+    "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Confira se os zeros foram mesmo resolvidos",
+    "text": "Confira se os zeros foram mesmo resolvidos\n\nlambda &lt;- predict(ziP, type = \"conditional\")\npi_zi  &lt;- predict(ziP, type = \"zprob\")\n\nc(observados    = sum(parasitas$Raillietiella_mottae == 0),\n  esperados_ZIP = round(sum(pi_zi + (1 - pi_zi) * exp(-lambda))))\n\n   observados esperados_ZIP \n          156           156 \n\n\n\\(P(Y = 0)\\) sob o ZIP é \\(\\pi + (1-\\pi)\\,e^{-\\lambda}\\): a probabilidade de ser um zero estrutural, mais a de não ser e ainda assim sair zero."
+  },
+  {
+    "objectID": "slides/e06.html#e-compare-com-o-atalho",
+    "href": "slides/e06.html#e-compare-com-o-atalho",
+    "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "E compare com o atalho",
+    "text": "E compare com o atalho\n\ncheck_zeroinflation(ziP)\n\n# Check for zero-inflation\n\n   Observed zeros: 156\n  Predicted zeros: 155\n            Ratio: 0.99\n\n\n\nConfira se os dois números batem na sua versão dos pacotes. No ambiente em que estes slides foram testados (performance 0.10.8) eles não batiam: a função reportava os zeros esperados sem levar em conta a parte zi do modelo, e concluía que ainda havia inflação.\n\nLição geral, que vale além deste caso: saiba o que a função está contando antes de aceitar o veredito."
+  },
+  {
+    "objectID": "slides/e06.html#a-rota-robusta",
+    "href": "slides/e06.html#a-rota-robusta",
+    "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "A rota robusta",
+    "text": "A rota robusta\n\nlibrary(DHARMa)\n\nres &lt;- simulateResiduals(ziP, n = 1000)\ntestZeroInflation(res)\n\nO DHARMa simula conjuntos de dados a partir do modelo ajustado inteiro, parte zi incluída, e compara a proporção de zeros simulada com a observada. Por ser baseado em simulação, não depende de alguém ter derivado a fórmula certa para cada família."
+  },
+  {
+    "objectID": "slides/e06.html#lendo-as-duas-tabelas",
+    "href": "slides/e06.html#lendo-as-duas-tabelas",
+    "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Lendo as duas tabelas",
+    "text": "Lendo as duas tabelas\n\nsummary(ziNB)$coefficients$cond\n\n                                       Estimate Std. Error    z value\n(Intercept)                          3.46085778 2.02383003  1.7100536\nCRC                                 -0.05982158 0.04022531 -1.4871625\nSexoM                               -1.10711321 0.54876450 -2.0174651\nEspeciePhyllopezus_pollicaris        0.79906460 0.99862455  0.8001652\nSexoM:EspeciePhyllopezus_pollicaris  1.49021930 0.77818607  1.9149910\n                                      Pr(&gt;|z|)\n(Intercept)                         0.08725597\nCRC                                 0.13697190\nSexoM                               0.04364700\nEspeciePhyllopezus_pollicaris       0.42361510\nSexoM:EspeciePhyllopezus_pollicaris 0.05549365\nattr(,\"ddf\")\n[1] \"asymptotic\"\n\n\n\nsummary(ziNB)$coefficients$zi\n\n                                      Estimate Std. Error   z value    Pr(&gt;|z|)\n(Intercept)                         13.7128613 4.27210534  3.209860 0.001327995\nCRC                                 -0.2617157 0.08955219 -2.922494 0.003472408\nSexoM                               -3.1046855 1.86521061 -1.664523 0.096008012\nEspeciePhyllopezus_pollicaris        4.0973433 1.64629390  2.488829 0.012816476\nSexoM:EspeciePhyllopezus_pollicaris  5.1728391 2.25825139  2.290639 0.021984292\nattr(,\"ddf\")\n[1] \"asymptotic\"\n\n\nA primeira está em log da contagem esperada; a segunda em log-odds de ser zero estrutural. Sinais opostos nas duas não são contradição: uma diz quantos parasitas há onde há, a outra diz onde não pode haver."
   },
   {
     "objectID": "slides/e06.html#armadilha-frequente",
     "href": "slides/e06.html#armadilha-frequente",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Armadilha frequente",
-    "text": "Armadilha frequente\n\nMuito “excesso de zeros” desaparece quando você troca Poisson por binomial negativa. A binomial negativa gera mais zeros que a Poisson com a mesma média.\n\nOrdem recomendada:\n\nteste sobredispersão;\nse houver, ajuste NB;\nsó então teste excesso de zeros no modelo NB;\nse ainda houver, aí sim ZI ou hurdle."
+    "text": "Armadilha frequente\n\nMuito “excesso de zeros” desaparece quando você troca Poisson por binomial negativa. A binomial negativa gera mais zeros que a Poisson de mesma média.\n\nOrdem recomendada:\n\nteste sobredispersão;\nse houver, ajuste a binomial negativa;\nsó então teste excesso de zeros, no modelo NB;\nse ainda houver, aí sim zero-inflado ou hurdle.\n\n\nRepare que neste conjunto de dados o ZIP ganha do ZINB por pouco no AIC. Com 80 % de zeros, a inflação é o problema dominante, não a dispersão."
   },
   {
     "objectID": "slides/e06.html#o-problema",
@@ -2737,6 +2779,13 @@
     "text": "Comparando\n\nrikz$obs &lt;- factor(seq_len(nrow(rikz)))\nm_olre &lt;- glmer(Richness ~ NAP + (1 | Beach) + (1 | obs),\n                family = poisson, data = rikz)\nm_nb   &lt;- glmmTMB(Richness ~ NAP + (1 | Beach), family = nbinom2, data = rikz)\n\nAIC(m_pois, m_olre, m_nb)\n\n       df      AIC\nm_pois  3 220.7843\nm_olre  4 219.0835\nm_nb    4 219.4731"
   },
   {
+    "objectID": "slides/e08.html#e-o-que-essa-tabela-diz",
+    "href": "slides/e08.html#e-o-que-essa-tabela-diz",
+    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "E o que essa tabela diz",
+    "text": "E o que essa tabela diz\n\nOs três modelos ficam a menos de 2 unidades de AIC um do outro, e a razão de deviance do Poisson era 1,15. Não havia sobredispersão a corrigir. O remédio não era necessário.\n\nIsso é um resultado, não um fracasso do procedimento. O Poisson com intercepto aleatório já dá conta: a variação que parecia excesso estava na estrutura de praias, e o efeito aleatório a absorveu.\nGuardem esta conclusão. Vamos reencontrá-la à tarde, de um jeito bem mais dramático."
+  },
+  {
     "objectID": "slides/e08.html#lme4-ou-glmmtmb",
     "href": "slides/e08.html#lme4-ou-glmmtmb",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
@@ -2776,14 +2825,42 @@
     "href": "slides/e08.html#o-que-relatar-davis-kay-2023",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "O que relatar (Davis & Kay 2023)",
-    "text": "O que relatar (Davis & Kay 2023)\n\n“Ajustamos um GLMM com distribuição binomial negativa e ligação log (glmmTMB 1.1.x), com NAP como efeito fixo e intercepto aleatório por praia (9 praias, 45 amostras). A estrutura aleatória reflete que as amostras foram coletadas em transectos dentro de praias. Diagnóstico com resíduos quantílicos simulados (DHARMa, 1000 simulações). \\(R^2\\) marginal = …, condicional = ….”\n\nSempre diga o que o efeito aleatório representa no delineamento."
+    "text": "O que relatar (Davis & Kay 2023)\n\n“Ajustamos um GLMM de Poisson com ligação log (lme4 1.1.x), com NAP como efeito fixo e intercepto aleatório por praia (9 praias, 45 amostras). A estrutura aleatória reflete que as amostras foram coletadas em transectos dentro de praias. A razão entre deviance residual e graus de liberdade foi 1,15 e a comparação por AIC com alternativas binomial negativa e com efeito aleatório em nível de observação não indicou sobredispersão relevante (ΔAIC &lt; 2). Diagnóstico com resíduos quantílicos simulados (DHARMa, 1000 simulações). \\(R^2\\) marginal = …, condicional = ….”\n\nSempre diga o que o efeito aleatório representa no delineamento."
   },
   {
     "objectID": "slides/e08.html#a-mesma-fórmula",
     "href": "slides/e08.html#a-mesma-fórmula",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "A mesma fórmula",
-    "text": "A mesma fórmula\n\nlibrary(brms)\n\nm_bayes &lt;- brm(Richness ~ NAP + (1 | Beach),\n               family = negbinomial(), data = rikz,\n               chains = 4, iter = 2000, seed = 2026,\n               file = \"../cache/e08_rikz_nb\")\n\nCompare com a linha do bloco 1:\n\nglmmTMB(Richness ~ NAP + (1 | Beach), family = nbinom2, data = rikz)\n\n\nA fórmula é idêntica. O custo de transferência é a família e três argumentos de MCMC."
+    "text": "A mesma fórmula\n\nlibrary(brms)\n\nm_bayes &lt;- brm(Richness ~ NAP + (1 | Beach),\n               family = poisson(), data = rikz,\n               chains = 4, iter = 2000, seed = 2026,\n               file = \"../cache/e08_rikz_pois\")\n\nCompare com a linha do bloco 1:\n\nglmer(Richness ~ NAP + (1 | Beach), family = poisson, data = rikz)\n\n\nReajustamos o modelo que de fato escolhemos de manhã, o Poisson com intercepto aleatório. Não o binomial negativo, que a comparação de AIC mostrou ser desnecessário.\n\n\nA fórmula é idêntica. O custo de transferência é a família e três argumentos de MCMC."
+  },
+  {
+    "objectID": "slides/e08.html#e-o-que-ele-devolve",
+    "href": "slides/e08.html#e-o-que-ele-devolve",
+    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "E o que ele devolve",
+    "text": "E o que ele devolve\n\nsummary(m_bayes)\n\n Family: poisson \n  Links: mu = log \nFormula: Richness ~ NAP + (1 | Beach) \n   Data: rikz (Number of observations: 45) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nMultilevel Hyperparameters:\n~Beach (Number of levels: 9) \n              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsd(Intercept)     0.61      0.21     0.33     1.16 1.01      829     1313\n\nRegression Coefficients:\n          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nIntercept     1.66      0.23     1.22     2.12 1.00      788      941\nNAP          -0.50      0.07    -0.65    -0.36 1.00     2815     2814\n\nDraws were sampled using sampling(NUTS). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
+  },
+  {
+    "objectID": "slides/e08.html#lendo-a-saída",
+    "href": "slides/e08.html#lendo-a-saída",
+    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "Lendo a saída",
+    "text": "Lendo a saída\n\nRhat em 1,00 e ESS na casa dos milhares: as quatro cadeias convergiram, e a amostra da posterior é utilizável. Guardem esses dois números — no próximo slide eles reaparecem de outro jeito.\n\nA estimativa de NAP é praticamente a mesma do glmer do bloco 1. O que muda é o que está em volta dela: em lugar de erro-padrão e intervalo de confiança, um desvio da posterior e um intervalo de credibilidade."
+  },
+  {
+    "objectID": "slides/e08.html#o-que-acontece-se-insistirmos-na-nb",
+    "href": "slides/e08.html#o-que-acontece-se-insistirmos-na-nb",
+    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "O que acontece se insistirmos na NB",
+    "text": "O que acontece se insistirmos na NB\nAjustando o mesmo modelo com family = negbinomial() nestes dados:\nFurther Distributional Parameters:\n                    Estimate      Est.Error  l-95% CI      u-95% CI  Rhat\nshape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22\n\nO parâmetro de forma foge para \\(10^{18}\\), e o \\(\\hat{R}\\) de todo o modelo vai a 3,2. Não é instabilidade numérica: é a posterior dizendo que os dados não identificam esse parâmetro. Quando a dispersão extra tende a zero, a binomial negativa converge para a Poisson, e a forma tende ao infinito sem que a verossimilhança mude.\n\nO glmmTMB devolveu, para o mesmo modelo, um ponto confortável: 15,5. Um número, sem alarme."
+  },
+  {
+    "objectID": "slides/e08.html#a-mesma-lição-do-encontro-9-adiantada",
+    "href": "slides/e08.html#a-mesma-lição-do-encontro-9-adiantada",
+    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "A mesma lição do Encontro 9, adiantada",
+    "text": "A mesma lição do Encontro 9, adiantada\n\nA máxima verossimilhança escolhe um ponto e segue em frente. O MCMC percorre a posterior inteira, e por isso encontra a região plana em que o parâmetro não está determinado.\n\nO ajuste bayesiano não criou o problema. Ele exibiu um problema que já estava no ajuste frequentista, escondido atrás de uma estimativa pontual.\n\nUm \\(\\hat{R}\\) alto é informação sobre o seu modelo, não um aborrecimento técnico a contornar aumentando iterações."
   },
   {
     "objectID": "slides/e08.html#por-que-atravessar-a-ponte",
@@ -2797,7 +2874,7 @@
     "href": "slides/e08.html#priors",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Priors",
-    "text": "Priors\n\nget_prior(Richness ~ NAP + (1 | Beach), family = negbinomial(), data = rikz)\n\npriors &lt;- c(prior(normal(0, 1),     class = \"b\"),\n            prior(normal(2, 1),     class = \"Intercept\"),\n            prior(exponential(1),   class = \"sd\"))\n\n\nFracamente informativa não é “sem informação”. É dizer ao modelo que um coeficiente de 500 na escala log é absurdo — o que você sabe, e os dados nem sempre conseguem dizer sozinhos."
+    "text": "Priors\n\nget_prior(Richness ~ NAP + (1 | Beach), family = poisson(), data = rikz)\n\npriors &lt;- c(prior(normal(0, 1),     class = \"b\"),\n            prior(normal(2, 1),     class = \"Intercept\"),\n            prior(exponential(1),   class = \"sd\"))\n\n\nFracamente informativa não é “sem informação”. É dizer ao modelo que um coeficiente de 500 na escala log é absurdo — o que você sabe, e os dados nem sempre conseguem dizer sozinhos."
   },
   {
     "objectID": "slides/e08.html#sensibilidade-à-prior",
@@ -2811,14 +2888,21 @@
     "href": "slides/e08.html#diagnóstico-de-mcmc",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Diagnóstico de MCMC",
-    "text": "Diagnóstico de MCMC\n\n\n\n\n\n\n\n\nSinal\nSignifica\nO que fazer\n\n\n\n\n\\(\\hat{R} &gt; 1{,}01\\)\ncadeias não convergiram\nmais iterações; reparametrizar\n\n\nESS baixo (&lt; 400)\namostras autocorrelacionadas\nmais iterações\n\n\ntransições divergentes\ngeometria difícil\nadapt_delta = 0.99; priors mais informativas\n\n\nmax_treedepth atingido\nineficiência\nmax_treedepth = 15\n\n\n\n\nplot(m_bayes)                 # traços das cadeias\nmcmc_plot(m_bayes, type = \"rhat\")\nmcmc_plot(m_bayes, type = \"neff\")"
+    "text": "Diagnóstico de MCMC\n\n\n\n\n\n\n\n\nSinal\nSignifica\nO que fazer\n\n\n\n\n\\(\\hat{R} &gt; 1{,}01\\)\ncadeias não convergiram\nmais iterações; reparametrizar\n\n\nESS baixo (&lt; 400)\namostras autocorrelacionadas\nmais iterações\n\n\ntransições divergentes\ngeometria difícil\nadapt_delta = 0.99; priors mais informativas\n\n\nmax_treedepth atingido\nineficiência\nmax_treedepth = 15\n\n\n\n\nplot(m_bayes)                 # traços das cadeias\n\n\n\n\n\n\n\nmcmc_plot(m_bayes, type = \"rhat\")\n\n\n\n\n\n\n\nmcmc_plot(m_bayes, type = \"neff\")"
   },
   {
     "objectID": "slides/e08.html#checagem-preditiva-posterior",
     "href": "slides/e08.html#checagem-preditiva-posterior",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Checagem preditiva posterior",
-    "text": "Checagem preditiva posterior\n\npp_check(m_bayes, ndraws = 100)\npp_check(m_bayes, type = \"stat\", stat = \"max\")\npp_check(m_bayes, type = \"stat\", stat = \\(y) mean(y == 0))\n\n\npp_check() pergunta: dados simulados pelo modelo se parecem com os dados reais? É o análogo honesto do diagnóstico de resíduos — e você pode checar qualquer estatística que interesse, como a proporção de zeros."
+    "text": "Checagem preditiva posterior\n\npp_check(m_bayes, ndraws = 100)"
+  },
+  {
+    "objectID": "slides/e08.html#checando-a-estatística-que-interessa",
+    "href": "slides/e08.html#checando-a-estatística-que-interessa",
+    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "Checando a estatística que interessa",
+    "text": "Checando a estatística que interessa\n\npp_check(m_bayes, type = \"stat\", stat = \"max\")\n\n\n\n\n\n\n\n\n\npp_check(m_bayes, type = \"stat\", stat = \\(y) mean(y == 0))\n\n\n\n\n\n\n\n\n\npp_check() pergunta: dados simulados pelo modelo se parecem com os dados reais? É o análogo honesto do diagnóstico de resíduos — e você pode checar qualquer estatística que interesse, como a proporção de zeros."
   },
   {
     "objectID": "slides/e08.html#intervalo-de-credibilidade-de-confiança",
@@ -2919,11 +3003,11 @@
     "text": "O arco da semana\n\n\n\n\nRelaxamos\nGanhamos\n\n\n\n\nE2–E3\nnada — só reorganizamos\num modelo no lugar de cinco testes\n\n\nE4–E5\na resposta ser gaussiana\nGLM\n\n\nE6\na variância ser a da família\ndispersão, zeros, ordinais\n\n\nE7–E8\nas observações serem independentes\nGLMM\n\n\nE8\nos parâmetros serem fixos\nposterior\n\n\nE9\nhaver um modelo certo\ncomparação e média\n\n\n\n\nUma premissa por vez. Nenhum salto conceitual — só relaxamentos sucessivos do mesmo objeto."
   },
   {
-    "objectID": "slides/e10.html#o-que-ficou-de-fora",
-    "href": "slides/e10.html#o-que-ficou-de-fora",
+    "objectID": "slides/e10.html#conteúdo-opcional-multivariados-e-jsdm",
+    "href": "slides/e10.html#conteúdo-opcional-multivariados-e-jsdm",
     "title": "Clínica Estatística e encerramento",
-    "section": "O que ficou de fora",
-    "text": "O que ficou de fora\nMultivariados baseados em modelos e JSDM. Quando a resposta é uma matriz de espécies, o GLM vira mvabund::manyglm(), e o modelo conjunto de distribuição (Hmsc, gllvm) acrescenta efeitos aleatórios residuais que descrevem associação entre espécies.\n\nAnálises Ecológicas no R, cap. 9\nVídeo sobre JSDM\nAnálises multidimensionais — a disciplina que cobre isso inteiro\nOvaskainen & Abrego (2020), Joint Species Distribution Modelling"
+    "section": "Conteúdo opcional: multivariados e JSDM",
+    "text": "Conteúdo opcional: multivariados e JSDM\nEstá na ementa e fica como panorama, sem prática em sala.\nMultivariados baseados em modelos e JSDM. Quando a resposta é uma matriz de espécies, o GLM vira mvabund::manyglm(), e o modelo conjunto de distribuição (Hmsc, gllvm) acrescenta efeitos aleatórios residuais que descrevem associação entre espécies.\n\nAnálises Ecológicas no R, cap. 9\nVídeo sobre JSDM\nAnálises multidimensionais — a disciplina que cobre isso inteiro\nOvaskainen & Abrego (2020), Joint Species Distribution Modelling"
   },
   {
     "objectID": "slides/e10.html#outros-caminhos",

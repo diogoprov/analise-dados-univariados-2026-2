@@ -808,6 +808,27 @@ sexmale      3.132877  0.3569599   8.77655  4.440460e-15</code></pre>
 <span id="cb42-4"><a></a>               <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">seed =</span> <span class="dv">2026</span>,</span>
 <span id="cb42-5"><a></a>               <span class="at">file =</span> <span class="st">"../cache/e02_bico"</span>)   <span class="co"># compila uma vez, reusa depois</span></span>
 <span id="cb42-6"><a></a><span class="fu">summary</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> Family: gaussian 
+  Links: mu = identity 
+Formula: body_mass_g ~ bill_length_mm 
+   Data: pinguins (Number of observations: 333) 
+  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
+         total post-warmup draws = 4000
+
+Regression Coefficients:
+               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+Intercept        386.18    290.99  -187.19   961.06 1.00     4237     2907
+bill_length_mm    86.85      6.57    73.96    99.96 1.00     4234     2828
+
+Further Distributional Parameters:
+      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
+sigma   652.73     25.32   605.66   704.80 1.00     4196     3349
+
+Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
+and Tail_ESS are effective sample size measures, and Rhat is the potential
+scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
+</div>
 </div>
 <div class="definicao">
 <p>A fórmula é exatamente a mesma que você escreveria em <code>lm()</code>. E a mesma que você vai escrever em <code>lmer()</code>, <code>glmmTMB()</code> e <code>brm()</code> nos Encontros 7 e 8 — só acrescentando <code>(1 | grupo)</code>.</p>
@@ -816,11 +837,12 @@ sexmale      3.132877  0.3569599   8.77655  4.440460e-15</code></pre>
 <section id="uma-notação-quatro-pacotes" class="slide level2">
 <h2>Uma notação, quatro pacotes</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">lm</span>       (massa <span class="sc">~</span> svl,                  <span class="at">data =</span> d)                     <span class="co"># gaussiano</span></span>
-<span id="cb43-2"><a></a><span class="fu">glm</span>      (massa <span class="sc">~</span> svl, <span class="at">family =</span> Gamma,  <span class="at">data =</span> d)                     <span class="co"># GLM</span></span>
-<span id="cb43-3"><a></a>lme4<span class="sc">::</span><span class="fu">lmer</span>   (massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca),               <span class="at">data =</span> d)       <span class="co"># LMM</span></span>
-<span id="cb43-4"><a></a>glmmTMB<span class="sc">::</span><span class="fu">glmmTMB</span>(massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca), <span class="at">family =</span> Gamma, <span class="at">data =</span> d)  <span class="co"># GLMM</span></span>
-<span id="cb43-5"><a></a>brms<span class="sc">::</span><span class="fu">brm</span>    (massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca), <span class="at">family =</span> Gamma, <span class="at">data =</span> d)     <span class="co"># bayesiano</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="co"># nomes ilustrativos: este bloco mostra a notação, não roda</span></span>
+<span id="cb44-2"><a></a><span class="fu">lm</span>       (massa <span class="sc">~</span> svl,                  <span class="at">data =</span> d)                     <span class="co"># gaussiano</span></span>
+<span id="cb44-3"><a></a><span class="fu">glm</span>      (massa <span class="sc">~</span> svl, <span class="at">family =</span> Gamma,  <span class="at">data =</span> d)                     <span class="co"># GLM</span></span>
+<span id="cb44-4"><a></a>lme4<span class="sc">::</span><span class="fu">lmer</span>   (massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca),               <span class="at">data =</span> d)       <span class="co"># LMM</span></span>
+<span id="cb44-5"><a></a>glmmTMB<span class="sc">::</span><span class="fu">glmmTMB</span>(massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca), <span class="at">family =</span> Gamma, <span class="at">data =</span> d)  <span class="co"># GLMM</span></span>
+<span id="cb44-6"><a></a>brms<span class="sc">::</span><span class="fu">brm</span>    (massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca), <span class="at">family =</span> Gamma, <span class="at">data =</span> d)     <span class="co"># bayesiano</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="nota">
 <p>É por isso que escolhemos <code>brms</code> e não outro pacote bayesiano: o custo de transferência entre as cinco linhas acima é quase zero. Referência prática: Kurz, <em>Statistical Rethinking recoded</em> (<a href="https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/" class="uri">https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/</a>).</p>
@@ -888,13 +910,23 @@ sexmale      3.132877  0.3569599   8.77655  4.440460e-15</code></pre>
 <section id="o-que-você-ganha-de-graça" class="slide level2">
 <h2>O que você ganha de graça</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="co"># distribuição preditiva posterior — o que o modelo acha</span></span>
-<span id="cb44-2"><a></a><span class="co"># que seriam novos dados</span></span>
-<span id="cb44-3"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">ndraws =</span> <span class="dv">50</span>)</span>
-<span id="cb44-4"><a></a></span>
-<span id="cb44-5"><a></a><span class="co"># incerteza sobre qualquer quantidade derivada, sem fórmula:</span></span>
-<span id="cb44-6"><a></a>posterior <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(m_bayes)</span>
-<span id="cb44-7"><a></a><span class="fu">quantile</span>(posterior<span class="sc">$</span>b_bill_length_mm <span class="sc">*</span> <span class="dv">10</span>, <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="co"># distribuição preditiva posterior — o que o modelo acha</span></span>
+<span id="cb45-2"><a></a><span class="co"># que seriam novos dados</span></span>
+<span id="cb45-3"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">ndraws =</span> <span class="dv">50</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-24-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="co"># incerteza sobre qualquer quantidade derivada, sem fórmula:</span></span>
+<span id="cb46-2"><a></a>posterior <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(m_bayes)</span>
+<span id="cb46-3"><a></a><span class="fu">quantile</span>(posterior<span class="sc">$</span>b_bill_length_mm <span class="sc">*</span> <span class="dv">10</span>, <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    2.5%      50%    97.5% 
+739.6205 868.8990 999.5654 </code></pre>
+</div>
 </div>
 <p>Propagar incerteza para uma quantidade derivada — “massa esperada de um pinguim com bico 10 mm maior” — é uma linha de código, não uma derivação.</p>
 <p>Voltamos a isso no Encontro 8, com GLMM.</p>
@@ -910,8 +942,8 @@ sexmale      3.132877  0.3569599   8.77655  4.440460e-15</code></pre>
 <section id="o-que-é-e-o-que-não-é" class="slide level2">
 <h2>O que é (e o que não é)</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="fu">round</span>(<span class="fu">cor</span>(pinguins[, <span class="fu">c</span>(<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>,</span>
-<span id="cb45-2"><a></a>                       <span class="st">"body_mass_g"</span>)], <span class="at">use =</span> <span class="st">"complete.obs"</span>), <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a><span class="fu">round</span>(<span class="fu">cor</span>(pinguins[, <span class="fu">c</span>(<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>,</span>
+<span id="cb48-2"><a></a>                       <span class="st">"body_mass_g"</span>)], <span class="at">use =</span> <span class="st">"complete.obs"</span>), <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 bill_length_mm              1.00         -0.23              0.65        0.59
@@ -927,7 +959,7 @@ body_mass_g                 0.59         -0.47              0.87        1.00</co
 <section id="vif" class="slide level2">
 <h2>VIF</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>car<span class="sc">::</span><span class="fu">vif</span>(m_mult)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a>car<span class="sc">::</span><span class="fu">vif</span>(m_mult)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   bill_length_mm flipper_length_mm 
          1.743782          1.743782 </code></pre>
@@ -950,8 +982,8 @@ body_mass_g                 0.59         -0.47              0.87        1.00</co
 <section id="os-quatro-gráficos" class="slide level2">
 <h2>Os quatro gráficos</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb49-2"><a></a><span class="fu">plot</span>(m_mult)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb52-2"><a></a><span class="fu">plot</span>(m_mult)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -997,8 +1029,8 @@ body_mass_g                 0.59         -0.47              0.87        1.00</co
 <section id="versão-moderna" class="slide level2">
 <h2>Versão moderna</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a><span class="fu">library</span>(performance)</span>
-<span id="cb50-2"><a></a><span class="fu">check_model</span>(m_mult)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="fu">library</span>(performance)</span>
+<span id="cb53-2"><a></a><span class="fu">check_model</span>(m_mult)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="nota">
 <p><code>performance::check_model()</code> produz os mesmos diagnósticos com intervalos de referência simulados — muito mais fácil de julgar do que “isso parece um padrão?”. A partir do Encontro 6, com GLMs, passamos a usar <code>DHARMa</code>, que é a única forma honesta de diagnosticar resíduos não gaussianos.</p>

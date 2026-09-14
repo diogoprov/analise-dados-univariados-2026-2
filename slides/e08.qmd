@@ -286,7 +286,7 @@ argumentos de MCMC.
 
 ---
 
-## E o que ele devolve
+## E o que ele devolve {.smaller}
 
 ```{r}
 summary(m_bayes)
