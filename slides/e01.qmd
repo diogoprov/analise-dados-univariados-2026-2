@@ -177,7 +177,7 @@ longa à direita.
 #| echo: false
 #| fig-width: 6.4
 #| fig-height: 5.1
-#| out-width: "52%"
+#| out-width: "46%"
 #| fig-align: center
 source("../R/ppdac.R")
 ppdac_plot()
@@ -430,7 +430,7 @@ O gráfico de Cleveland é mais informativo que o boxplot: mostra cada
 observação contra a ordem no arquivo.
 
 ```{r}
-#| fig-height: 3.4
+#| fig-height: 3.0
 library(tidyverse)
 dados <- read_delim("../dados/dados_com_outliers_e_faltantes.csv", delim = ";")
 

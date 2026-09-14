@@ -51,7 +51,7 @@ RK <- read.delim("../dados/RoadKills.txt")
 #| echo: false
 #| fig-width: 5.6
 #| fig-height: 4.5
-#| out-width: "42%"
+#| out-width: "36%"
 #| fig-align: center
 source("../R/ppdac.R")
 ppdac_plot(destaque = c("An\u00e1lise"))
@@ -142,7 +142,7 @@ soma dos quadrados **é** maximizar a verossimilhança.
 ## Vendo a superfície {.smaller}
 
 ```{r}
-#| fig-height: 3.1
+#| fig-height: 2.6
 y <- lagartos$Tail_state
 x <- lagartos$SVL
 
@@ -419,7 +419,7 @@ e é o assunto da tarde.
 
 ---
 
-## A regra
+## A regra {.smaller}
 
 ```{r}
 #| fig-height: 3.0

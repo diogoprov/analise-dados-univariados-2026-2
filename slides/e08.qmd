@@ -47,7 +47,7 @@ rikz <- read.table("../dados/RIKZ.txt", header = TRUE, row.names = 1) |>
 #| echo: false
 #| fig-width: 5.6
 #| fig-height: 4.5
-#| out-width: "42%"
+#| out-width: "36%"
 #| fig-align: center
 source("../R/ppdac.R")
 ppdac_plot(destaque = c("An\u00e1lise", "Conclus\u00e3o"))
@@ -421,7 +421,7 @@ plot(m_bayes)
 ## $\hat{R}$ e ESS em um relance {.smaller}
 
 ```{r}
-#| fig-height: 5.2
+#| fig-height: 4.4
 #| layout-ncol: 2
 mcmc_plot(m_bayes, type = "rhat")
 mcmc_plot(m_bayes, type = "neff")
@@ -444,19 +444,23 @@ pp_check(m_bayes, ndraws = 100)
 
 ---
 
-## Checando a estatística que interessa {.smaller}
+## Checando a estatística que interessa
 
 ```{r}
-#| fig-height: 4.2
+#| fig-height: 4.6
 #| layout-ncol: 2
 pp_check(m_bayes, type = "stat", stat = "max")
 pp_check(m_bayes, type = "stat", stat = \(y) mean(y == 0))
 ```
 
+---
+
+## O que o `pp_check()` pergunta
+
 ::: {.definicao}
-`pp_check()` pergunta: dados simulados pelo modelo se parecem com os
-dados reais? É o análogo honesto do diagnóstico de resíduos — e você pode
-checar **qualquer estatística** que interesse, como a proporção de zeros.
+Dados simulados pelo modelo se parecem com os dados reais? É o análogo
+honesto do diagnóstico de resíduos — e você pode checar **qualquer
+estatística** que interesse, como a proporção de zeros.
 :::
 
 ---

@@ -47,7 +47,7 @@ lagartos <- read_tsv("../dados/camila_cauda_lagartos.txt", show_col_types = FALS
 #| echo: false
 #| fig-width: 5.6
 #| fig-height: 4.5
-#| out-width: "42%"
+#| out-width: "36%"
 #| fig-align: center
 source("../R/ppdac.R")
 ppdac_plot(destaque = c("An\u00e1lise"))
@@ -123,7 +123,7 @@ ggplot(pinguins, aes(species, body_mass_g, fill = species)) +
 
 ---
 
-## Os dois caminhos, lado a lado
+## Os dois caminhos, lado a lado {.smaller}
 
 ```{r}
 m <- lm(body_mass_g ~ species, data = pinguins)

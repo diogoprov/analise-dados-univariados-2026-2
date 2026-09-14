@@ -46,7 +46,7 @@ rikz <- read.table("../dados/RIKZ.txt", header = TRUE, row.names = 1) |>
 #| echo: false
 #| fig-width: 5.6
 #| fig-height: 4.5
-#| out-width: "42%"
+#| out-width: "36%"
 #| fig-align: center
 source("../R/ppdac.R")
 ppdac_plot(destaque = c("Plano", "An\u00e1lise"))

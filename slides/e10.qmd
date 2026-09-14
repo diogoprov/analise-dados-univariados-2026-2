@@ -35,7 +35,7 @@ execute:
 #| echo: false
 #| fig-width: 5.6
 #| fig-height: 4.5
-#| out-width: "42%"
+#| out-width: "36%"
 #| fig-align: center
 source("../R/ppdac.R")
 ppdac_plot(destaque = NULL)

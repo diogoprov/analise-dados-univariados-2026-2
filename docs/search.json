@@ -2930,7 +2930,14 @@
     "href": "slides/e08.html#checando-a-estatística-que-interessa",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Checando a estatística que interessa",
-    "text": "Checando a estatística que interessa\npp_check(m_bayes, type = \"stat\", stat = \"max\")\npp_check(m_bayes, type = \"stat\", stat = \\(y) mean(y == 0))\n\n\n\n\n\n\n\n\n\n\n\npp_check() pergunta: dados simulados pelo modelo se parecem com os dados reais? É o análogo honesto do diagnóstico de resíduos — e você pode checar qualquer estatística que interesse, como a proporção de zeros."
+    "text": "Checando a estatística que interessa\npp_check(m_bayes, type = \"stat\", stat = \"max\")\npp_check(m_bayes, type = \"stat\", stat = \\(y) mean(y == 0))"
+  },
+  {
+    "objectID": "slides/e08.html#o-que-o-pp_check-pergunta",
+    "href": "slides/e08.html#o-que-o-pp_check-pergunta",
+    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "O que o pp_check() pergunta",
+    "text": "O que o pp_check() pergunta\n\nDados simulados pelo modelo se parecem com os dados reais? É o análogo honesto do diagnóstico de resíduos — e você pode checar qualquer estatística que interesse, como a proporção de zeros."
   },
   {
     "objectID": "slides/e08.html#intervalo-de-credibilidade-de-confiança",

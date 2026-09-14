@@ -47,7 +47,7 @@ RK$D.PARK_km <- RK$D.PARK / 1000
 #| echo: false
 #| fig-width: 5.6
 #| fig-height: 4.5
-#| out-width: "42%"
+#| out-width: "36%"
 #| fig-align: center
 source("../R/ppdac.R")
 ppdac_plot(destaque = c("Conclus\u00e3o", "Problema"))

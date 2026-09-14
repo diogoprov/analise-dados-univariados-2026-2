@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-9e840045cb7dac26506411e9a54f7183.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-f1b322be379289ffee6699166c851a11.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -215,7 +215,7 @@ Diogo B. Provete
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center" style="width:42.0%"></p>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center" style="width:36.0%"></p>
 </figure>
 </div>
 </div>
@@ -606,7 +606,7 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 </div>
 </div>
 </section>
-<section id="checando-a-estatística-que-interessa" class="slide level2 smaller">
+<section id="checando-a-estatística-que-interessa" class="slide level2">
 <h2>Checando a estatística que interessa</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> <span class="st">"max"</span>)</span>
 <span id="cb23-2"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> \(y) <span class="fu">mean</span>(y <span class="sc">==</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
@@ -620,8 +620,11 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 </div>
 </div>
 </div>
+</section>
+<section id="o-que-o-pp_check-pergunta" class="slide level2">
+<h2>O que o <code>pp_check()</code> pergunta</h2>
 <div class="definicao">
-<p><code>pp_check()</code> pergunta: dados simulados pelo modelo se parecem com os dados reais? É o análogo honesto do diagnóstico de resíduos — e você pode checar <strong>qualquer estatística</strong> que interesse, como a proporção de zeros.</p>
+<p>Dados simulados pelo modelo se parecem com os dados reais? É o análogo honesto do diagnóstico de resíduos — e você pode checar <strong>qualquer estatística</strong> que interesse, como a proporção de zeros.</p>
 </div>
 </section>
 <section id="intervalo-de-credibilidade-de-confiança" class="slide level2">
