@@ -436,9 +436,10 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 </tr>
 </tbody>
 </table>
-<div class="nota">
-<p>Em ecologia, a premissa do BIC — de que o modelo verdadeiro está entre os candidatos — raramente é defensável. Por isso o AICc é o padrão da área.</p>
+<div class="definicao">
+<p>Aho, Derryberry &amp; Peterson (2014) chamam isso de <strong>visões de mundo</strong> distintas, e não de duas aproximações do mesmo alvo. O AIC assume que a realidade é mais complexa que qualquer modelo do conjunto e busca o que melhor prediz; o BIC assume que o modelo gerador está entre os candidatos e busca identificá-lo.</p>
 </div>
+<p>Em ecologia, a premissa do BIC raramente é defensável: é implausível que o processo que gerou a comunidade esteja entre os cinco modelos que você escreveu. Por isso o AICc é o padrão da área. Mas o ponto de Aho e colegas é que a escolha entre os dois <strong>precede</strong> os dados, e deve ser justificada pela pergunta.</p>
 </section>
 <section class="slide level2">
 
@@ -503,6 +504,19 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
           1 </code></pre>
 </div>
 </div>
+</section>
+<section id="but-is-the-best-model-any-good" class="slide level2">
+<h2>“But is the ‘best’ model any good?”</h2>
+<p>Mac Nally et al.&nbsp;(2018) fazem a pergunta que o procedimento não faz sozinho: depois de eleger o modelo mais bem apoiado, <strong>ele é bom</strong>?</p>
+<div class="definicao">
+<p>AIC, <span class="math inline">\(\Delta_i\)</span> e pesos são medidas <strong>relativas</strong>. Elas ordenam os candidatos entre si e não dizem nada sobre o quanto qualquer um deles descreve os dados.</p>
+</div>
+<p>Duas coisas a relatar junto com a tabela:</p>
+<ul>
+<li><strong>ajuste absoluto</strong> — <span class="math inline">\(R^2\)</span>, ou o diagnóstico de resíduos do modelo escolhido;</li>
+<li><strong>desempenho preditivo</strong> — validação cruzada, ou pelo menos uma comparação com o modelo nulo.</li>
+</ul>
+<p>Um modelo com <span class="math inline">\(w = 0{,}98\)</span> e <span class="math inline">\(R^2 = 0{,}04\)</span> é o melhor de um conjunto ruim. Isso precisa aparecer no texto.</p>
 </section>
 <section id="a-ressalva-que-quase-nunca-aparece" class="slide level2">
 <h2>A ressalva que quase nunca aparece</h2>
@@ -882,7 +896,9 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <ul>
 <li>Akaike, H. 1974. <a href="https://doi.org/10.1109/TAC.1974.1100705">A new look at the statistical model identification</a>. <em>IEEE Transactions on Automatic Control</em> 19:716–723.</li>
 <li>Burnham, K.P. &amp; Anderson, D.R. 2002. <a href="https://doi.org/10.1007/b97636"><em>Model Selection and Multimodel Inference</em></a>. 2ª ed.&nbsp;Springer.</li>
-<li>Vehtari, A.; Gelman, A. &amp; Gabry, J. 2017. <a href="https://doi.org/10.1007/s11222-016-9696-4">Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC</a>. <em>Statistics and Computing</em> 27:1413–1432.</li>
+<li>Aho, K.; Derryberry, D. &amp; Peterson, T. 2014. <a href="https://doi.org/10.1890/13-1452.1">Model selection for ecologists: the worldviews of AIC and BIC</a>. <em>Ecology</em> 95:631–636.</li>
+<li>Mac Nally, R.; Duncan, R.P.; Thomson, J.R. &amp; Yen, J.D.L. 2018. <a href="https://doi.org/10.1111/1365-2664.13060">Model selection using information criteria, but is the ‘best’ model any good?</a> <em>Journal of Applied Ecology</em> 55:1441–1444.</li>
+<li>Gelman, A. et al.&nbsp;2026. <a href="https://avehtari.github.io/Bayesian-Workflow/"><em>Bayesian Workflow</em></a>. Chapman &amp; Hall/CRC. Cap. 9, “Comparing and improving models”.</li>
 <li>Gerstner, K. et al.&nbsp;2017. <a href="https://doi.org/10.1111/2041-210X.12758">Will your paper be used in a meta-analysis?</a> <em>Methods in Ecology and Evolution</em> 8:777–784.</li>
 <li>Gelman, A.; Hill, J. &amp; Vehtari, A. 2020. <a href="https://avehtari.github.io/ROS-Examples/"><em>Regression and Other Stories</em></a>, cap. 11.</li>
 </ul>
