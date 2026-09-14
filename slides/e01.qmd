@@ -462,7 +462,7 @@ p-hacking em ecologia.
 
 ---
 
-## Passo 2 — Homogeneidade de variância {.smaller}
+## Passo 2 — Homogeneidade de variância
 
 ```{r}
 #| fig-height: 3.2
@@ -477,7 +477,7 @@ ggplot(het, aes(Dificuldade, Desempenho, fill = Metodo)) +
 
 ---
 
-## Passo 2 — quanto difere?
+## Passo 2 — quanto difere? {.smaller}
 
 ```{r}
 het |>

@@ -209,7 +209,7 @@ certo porque nós escrevemos a verdade.**
 ## E quanto varia de amostra para amostra? {.smaller}
 
 ```{r}
-#| fig-height: 3.2
+#| fig-height: 2.7
 simula_uma <- function(i) {
   x <- runif(120, 20, 60)
   y <- 3 + 0.45 * x + rnorm(120, 0, 2)
@@ -583,7 +583,6 @@ library(brms)
 m_bayes <- brm(body_mass_g ~ bill_length_mm, data = pinguins,
                chains = 4, iter = 2000, seed = 2026,
                file = "../cache/e02_bico")   # compila uma vez, reusa depois
-summary(m_bayes)
 ```
 
 ::: {.definicao}
@@ -591,6 +590,14 @@ A fórmula é exatamente a mesma que você escreveria em `lm()`. E a mesma
 que você vai escrever em `lmer()`, `glmmTMB()` e `brm()` nos Encontros 7 e
 8 — só acrescentando `(1 | grupo)`.
 :::
+
+---
+
+## O que o `brm()` devolve {.smaller}
+
+```{r}
+summary(m_bayes)
+```
 
 ---
 
@@ -652,7 +659,7 @@ boa parte da ecologia de campo.
 ## O que você ganha de graça {.smaller}
 
 ```{r}
-#| fig-height: 3.2
+#| fig-height: 2.8
 # distribuição preditiva posterior — o que o modelo acha
 # que seriam novos dados
 pp_check(m_bayes, ndraws = 50)

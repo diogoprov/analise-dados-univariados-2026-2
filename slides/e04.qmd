@@ -161,7 +161,7 @@ pequena não "parece" Poisson — e ainda assim é.
 
 ---
 
-## Normal
+## Normal {.smaller}
 
 ```{r}
 #| fig-height: 3.0
@@ -180,7 +180,7 @@ exceção, não a regra.
 
 ---
 
-## Poisson
+## Poisson {.smaller}
 
 ```{r}
 #| fig-height: 3.0
@@ -232,7 +232,7 @@ converge para a Poisson. É a Poisson com uma válvula de escape.
 
 ---
 
-## Gamma
+## Gamma {.smaller}
 
 ```{r}
 #| fig-height: 3.0

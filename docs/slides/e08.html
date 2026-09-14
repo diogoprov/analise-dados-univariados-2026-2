@@ -575,7 +575,7 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 </div>
 </div>
 </section>
-<section id="hatr-e-ess-em-um-relance" class="slide level2">
+<section id="hatr-e-ess-em-um-relance" class="slide level2 smaller">
 <h2><span class="math inline">\(\hat{R}\)</span> e ESS em um relance</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"rhat"</span>)</span>
 <span id="cb21-2"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"neff"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
@@ -606,7 +606,7 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 </div>
 </div>
 </section>
-<section id="checando-a-estatística-que-interessa" class="slide level2">
+<section id="checando-a-estatística-que-interessa" class="slide level2 smaller">
 <h2>Checando a estatística que interessa</h2>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> <span class="st">"max"</span>)</span>
 <span id="cb23-2"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> \(y) <span class="fu">mean</span>(y <span class="sc">==</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>

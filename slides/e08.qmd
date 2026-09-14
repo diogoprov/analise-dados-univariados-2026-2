@@ -418,10 +418,10 @@ plot(m_bayes)
 
 ---
 
-## $\hat{R}$ e ESS em um relance
+## $\hat{R}$ e ESS em um relance {.smaller}
 
 ```{r}
-#| fig-height: 5.5
+#| fig-height: 5.2
 #| layout-ncol: 2
 mcmc_plot(m_bayes, type = "rhat")
 mcmc_plot(m_bayes, type = "neff")
@@ -444,10 +444,10 @@ pp_check(m_bayes, ndraws = 100)
 
 ---
 
-## Checando a estatística que interessa
+## Checando a estatística que interessa {.smaller}
 
 ```{r}
-#| fig-height: 5.0
+#| fig-height: 4.2
 #| layout-ncol: 2
 pp_check(m_bayes, type = "stat", stat = "max")
 pp_check(m_bayes, type = "stat", stat = \(y) mean(y == 0))

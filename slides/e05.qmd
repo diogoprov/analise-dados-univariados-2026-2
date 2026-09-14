@@ -265,7 +265,7 @@ c(log_odds_por_mm = b[2], odds_ratio_por_mm = exp(b[2]),
 
 ---
 
-## A curva ajustada
+## A curva ajustada {.smaller}
 
 ```{r}
 #| fig-height: 3.1
