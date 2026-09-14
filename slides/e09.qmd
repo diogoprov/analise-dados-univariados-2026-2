@@ -280,9 +280,10 @@ c(AIC = round(AIC(m2), 1), AICc = round(aicc(m2), 1), n = nobs(m2))
 ```
 
 ::: {.definicao}
-Regra prática de Burnham & Anderson: use AICc sempre que $n/K < 40$. Como
-AICc converge para AIC quando $n$ cresce, **use AICc sempre** — não há
-custo.
+Regra prática de Burnham & Anderson (§2.4, p. 66): *"we advocate the use
+of AICc when the ratio $n/K$ is small (say $< 40$)"*. Como AICc converge
+para AIC quando $n$ cresce, **use AICc sempre** — não há custo. E nunca
+misture os dois critérios na mesma análise.
 :::
 
 ---
@@ -360,9 +361,10 @@ tab |> mutate(across(c(AICc, delta), \(x) round(x, 1)),
 
 ## Como se leem
 
-- $\Delta_i$ — distância ao melhor modelo. Convenção frouxa de Burnham &
-  Anderson: $\Delta < 2$ tem suporte substancial; 4–7, bem menos;
-  $> 10$, essencialmente nenhum.
+- $\Delta_i$ — distância ao melhor modelo. Burnham & Anderson chamam de
+  *rough rules of thumb*, "particularly useful for **nested** models":
+  $\Delta$ 0–2 tem suporte substancial; 4–7, bem menos; $> 10$,
+  essencialmente nenhum.
 - **Peso** $w_i$ — probabilidade de que o modelo $i$ seja o melhor do
   conjunto, **no sentido de KL e dado aquele conjunto**.
 - **Razão de evidência** $w_i / w_j$ — quantas vezes um modelo é mais
@@ -371,6 +373,33 @@ tab |> mutate(across(c(AICc, delta), \(x) round(x, 1)),
 ```{r}
 round(tab$peso[1] / tab$peso[2], 1)
 ```
+
+---
+
+## As três ressalvas que ninguém copia {.smaller}
+
+Junto com a tabela de limiares, Burnham & Anderson listam três condições.
+A terceira é a que mais importa nesta disciplina:
+
+> "These guidelines seem useful if $R$ is small (even as many as 100), but
+> may break down in exploratory cases where there may be thousands of
+> models. The guideline values may be somewhat larger for nonnested
+> models. **If observations are not independent, but are assumed to be
+> independent, then these simple guidelines cannot be expected to hold.**"
+
+::: {.nota}
+A terceira condena boa parte do que se lê em ecologia: os $\Delta$ são
+reportados com a mesma régua em delineamentos agrupados, onde a premissa
+de independência é justamente a que não vale. É o assunto dos Encontros 7
+e 8 — e a razão de o agrupamento vir **antes** da seleção de modelos.
+
+A primeira é o argumento contra o `dredge` em uma frase dos próprios
+autores do método.
+:::
+
+::: {.ref}
+Burnham & Anderson (2002), §2.6, p. 70–71.
+:::
 
 ---
 
@@ -696,6 +725,13 @@ Em modelos mistos, "quantos parâmetros é um efeito aleatório com 9
 níveis?" não tem resposta única — está entre 1 e 9, conforme o
 *shrinkage*. O AIC precisa de um número; LOO e WAIC estimam o
 **número efetivo**.
+:::
+
+::: {.ref}
+Os próprios Burnham & Anderson tratam o caso como não resolvido: §6.6,
+p. 310–316, "not straightforward because we need to consider the
+$\theta_i$ as random, even though in this likelihood they are technically
+considered as fixed effects".
 :::
 
 ---

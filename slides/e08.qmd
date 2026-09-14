@@ -567,5 +567,6 @@ escolher — e por que "escolher" talvez não seja a pergunta certa.
 - Kruschke, J.K. 2021. [Bayesian Analysis Reporting Guidelines](https://doi.org/10.1038/s41562-021-01177-7). *Nature Human Behaviour*.
 - Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
 - Gelman, A. et al. 2026. [*Bayesian Workflow*](https://avehtari.github.io/Bayesian-Workflow/). Chapman & Hall/CRC. Caps. 5 (priors), 8 (checagem preditiva), 11 e 12 (ajuste e diagnóstico de convergência).
+- BIOS2. [*Hierarchical models in ecology*](https://bios2.github.io/hiermod/) (curso, 2023). O Dia 4 trata separadamente *hierarchy on the intercept* e *hierarchy on the slope*, em Stan. É a explicação mais clara que conheço de por que intercepto e inclinação aleatórios são o **mesmo** mecanismo aplicado a coeficientes diferentes. O site não traz autoria nomeada nem citação sugerida.
 - Hartig, F. [`DHARMa`: residual diagnostics for hierarchical regression models](https://cran.r-project.org/package=DHARMa).
 :::

@@ -397,7 +397,7 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 </div>
 </div>
 <div class="definicao">
-<p>Regra prática de Burnham &amp; Anderson: use AICc sempre que <span class="math inline">\(n/K &lt; 40\)</span>. Como AICc converge para AIC quando <span class="math inline">\(n\)</span> cresce, <strong>use AICc sempre</strong> — não há custo.</p>
+<p>Regra prática de Burnham &amp; Anderson (§2.4, p.&nbsp;66): <em>“we advocate the use of AICc when the ratio <span class="math inline">\(n/K\)</span> is small (say <span class="math inline">\(&lt; 40\)</span>)”</em>. Como AICc converge para AIC quando <span class="math inline">\(n\)</span> cresce, <strong>use AICc sempre</strong> — não há custo. E nunca misture os dois critérios na mesma análise.</p>
 </div>
 </section>
 <section id="bic-responde-outra-pergunta" class="slide level2 smaller">
@@ -493,7 +493,7 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <section id="como-se-leem" class="slide level2">
 <h2>Como se leem</h2>
 <ul>
-<li><span class="math inline">\(\Delta_i\)</span> — distância ao melhor modelo. Convenção frouxa de Burnham &amp; Anderson: <span class="math inline">\(\Delta &lt; 2\)</span> tem suporte substancial; 4–7, bem menos; <span class="math inline">\(&gt; 10\)</span>, essencialmente nenhum.</li>
+<li><span class="math inline">\(\Delta_i\)</span> — distância ao melhor modelo. Burnham &amp; Anderson chamam de <em>rough rules of thumb</em>, “particularly useful for <strong>nested</strong> models”: <span class="math inline">\(\Delta\)</span> 0–2 tem suporte substancial; 4–7, bem menos; <span class="math inline">\(&gt; 10\)</span>, essencialmente nenhum.</li>
 <li><strong>Peso</strong> <span class="math inline">\(w_i\)</span> — probabilidade de que o modelo <span class="math inline">\(i\)</span> seja o melhor do conjunto, <strong>no sentido de KL e dado aquele conjunto</strong>.</li>
 <li><strong>Razão de evidência</strong> <span class="math inline">\(w_i / w_j\)</span> — quantas vezes um modelo é mais plausível que o outro.</li>
 </ul>
@@ -503,6 +503,20 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <pre><code>parque_agua 
           1 </code></pre>
 </div>
+</div>
+</section>
+<section id="as-três-ressalvas-que-ninguém-copia" class="slide level2 smaller">
+<h2>As três ressalvas que ninguém copia</h2>
+<p>Junto com a tabela de limiares, Burnham &amp; Anderson listam três condições. A terceira é a que mais importa nesta disciplina:</p>
+<blockquote>
+<p>“These guidelines seem useful if <span class="math inline">\(R\)</span> is small (even as many as 100), but may break down in exploratory cases where there may be thousands of models. The guideline values may be somewhat larger for nonnested models. <strong>If observations are not independent, but are assumed to be independent, then these simple guidelines cannot be expected to hold.</strong>”</p>
+</blockquote>
+<div class="nota">
+<p>A terceira condena boa parte do que se lê em ecologia: os <span class="math inline">\(\Delta\)</span> são reportados com a mesma régua em delineamentos agrupados, onde a premissa de independência é justamente a que não vale. É o assunto dos Encontros 7 e 8 — e a razão de o agrupamento vir <strong>antes</strong> da seleção de modelos.</p>
+<p>A primeira é o argumento contra o <code>dredge</code> em uma frase dos próprios autores do método.</p>
+</div>
+<div class="ref">
+<p>Burnham &amp; Anderson (2002), §2.6, p.&nbsp;70–71.</p>
 </div>
 </section>
 <section id="but-is-the-best-model-any-good" class="slide level2">
@@ -836,6 +850,9 @@ Chain 1:   Gradient evaluated at the initial value is not finite.</code></pre>
 </table>
 <div class="definicao">
 <p>Em modelos mistos, “quantos parâmetros é um efeito aleatório com 9 níveis?” não tem resposta única — está entre 1 e 9, conforme o <em>shrinkage</em>. O AIC precisa de um número; LOO e WAIC estimam o <strong>número efetivo</strong>.</p>
+</div>
+<div class="ref">
+<p>Os próprios Burnham &amp; Anderson tratam o caso como não resolvido: §6.6, p.&nbsp;310–316, “not straightforward because we need to consider the <span class="math inline">\(\theta_i\)</span> as random, even though in this likelihood they are technically considered as fixed effects”.</p>
 </div>
 </section>
 <section id="a-vantagem-do-hatk" class="slide level2">

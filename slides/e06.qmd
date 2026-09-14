@@ -228,6 +228,29 @@ resolvê-lo.
 
 ---
 
+## O tamanho da razão já diz qual causa {.smaller}
+
+A razão de *deviance* do nosso Poisson foi **7,8**. Burnham & Anderson
+tratam esse número como diagnóstico, não como mero fator de correção:
+
+> "We might expect $c > 1$ with real data but would not expect $c$ to
+> exceed about 4 if model structure is acceptable and only overdispersion
+> is affecting $c$. Substantially larger values of $c$ (say, 6–10) are
+> usually caused partly by a model structure that is inadequate."
+
+::: {.nota}
+Ou seja: 7,8 aponta para a **primeira** linha da tabela — falta estrutura —
+antes de apontar para a quarta. Trocar de família conserta o erro-padrão
+sem consertar o modelo. Voltamos a isso no Encontro 7, quando a estrutura
+que falta for o agrupamento.
+:::
+
+::: {.ref}
+Burnham & Anderson (2002), §2.5, p. 68.
+:::
+
+---
+
 ## Remédio 1: quasi-Poisson
 
 ```{r}

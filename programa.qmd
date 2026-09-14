@@ -176,6 +176,8 @@ existe). Os de acesso aberto estão marcados com {{< fa solid unlock >}}.
 - Akaike, H. 1974. [A new look at the statistical model identification](https://doi.org/10.1109/TAC.1974.1100705). *IEEE Transactions on Automatic Control* 19:716–723.
 - Arif, S. & MacNeil, M.A. 2023. [Applying the structural causal model framework for observational causal inference in ecology](https://doi.org/10.1002/ecm.1554). *Ecological Monographs* 93:e1554.
 - Brooks, M.E. et al. 2017. [glmmTMB balances speed and flexibility among packages for zero-inflated generalized linear mixed modeling](https://doi.org/10.32614/RJ-2017-066). *The R Journal* 9:378–400.
+- BIOS2. [*Hierarchical models in ecology*](https://bios2.github.io/hiermod/) (curso, 2023). O Dia 4 trata separadamente *hierarchy on the intercept* e *hierarchy on the slope*, em Stan. É a explicação mais clara que conheço de por que intercepto e inclinação aleatórios são o **mesmo** mecanismo aplicado a coeficientes diferentes. O site não traz autoria nomeada nem citação sugerida.
+
 - Bürkner, P.-C. 2017. [brms: an R package for Bayesian multilevel models using Stan](https://doi.org/10.18637/jss.v080.i01). *Journal of Statistical Software* 80(1).
 - Chamberlin, T.C. 1890. [The method of multiple working hypotheses](https://doi.org/10.1126/science.ns-15.366.92). *Science* ns-15:92–96.
 - Cooper, N. et al. 2024. [Harnessing large language models for coding, teaching and inclusion to empower research in ecology and evolution](https://doi.org/10.1111/2041-210X.14325). *Methods in Ecology and Evolution* 15:1757–1763.

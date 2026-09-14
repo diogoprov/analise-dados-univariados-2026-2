@@ -462,6 +462,19 @@ outlier frequency (expected: 0.00365384615384615 )
 <p>Sobredispersão é quase sempre <strong>sintoma</strong>, não doença. Trocar a distribuição sem investigar a causa esconde o problema em vez de resolvê-lo.</p>
 </div>
 </section>
+<section id="o-tamanho-da-razão-já-diz-qual-causa" class="slide level2 smaller">
+<h2>O tamanho da razão já diz qual causa</h2>
+<p>A razão de <em>deviance</em> do nosso Poisson foi <strong>7,8</strong>. Burnham &amp; Anderson tratam esse número como diagnóstico, não como mero fator de correção:</p>
+<blockquote>
+<p>“We might expect <span class="math inline">\(c &gt; 1\)</span> with real data but would not expect <span class="math inline">\(c\)</span> to exceed about 4 if model structure is acceptable and only overdispersion is affecting <span class="math inline">\(c\)</span>. Substantially larger values of <span class="math inline">\(c\)</span> (say, 6–10) are usually caused partly by a model structure that is inadequate.”</p>
+</blockquote>
+<div class="nota">
+<p>Ou seja: 7,8 aponta para a <strong>primeira</strong> linha da tabela — falta estrutura — antes de apontar para a quarta. Trocar de família conserta o erro-padrão sem consertar o modelo. Voltamos a isso no Encontro 7, quando a estrutura que falta for o agrupamento.</p>
+</div>
+<div class="ref">
+<p>Burnham &amp; Anderson (2002), §2.5, p.&nbsp;68.</p>
+</div>
+</section>
 <section id="remédio-1-quasi-poisson" class="slide level2">
 <h2>Remédio 1: quasi-Poisson</h2>
 <div class="cell">
