@@ -126,6 +126,23 @@ AIC(m_pois, m_olre, m_nb)
 
 ---
 
+## E o que essa tabela diz
+
+::: {.definicao}
+Os três modelos ficam a menos de 2 unidades de AIC um do outro, e a razão
+de *deviance* do Poisson era 1,15. **Não havia sobredispersão a corrigir.**
+O remédio não era necessário.
+:::
+
+Isso é um resultado, não um fracasso do procedimento. O Poisson com
+intercepto aleatório já dá conta: a variação que parecia excesso estava na
+estrutura de praias, e o efeito aleatório a absorveu.
+
+Guardem esta conclusão. Vamos reencontrá-la à tarde, de um jeito bem mais
+dramático.
+
+---
+
 ## `lme4` ou `glmmTMB`?
 
 | Precisa de… | Use |
@@ -220,12 +237,15 @@ Relate os dois.
 
 ## O que relatar (Davis & Kay 2023)
 
-> "Ajustamos um GLMM com distribuição binomial negativa e ligação log
-> (`glmmTMB` 1.1.x), com NAP como efeito fixo e intercepto aleatório por
-> praia (9 praias, 45 amostras). A estrutura aleatória reflete que as
-> amostras foram coletadas em transectos dentro de praias. Diagnóstico
-> com resíduos quantílicos simulados (`DHARMa`, 1000 simulações).
-> $R^2$ marginal = …, condicional = …."
+> "Ajustamos um GLMM de Poisson com ligação log (`lme4` 1.1.x), com NAP
+> como efeito fixo e intercepto aleatório por praia (9 praias, 45
+> amostras). A estrutura aleatória reflete que as amostras foram coletadas
+> em transectos dentro de praias. A razão entre *deviance* residual e graus
+> de liberdade foi 1,15 e a comparação por AIC com alternativas binomial
+> negativa e com efeito aleatório em nível de observação não indicou
+> sobredispersão relevante (ΔAIC < 2). Diagnóstico com resíduos
+> quantílicos simulados (`DHARMa`, 1000 simulações). $R^2$ marginal = …,
+> condicional = …."
 
 **Sempre diga o que o efeito aleatório representa no delineamento.**
 
@@ -241,21 +261,68 @@ Relate os dois.
 library(brms)
 
 m_bayes <- brm(Richness ~ NAP + (1 | Beach),
-               family = negbinomial(), data = rikz,
+               family = poisson(), data = rikz,
                chains = 4, iter = 2000, seed = 2026,
-               file = "../cache/e08_rikz_nb")
+               file = "../cache/e08_rikz_pois")
 ```
 
 Compare com a linha do bloco 1:
 
 ```{r}
 #| eval: false
-glmmTMB(Richness ~ NAP + (1 | Beach), family = nbinom2, data = rikz)
+glmer(Richness ~ NAP + (1 | Beach), family = poisson, data = rikz)
 ```
+
+::: {.nota}
+Reajustamos o modelo que de fato **escolhemos** de manhã, o Poisson com
+intercepto aleatório. Não o binomial negativo, que a comparação de AIC
+mostrou ser desnecessário.
+:::
 
 ::: {.definicao}
 A fórmula é **idêntica**. O custo de transferência é a família e três
 argumentos de MCMC.
+:::
+
+---
+
+## O que acontece se insistirmos na NB
+
+Ajustando o mesmo modelo com `family = negbinomial()` nestes dados:
+
+```
+Further Distributional Parameters:
+                    Estimate      Est.Error  l-95% CI      u-95% CI  Rhat
+shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22
+```
+
+::: {.definicao}
+O parâmetro de forma foge para $10^{18}$, e o $\hat{R}$ de **todo** o
+modelo vai a 3,2. Não é instabilidade numérica: é a posterior dizendo que
+**os dados não identificam esse parâmetro**. Quando a dispersão extra
+tende a zero, a binomial negativa converge para a Poisson, e a forma
+tende ao infinito sem que a verossimilhança mude.
+:::
+
+O `glmmTMB` devolveu, para o mesmo modelo, um ponto confortável: 15,5.
+Um número, sem alarme.
+
+---
+
+## A mesma lição do Encontro 9, adiantada
+
+::: {.definicao}
+A máxima verossimilhança **escolhe um ponto** e segue em frente. O MCMC
+percorre a posterior inteira, e por isso encontra a região plana em que o
+parâmetro não está determinado.
+:::
+
+O ajuste bayesiano não criou o problema. Ele **exibiu** um problema que já
+estava no ajuste frequentista, escondido atrás de uma estimativa pontual.
+
+::: {.nota}
+Um $\hat{R}$ alto é informação sobre o seu modelo, não um aborrecimento
+técnico a contornar aumentando iterações.
 :::
 
 ---
@@ -276,7 +343,7 @@ argumentos de MCMC.
 
 ```{r}
 #| eval: false
-get_prior(Richness ~ NAP + (1 | Beach), family = negbinomial(), data = rikz)
+get_prior(Richness ~ NAP + (1 | Beach), family = poisson(), data = rikz)
 
 priors <- c(prior(normal(0, 1),     class = "b"),
             prior(normal(2, 1),     class = "Intercept"),
