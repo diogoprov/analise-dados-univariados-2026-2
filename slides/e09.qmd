@@ -434,6 +434,39 @@ ter AICc ótimo **por acaso**.
 
 ---
 
+## O caso mais bem documentado: *stepwise*
+
+Whittingham et al. (2006) examinaram os artigos de 2004 em três
+periódicos de ecologia e comportamento: de 65 que usaram regressão
+múltipla, **57 % usaram um procedimento *stepwise***.
+
+Os quatro defeitos que eles listam:
+
+1. **viés na estimativa dos parâmetros**;
+2. **inconsistência entre algoritmos** de seleção — *forward*, *backward*
+   e *stepwise* chegam a modelos diferentes nos mesmos dados;
+3. um problema de **testes múltiplos** que quase ninguém contabiliza;
+4. **foco indevido num único "melhor" modelo**.
+
+---
+
+## A demonstração deles
+
+Com dados de distribuição de *Emberiza citrinella* coletados em quatro
+anos, o *stepwise* produz, **em cada ano separadamente**, modelos com
+preditoras significativas.
+
+::: {.definicao}
+Esses modelos anuais variam substancialmente entre si e sugerem padrões
+que **contradizem** o que se obtém analisando os quatro anos juntos.
+:::
+
+A análise por teoria da informação nos mesmos dados mostra por quê:
+existe um número grande de modelos concorrentes que descrevem os dados
+igualmente bem. Nenhum deles deveria sustentar sozinho a inferência.
+
+---
+
 ## Por que é um problema
 
 1. **Os pesos deixam de significar o que dizem.** Eles pressupõem um
@@ -444,6 +477,33 @@ ter AICc ótimo **por acaso**.
    melhor num conjunto novo.
 4. **Ignora causalidade.** O garimpo inclui colisores com prazer —
    Encontro 5.
+
+---
+
+## Dois avisos do Freckleton (2009)
+
+Freckleton chama de pecados capitais alguns hábitos que sobrevivem à
+seleção de modelos:
+
+::: {.definicao}
+**Fé indevida em modelos com $R^2$ baixo.** Em muitas análises
+comparativas o $R^2$ fica na faixa de 0,05 a 0,10, e ainda assim o modelo
+é apresentado como se explicasse o sistema. Significância e poder
+explicativo são coisas diferentes, e amostras grandes produzem a primeira
+sem a segunda.
+:::
+
+E o ponto que amarra este encontro ao Encontro 2: mostrar que o efeito de
+uma variável é estatisticamente significativo **não é informativo**. O que
+interessa é o tamanho do efeito e **como ele se ordena em relação aos
+demais**.
+
+::: {.nota}
+Cuidado com o $R^2$ como critério de escolha: um modelo com mais
+parâmetros sempre ajusta melhor que um modelo aninhado com menos. Por isso
+o $R^2$ serve como indicador de falta de ajuste, não como medida de
+comparação entre modelos.
+:::
 
 ---
 
@@ -462,15 +522,35 @@ exige pensar **antes**.
 
 ---
 
+## Antes de tudo: qual é o seu objetivo?
+
+Tredennick et al. (2021) separam três objetivos que exigem estratégias
+diferentes de seleção:
+
+| Objetivo | A pergunta | O que fazer |
+|---|---|---|
+| **Exploração** | que padrões há aqui? | seleção liberal, resultado é hipótese, não conclusão |
+| **Inferência** | qual o efeito de X sobre Y? | conjunto pequeno, definido *a priori*; covariáveis de controle vêm do DAG |
+| **Predição** | que valor esperar em condições novas? | validação cruzada; regularização; mediar modelos ajuda |
+
+::: {.definicao}
+Quase todo conflito sobre "qual método de seleção usar" some quando o
+objetivo é declarado. Boa parte dos artigos de ecologia faz exploração e
+relata como inferência.
+:::
+
+---
+
 ## O que fazer no lugar
 
-1. Escreva as **hipóteses biológicas**, em palavras, antes de tocar nos
+1. **Declare o objetivo** — exploração, inferência ou predição.
+2. Escreva as **hipóteses biológicas**, em palavras, antes de tocar nos
    dados.
-2. Traduza cada uma em **um** modelo. Normalmente são 4 a 8, não 256.
-3. Inclua o modelo nulo e, se fizer sentido, um modelo global.
-4. Use DAGs (Encontro 5) para decidir covariáveis de controle — elas
+3. Traduza cada uma em **um** modelo. Normalmente são 4 a 8, não 256.
+4. Inclua o modelo nulo e, se fizer sentido, um modelo global.
+5. Use DAGs (Encontro 5) para decidir covariáveis de controle — elas
    entram em **todos** os modelos, não são candidatas.
-5. Compare, reporte a tabela **inteira**, e diagnostique o escolhido.
+6. Compare, reporte a tabela **inteira**, e diagnostique o escolhido.
 
 ---
 
@@ -632,12 +712,35 @@ Depois, cinco minutos de apresentação por pessoa.
 ## Referências
 
 ::: {.nota}
+**Por que trabalhar com modelos**
+
+- Chamberlin, T.C. 1890. [The method of multiple working hypotheses](https://doi.org/10.1126/science.ns-15.366.92). *Science* ns-15:92–96. Reimpresso em 1897 no [*Journal of Geology* 5:837–848](https://doi.org/10.1086/607980).
+- Platt, J.R. 1964. [Strong inference](https://doi.org/10.1126/science.146.3642.347). *Science* 146:347–353.
+- Hilborn, R. & Mangel, M. 1997. [*The Ecological Detective: Confronting Models with Data*](https://www.jstor.org/stable/j.ctt24hqnx). Princeton University Press.
+- Johnson, J.B. & Omland, K.S. 2004. [Model selection in ecology and evolution](https://doi.org/10.1016/j.tree.2003.10.013). *Trends in Ecology & Evolution* 19:101–108.
+- Hobbs, N.T. & Hilborn, R. 2006. [Alternatives to statistical hypothesis testing in ecology: a guide to self teaching](https://doi.org/10.1890/04-0645). *Ecological Applications* 16:5–19.
+- Coelho, M.T.P.; Diniz-Filho, J.A.F. & Rangel, T.F. 2019. [A parsimonious view of the parsimony principle in ecology and evolution](https://doi.org/10.1111/ecog.04228). *Ecography* 42:968–976.
+- Tredennick, A.T. et al. 2021. [A practical guide to selecting models for exploration, inference, and prediction in ecology](https://doi.org/10.1002/ecy.3336). *Ecology* 102:e03336.
+:::
+
+---
+
+## Referências
+
+::: {.nota}
+**O que não fazer**
+
+- Anderson, D.R.; Burnham, K.P. & Thompson, W.L. 2000. [Null hypothesis testing: problems, prevalence, and an alternative](https://doi.org/10.2307/3803199). *The Journal of Wildlife Management* 64:912–923.
+- Anderson, D.R. & Burnham, K.P. 2002. [Avoiding pitfalls when using information-theoretic methods](https://doi.org/10.2307/3803155). *The Journal of Wildlife Management* 66:912–918.
+- Whittingham, M.J.; Stephens, P.A.; Bradbury, R.B. & Freckleton, R.P. 2006. [Why do we still use stepwise modelling in ecology and behaviour?](https://doi.org/10.1111/j.1365-2656.2006.01141.x) *Journal of Animal Ecology* 75:1182–1189.
+- Mundry, R. & Nunn, C.L. 2009. [Stepwise model fitting and statistical inference: turning noise into signal pollution](https://doi.org/10.1086/593303). *The American Naturalist* 173:119–123.
+- Freckleton, R.P. 2009. [The seven deadly sins of comparative analysis](https://doi.org/10.1111/j.1420-9101.2009.01757.x). *Journal of Evolutionary Biology* 22:1367–1375.
+
+**Base metodológica**
+
 - Akaike, H. 1974. [A new look at the statistical model identification](https://doi.org/10.1109/TAC.1974.1100705). *IEEE Transactions on Automatic Control* 19:716–723.
 - Burnham, K.P. & Anderson, D.R. 2002. [*Model Selection and Multimodel Inference*](https://doi.org/10.1007/b97636). 2ª ed. Springer.
-- Chamberlin, T.C. 1890. [The method of multiple working hypotheses](https://doi.org/10.1126/science.ns-15.366.92). *Science* ns-15:92–96.
-- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
-- Gerstner, K. et al. 2017. [Will your paper be used in a meta-analysis? Make the reach of your research broader and longer lasting](https://doi.org/10.1111/2041-210X.12758). *Methods in Ecology and Evolution* 8:777–784.
 - Vehtari, A.; Gelman, A. & Gabry, J. 2017. [Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC](https://doi.org/10.1007/s11222-016-9696-4). *Statistics and Computing* 27:1413–1432.
-- Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
-- Bartoń, K. [`MuMIn`: multi-model inference](https://cran.r-project.org/package=MuMIn).
+- Gerstner, K. et al. 2017. [Will your paper be used in a meta-analysis?](https://doi.org/10.1111/2041-210X.12758) *Methods in Ecology and Evolution* 8:777–784.
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/), cap. 11.
 :::

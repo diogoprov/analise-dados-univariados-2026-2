@@ -45,12 +45,39 @@ e sobre por que ela é mais perigosa do que parece.
 
 **Obrigatória**
 
-- Burnham, K.P. & Anderson, D.R. 2002. [*Model Selection and Multimodel Inference*](https://doi.org/10.1007/b97636). 2ª ed. Springer.
+- Burnham, K.P. & Anderson, D.R. 2002. [*Model Selection and Multimodel Inference*](https://doi.org/10.1007/b97636). 2ª ed. Springer. Caps. 2–4.
 
-**Complementar**
+**Por que trabalhar com modelos**
 
-- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
+- Chamberlin, T.C. 1890. [The method of multiple working hypotheses](https://doi.org/10.1126/science.ns-15.366.92). *Science* ns-15:92–96. Reimpresso em 1897 no [*Journal of Geology* 5:837–848](https://doi.org/10.1086/607980).
+- Platt, J.R. 1964. [Strong inference](https://doi.org/10.1126/science.146.3642.347). *Science* 146:347–353.
+- Hilborn, R. & Mangel, M. 1997. [*The Ecological Detective: Confronting Models with Data*](https://www.jstor.org/stable/j.ctt24hqnx). Princeton University Press.
+- Johnson, J.B. & Omland, K.S. 2004. [Model selection in ecology and evolution](https://doi.org/10.1016/j.tree.2003.10.013). *Trends in Ecology & Evolution* 19:101–108.
+- Hobbs, N.T. & Hilborn, R. 2006. [Alternatives to statistical hypothesis testing in ecology: a guide to self teaching](https://doi.org/10.1890/04-0645). *Ecological Applications* 16:5–19.
+- Coelho, M.T.P.; Diniz-Filho, J.A.F. & Rangel, T.F. 2019. [A parsimonious view of the parsimony principle in ecology and evolution](https://doi.org/10.1111/ecog.04228). *Ecography* 42:968–976.
+- Tredennick, A.T. et al. 2021. [A practical guide to selecting models for exploration, inference, and prediction in ecology](https://doi.org/10.1002/ecy.3336). *Ecology* 102:e03336.
+
+**O que não fazer**
+
+- Anderson, D.R.; Burnham, K.P. & Thompson, W.L. 2000. [Null hypothesis testing: problems, prevalence, and an alternative](https://doi.org/10.2307/3803199). *The Journal of Wildlife Management* 64:912–923.
+- Anderson, D.R. & Burnham, K.P. 2002. [Avoiding pitfalls when using information-theoretic methods](https://doi.org/10.2307/3803155). *The Journal of Wildlife Management* 66:912–918.
+- Whittingham, M.J.; Stephens, P.A.; Bradbury, R.B. & Freckleton, R.P. 2006. [Why do we still use stepwise modelling in ecology and behaviour?](https://doi.org/10.1111/j.1365-2656.2006.01141.x) *Journal of Animal Ecology* 75:1182–1189.
+- Mundry, R. & Nunn, C.L. 2009. [Stepwise model fitting and statistical inference: turning noise into signal pollution](https://doi.org/10.1086/593303). *The American Naturalist* 173:119–123.
+- Freckleton, R.P. 2009. [The seven deadly sins of comparative analysis](https://doi.org/10.1111/j.1420-9101.2009.01757.x). *Journal of Evolutionary Biology* 22:1367–1375.
+
+**Boas práticas**
+
+- Popovic, G. et al. 2024. [Four principles for improved statistical ecology](https://doi.org/10.1111/2041-210X.14270). *Methods in Ecology and Evolution* 15:266–281.
+- Gerstner, K. et al. 2017. [Will your paper be used in a meta-analysis?](https://doi.org/10.1111/2041-210X.12758) *Methods in Ecology and Evolution* 8:777–784.
+
+**Bayesiano**
+
 - Vehtari, A.; Gelman, A. & Gabry, J. 2017. [Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC](https://doi.org/10.1007/s11222-016-9696-4). *Statistics and Computing* 27:1413–1432.
-- Gerstner, K. et al. 2017. [Will your paper be used in a meta-analysis? Make the reach of your research broader and longer lasting](https://doi.org/10.1111/2041-210X.12758). *Methods in Ecology and Evolution* 8:777–784.
-- Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
+- Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/), capítulo "Ulysses' Compass".
+
+## Prática, para acompanhar
+
+- [Model selection and model averaging](https://www.stat.umn.edu/geyer/5421/notes/glmbb.html) — notas do Stat 5421 de Charles Geyer (Universidade de Minnesota).
+- [Model selection and model averaging](https://uoftcoders.github.io/rcourse/lec09-model-selection.html) — aula 9 do curso EEB313 (UofT Coders).
+
 
