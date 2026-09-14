@@ -36,6 +36,9 @@ execute:
 library(tidyverse)
 theme_set(theme_minimal(base_size = 14))
 RK <- read.delim("../dados/RoadKills.txt")
+# distância ao parque em km em vez de metros: o coeficiente fica legível e o
+# preditor linear para de estourar na inicialização do MCMC (ver E8)
+RK$D.PARK_km <- RK$D.PARK / 1000
 ```
 
 ## Onde estamos no ciclo PPDAC
@@ -233,8 +236,8 @@ O polinômio de grau 10 ajusta **melhor** estes 15 pontos e prediz
 ## Na prática
 
 ```{r}
-m1 <- glm(TOT.N ~ D.PARK, family = poisson, data = RK)
-m2 <- MASS::glm.nb(TOT.N ~ D.PARK, data = RK)
+m1 <- glm(TOT.N ~ D.PARK_km, family = poisson, data = RK)
+m2 <- MASS::glm.nb(TOT.N ~ D.PARK_km, data = RK)
 c(logLik_pois = round(as.numeric(logLik(m1)), 1), K_pois = attr(logLik(m1), "df"),
   AIC_pois = round(AIC(m1)),
   logLik_nb = round(as.numeric(logLik(m2)), 1), K_nb = attr(logLik(m2), "df"),
@@ -322,10 +325,10 @@ justificada pela pergunta.
 ```{r}
 modelos <- list(
   nulo       = MASS::glm.nb(TOT.N ~ 1, data = RK),
-  parque     = MASS::glm.nb(TOT.N ~ D.PARK, data = RK),
+  parque     = MASS::glm.nb(TOT.N ~ D.PARK_km, data = RK),
   habitat    = MASS::glm.nb(TOT.N ~ OPEN.L + MONT.S, data = RK),
   agua       = MASS::glm.nb(TOT.N ~ L.WAT.C + D.WAT.RES, data = RK),
-  parque_agua = MASS::glm.nb(TOT.N ~ D.PARK + L.WAT.C, data = RK)
+  parque_agua = MASS::glm.nb(TOT.N ~ D.PARK_km + L.WAT.C, data = RK)
 )
 ```
 
@@ -454,7 +457,7 @@ diferentes em modelos diferentes.
 
 ```{r}
 #| eval: false
-global <- MASS::glm.nb(TOT.N ~ D.PARK + OPEN.L + MONT.S + L.WAT.C +
+global <- MASS::glm.nb(TOT.N ~ D.PARK_km + OPEN.L + MONT.S + L.WAT.C +
                          D.WAT.RES + URBAN + N.PATCH + P.EDGE, data = RK)
 MuMIn::dredge(global)     # 256 modelos
 ```
@@ -603,6 +606,30 @@ Reportar só o modelo vencedor é como reportar só a análise que deu certo.
 
 ---
 
+## Um detalhe que só aparece no MCMC
+
+`D.PARK` vem em **metros**, de 250 a 24 885. Com ligação log, o preditor
+linear na inicialização vira $e^{\beta \cdot 24885}$, que estoura antes de
+a cadeia começar:
+
+```
+Chain 1: Rejecting initial value:
+Chain 1:   Gradient evaluated at the initial value is not finite.
+```
+
+::: {.definicao}
+Passar a preditora para **km** resolve. E como a mudança é linear, a
+verossimilhança é idêntica: a tabela de AICc, os deltas e os pesos deste
+encontro **não mudam**. O que muda é o coeficiente, que passa a ser
+legível: −0,12 por km em vez de −0,000116 por metro.
+:::
+
+O ajuste por máxima verossimilhança tolera a escala ruim em silêncio; o
+MCMC não. Nesse sentido, o bayesiano é um detector de problemas que já
+estavam lá.
+
+---
+
 # Bloco 2 — o fecho bayesiano {.secao}
 
 ---
@@ -627,9 +654,9 @@ já obtida.
 library(brms)
 library(loo)
 
-m_a <- brm(TOT.N ~ D.PARK, family = negbinomial(), data = RK,
+m_a <- brm(TOT.N ~ D.PARK_km, family = negbinomial(), data = RK,
            file = "../cache/e09_a")
-m_b <- brm(TOT.N ~ D.PARK + L.WAT.C, family = negbinomial(), data = RK,
+m_b <- brm(TOT.N ~ D.PARK_km + L.WAT.C, family = negbinomial(), data = RK,
            file = "../cache/e09_b")
 
 loo_compare(loo(m_a), loo(m_b))

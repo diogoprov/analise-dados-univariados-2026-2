@@ -64,14 +64,15 @@ cronometra("E8 — riqueza ~ NAP + (1|praia), binomial negativa", {
 
 # ---- Encontro 9 ---------------------------------------------------
 RK <- read.delim("dados/RoadKills.txt")
+RK$D.PARK_km <- RK$D.PARK / 1000
 
 cronometra("E9 — atropelamentos ~ distância ao parque", {
-  brm(TOT.N ~ D.PARK, family = negbinomial(), data = RK,
+  brm(TOT.N ~ D.PARK_km, family = negbinomial(), data = RK,
       file = "cache/e09_a", file_refit = "on_change")
 })
 
 cronometra("E9 — + distância a corpos d'água", {
-  brm(TOT.N ~ D.PARK + L.WAT.C, family = negbinomial(), data = RK,
+  brm(TOT.N ~ D.PARK_km + L.WAT.C, family = negbinomial(), data = RK,
       file = "cache/e09_b", file_refit = "on_change")
 })
 

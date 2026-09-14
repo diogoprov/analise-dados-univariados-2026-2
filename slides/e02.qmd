@@ -598,6 +598,7 @@ que você vai escrever em `lmer()`, `glmmTMB()` e `brm()` nos Encontros 7 e
 
 ```{r}
 #| eval: false
+# nomes ilustrativos: este bloco mostra a notação, não roda
 lm       (massa ~ svl,                  data = d)                     # gaussiano
 glm      (massa ~ svl, family = Gamma,  data = d)                     # GLM
 lme4::lmer   (massa ~ svl + (1 | poca),               data = d)       # LMM
