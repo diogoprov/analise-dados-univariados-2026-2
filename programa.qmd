@@ -159,10 +159,12 @@ existe). Os de acesso aberto estão marcados com {{< fa solid unlock >}}.
 - da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
 - Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
 - Popovic, G. et al. 2024. [Four principles for improved statistical ecology](https://doi.org/10.1111/2041-210X.14270). *Methods in Ecology and Evolution* 15:266–281.
+- Gelman, A.; Vehtari, A.; McElreath, R.; Simpson, D.; Margossian, C.C.; Yao, Y.; Kennedy, L.; Gabry, J.; Bürkner, P.-C.; Modrák, M. & Leos Barajas, V. 2026. [*Bayesian Workflow*](https://avehtari.github.io/Bayesian-Workflow/). Chapman & Hall/CRC. Edição eletrônica de acesso livre para uso não comercial, com código em R e Stan.
 
 ### Complementar
 
 - Agresti, A. 2015. [*Foundations of Linear and Generalized Linear Models*](https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034). Wiley.
+- Aho, K.; Derryberry, D. & Peterson, T. 2014. [Model selection for ecologists: the worldviews of AIC and BIC](https://doi.org/10.1890/13-1452.1). *Ecology* 95:631–636.
 - Akaike, H. 1974. [A new look at the statistical model identification](https://doi.org/10.1109/TAC.1974.1100705). *IEEE Transactions on Automatic Control* 19:716–723.
 - Arif, S. & MacNeil, M.A. 2023. [Applying the structural causal model framework for observational causal inference in ecology](https://doi.org/10.1002/ecm.1554). *Ecological Monographs* 93:e1554.
 - Brooks, M.E. et al. 2017. [glmmTMB balances speed and flexibility among packages for zero-inflated generalized linear mixed modeling](https://doi.org/10.32614/RJ-2017-066). *The R Journal* 9:378–400.
@@ -174,21 +176,21 @@ existe). Os de acesso aberto estão marcados com {{< fa solid unlock >}}.
 - Gotelli, N.J. & Ellison, A.M. [*A Primer of Ecological Statistics*](https://global.oup.com/academic/product/a-primer-of-ecological-statistics-9781605350646). Ed. brasileira: *Princípios de Estatística em Ecologia*, Artmed.
 - Harrison, X.A. et al. 2018. [A brief introduction to mixed effects modelling and multi-model inference in ecology](https://doi.org/10.7717/peerj.4794). *PeerJ* 6:e4794.
 - Hurlbert, S.H. 1984. [Pseudoreplication and the design of ecological field experiments](https://doi.org/10.2307/1942661). *Ecological Monographs* 54:187–211.
+- Field, A.P. 2022. [*An Adventure in Statistics*](https://profandyfield.com/discoverse/ais/). SAGE. Ensina os testes clássicos dentro do modelo linear geral, com foco em conceito e interpretação em vez de software.
 - Kay, M. et al. 2026. [A century of inertia in quantitative ecology education](https://doi.org/10.1111/2041-210X.70405). *Methods in Ecology and Evolution*.
 - Kruschke, J.K. 2021. [Bayesian Analysis Reporting Guidelines](https://doi.org/10.1038/s41562-021-01177-7). *Nature Human Behaviour*.
 - Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
 - McElreath, R. 2020. [*Statistical Rethinking*](https://doi.org/10.1201/9780429029608). 2ª ed. CRC Press.
 - Nakagawa, S. et al. 2023. [Method Reporting with Initials for Transparency (MeRIT)](https://doi.org/10.1038/s41467-023-37039-1). *Nature Communications* 14:1788.
+- Mac Nally, R.; Duncan, R.P.; Thomson, J.R. & Yen, J.D.L. 2018. [Model selection using information criteria, but is the 'best' model any good?](https://doi.org/10.1111/1365-2664.13060) *Journal of Applied Ecology* 55:1441–1444.
 - Nakagawa, S. & Schielzeth, H. 2013. [A general and simple method for obtaining R² from generalized linear mixed-effects models](https://doi.org/10.1111/j.2041-210x.2012.00261.x). *Methods in Ecology and Evolution* 4:133–142.
 - Ovaskainen, O. & Abrego, N. 2020. [*Joint Species Distribution Modelling*](https://doi.org/10.1017/9781108591720). Cambridge University Press.
 - Quinn, G.P. & Keough, M.J. 2023. [*Experimental Design and Data Analysis for Biologists*](https://doi.org/10.1017/9781139568173). 2ª ed. Cambridge University Press.
-- Vehtari, A.; Gelman, A. & Gabry, J. 2017. [Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC](https://doi.org/10.1007/s11222-016-9696-4). *Statistics and Computing* 27:1413–1432.
 - Wild, C.J. & Pfannkuch, M. 1999. [Statistical thinking in empirical enquiry](https://doi.org/10.1111/j.1751-5823.1999.tb00442.x). *International Statistical Review* 67:223–248. — origem do ciclo PPDAC.
 - Zuur, A.F. et al. 2009. [*Mixed Effects Models and Extensions in Ecology with R*](https://doi.org/10.1007/978-0-387-87458-6). Springer.
 - Zuur, A.F.; Ieno, E.N. & Elphick, C.S. 2010. [A protocol for data exploration to avoid common statistical problems](https://doi.org/10.1111/j.2041-210X.2009.00001.x). *Methods in Ecology and Evolution* 1:3–14.
 - Zuur, A.F. & Ieno, E.N. 2016. [A protocol for conducting and presenting results of regression-type analyses](https://doi.org/10.1111/2041-210X.12577). *Methods in Ecology and Evolution* 7:636–645.
 
-- Field, A. 2022. *Discovering Statistics Using R*. Sage.
 
 ### Pacotes de R
 

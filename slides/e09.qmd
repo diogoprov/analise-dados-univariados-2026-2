@@ -297,10 +297,19 @@ $$
 | Penalidade | $2K$ | $K \log n$ — mais severa com $n$ grande |
 | Tende a escolher | modelos maiores | modelos menores |
 
-::: {.nota}
-Em ecologia, a premissa do BIC — de que o modelo verdadeiro está entre os
-candidatos — raramente é defensável. Por isso o AICc é o padrão da área.
+::: {.definicao}
+Aho, Derryberry & Peterson (2014) chamam isso de **visões de mundo**
+distintas, e não de duas aproximações do mesmo alvo. O AIC assume que a
+realidade é mais complexa que qualquer modelo do conjunto e busca o que
+melhor prediz; o BIC assume que o modelo gerador está entre os candidatos
+e busca identificá-lo.
 :::
+
+Em ecologia, a premissa do BIC raramente é defensável: é implausível que o
+processo que gerou a comunidade esteja entre os cinco modelos que você
+escreveu. Por isso o AICc é o padrão da área. Mas o ponto de Aho e
+colegas é que a escolha entre os dois **precede** os dados, e deve ser
+justificada pela pergunta.
 
 ---
 
@@ -359,6 +368,29 @@ tab |> mutate(across(c(AICc, delta), \(x) round(x, 1)),
 ```{r}
 round(tab$peso[1] / tab$peso[2], 1)
 ```
+
+---
+
+## "But is the 'best' model any good?"
+
+Mac Nally et al. (2018) fazem a pergunta que o procedimento não faz
+sozinho: depois de eleger o modelo mais bem apoiado, **ele é bom**?
+
+::: {.definicao}
+AIC, $\Delta_i$ e pesos são medidas **relativas**. Elas ordenam os
+candidatos entre si e não dizem nada sobre o quanto qualquer um deles
+descreve os dados.
+:::
+
+Duas coisas a relatar junto com a tabela:
+
+- **ajuste absoluto** — $R^2$, ou o diagnóstico de resíduos do modelo
+  escolhido;
+- **desempenho preditivo** — validação cruzada, ou pelo menos uma
+  comparação com o modelo nulo.
+
+Um modelo com $w = 0{,}98$ e $R^2 = 0{,}04$ é o melhor de um conjunto
+ruim. Isso precisa aparecer no texto.
 
 ---
 
@@ -740,7 +772,9 @@ Depois, cinco minutos de apresentação por pessoa.
 
 - Akaike, H. 1974. [A new look at the statistical model identification](https://doi.org/10.1109/TAC.1974.1100705). *IEEE Transactions on Automatic Control* 19:716–723.
 - Burnham, K.P. & Anderson, D.R. 2002. [*Model Selection and Multimodel Inference*](https://doi.org/10.1007/b97636). 2ª ed. Springer.
-- Vehtari, A.; Gelman, A. & Gabry, J. 2017. [Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC](https://doi.org/10.1007/s11222-016-9696-4). *Statistics and Computing* 27:1413–1432.
+- Aho, K.; Derryberry, D. & Peterson, T. 2014. [Model selection for ecologists: the worldviews of AIC and BIC](https://doi.org/10.1890/13-1452.1). *Ecology* 95:631–636.
+- Mac Nally, R.; Duncan, R.P.; Thomson, J.R. & Yen, J.D.L. 2018. [Model selection using information criteria, but is the 'best' model any good?](https://doi.org/10.1111/1365-2664.13060) *Journal of Applied Ecology* 55:1441–1444.
+- Gelman, A. et al. 2026. [*Bayesian Workflow*](https://avehtari.github.io/Bayesian-Workflow/). Chapman & Hall/CRC. Cap. 9, "Comparing and improving models".
 - Gerstner, K. et al. 2017. [Will your paper be used in a meta-analysis?](https://doi.org/10.1111/2041-210X.12758) *Methods in Ecology and Evolution* 8:777–784.
 - Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/), cap. 11.
 :::
