@@ -738,12 +738,11 @@ plot(m_mult)
 ## Versão moderna {.smaller}
 
 ```{r}
-#| fig-height: 4.4
+#| fig-height: 5.2
 library(performance)
 
-# o plot() explicito e obrigatorio: check_model() devolve o objeto de forma
-# invisivel, e o knitr so imprime o resultado visivel do ultimo comando --
-# sem ele o chunk roda, nao desenha nada e nao reclama
+# fig-height >= 5 e obrigatorio: os seis paineis nao cabem num dispositivo
+# menor, o grid desiste e o knitr descarta a figura sem erro nem aviso
 plot(check_model(m_mult))
 ```
 

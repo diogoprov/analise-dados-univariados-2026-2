@@ -2258,7 +2258,7 @@
     "href": "slides/e02.html#versão-moderna",
     "title": "O modelo linear como arcabouço unificador",
     "section": "Versão moderna",
-    "text": "Versão moderna\n\nlibrary(performance)\n\n# o plot() explicito e obrigatorio: check_model() devolve o objeto de forma\n# invisivel, e o knitr so imprime o resultado visivel do ultimo comando --\n# sem ele o chunk roda, nao desenha nada e nao reclama\nplot(check_model(m_mult))"
+    "text": "Versão moderna\n\nlibrary(performance)\n\n# fig-height &gt;= 5 e obrigatorio: os seis paineis nao cabem num dispositivo\n# menor, o grid desiste e o knitr descarta a figura sem erro nem aviso\nplot(check_model(m_mult))"
   },
   {
     "objectID": "slides/e02.html#por-que-esta-é-melhor",

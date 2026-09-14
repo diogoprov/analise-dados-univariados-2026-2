@@ -1036,10 +1036,16 @@ body_mass_g                 0.59         -0.47              0.87        1.00</co
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a><span class="fu">library</span>(performance)</span>
 <span id="cb54-2"><a></a></span>
-<span id="cb54-3"><a></a><span class="co"># o plot() explicito e obrigatorio: check_model() devolve o objeto de forma</span></span>
-<span id="cb54-4"><a></a><span class="co"># invisivel, e o knitr so imprime o resultado visivel do ultimo comando --</span></span>
-<span id="cb54-5"><a></a><span class="co"># sem ele o chunk roda, nao desenha nada e nao reclama</span></span>
-<span id="cb54-6"><a></a><span class="fu">plot</span>(<span class="fu">check_model</span>(m_mult))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb54-3"><a></a><span class="co"># fig-height &gt;= 5 e obrigatorio: os seis paineis nao cabem num dispositivo</span></span>
+<span id="cb54-4"><a></a><span class="co"># menor, o grid desiste e o knitr descarta a figura sem erro nem aviso</span></span>
+<span id="cb54-5"><a></a><span class="fu">plot</span>(<span class="fu">check_model</span>(m_mult))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-29-1.png" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="por-que-esta-é-melhor" class="slide level2">
