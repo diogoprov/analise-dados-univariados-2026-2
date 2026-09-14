@@ -40,6 +40,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-ec100a28b3f28334d858203a6e0baf76.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/quarto-contrib/fontawesome6-6.7.2/all.min.css" rel="stylesheet">
+<link href="site_libs/quarto-contrib/fontawesome6-6.7.2/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -68,13 +70,18 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Programa da disciplina – Análise de Dados Univariados">
 <meta property="og:description" content="Análise de Dados Univariados — PPGBA/UFMS, 2026/2">
+<meta property="og:image" content="https://provetelab.org/analise-dados-univariados-2026-2/programa_files/figure-html/unnamed-chunk-1-1.png">
 <meta property="og:site_name" content="Análise de Dados Univariados">
+<meta property="og:image:height" content="1017">
+<meta property="og:image:width" content="1267">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -143,6 +150,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#duas-espinhas-dorsais" id="toc-duas-espinhas-dorsais" class="nav-link" data-scroll-target="#duas-espinhas-dorsais">Duas espinhas dorsais</a></li>
   <li><a href="#cronograma" id="toc-cronograma" class="nav-link" data-scroll-target="#cronograma">Cronograma</a></li>
   <li><a href="#pré-requisitos" id="toc-pré-requisitos" class="nav-link" data-scroll-target="#pré-requisitos">Pré-requisitos</a></li>
+  <li><a href="#o-ciclo-ppdac" id="toc-o-ciclo-ppdac" class="nav-link" data-scroll-target="#o-ciclo-ppdac">O ciclo PPDAC</a></li>
   <li><a href="#metodologia" id="toc-metodologia" class="nav-link" data-scroll-target="#metodologia">Metodologia</a></li>
   <li><a href="#avaliação" id="toc-avaliação" class="nav-link" data-scroll-target="#avaliação">Avaliação</a></li>
   <li><a href="#bibliografia" id="toc-bibliografia" class="nav-link" data-scroll-target="#bibliografia">Bibliografia</a></li>
@@ -177,7 +185,7 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="ementa" class="level2">
 <h2 class="anchored" data-anchor-id="ementa">Ementa</h2>
-<p>Análise exploratória de dados e reprodutibilidade. Testes estatísticos clássicos redefinidos como modelos lineares. Distribuições de probabilidade e a família exponencial. Correlação de Pearson e Spearman. Teoria de decisão, erros do tipo I e II. Introdução aos modelos lineares generalizados (GLM), incluindo modelos para dados de contagem, binários, com excesso de zeros e ordinais. Modelos lineares generalizados mistos (GLMM) e suas aplicações em ecologia. Teoria da informação e seleção de modelos. Rudimentos de métodos multivariados baseados em modelos e modelos conjuntos de distribuição de espécies (JSDM).</p>
+<p>Ciclo PPDAC e raciocínio estatístico. Análise exploratória de dados e reprodutibilidade. Testes estatísticos clássicos redefinidos como modelos lineares. Distribuições de probabilidade e a família exponencial. Correlação de Pearson e Spearman. Teoria de decisão, erros do tipo I e II. Introdução aos modelos lineares generalizados (GLM), incluindo modelos para dados de contagem, binários, com excesso de zeros e ordinais. Modelos lineares generalizados mistos (GLMM) e suas aplicações em ecologia. Teoria da informação e seleção de modelos. Rudimentos de métodos multivariados baseados em modelos e modelos conjuntos de distribuição de espécies (JSDM).</p>
 </section>
 <section id="objetivos" class="level2">
 <h2 class="anchored" data-anchor-id="objetivos">Objetivos</h2>
@@ -193,7 +201,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="duas-espinhas-dorsais" class="level2">
 <h2 class="anchored" data-anchor-id="duas-espinhas-dorsais">Duas espinhas dorsais</h2>
-<p><strong>Tudo é modelo linear.</strong> Os testes clássicos entram como casos particulares de <code>lm()</code> com matrizes de delineamento distintas, seguindo <a href="https://lindeloev.github.io/tests-as-linear/">Lindeløv</a> e Gelman, Hill &amp; Vehtari (2020).</p>
+<p><strong>Tudo é modelo linear.</strong> Os testes clássicos entram como casos particulares de <code>lm()</code> com matrizes de delineamento distintas, seguindo <a href="https://lindeloev.github.io/tests-as-linear/">Lindeløv</a> e <a href="https://avehtari.github.io/ROS-Examples/">Gelman, Hill &amp; Vehtari (2020)</a>.</p>
 <p><strong>A ponte bayesiana é distribuída, não paralela.</strong> Em vez de um bloco bayesiano isolado no fim, a mesma pergunta e os mesmos dados são ajustados nos dois arcabouços: ao final do Encontro 8 (GLMM em <code>brms</code>) e no bloco de LOO/WAIC do Encontro 9.</p>
 </section>
 <section id="cronograma" class="level2">
@@ -242,7 +250,7 @@ ul.task-list li input[type="checkbox"] {
 <td style="text-align: left;">5</td>
 <td style="text-align: left;">sex 25/09</td>
 <td style="text-align: left;"><strong>E9</strong> — Teoria da informação e seleção de modelos</td>
-<td style="text-align: left;"><strong>E10</strong> — Multivariados baseados em modelos e JSDM</td>
+<td style="text-align: left;"><strong>E10</strong> — Clínica Estatística e apresentação de resultados</td>
 </tr>
 </tbody>
 </table>
@@ -253,64 +261,107 @@ ul.task-list li input[type="checkbox"] {
 <p>Familiaridade com R no nível da disciplina <em>Introdução à Linguagem R</em> (PPGEC/UFMS) — objetos, pacotes, <code>tidyverse</code>, <code>ggplot2</code>. Quem não cursou deve percorrer os <a href="https://analises-ecologicas.com">capítulos 4 a 6 de <em>Análises Ecológicas no R</em></a> antes do primeiro dia.</p>
 <p>Não se pressupõe conhecimento prévio de GLM, GLMM ou estatística bayesiana.</p>
 </section>
+<section id="o-ciclo-ppdac" class="level2">
+<h2 class="anchored" data-anchor-id="o-ciclo-ppdac">O ciclo PPDAC</h2>
+<p>O curso inteiro é organizado em torno do <strong>ciclo investigativo PPDAC</strong> (<a href="https://doi.org/10.1111/j.1751-5823.1999.tb00442.x">Wild &amp; Pfannkuch 1999</a>): <strong>P</strong>roblema → <strong>P</strong>lano → <strong>D</strong>ados → <strong>A</strong>nálise → <strong>C</strong>onclusão.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="programa_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Cada encontro abre indicando em que etapa do ciclo ele vive. A maior parte da disciplina ocupa a etapa <strong>Análise</strong> — mas o ponto pedagógico é justamente que a qualidade da Análise é decidida antes dela: no <strong>Problema</strong>, que define se a pergunta é respondível por um parâmetro, e no <strong>Plano</strong>, que determina a estrutura do modelo. As setas de retorno importam tanto quanto as de avanço: diagnóstico que falha devolve você aos Dados, e conclusão honesta frequentemente reformula o Problema.</p>
+<p>É essa a forma de pensar que a disciplina pretende deixar.</p>
+</section>
 <section id="metodologia" class="level2">
 <h2 class="anchored" data-anchor-id="metodologia">Metodologia</h2>
-<p>Aulas expositivas intercaladas com prática em R. Cada encontro abre com 20 min de <strong><em>productive failure</em></strong> (Kay et al.&nbsp;2026, Box 1): pergunta ecológica e dados apresentados <strong>antes</strong> do método, proposta de análise escrita em grupos pequenos e apresentação de 1 min por grupo. Os grupos são formados deliberadamente com formação quantitativa heterogênea.</p>
+<p><strong>Sala de aula invertida.</strong> A base teórica e o nivelamento técnico acontecem <strong>antes</strong> do encontro presencial: os vídeos do canal sobre o ciclo PPDAC, teste de hipótese e distribuições de probabilidade, os capítulos indicados de <em>Análises Ecológicas no R</em>, e a leitura obrigatória de cada encontro. O tempo em sala é gasto resolvendo problemas biológicos reais, não expondo o que podia ter sido lido.</p>
+<p><strong>Abertura em <em>productive failure</em>.</strong> Cada encontro abre com 20 min em que a pergunta ecológica e os dados são apresentados <strong>antes</strong> do método: em grupos pequenos e com formação quantitativa deliberadamente heterogênea, vocês escrevem como analisariam, e cada grupo apresenta em 1 min. Só então vem o método formal (<a href="https://doi.org/10.1111/2041-210X.70405">Kay et al.&nbsp;2026</a>, Box 1).</p>
+<p><strong>Clínica Estatística.</strong> A tarde de sexta é dedicada aos dados de vocês: consultoria com a turma inteira acompanhando, seguida da apresentação dos resultados preliminares. Tragam os dados em <code>.csv</code> ou <code>.txt</code>.</p>
 <p>Cada encontro tem uma leitura obrigatória e uma opcional, indicadas na página do encontro.</p>
 </section>
 <section id="avaliação" class="level2">
 <h2 class="anchored" data-anchor-id="avaliação">Avaliação</h2>
 <p><strong>Relatório Quarto reproduzível</strong> com dados próprios ou de repositório aberto, contendo:</p>
 <ol type="1">
-<li>objetivo, variáveis, método estatístico e implementação, seguindo o <em>checklist</em> de Davis &amp; Kay (2023);</li>
-<li>análise exploratória seguindo o protocolo de Zuur &amp; Ieno (2016);</li>
+<li>objetivo, variáveis, método estatístico e implementação, seguindo o <a href="https://doi.org/10.1002/ecs2.4539"><em>checklist</em> de Davis &amp; Kay (2023)</a>;</li>
+<li>análise exploratória seguindo o <a href="https://doi.org/10.1111/2041-210X.12577">protocolo de Zuur &amp; Ieno (2016)</a>;</li>
 <li>ajuste de GLM ou GLMM apropriado à natureza da resposta;</li>
 <li>diagnóstico com <code>DHARMa</code>;</li>
 <li>comparação de modelos com justificativa;</li>
 <li>interpretação em linguagem biológica.</li>
 </ol>
-<p><strong>Extensão bayesiana opcional (recomendada):</strong> reajuste em <code>brms</code> com relato segundo o BARG (Kruschke 2021).</p>
-<p>Em trabalhos feitos em grupo, as iniciais dos autores nos Métodos seguem o <strong>MeRIT</strong> (Nakagawa et al.&nbsp;2023).</p>
+<p><strong>Extensão bayesiana opcional (recomendada):</strong> reajuste em <code>brms</code> com relato segundo o <a href="https://doi.org/10.1038/s41562-021-01177-7">BARG (Kruschke 2021)</a>.</p>
+<p>Em trabalhos feitos em grupo, as iniciais dos autores nos Métodos seguem o <a href="https://doi.org/10.1038/s41467-023-37039-1"><strong>MeRIT</strong> (Nakagawa et al.&nbsp;2023)</a>.</p>
 <p>O uso de modelos de linguagem deve ser declarado conforme discutido no Encontro 1 — modelo, versão, que porção do código foi gerada e quem responde por ela.</p>
 </section>
 <section id="bibliografia" class="level2">
 <h2 class="anchored" data-anchor-id="bibliografia">Bibliografia</h2>
+<p>Todos os itens abaixo estão linkados para a fonte canônica (DOI sempre que existe). Os de acesso aberto estão marcados com <i class="fa-solid fa-unlock" aria-label="unlock"></i>.</p>
 <section id="obrigatória" class="level3">
 <h3 class="anchored" data-anchor-id="obrigatória">Obrigatória</h3>
 <ul>
-<li>Bolker, B.M. et al.&nbsp;2009. Generalized linear mixed models: a practical guide for ecology and evolution. <em>Trends in Ecology &amp; Evolution</em>.</li>
-<li>Burnham, K.P. &amp; Anderson, D.R. 2002. <em>Model Selection and Multimodel Inference: a practical information-theoretic approach</em>. 2ª ed. Springer. — caps. 2–4.</li>
-<li>da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; <strong>Provete, D.B.</strong> &amp; Vancine, M.A.&nbsp;2022. <em>Análises Ecológicas no R</em>. NUPEEA. <a href="https://analises-ecologicas.com" class="uri">https://analises-ecologicas.com</a> — caps. 4–9.</li>
-<li>Gelman, A.; Hill, J. &amp; Vehtari, A. 2020. <em>Regression and Other Stories</em>. Cambridge University Press.</li>
-<li>Ovaskainen, O. &amp; Abrego, N. 2020. <em>Joint Species Distribution Modelling</em>. Cambridge University Press. — caps. 1–5.</li>
-<li>Popovic, G. et al.&nbsp;2024. Four principles for improved statistical ecology. <em>Methods in Ecology and Evolution</em> 15:266–281. — <strong>leitura pré-curso</strong>.</li>
+<li>Bolker, B.M. et al.&nbsp;2009. <a href="https://doi.org/10.1016/j.tree.2008.10.008">Generalized linear mixed models: a practical guide for ecology and evolution</a>. <em>Trends in Ecology &amp; Evolution</em> 24:127–135.</li>
+<li>Burnham, K.P. &amp; Anderson, D.R. 2002. <a href="https://doi.org/10.1007/b97636"><em>Model Selection and Multimodel Inference</em></a>. 2ª ed.&nbsp;Springer.</li>
+<li>da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; <strong>Provete, D.B.</strong> &amp; Vancine, M.A.&nbsp;2022. <a href="https://analises-ecologicas.com"><em>Análises Ecológicas no R</em></a>. NUPEEA.</li>
+<li>Gelman, A.; Hill, J. &amp; Vehtari, A. 2020. <a href="https://avehtari.github.io/ROS-Examples/"><em>Regression and Other Stories</em></a>. Cambridge University Press. — código e exemplos no site.</li>
+<li>Popovic, G. et al.&nbsp;2024. <a href="https://doi.org/10.1111/2041-210X.14270">Four principles for improved statistical ecology</a>. <em>Methods in Ecology and Evolution</em> 15:266–281.</li>
 </ul>
 </section>
 <section id="complementar" class="level3">
 <h3 class="anchored" data-anchor-id="complementar">Complementar</h3>
 <ul>
-<li>Agresti, A. 2015. <em>Foundations of Linear and Generalized Linear Models</em>. Wiley.</li>
-<li>Cooper, N. et al.&nbsp;2024. Harnessing large language models for coding, teaching and inclusion. <em>Methods in Ecology and Evolution</em> 15:1757–1763.</li>
-<li>Davis, S. &amp; Kay, M. 2023. <em>Ecosphere</em>. doi:10.1002/ecs2.4539 — <em>checklist</em> de relato estatístico.</li>
-<li>Field, A. 2022. <em>Discovering Statistics Using R</em>. Sage.</li>
-<li>Gotelli, N.J. &amp; Ellison, A.M. 2011. <em>Princípios de Estatística em Ecologia</em>. Artmed.</li>
-<li>Harrison, X.A. et al.&nbsp;2018. A brief introduction to mixed effects modelling and multi-model inference in ecology. <em>PeerJ</em>.</li>
-<li>Kay, M. et al.&nbsp;2026. A century of inertia in quantitative ecology education. <em>Methods in Ecology and Evolution</em>.</li>
-<li>Kruschke, J.K. 2021. Bayesian Analysis Reporting Guidelines. <em>Nature Human Behaviour</em>. doi:10.1038/s41562-021-01177-7</li>
-<li>Kurz, A.S. <em>Statistical Rethinking with brms, ggplot2, and the tidyverse</em>, 2ª ed. <a href="https://bookdown.org/content/70a06054-8138-4d90-aaa0-895f57aab1b4/" class="uri">https://bookdown.org/content/70a06054-8138-4d90-aaa0-895f57aab1b4/</a></li>
-<li>McElreath, R. 2020. <em>Statistical Rethinking</em>. 2ª ed.&nbsp;CRC Press.</li>
-<li>Quinn, G.P. &amp; Keough, M.J. 2023. <em>Experimental Design and Data Analysis for Biologists</em>. 2ª ed.&nbsp;Cambridge University Press.</li>
-<li>Zuur, A.F. et al.&nbsp;2009. <em>Mixed Effects Models and Extensions in Ecology with R</em>. Springer.</li>
-<li>Zuur, A.F. &amp; Ieno, E.N. 2016. A protocol for conducting and presenting results of regression-type analyses. <em>Methods in Ecology and Evolution</em>.</li>
+<li><p>Agresti, A. 2015. <a href="https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034"><em>Foundations of Linear and Generalized Linear Models</em></a>. Wiley.</p></li>
+<li><p>Akaike, H. 1974. <a href="https://doi.org/10.1109/TAC.1974.1100705">A new look at the statistical model identification</a>. <em>IEEE Transactions on Automatic Control</em> 19:716–723.</p></li>
+<li><p>Arif, S. &amp; MacNeil, M.A.&nbsp;2023. <a href="https://doi.org/10.1002/ecm.1554">Applying the structural causal model framework for observational causal inference in ecology</a>. <em>Ecological Monographs</em> 93:e1554.</p></li>
+<li><p>Brooks, M.E. et al.&nbsp;2017. <a href="https://doi.org/10.32614/RJ-2017-066">glmmTMB balances speed and flexibility among packages for zero-inflated generalized linear mixed modeling</a>. <em>The R Journal</em> 9:378–400.</p></li>
+<li><p>Bürkner, P.-C. 2017. <a href="https://doi.org/10.18637/jss.v080.i01">brms: an R package for Bayesian multilevel models using Stan</a>. <em>Journal of Statistical Software</em> 80(1).</p></li>
+<li><p>Chamberlin, T.C. 1890. <a href="https://doi.org/10.1126/science.ns-15.366.92">The method of multiple working hypotheses</a>. <em>Science</em> ns-15:92–96.</p></li>
+<li><p>Cooper, N. et al.&nbsp;2024. <a href="https://doi.org/10.1111/2041-210X.14325">Harnessing large language models for coding, teaching and inclusion to empower research in ecology and evolution</a>. <em>Methods in Ecology and Evolution</em> 15:1757–1763.</p></li>
+<li><p>Davis, S. &amp; Kay, M. 2023. <a href="https://doi.org/10.1002/ecs2.4539">Statistical reporting checklist</a>. <em>Ecosphere</em>.</p></li>
+<li><p>Gerstner, K. et al.&nbsp;2017. <a href="https://doi.org/10.1111/2041-210X.12758">Will your paper be used in a meta-analysis? Make the reach of your research broader and longer lasting</a>. <em>Methods in Ecology and Evolution</em> 8:777–784.</p></li>
+<li><p>Gotelli, N.J. &amp; Ellison, A.M. <a href="https://global.oup.com/academic/product/a-primer-of-ecological-statistics-9781605350646"><em>A Primer of Ecological Statistics</em></a>. Ed. brasileira: <em>Princípios de Estatística em Ecologia</em>, Artmed.</p></li>
+<li><p>Harrison, X.A. et al.&nbsp;2018. <a href="https://doi.org/10.7717/peerj.4794">A brief introduction to mixed effects modelling and multi-model inference in ecology</a>. <em>PeerJ</em> 6:e4794.</p></li>
+<li><p>Hurlbert, S.H. 1984. <a href="https://doi.org/10.2307/1942661">Pseudoreplication and the design of ecological field experiments</a>. <em>Ecological Monographs</em> 54:187–211.</p></li>
+<li><p>Kay, M. et al.&nbsp;2026. <a href="https://doi.org/10.1111/2041-210X.70405">A century of inertia in quantitative ecology education</a>. <em>Methods in Ecology and Evolution</em>.</p></li>
+<li><p>Kruschke, J.K. 2021. <a href="https://doi.org/10.1038/s41562-021-01177-7">Bayesian Analysis Reporting Guidelines</a>. <em>Nature Human Behaviour</em>.</p></li>
+<li><p>Kurz, A.S. <a href="https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/"><em>Statistical Rethinking recoded</em></a> — o livro do McElreath em <code>brms</code>, <code>ggplot2</code> e tidyverse.</p></li>
+<li><p>McElreath, R. 2020. <a href="https://doi.org/10.1201/9780429029608"><em>Statistical Rethinking</em></a>. 2ª ed.&nbsp;CRC Press.</p></li>
+<li><p>Nakagawa, S. et al.&nbsp;2023. <a href="https://doi.org/10.1038/s41467-023-37039-1">Method Reporting with Initials for Transparency (MeRIT)</a>. <em>Nature Communications</em> 14:1788.</p></li>
+<li><p>Nakagawa, S. &amp; Schielzeth, H. 2013. <a href="https://doi.org/10.1111/j.2041-210x.2012.00261.x">A general and simple method for obtaining R² from generalized linear mixed-effects models</a>. <em>Methods in Ecology and Evolution</em> 4:133–142.</p></li>
+<li><p>Ovaskainen, O. &amp; Abrego, N. 2020. <a href="https://doi.org/10.1017/9781108591720"><em>Joint Species Distribution Modelling</em></a>. Cambridge University Press.</p></li>
+<li><p>Quinn, G.P. &amp; Keough, M.J. 2023. <a href="https://doi.org/10.1017/9781139568173"><em>Experimental Design and Data Analysis for Biologists</em></a>. 2ª ed.&nbsp;Cambridge University Press.</p></li>
+<li><p>Vehtari, A.; Gelman, A. &amp; Gabry, J. 2017. <a href="https://doi.org/10.1007/s11222-016-9696-4">Practical Bayesian model evaluation using leave-one-out cross-validation and WAIC</a>. <em>Statistics and Computing</em> 27:1413–1432.</p></li>
+<li><p>Wild, C.J. &amp; Pfannkuch, M. 1999. <a href="https://doi.org/10.1111/j.1751-5823.1999.tb00442.x">Statistical thinking in empirical enquiry</a>. <em>International Statistical Review</em> 67:223–248. — origem do ciclo PPDAC.</p></li>
+<li><p>Zuur, A.F. et al.&nbsp;2009. <a href="https://doi.org/10.1007/978-0-387-87458-6"><em>Mixed Effects Models and Extensions in Ecology with R</em></a>. Springer.</p></li>
+<li><p>Zuur, A.F.; Ieno, E.N. &amp; Elphick, C.S. 2010. <a href="https://doi.org/10.1111/j.2041-210X.2009.00001.x">A protocol for data exploration to avoid common statistical problems</a>. <em>Methods in Ecology and Evolution</em> 1:3–14.</p></li>
+<li><p>Zuur, A.F. &amp; Ieno, E.N. 2016. <a href="https://doi.org/10.1111/2041-210X.12577">A protocol for conducting and presenting results of regression-type analyses</a>. <em>Methods in Ecology and Evolution</em> 7:636–645.</p></li>
+<li><p>Field, A. 2022. <em>Discovering Statistics Using R</em>. Sage.</p></li>
+</ul>
+</section>
+<section id="pacotes-de-r" class="level3">
+<h3 class="anchored" data-anchor-id="pacotes-de-r">Pacotes de R</h3>
+<ul>
+<li>Hartig, F. <a href="https://cran.r-project.org/package=DHARMa"><code>DHARMa</code>: residual diagnostics for hierarchical regression models</a>.</li>
+<li>Lenth, R. <a href="https://cran.r-project.org/package=emmeans"><code>emmeans</code>: estimated marginal means</a>.</li>
+<li><a href="https://cran.r-project.org/package=glmmTMB"><code>glmmTMB</code></a> — modelos mistos generalizados, zeros inflados e dispersão modelada.</li>
+<li>Bartoń, K. <a href="https://cran.r-project.org/package=MuMIn"><code>MuMIn</code>: multi-model inference</a>.</li>
+<li>Christensen, R.H.B. <a href="https://cran.r-project.org/package=ordinal"><code>ordinal</code>: regression models for ordinal data</a>.</li>
+<li>Horst, A.M.; Hill, A.P. &amp; Gorman, K.B. 2020. <a href="https://doi.org/10.5281/zenodo.3960218"><code>palmerpenguins</code>: Palmer Archipelago (Antarctica) penguin data</a>.</li>
 </ul>
 </section>
 <section id="recursos-online" class="level3">
 <h3 class="anchored" data-anchor-id="recursos-online">Recursos online</h3>
 <ul>
-<li><a href="https://lindeloev.github.io/tests-as-linear/"><em>tests-as-linear</em> — Jonas Kristoffer Lindeløv</a></li>
-<li><a href="https://www.youtube.com/@DiogoBProvete">Canal do YouTube <span class="citation" data-cites="DiogoBProvete">@DiogoBProvete</span></a> — estatística para as ciências da vida, em português.</li>
-<li><a href="https://provetelab.org/teaching/intro-r/">Introdução à Linguagem R</a> — disciplina pré-requisito.</li>
-<li><a href="https://provetelab.org/teaching/multidimensionais/">Análises multidimensionais</a> — continuação natural deste curso.</li>
+<li><a href="https://lindeloev.github.io/tests-as-linear/"><em>tests-as-linear</em>, de Jonas Kristoffer Lindeløv</a></li>
+<li><a href="https://avehtari.github.io/ROS-Examples/">Exemplos e código do ROS</a></li>
+<li><a href="https://www.youtube.com/@DiogoBProvete">Canal <span class="citation" data-cites="DiogoBProvete">@DiogoBProvete</span> no YouTube</a> — estatística para as ciências da vida, em português</li>
+<li><a href="https://provetelab.org/teaching/intro-r/">Introdução à Linguagem R</a> — disciplina pré-requisito</li>
+<li><a href="https://provetelab.org/teaching/multidimensionais/">Análises multidimensionais</a> — continuação natural deste curso</li>
+<li><a href="https://quarto.org/">Quarto</a> · <a href="https://happygitwithr.com/">Happy Git with R</a></li>
 </ul>
 
 
@@ -391,7 +442,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/diogoprov\.github\.io\/analise-dados-univariados-2026-2\/");
+        var filterRegex = new RegExp("https:\/\/provetelab\.org\/analise-dados-univariados-2026-2\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

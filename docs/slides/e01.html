@@ -187,6 +187,9 @@
       margin-right: 0; 
     }
   </style>
+  <script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 <meta property="og:title" content="EDA, reprodutibilidade e literacia em IA – Análise de Dados Univariados">
 <meta property="og:description" content="Encontro 1 · Análise de Dados Univariados · PPGBA/UFMS">
 <meta property="og:site_name" content="Análise de Dados Univariados">
@@ -272,13 +275,14 @@ Diogo B. Provete
 <li><strong>Perguntem durante</strong>, não no fim. Se uma coisa não fez sentido para você, não fez sentido para mais três pessoas na sala.</li>
 <li>Erro de modelo em aula é material didático, não constrangimento.</li>
 <li>O trabalho final usa <strong>os dados de vocês</strong>. Quanto mais cedo vocês os trouxerem para as práticas, melhor.</li>
-<li>Tudo está em <a href="https://diogoprov.github.io/analise-dados-univariados-2026-2/">diogoprov.github.io/analise-dados-univariados-2026-2</a>.</li>
+<li>Tudo está em <a href="https://provetelab.org/analise-dados-univariados-2026-2/">provetelab.org/analise-dados-univariados-2026-2</a>.</li>
 </ul>
 </section>
 <section id="hoje" class="slide level2">
 <h2>Hoje</h2>
 <ol type="1">
 <li><em>Productive failure</em> de abertura — 20 min</li>
+<li>O ciclo PPDAC — 30 min</li>
 <li>Os quatro princípios de Popovic et al.&nbsp;(2024) — 30 min</li>
 <li>Pergunta focada, HARKing e pré-registro — 30 min</li>
 <li><strong>Intervalo</strong></li>
@@ -347,8 +351,105 @@ Diogo B. Provete
 
 </section></section>
 <section>
+<section id="o-ciclo-ppdac" class="title-slide slide level1 secao center">
+<h1>2. O ciclo PPDAC</h1>
+
+</section>
+<section id="o-mapa-da-disciplina-inteira" class="slide level2">
+<h2>O mapa da disciplina inteira</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" style="width:52.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="ref">
+<p>Wild, C.J. &amp; Pfannkuch, M. 1999. <em>International Statistical Review</em>.</p>
+</div>
+</section>
+<section id="onde-cada-etapa-aparece-no-curso" class="slide level2">
+<h2>Onde cada etapa aparece no curso</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Etapa</th>
+<th>A pergunta que ela responde</th>
+<th>Onde aparece no curso</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Problema</strong></td>
+<td>o que eu quero saber, em termos mensuráveis?</td>
+<td>hoje, e no item 1 do trabalho final</td>
+</tr>
+<tr class="even">
+<td><strong>Plano</strong></td>
+<td>que dados respondem isso, e como coletá-los?</td>
+<td>hoje (pré-registro); E7 (delineamento e dependência)</td>
+</tr>
+<tr class="odd">
+<td><strong>Dados</strong></td>
+<td>o que eu de fato tenho, e em que estado?</td>
+<td>hoje (EDA em 8 passos)</td>
+</tr>
+<tr class="even">
+<td><strong>Análise</strong></td>
+<td>que modelo corresponde a esses dados e a essa pergunta?</td>
+<td>E2 a E9</td>
+</tr>
+<tr class="odd">
+<td><strong>Conclusão</strong></td>
+<td>o que posso afirmar, e com que incerteza?</td>
+<td>E5 (escala da resposta), E9 (seleção)</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="por-que-um-ciclo-e-não-uma-lista" class="slide level2">
+<h2>Por que um ciclo e não uma lista</h2>
+<div class="cell" data-reveal="true" data-fig-height="2.6" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource default number-lines code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a></a>flowchart LR</span>
+<span id="cb5-2"><a></a>  P1[Problema] --&gt; P2[Plano] --&gt; D[Dados] --&gt; A[Análise] --&gt; C[Conclusão]</span>
+<span id="cb5-3"><a></a>  C -.-&gt; P1</span>
+<span id="cb5-4"><a></a>  A -.-&gt; D</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  P1[Problema] --&gt; P2[Plano] --&gt; D[Dados] --&gt; A[Análise] --&gt; C[Conclusão]
+  C -.-&gt; P1
+  A -.-&gt; D
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>As setas pontilhadas são o ponto: a análise revela problemas nos dados, e a conclusão quase sempre reformula o problema. <strong>Isso é legítimo</strong> — o que não é legítimo é apagar o percurso e apresentar a última volta do ciclo como se tivesse sido a primeira.</p>
+</section>
+<section id="onde-a-maioria-dos-trabalhos-quebra" class="slide level2">
+<h2>Onde a maioria dos trabalhos quebra</h2>
+<div class="definicao">
+<p>Não é na Análise. É no <strong>Problema</strong> — a pergunta nunca foi escrita de forma que um parâmetro pudesse respondê-la — e no <strong>Plano</strong> — a estrutura de coleta não permite separar o efeito de interesse.</p>
+</div>
+<p>Nenhum modelo do Encontro 2 ao 9 conserta isso. É por isso que gastamos a primeira manhã aqui.</p>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
 <section id="quatro-princípios" class="title-slide slide level1 secao center">
-<h1>2. Quatro princípios</h1>
+<h1>3. Quatro princípios</h1>
 <div class="nota">
 <p>Popovic, G. et al.&nbsp;2024. Four principles for improved statistical ecology. <em>Methods in Ecology and Evolution</em> 15:266–281.</p>
 </div>
@@ -418,7 +519,7 @@ Diogo B. Provete
 </section></section>
 <section>
 <section id="a-pergunta-vem-antes" class="title-slide slide level1 secao center">
-<h1>3. A pergunta vem antes</h1>
+<h1>4. A pergunta vem antes</h1>
 
 </section>
 <section id="harking" class="slide level2">
@@ -501,7 +602,7 @@ Diogo B. Provete
 </section></section>
 <section>
 <section id="exploração-de-dados" class="title-slide slide level1 secao center">
-<h1>4. Exploração de dados</h1>
+<h1>5. Exploração de dados</h1>
 <div class="nota">
 <p>Protocolo de Zuur, Ieno &amp; Elphick (2010), <em>Methods in Ecology and Evolution</em>; apresentação dos resultados segundo Zuur &amp; Ieno (2016).</p>
 </div>
@@ -531,20 +632,20 @@ Diogo B. Provete
 <h2>Passo 1 — Outliers</h2>
 <p>O gráfico de Cleveland é mais informativo que o boxplot: mostra cada observação contra a ordem no arquivo.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb5-2"><a></a>dados <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"../dados/dados_com_outliers_e_faltantes.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span>
-<span id="cb5-3"><a></a></span>
-<span id="cb5-4"><a></a>dados <span class="sc">|&gt;</span></span>
-<span id="cb5-5"><a></a>  <span class="fu">mutate</span>(<span class="at">ordem =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb5-6"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Pontuacao, <span class="at">y =</span> ordem, <span class="at">colour =</span> Grupo)) <span class="sc">+</span></span>
-<span id="cb5-7"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb5-8"><a></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>)) <span class="sc">+</span></span>
-<span id="cb5-9"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Valor observado"</span>, <span class="at">y =</span> <span class="st">"Ordem no arquivo"</span>) <span class="sc">+</span></span>
-<span id="cb5-10"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb6-2"><a></a>dados <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"../dados/dados_com_outliers_e_faltantes.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span>
+<span id="cb6-3"><a></a></span>
+<span id="cb6-4"><a></a>dados <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a></a>  <span class="fu">mutate</span>(<span class="at">ordem =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Pontuacao, <span class="at">y =</span> ordem, <span class="at">colour =</span> Grupo)) <span class="sc">+</span></span>
+<span id="cb6-7"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-8"><a></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>)) <span class="sc">+</span></span>
+<span id="cb6-9"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Valor observado"</span>, <span class="at">y =</span> <span class="st">"Ordem no arquivo"</span>) <span class="sc">+</span></span>
+<span id="cb6-10"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-3-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-5-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -565,17 +666,17 @@ Diogo B. Provete
 <section id="passo-2-homogeneidade-de-variância" class="slide level2">
 <h2>Passo 2 — Homogeneidade de variância</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>het <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"../dados/dados_heterocedasticidade.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span>
-<span id="cb6-2"><a></a></span>
-<span id="cb6-3"><a></a><span class="fu">ggplot</span>(het, <span class="fu">aes</span>(Dificuldade, Desempenho, <span class="at">fill =</span> Metodo)) <span class="sc">+</span></span>
-<span id="cb6-4"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> .<span class="dv">75</span>) <span class="sc">+</span></span>
-<span id="cb6-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>, <span class="st">"#6b8f71"</span>)) <span class="sc">+</span></span>
-<span id="cb6-6"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
-<span id="cb6-7"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Dificuldade"</span>, <span class="at">y =</span> <span class="st">"Desempenho"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>het <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"../dados/dados_heterocedasticidade.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span>
+<span id="cb7-2"><a></a></span>
+<span id="cb7-3"><a></a><span class="fu">ggplot</span>(het, <span class="fu">aes</span>(Dificuldade, Desempenho, <span class="at">fill =</span> Metodo)) <span class="sc">+</span></span>
+<span id="cb7-4"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> .<span class="dv">75</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>, <span class="st">"#6b8f71"</span>)) <span class="sc">+</span></span>
+<span id="cb7-6"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Dificuldade"</span>, <span class="at">y =</span> <span class="st">"Desempenho"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-4-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-6-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -584,10 +685,10 @@ Diogo B. Provete
 <section id="passo-2-quanto-difere" class="slide level2">
 <h2>Passo 2 — quanto difere?</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>het <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a></a>  <span class="fu">group_by</span>(Metodo, Dificuldade) <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Desempenho), <span class="dv">1</span>),</span>
-<span id="cb7-4"><a></a>            <span class="at">dp    =</span> <span class="fu">round</span>(<span class="fu">sd</span>(Desempenho), <span class="dv">1</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>het <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a></a>  <span class="fu">group_by</span>(Metodo, Dificuldade) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Desempenho), <span class="dv">1</span>),</span>
+<span id="cb8-4"><a></a>            <span class="at">dp    =</span> <span class="fu">round</span>(<span class="fu">sd</span>(Desempenho), <span class="dv">1</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 4
   Metodo Dificuldade media    dp
@@ -609,17 +710,17 @@ Diogo B. Provete
 <section id="passo-3-distribuição-da-resposta" class="slide level2">
 <h2>Passo 3 — Distribuição da resposta</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>nn <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"../dados/dados_nao_normais.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span>
-<span id="cb9-2"><a></a></span>
-<span id="cb9-3"><a></a><span class="fu">ggplot</span>(nn, <span class="fu">aes</span>(Tempo_Reacao, <span class="at">fill =</span> Tratamento)) <span class="sc">+</span></span>
-<span id="cb9-4"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>, <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> .<span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb9-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>)) <span class="sc">+</span></span>
-<span id="cb9-6"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
-<span id="cb9-7"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tempo de reação"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>nn <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"../dados/dados_nao_normais.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span>
+<span id="cb10-2"><a></a></span>
+<span id="cb10-3"><a></a><span class="fu">ggplot</span>(nn, <span class="fu">aes</span>(Tempo_Reacao, <span class="at">fill =</span> Tratamento)) <span class="sc">+</span></span>
+<span id="cb10-4"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>, <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> .<span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb10-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>)) <span class="sc">+</span></span>
+<span id="cb10-6"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb10-7"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tempo de reação"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-6-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-8-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -631,14 +732,14 @@ Diogo B. Provete
 <section id="passo-4-excesso-de-zeros" class="slide level2">
 <h2>Passo 4 — Excesso de zeros</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">ggplot</span>(RK, <span class="fu">aes</span>(TOT.N)) <span class="sc">+</span></span>
-<span id="cb10-2"><a></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#1c6e8c"</span>) <span class="sc">+</span></span>
-<span id="cb10-3"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Anfíbios mortos"</span>, <span class="at">y =</span> <span class="st">"Nº de sítios"</span>) <span class="sc">+</span></span>
-<span id="cb10-4"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">ggplot</span>(RK, <span class="fu">aes</span>(TOT.N)) <span class="sc">+</span></span>
+<span id="cb11-2"><a></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#1c6e8c"</span>) <span class="sc">+</span></span>
+<span id="cb11-3"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Anfíbios mortos"</span>, <span class="at">y =</span> <span class="st">"Nº de sítios"</span>) <span class="sc">+</span></span>
+<span id="cb11-4"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-7-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-9-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -648,10 +749,10 @@ Diogo B. Provete
 <section id="passo-5-colinearidade" class="slide level2">
 <h2>Passo 5 — Colinearidade</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>RK <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a></a>  <span class="fu">select</span>(D.PARK, OPEN.L, L.WAT.C, MONT.S) <span class="sc">|&gt;</span></span>
-<span id="cb11-3"><a></a>  <span class="fu">cor</span>(<span class="at">use =</span> <span class="st">"complete.obs"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-4"><a></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>RK <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a></a>  <span class="fu">select</span>(D.PARK, OPEN.L, L.WAT.C, MONT.S) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a></a>  <span class="fu">cor</span>(<span class="at">use =</span> <span class="st">"complete.obs"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        D.PARK OPEN.L L.WAT.C MONT.S
 D.PARK    1.00   0.27    0.28   0.07
@@ -665,15 +766,15 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <section id="passos-6-e-7-relações-e-interações" class="slide level2">
 <h2>Passos 6 e 7 — Relações e interações</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">ggplot</span>(RK, <span class="fu">aes</span>(D.PARK, TOT.N)) <span class="sc">+</span></span>
-<span id="cb13-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#1c6e8c"</span>) <span class="sc">+</span></span>
-<span id="cb13-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">"#144f64"</span>) <span class="sc">+</span></span>
-<span id="cb13-4"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Distância ao parque (m)"</span>, <span class="at">y =</span> <span class="st">"Anfíbios mortos"</span>) <span class="sc">+</span></span>
-<span id="cb13-5"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">ggplot</span>(RK, <span class="fu">aes</span>(D.PARK, TOT.N)) <span class="sc">+</span></span>
+<span id="cb14-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#1c6e8c"</span>) <span class="sc">+</span></span>
+<span id="cb14-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">"#144f64"</span>) <span class="sc">+</span></span>
+<span id="cb14-4"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Distância ao parque (m)"</span>, <span class="at">y =</span> <span class="st">"Anfíbios mortos"</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-9-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-11-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -704,7 +805,7 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 </section></section>
 <section>
 <section id="fluxo-reprodutível" class="title-slide slide level1 secao center">
-<h1>5. Fluxo reprodutível</h1>
+<h1>6. Fluxo reprodutível</h1>
 
 </section>
 <section id="o-problema-concreto" class="slide level2">
@@ -730,26 +831,26 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <section id="caminhos" class="slide level2">
 <h2>Caminhos</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="co"># Nunca:</span></span>
-<span id="cb15-2"><a></a><span class="fu">read.csv</span>(<span class="st">"/Users/diogo/Documents/projeto-final-v3/dados.csv"</span>)</span>
-<span id="cb15-3"><a></a></span>
-<span id="cb15-4"><a></a><span class="co"># Sempre:</span></span>
-<span id="cb15-5"><a></a><span class="fu">library</span>(here)</span>
-<span id="cb15-6"><a></a><span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"dados"</span>, <span class="st">"brutos"</span>, <span class="st">"anuros.csv"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="co"># Nunca:</span></span>
+<span id="cb16-2"><a></a><span class="fu">read.csv</span>(<span class="st">"/Users/diogo/Documents/projeto-final-v3/dados.csv"</span>)</span>
+<span id="cb16-3"><a></a></span>
+<span id="cb16-4"><a></a><span class="co"># Sempre:</span></span>
+<span id="cb16-5"><a></a><span class="fu">library</span>(here)</span>
+<span id="cb16-6"><a></a><span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"dados"</span>, <span class="st">"brutos"</span>, <span class="st">"anuros.csv"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><code>here()</code> resolve a partir da raiz do projeto. O script roda na sua máquina, na do orientando e no GitHub Actions.</p>
 </section>
 <section id="quarto" class="slide level2">
 <h2>Quarto</h2>
 <p>Texto, código e resultado no mesmo arquivo. O número do texto <strong>é</strong> o número que o código calculou.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a></a>A riqueza média foi de <span class="in">`r round(mean(dados$riqueza), 1)`</span> espécies.</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a></a>A riqueza média foi de <span class="in">`r round(mean(dados$riqueza), 1)`</span> espécies.</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Nunca mais copiar e colar um resultado — e nunca mais esquecer de atualizar o texto quando o dado muda.</p>
 </section>
 <section id="git-em-três-comandos" class="slide level2">
 <h2>git, em três comandos</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a></a><span class="fu">git</span> add .</span>
-<span id="cb17-2"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Adiciona diagnóstico do modelo Poisson"</span></span>
-<span id="cb17-3"><a></a><span class="fu">git</span> push</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a></a><span class="fu">git</span> add .</span>
+<span id="cb18-2"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Adiciona diagnóstico do modelo Poisson"</span></span>
+<span id="cb18-3"><a></a><span class="fu">git</span> push</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O que você ganha:</p>
 <ul>
 <li>histórico de <strong>por que</strong> cada mudança foi feita;</li>
@@ -776,7 +877,7 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 </section></section>
 <section>
 <section id="llms-em-estatística" class="title-slide slide level1 secao center">
-<h1>6. LLMs em estatística</h1>
+<h1>7. LLMs em estatística</h1>
 <div class="nota">
 <p>Cooper, N. et al.&nbsp;2024. Harnessing large language models for coding, teaching and inclusion. <em>Methods in Ecology and Evolution</em> 15:1757–1763.</p>
 </div>
@@ -860,6 +961,12 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <li>LLM é ferramenta de código, não de interpretação.</li>
 </ol>
 </section>
+<section id="o-que-fica-de-hoje-em-uma-linha" class="slide level2">
+<h2>O que fica de hoje, em uma linha</h2>
+<div class="definicao">
+<p>O ciclo PPDAC é o mapa; os quatro princípios são o critério de qualidade; o protocolo de oito passos é a lista de verificação. O resto do curso é a etapa “Análise”.</p>
+</div>
+</section>
 <section id="para-amanhã" class="slide level2">
 <h2>Para amanhã</h2>
 <p><strong>Leitura:</strong> Gelman, Hill &amp; Vehtari (2020), <em>Regression and Other Stories</em>, Parte I.</p>
@@ -870,12 +977,13 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <h2>Referências</h2>
 <div class="nota">
 <ul>
-<li>Cooper, N. et al.&nbsp;2024. Harnessing large language models for coding, teaching and inclusion. <em>Methods in Ecology and Evolution</em> 15:1757–1763.</li>
-<li>Kay, M. et al.&nbsp;2026. A century of inertia in quantitative ecology education. <em>Methods in Ecology and Evolution</em>.</li>
-<li>Popovic, G. et al.&nbsp;2024. Four principles for improved statistical ecology. <em>Methods in Ecology and Evolution</em> 15:266–281.</li>
-<li>Zuur, A.F., Ieno, E.N. &amp; Elphick, C.S. 2010. A protocol for data exploration to avoid common statistical problems. <em>Methods in Ecology and Evolution</em> 1:3–14.</li>
-<li>Zuur, A.F. &amp; Ieno, E.N. 2016. A protocol for conducting and presenting results of regression-type analyses. <em>Methods in Ecology and Evolution</em>.</li>
-<li>da Silva, F.R. et al.&nbsp;2022. <em>Análises Ecológicas no R</em>. NUPEEA.</li>
+<li>Wild, C.J. &amp; Pfannkuch, M. 1999. <a href="https://doi.org/10.1111/j.1751-5823.1999.tb00442.x">Statistical thinking in empirical enquiry</a>. <em>International Statistical Review</em> 67:223–248. — origem do ciclo PPDAC.</li>
+<li>Popovic, G. et al.&nbsp;2024. <a href="https://doi.org/10.1111/2041-210X.14270">Four principles for improved statistical ecology</a>. <em>Methods in Ecology and Evolution</em> 15:266–281.</li>
+<li>Cooper, N. et al.&nbsp;2024. <a href="https://doi.org/10.1111/2041-210X.14325">Harnessing large language models for coding, teaching and inclusion to empower research in ecology and evolution</a>. <em>Methods in Ecology and Evolution</em> 15:1757–1763.</li>
+<li>Kay, M. et al.&nbsp;2026. <a href="https://doi.org/10.1111/2041-210X.70405">A century of inertia in quantitative ecology education</a>. <em>Methods in Ecology and Evolution</em>.</li>
+<li>Zuur, A.F.; Ieno, E.N. &amp; Elphick, C.S. 2010. <a href="https://doi.org/10.1111/j.2041-210X.2009.00001.x">A protocol for data exploration to avoid common statistical problems</a>. <em>Methods in Ecology and Evolution</em> 1:3–14.</li>
+<li>Zuur, A.F. &amp; Ieno, E.N. 2016. <a href="https://doi.org/10.1111/2041-210X.12577">A protocol for conducting and presenting results of regression-type analyses</a>. <em>Methods in Ecology and Evolution</em> 7:636–645.</li>
+<li>da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; <strong>Provete, D.B.</strong> &amp; Vancine, M.A.&nbsp;2022. <a href="https://analises-ecologicas.com"><em>Análises Ecológicas no R</em></a>. NUPEEA.</li>
 </ul>
 </div>
 
@@ -1204,7 +1312,7 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/diogoprov\.github\.io\/analise-dados-univariados-2026-2\/");
+            var filterRegex = new RegExp("https:\/\/provetelab\.org\/analise-dados-univariados-2026-2\/");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }

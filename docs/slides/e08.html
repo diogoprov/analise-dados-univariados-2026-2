@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="pt"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
+
+  <meta name="author" content="Diogo B. Provete">
+  <title>Análise de Dados Univariados – GLMM II: lme4, glmmTMB e a ponte bayesiana</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-767eba1032040cdc5b63624daf3aadd0.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+<meta property="og:title" content="GLMM II: lme4, glmmTMB e a ponte bayesiana – Análise de Dados Univariados">
+<meta property="og:description" content="Encontro 8 · Análise de Dados Univariados · PPGBA/UFMS">
+<meta property="og:site_name" content="Análise de Dados Univariados">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">GLMM II: <code>lme4</code>, <code>glmmTMB</code> e a ponte bayesiana</h1>
+  <p class="subtitle">Encontro 8 · Análise de Dados Univariados · PPGBA/UFMS</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Diogo B. Provete 
+</div>
+</div>
+</div>
+
+  <p class="date">24 de setembro de 2026</p>
+</section>
+<section id="onde-estamos-no-ciclo-ppdac" class="slide level2">
+<h2>Onde estamos no ciclo PPDAC</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-2-1.png" class="quarto-figure quarto-figure-center" style="width:42.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Fechamos a <strong>Análise</strong> e entramos na <strong>Conclusão</strong>: o que posso afirmar, e com que incerteza.</p>
+</section>
+<section id="dois-blocos" class="slide level2 secao">
+<h2>Dois blocos</h2>
+<p><strong>Bloco 1 (≈ 3 h)</strong> — GLMM na prática: resposta não gaussiana, escolha do pacote, convergência, diagnóstico, relato.</p>
+<p><strong>Bloco 2 (≈ 1,5 h)</strong> — o mesmo modelo, os mesmos dados, em <code>brms</code>.</p>
+<div class="definicao">
+<p>A fórmula não muda. É esse o ponto: vocês já sabem escrever o modelo bayesiano.</p>
+</div>
+</section>
+<section class="slide level2">
+
+</section>
+<section>
+<section id="bloco-1-glmm-frequentista" class="title-slide slide level1 secao center">
+<h1>Bloco 1 — GLMM frequentista</h1>
+
+</section>
+<section id="riqueza-é-contagem" class="slide level2">
+<h2>Riqueza é contagem</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>m_gauss <span class="ot">&lt;-</span> <span class="fu">lmer</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">data =</span> rikz)</span>
+<span id="cb1-2"><a></a><span class="fu">min</span>(<span class="fu">predict</span>(m_gauss))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -0.7544933</code></pre>
+</div>
+</div>
+<p>O modelo gaussiano do encontro passado prevê <strong>riqueza negativa</strong>. Para uma contagem, isso é um defeito estrutural, não um detalhe.</p>
+</section>
+<section id="glmm-de-poisson" class="slide level2">
+<h2>GLMM de Poisson</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a>m_pois <span class="ot">&lt;-</span> <span class="fu">glmer</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> poisson, <span class="at">data =</span> rikz)</span>
+<span id="cb3-2"><a></a><span class="fu">round</span>(<span class="fu">summary</span>(m_pois)<span class="sc">$</span>coefficients, <span class="dv">3</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Estimate Std. Error z value Pr(&gt;|z|)
+(Intercept)    1.662      0.174   9.569        0
+NAP           -0.504      0.075  -6.687        0</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">c</span>(<span class="at">razao_deviance =</span> <span class="fu">round</span>(<span class="fu">deviance</span>(m_pois) <span class="sc">/</span> <span class="fu">df.residual</span>(m_pois), <span class="dv">2</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>razao_deviance 
+          1.15 </code></pre>
+</div>
+</div>
+</section>
+<section id="sobredispersão-em-modelo-misto" class="slide level2">
+<h2>Sobredispersão em modelo misto</h2>
+<p>A tabela de causas do Encontro 6 vale aqui — com uma a mais: <strong>a estrutura aleatória pode estar incompleta</strong>.</p>
+<p>Três remédios:</p>
+<ol type="1">
+<li>binomial negativa: <code>glmer.nb()</code> ou <code>glmmTMB(family = nbinom2)</code>;</li>
+<li>efeito aleatório em nível de observação (OLRE): <code>(1 | id_obs)</code>;</li>
+<li>modelar a dispersão diretamente: <code>glmmTMB(dispformula = ~ .)</code>.</li>
+</ol>
+</section>
+<section id="comparando" class="slide level2">
+<h2>Comparando</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>rikz<span class="sc">$</span>obs <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">seq_len</span>(<span class="fu">nrow</span>(rikz)))</span>
+<span id="cb7-2"><a></a>m_olre <span class="ot">&lt;-</span> <span class="fu">glmer</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach) <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> obs),</span>
+<span id="cb7-3"><a></a>                <span class="at">family =</span> poisson, <span class="at">data =</span> rikz)</span>
+<span id="cb7-4"><a></a>m_nb   <span class="ot">&lt;-</span> <span class="fu">glmmTMB</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> nbinom2, <span class="at">data =</span> rikz)</span>
+<span id="cb7-5"><a></a></span>
+<span id="cb7-6"><a></a><span class="fu">AIC</span>(m_pois, m_olre, m_nb)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       df      AIC
+m_pois  3 220.7843
+m_olre  4 219.0835
+m_nb    4 219.4731</code></pre>
+</div>
+</div>
+</section>
+<section id="lme4-ou-glmmtmb" class="slide level2">
+<h2><code>lme4</code> ou <code>glmmTMB</code>?</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Precisa de…</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>LMM ou GLMM padrão (gaussiano, Poisson, binomial)</td>
+<td><code>lme4</code></td>
+</tr>
+<tr class="even">
+<td>binomial negativa estável</td>
+<td><code>glmmTMB</code></td>
+</tr>
+<tr class="odd">
+<td>zeros inflados <strong>com</strong> efeito aleatório</td>
+<td><code>glmmTMB</code></td>
+</tr>
+<tr class="even">
+<td>dispersão modelada por covariáveis</td>
+<td><code>glmmTMB</code></td>
+</tr>
+<tr class="odd">
+<td>resposta Beta (proporção contínua)</td>
+<td><code>glmmTMB</code></td>
+</tr>
+<tr class="even">
+<td>ordinal com efeito aleatório</td>
+<td><code>ordinal::clmm</code></td>
+</tr>
+</tbody>
+</table>
+<div class="nota">
+<p>O <code>nlme</code> ainda é preferível quando você precisa de <strong>estrutura de correlação</strong> explícita — temporal ou espacial. Fora isso, <code>lme4</code> e <code>glmmTMB</code> cobrem quase tudo.</p>
+</div>
+</section>
+<section id="convergência-o-que-os-avisos-dizem" class="slide level2">
+<h2>Convergência: o que os avisos dizem</h2>
+<p><code>Model failed to converge with max|grad| = ...</code></p>
+<p>Na ordem de eficácia:</p>
+<ol type="1">
+<li><strong>Reescale as preditoras contínuas</strong> — <code>scale()</code>. Resolve a maioria dos casos.</li>
+<li><strong>Simplifique a estrutura aleatória</strong> — tirar a inclinação aleatória, ou a correlação entre intercepto e inclinação: <code>(1 | g) + (0 + x | g)</code>.</li>
+<li><strong>Troque o otimizador</strong> — <code>control = glmerControl(optimizer = "bobyqa")</code>.</li>
+<li><strong>Aumente as iterações</strong> — <code>optCtrl = list(maxfun = 1e5)</code>.</li>
+</ol>
+</section>
+<section id="variância-zero-ou-correlação-1" class="slide level2">
+<h2>Variância zero ou correlação ±1</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>m <span class="ot">&lt;-</span> <span class="fu">lmer</span>(y <span class="sc">~</span> x <span class="sc">+</span> (x <span class="sc">|</span> g), <span class="at">data =</span> d)</span>
+<span id="cb9-2"><a></a><span class="co"># Warning: boundary (singular) fit</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="definicao">
+<p>Ajuste singular significa que <strong>os dados não sustentam aquela estrutura aleatória</strong> — não que o modelo está errado. A resposta é simplificar a estrutura, não forçar o ajuste.</p>
+</div>
+<p>Forçar a convergência de um modelo singular produz números que não significam nada.</p>
+</section>
+<section id="diagnóstico" class="slide level2">
+<h2>Diagnóstico</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">library</span>(DHARMa)</span>
+<span id="cb10-2"><a></a></span>
+<span id="cb10-3"><a></a>res <span class="ot">&lt;-</span> <span class="fu">simulateResiduals</span>(m_nb, <span class="at">n =</span> <span class="dv">1000</span>)</span>
+<span id="cb10-4"><a></a><span class="fu">plot</span>(res)</span>
+<span id="cb10-5"><a></a><span class="fu">testDispersion</span>(res)</span>
+<span id="cb10-6"><a></a><span class="fu">testZeroInflation</span>(res)</span>
+<span id="cb10-7"><a></a></span>
+<span id="cb10-8"><a></a><span class="co"># resíduos agrupados por praia — detecta estrutura não modelada</span></span>
+<span id="cb10-9"><a></a><span class="fu">plotResiduals</span>(res, <span class="at">form =</span> rikz<span class="sc">$</span>Beach)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="nota">
+<p><code>plotResiduals(res, form = ...)</code> é o teste que mais rende em modelos mistos: se os resíduos ainda têm padrão dentro de um grupo, falta algo na estrutura aleatória.</p>
+</div>
+</section>
+<section id="r2-marginal-e-condicional" class="slide level2">
+<h2><span class="math inline">\(R^2\)</span> marginal e condicional</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>performance<span class="sc">::</span><span class="fu">r2_nakagawa</span>(m_pois)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># R2 for Mixed Models
+
+  Conditional R2: 0.746
+     Marginal R2: 0.393</code></pre>
+</div>
+</div>
+<div class="definicao">
+<p><strong>Marginal</strong> — variação explicada só pelos efeitos fixos. <strong>Condicional</strong> — pelos fixos <strong>e</strong> aleatórios juntos.</p>
+<p>A diferença entre os dois é o quanto a estrutura de agrupamento explica. Relate os dois.</p>
+</div>
+</section>
+<section id="o-que-relatar-davis-kay-2023" class="slide level2">
+<h2>O que relatar (Davis &amp; Kay 2023)</h2>
+<blockquote>
+<p>“Ajustamos um GLMM com distribuição binomial negativa e ligação log (<code>glmmTMB</code> 1.1.x), com NAP como efeito fixo e intercepto aleatório por praia (9 praias, 45 amostras). A estrutura aleatória reflete que as amostras foram coletadas em transectos dentro de praias. Diagnóstico com resíduos quantílicos simulados (<code>DHARMa</code>, 1000 simulações). <span class="math inline">\(R^2\)</span> marginal = …, condicional = ….”</p>
+</blockquote>
+<p><strong>Sempre diga o que o efeito aleatório representa no delineamento.</strong></p>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="bloco-2-a-ponte-bayesiana" class="title-slide slide level1 secao center">
+<h1>Bloco 2 — A ponte bayesiana</h1>
+
+</section>
+<section id="a-mesma-fórmula" class="slide level2">
+<h2>A mesma fórmula</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">library</span>(brms)</span>
+<span id="cb13-2"><a></a></span>
+<span id="cb13-3"><a></a>m_bayes <span class="ot">&lt;-</span> <span class="fu">brm</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach),</span>
+<span id="cb13-4"><a></a>               <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> rikz,</span>
+<span id="cb13-5"><a></a>               <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">seed =</span> <span class="dv">2026</span>,</span>
+<span id="cb13-6"><a></a>               <span class="at">file =</span> <span class="st">"../cache/e08_rikz_nb"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Compare com a linha do bloco 1:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">glmmTMB</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> nbinom2, <span class="at">data =</span> rikz)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="definicao">
+<p>A fórmula é <strong>idêntica</strong>. O custo de transferência é a família e três argumentos de MCMC.</p>
+</div>
+</section>
+<section id="por-que-atravessar-a-ponte" class="slide level2">
+<h2>Por que atravessar a ponte</h2>
+<ol type="1">
+<li><strong>Amostra pequena e poucos níveis</strong> — a prior regulariza onde o máximo de verossimilhança colapsa em ajuste singular.</li>
+<li><strong>Incerteza de quantidades derivadas</strong> — sem <em>delta method</em>.</li>
+<li><strong>Graus de liberdade</strong> — o problema do encontro passado simplesmente não existe.</li>
+<li><strong>Modelos que o frequentista não ajusta</strong> — estruturas complexas, filogenia, medidas com erro.</li>
+</ol>
+</section>
+<section id="priors" class="slide level2">
+<h2>Priors</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">get_prior</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> rikz)</span>
+<span id="cb15-2"><a></a></span>
+<span id="cb15-3"><a></a>priors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>),     <span class="at">class =</span> <span class="st">"b"</span>),</span>
+<span id="cb15-4"><a></a>            <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">2</span>, <span class="dv">1</span>),     <span class="at">class =</span> <span class="st">"Intercept"</span>),</span>
+<span id="cb15-5"><a></a>            <span class="fu">prior</span>(<span class="fu">exponential</span>(<span class="dv">1</span>),   <span class="at">class =</span> <span class="st">"sd"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="definicao">
+<p><strong>Fracamente informativa</strong> não é “sem informação”. É dizer ao modelo que um coeficiente de 500 na escala log é absurdo — o que você sabe, e os dados nem sempre conseguem dizer sozinhos.</p>
+</div>
+</section>
+<section id="sensibilidade-à-prior" class="slide level2">
+<h2>Sensibilidade à prior</h2>
+<p>O teste honesto: ajuste com duas priors razoavelmente diferentes e veja se a conclusão muda.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(..., <span class="at">prior =</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>),  <span class="at">class =</span> <span class="st">"b"</span>), <span class="at">file =</span> <span class="st">"../cache/pa"</span>)</span>
+<span id="cb16-2"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(..., <span class="at">prior =</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> <span class="st">"b"</span>), <span class="at">file =</span> <span class="st">"../cache/pb"</span>)</span>
+<span id="cb16-3"><a></a></span>
+<span id="cb16-4"><a></a><span class="fu">fixef</span>(m_a); <span class="fu">fixef</span>(m_b)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Se mudar muito, <strong>diga isso no artigo</strong>. É informação sobre quanta evidência os seus dados carregam.</p>
+</section>
+<section id="diagnóstico-de-mcmc" class="slide level2">
+<h2>Diagnóstico de MCMC</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Sinal</th>
+<th>Significa</th>
+<th>O que fazer</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(\hat{R} &gt; 1{,}01\)</span></td>
+<td>cadeias não convergiram</td>
+<td>mais iterações; reparametrizar</td>
+</tr>
+<tr class="even">
+<td>ESS baixo (&lt; 400)</td>
+<td>amostras autocorrelacionadas</td>
+<td>mais iterações</td>
+</tr>
+<tr class="odd">
+<td>transições divergentes</td>
+<td>geometria difícil</td>
+<td><code>adapt_delta = 0.99</code>; priors mais informativas</td>
+</tr>
+<tr class="even">
+<td><code>max_treedepth</code> atingido</td>
+<td>ineficiência</td>
+<td><code>max_treedepth = 15</code></td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">plot</span>(m_bayes)                 <span class="co"># traços das cadeias</span></span>
+<span id="cb17-2"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"rhat"</span>)</span>
+<span id="cb17-3"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"neff"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="checagem-preditiva-posterior" class="slide level2">
+<h2>Checagem preditiva posterior</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">ndraws =</span> <span class="dv">100</span>)</span>
+<span id="cb18-2"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> <span class="st">"max"</span>)</span>
+<span id="cb18-3"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> \(y) <span class="fu">mean</span>(y <span class="sc">==</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="definicao">
+<p><code>pp_check()</code> pergunta: dados simulados pelo modelo se parecem com os dados reais? É o análogo honesto do diagnóstico de resíduos — e você pode checar <strong>qualquer estatística</strong> que interesse, como a proporção de zeros.</p>
+</div>
+</section>
+<section id="intervalo-de-credibilidade-de-confiança" class="slide level2">
+<h2>Intervalo de credibilidade × de confiança</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>Confiança (95 %)</th>
+<th>Credibilidade (95 %)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>O que é aleatório</td>
+<td>o intervalo</td>
+<td>o parâmetro</td>
+</tr>
+<tr class="even">
+<td>Frase correta</td>
+<td>“95 % dos intervalos construídos assim conteriam o valor”</td>
+<td>“há 95 % de probabilidade de o parâmetro estar aqui”</td>
+</tr>
+<tr class="odd">
+<td>Como quase todo mundo interpreta</td>
+<td>como se fosse o da direita</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<div class="nota">
+<p>Boa parte das pessoas já interpreta o IC frequentista como se fosse bayesiano. O ajuste bayesiano apenas torna a interpretação correta.</p>
+</div>
+</section>
+<section id="relato-barg" class="slide level2">
+<h2>Relato BARG</h2>
+<p>Kruschke (2021) — preâmbulo mais seis passos. O mínimo que precisa aparecer:</p>
+<ol type="1">
+<li>o modelo, com todas as priors explicitadas;</li>
+<li>justificativa das priors, e análise de sensibilidade;</li>
+<li>diagnóstico de convergência (<span class="math inline">\(\hat{R}\)</span>, ESS, divergências);</li>
+<li>checagem preditiva posterior;</li>
+<li>o resumo da posterior — mediana e intervalo, não só o ponto;</li>
+<li>software, versões e semente.</li>
+</ol>
+</section>
+<section id="a-tabela-de-tradução" class="slide level2">
+<h2>A tabela de tradução</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Frequentista</th>
+<th>Bayesiano (<code>brms</code>)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>lmer(y ~ x + (1\|g))</code></td>
+<td><code>brm(y ~ x + (1\|g))</code></td>
+</tr>
+<tr class="even">
+<td><code>glmer(..., family = poisson)</code></td>
+<td><code>brm(..., family = poisson())</code></td>
+</tr>
+<tr class="odd">
+<td><code>glmmTMB(..., family = nbinom2)</code></td>
+<td><code>brm(..., family = negbinomial())</code></td>
+</tr>
+<tr class="even">
+<td><code>glmmTMB(..., ziformula = ~1)</code></td>
+<td><code>brm(..., family = zero_inflated_poisson())</code></td>
+</tr>
+<tr class="odd">
+<td><code>clmm(...)</code></td>
+<td><code>brm(..., family = cumulative())</code></td>
+</tr>
+<tr class="even">
+<td><code>confint()</code></td>
+<td><code>posterior_interval()</code></td>
+</tr>
+<tr class="odd">
+<td><code>DHARMa::simulateResiduals()</code></td>
+<td><code>pp_check()</code></td>
+</tr>
+<tr class="even">
+<td><code>AIC()</code></td>
+<td><code>loo()</code> — Encontro 9</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="fechamento" class="title-slide slide level1 secao center">
+<h1>Fechamento</h1>
+
+</section>
+<section id="o-que-fica-de-hoje" class="slide level2">
+<h2>O que fica de hoje</h2>
+<ol type="1">
+<li>Riqueza é contagem: GLMM de Poisson ou NB, não gaussiano.</li>
+<li>Ajuste singular = os dados não sustentam aquela estrutura aleatória.</li>
+<li>Reescalar preditoras resolve a maioria dos problemas de convergência.</li>
+<li>Relate <span class="math inline">\(R^2\)</span> marginal <strong>e</strong> condicional, e diga o que o efeito aleatório representa.</li>
+<li><code>brm()</code> usa a mesma fórmula — a ponte custa três argumentos.</li>
+</ol>
+</section>
+<section id="prática-o-resto-do-bloco" class="slide level2">
+<h2>Prática (o resto do bloco)</h2>
+<ol type="1">
+<li>Ajuste um GLMM aos seus dados com a família adequada.</li>
+<li>Diagnostique com <code>DHARMa</code>, incluindo <code>plotResiduals(form = grupo)</code>.</li>
+<li>Calcule <span class="math inline">\(R^2\)</span> marginal e condicional.</li>
+<li>Reajuste o mesmo modelo em <code>brm()</code>, com <code>file = "cache/..."</code>.</li>
+<li>Compare as estimativas. Se diferirem, proponha uma explicação.</li>
+</ol>
+</section>
+<section id="para-amanhã" class="slide level2">
+<h2>Para amanhã</h2>
+<p><strong>Leitura:</strong> Burnham &amp; Anderson (2002), caps. 2 a 4.</p>
+<p><strong>Amanhã de manhã:</strong> vocês vão ter vários modelos plausíveis. Como escolher — e por que “escolher” talvez não seja a pergunta certa.</p>
+</section>
+<section id="referências" class="slide level2">
+<h2>Referências</h2>
+<div class="nota">
+<ul>
+<li>Bolker, B.M. et al.&nbsp;2009. <a href="https://doi.org/10.1016/j.tree.2008.10.008">Generalized linear mixed models: a practical guide for ecology and evolution</a>. <em>Trends in Ecology &amp; Evolution</em> 24:127–135.</li>
+<li>Harrison, X.A. et al.&nbsp;2018. <a href="https://doi.org/10.7717/peerj.4794">A brief introduction to mixed effects modelling and multi-model inference in ecology</a>. <em>PeerJ</em> 6:e4794.</li>
+<li>Brooks, M.E. et al.&nbsp;2017. <a href="https://doi.org/10.32614/RJ-2017-066">glmmTMB balances speed and flexibility among packages for zero-inflated generalized linear mixed modeling</a>. <em>The R Journal</em> 9:378–400.</li>
+<li>Bürkner, P.-C. 2017. <a href="https://doi.org/10.18637/jss.v080.i01">brms: an R package for Bayesian multilevel models using Stan</a>. <em>Journal of Statistical Software</em> 80(1).</li>
+<li>Nakagawa, S. &amp; Schielzeth, H. 2013. <a href="https://doi.org/10.1111/j.2041-210x.2012.00261.x">A general and simple method for obtaining R² from generalized linear mixed-effects models</a>. <em>Methods in Ecology and Evolution</em> 4:133–142.</li>
+<li>Kruschke, J.K. 2021. <a href="https://doi.org/10.1038/s41562-021-01177-7">Bayesian Analysis Reporting Guidelines</a>. <em>Nature Human Behaviour</em>.</li>
+<li>Kurz, A.S. <a href="https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/"><em>Statistical Rethinking recoded</em></a> — o livro do McElreath em <code>brms</code>, <code>ggplot2</code> e tidyverse.</li>
+<li>Hartig, F. <a href="https://cran.r-project.org/package=DHARMa"><code>DHARMa</code>: residual diagnostics for hierarchical regression models</a>.</li>
+</ul>
+</div>
+
+
+</section></section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<div class="footer footer-default">
+<p>Análise de Dados Univariados · PPGBA/UFMS · 2026/2</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1250,
+
+        height: 750,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copiada");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copiada");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/provetelab\.org\/analise-dados-univariados-2026-2\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

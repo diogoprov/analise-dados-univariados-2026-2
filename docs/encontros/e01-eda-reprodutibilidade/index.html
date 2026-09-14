@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Análise exploratória segundo Zuur &amp; Ieno (2016). Fluxo Quarto + git. Pergunta focada, PICO e pré-registro. Uso responsável de LLMs em estatística.">
+<meta name="description" content="Ciclo PPDAC e raciocínio estatístico. Análise exploratória segundo Zuur &amp; Ieno (2016). Fluxo Quarto + git. Pergunta focada, PICO e pré-registro. Uso responsável de LLMs em estatística.">
 
 <title>E1 — EDA, reprodutibilidade e literacia em IA – Análise de Dados Univariados</title>
 <style>
@@ -76,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="E1 — EDA, reprodutibilidade e literacia em IA – Análise de Dados Univariados">
-<meta property="og:description" content="Análise exploratória segundo Zuur &amp; Ieno (2016). Fluxo Quarto + git. Pergunta focada, PICO e pré-registro. Uso responsável de LLMs em estatística.">
+<meta property="og:description" content="Ciclo PPDAC e raciocínio estatístico. Análise exploratória segundo Zuur &amp; Ieno (2016). Fluxo Quarto + git. Pergunta focada, PICO e pré-registro. Uso responsável de LLMs em estatística.">
 <meta property="og:site_name" content="Análise de Dados Univariados">
 </head>
 
@@ -144,6 +144,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#slides" id="toc-slides" class="nav-link active" data-scroll-target="#slides">Slides</a></li>
   <li><a href="#conteúdo" id="toc-conteúdo" class="nav-link" data-scroll-target="#conteúdo">Conteúdo</a></li>
   <li><a href="#dados" id="toc-dados" class="nav-link" data-scroll-target="#dados">Dados</a></li>
+  <li><a href="#preparação-prévia-sala-de-aula-invertida" id="toc-preparação-prévia-sala-de-aula-invertida" class="nav-link" data-scroll-target="#preparação-prévia-sala-de-aula-invertida">Preparação prévia (sala de aula invertida)</a></li>
   <li><a href="#leituras" id="toc-leituras" class="nav-link" data-scroll-target="#leituras">Leituras</a></li>
   <li><a href="#recursos-externos" id="toc-recursos-externos" class="nav-link" data-scroll-target="#recursos-externos">Recursos externos</a></li>
   </ul>
@@ -159,7 +160,7 @@ ul.task-list li input[type="checkbox"] {
 
 <div>
   <div class="description">
-    Análise exploratória segundo Zuur &amp; Ieno (2016). Fluxo Quarto + git. Pergunta focada, PICO e pré-registro. Uso responsável de LLMs em estatística.
+    Ciclo PPDAC e raciocínio estatístico. Análise exploratória segundo Zuur &amp; Ieno (2016). Fluxo Quarto + git. Pergunta focada, PICO e pré-registro. Uso responsável de LLMs em estatística.
   </div>
 </div>
 
@@ -188,6 +189,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="conteúdo">Conteúdo</h2>
 <ol type="1">
 <li><strong>Productive failure de abertura</strong> (20 min) — uma pergunta, um conjunto de dados, nenhuma instrução.</li>
+<li><strong>O ciclo PPDAC</strong> (30 min) — Problema, Plano, Dados, Análise, Conclusão: onde cada parte do curso se encaixa.</li>
 <li><strong>Os quatro princípios</strong> de Popovic et al.&nbsp;(2024) como moldura do curso (30 min).</li>
 <li><strong>Pergunta focada, PICO e pré-registro</strong> (30 min) — HARKing, p-hacking, a distinção entre análise confirmatória e exploratória, e o custo real de mudar a hipótese depois de ver os dados.</li>
 <li><strong>EDA segundo Zuur &amp; Ieno (2016)</strong> — o protocolo em oito passos, com dados problemáticos de verdade.</li>
@@ -203,12 +205,25 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="../../dados/dados_nao_normais.csv"><code>dados_nao_normais.csv</code></a></li>
 </ul>
 </section>
+<section id="preparação-prévia-sala-de-aula-invertida" class="level2">
+<h2 class="anchored" data-anchor-id="preparação-prévia-sala-de-aula-invertida">Preparação prévia (sala de aula invertida)</h2>
+<ul>
+<li>Vídeos do canal <a href="https://www.youtube.com/@DiogoBProvete"><span class="citation" data-cites="DiogoBProvete">@DiogoBProvete</span></a> sobre <strong>ciclo PPDAC</strong>, <strong>teste de hipótese</strong> e <strong>distribuições de probabilidade</strong>.</li>
+<li><a href="https://analises-ecologicas.com"><em>Análises Ecológicas no R</em>, caps. 4 a 6</a>.</li>
+<li><a href="../../instalacao.html">Roteiro de instalação</a> concluído, com o <code>brms</code> compilando.</li>
+</ul>
+</section>
 <section id="leituras" class="level2">
 <h2 class="anchored" data-anchor-id="leituras">Leituras</h2>
+<p><strong>Obrigatória</strong></p>
 <ul>
-<li><strong>Obrigatória, pré-aula:</strong> Popovic, G. et al.&nbsp;2024. Four principles for improved statistical ecology. <em>Methods in Ecology and Evolution</em> 15:266–281.</li>
-<li><strong>Complementar:</strong> Cooper, N. et al.&nbsp;2024. Harnessing large language models for coding, teaching and inclusion. <em>Methods in Ecology and Evolution</em> 15:1757–1763.</li>
-<li><strong>Para quem se vê orientando:</strong> Kay, M. et al.&nbsp;2026. A century of inertia in quantitative ecology education. <em>Methods in Ecology and Evolution</em>.</li>
+<li>Popovic, G. et al.&nbsp;2024. <a href="https://doi.org/10.1111/2041-210X.14270">Four principles for improved statistical ecology</a>. <em>Methods in Ecology and Evolution</em> 15:266–281.</li>
+</ul>
+<p><strong>Complementar</strong></p>
+<ul>
+<li>Cooper, N. et al.&nbsp;2024. <a href="https://doi.org/10.1111/2041-210X.14325">Harnessing large language models for coding, teaching and inclusion to empower research in ecology and evolution</a>. <em>Methods in Ecology and Evolution</em> 15:1757–1763.</li>
+<li>Kay, M. et al.&nbsp;2026. <a href="https://doi.org/10.1111/2041-210X.70405">A century of inertia in quantitative ecology education</a>. <em>Methods in Ecology and Evolution</em>.</li>
+<li>Wild, C.J. &amp; Pfannkuch, M. 1999. <a href="https://doi.org/10.1111/j.1751-5823.1999.tb00442.x">Statistical thinking in empirical enquiry</a>. <em>International Statistical Review</em> 67:223–248. — origem do ciclo PPDAC.</li>
 </ul>
 </section>
 <section id="recursos-externos" class="level2">
@@ -299,7 +314,7 @@ ul.task-list li input[type="checkbox"] {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/diogoprov\.github\.io\/analise-dados-univariados-2026-2\/");
+        var filterRegex = new RegExp("https:\/\/provetelab\.org\/analise-dados-univariados-2026-2\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

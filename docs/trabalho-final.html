@@ -223,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="estrutura-exigida" class="level2">
 <h2 class="anchored" data-anchor-id="estrutura-exigida">Estrutura exigida</h2>
-<p>A espinha é o <em>checklist</em> de <strong>Davis &amp; Kay (2023)</strong>: quatro seções que toda descrição de método estatístico deve conter.</p>
+<p>A espinha é o <em>checklist</em> de <a href="https://doi.org/10.1002/ecs2.4539"><strong>Davis &amp; Kay (2023)</strong></a>: quatro seções que toda descrição de método estatístico deve conter.</p>
 <section id="objetivo" class="level3">
 <h3 class="anchored" data-anchor-id="objetivo">1. Objetivo</h3>
 <p>Qual é a pergunta? Formule de modo que a resposta seja um parâmetro estimável, não uma vaga “relação entre X e Y”. Diga se a análise é <strong>confirmatória</strong> (a hipótese existia antes de você olhar os dados) ou <strong>exploratória</strong>. As duas são legítimas; apresentá-las trocadas não é.</p>
@@ -244,13 +244,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="seções-adicionais" class="level2">
 <h2 class="anchored" data-anchor-id="seções-adicionais">Seções adicionais</h2>
 <p>Além do <em>checklist</em>, o relatório deve conter:</p>
-<p><strong>Análise exploratória</strong> seguindo o protocolo de Zuur &amp; Ieno (2016): outliers, homogeneidade de variância, distribuição da resposta, excesso de zeros, colinearidade entre preditoras, relações entre resposta e preditoras, interações, independência.</p>
+<p><strong>Análise exploratória</strong> seguindo o <a href="https://doi.org/10.1111/2041-210X.12577">protocolo de Zuur &amp; Ieno (2016)</a>: outliers, homogeneidade de variância, distribuição da resposta, excesso de zeros, colinearidade entre preditoras, relações entre resposta e preditoras, interações, independência.</p>
 <p><strong>Diagnóstico do modelo</strong> com <code>DHARMa</code> — resíduos quantílicos simulados, teste de dispersão, teste de zeros inflados. Mostre os gráficos e comente o que eles dizem, mesmo (e principalmente) quando o ajuste não é bom.</p>
 <p><strong>Interpretação biológica.</strong> Traduza os coeficientes para a escala da resposta e diga o que significam para o organismo ou o sistema. Um parágrafo de conclusão que um leitor da sua área entenda sem olhar a tabela.</p>
 </section>
 <section id="extensão-bayesiana-opcional-recomendada" class="level2">
 <h2 class="anchored" data-anchor-id="extensão-bayesiana-opcional-recomendada">Extensão bayesiana (opcional, recomendada)</h2>
-<p>Reajuste o mesmo modelo em <code>brms</code> e relate segundo o <strong>BARG</strong> (Kruschke 2021): preâmbulo mais os seis passos. Comparar as duas estimativas — e explicar por que diferem, ou por que não diferem — vale mais do que qualquer análise adicional.</p>
+<p>Reajuste o mesmo modelo em <code>brms</code> e relate segundo o <strong>BARG</strong> (<a href="https://doi.org/10.1038/s41562-021-01177-7">Kruschke 2021</a>): preâmbulo mais os seis passos. Comparar as duas estimativas — e explicar por que diferem, ou por que não diferem — vale mais do que qualquer análise adicional.</p>
 </section>
 <section id="critérios-de-avaliação" class="level2">
 <h2 class="anchored" data-anchor-id="critérios-de-avaliação">Critérios de avaliação</h2>
@@ -306,7 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="autoria" class="level2">
 <h2 class="anchored" data-anchor-id="autoria">Autoria</h2>
-<p>Em trabalhos em grupo, as iniciais dos autores nos Métodos seguem o <strong>MeRIT</strong> (Nakagawa et al.&nbsp;2023) — quem fez o quê, explicitamente.</p>
+<p>Em trabalhos em grupo, as iniciais dos autores nos Métodos seguem o <a href="https://doi.org/10.1038/s41467-023-37039-1"><strong>MeRIT</strong> (Nakagawa et al.&nbsp;2023)</a> — quem fez o quê, explicitamente.</p>
 </section>
 <section id="esqueleto-para-copiar" class="level2">
 <h2 class="anchored" data-anchor-id="esqueleto-para-copiar">Esqueleto para copiar</h2>
@@ -426,7 +426,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/diogoprov\.github\.io\/analise-dados-univariados-2026-2\/");
+        var filterRegex = new RegExp("https:\/\/provetelab\.org\/analise-dados-univariados-2026-2\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

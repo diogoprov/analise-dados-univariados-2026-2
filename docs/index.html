@@ -99,6 +99,8 @@ ul.task-list li input[type="checkbox"] {
   })
   </script>
 <style>html{ scroll-behavior: smooth; }</style>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
@@ -134,7 +136,10 @@ window.Quarto = {
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Análise de Dados Univariados">
 <meta property="og:description" content="Disciplina de pós-graduação — PPG em Biologia Animal, UFMS (45 h, intensiva)">
+<meta property="og:image" content="https://provetelab.org/analise-dados-univariados-2026-2/index_files/figure-html/unnamed-chunk-1-1.png">
 <meta property="og:site_name" content="Análise de Dados Univariados">
+<meta property="og:image:height" content="1017">
+<meta property="og:image:width" content="1267">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -199,6 +204,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#o-curso-em-uma-frase" id="toc-o-curso-em-uma-frase" class="nav-link active" data-scroll-target="#o-curso-em-uma-frase">O curso em uma frase</a></li>
+  <li><a href="#como-pensamos-aqui-o-ciclo-ppdac" id="toc-como-pensamos-aqui-o-ciclo-ppdac" class="nav-link" data-scroll-target="#como-pensamos-aqui-o-ciclo-ppdac">Como pensamos aqui: o ciclo PPDAC</a></li>
   <li><a href="#cronograma" id="toc-cronograma" class="nav-link" data-scroll-target="#cronograma">Cronograma</a></li>
   <li><a href="#antes-do-primeiro-dia" id="toc-antes-do-primeiro-dia" class="nav-link" data-scroll-target="#antes-do-primeiro-dia">Antes do primeiro dia</a></li>
   <li><a href="#como-este-material-está-organizado" id="toc-como-este-material-está-organizado" class="nav-link" data-scroll-target="#como-este-material-está-organizado">Como este material está organizado</a></li>
@@ -245,6 +251,19 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="o-curso-em-uma-frase">O curso em uma frase</h2>
 <p>Praticamente tudo o que você aprendeu como “teste estatístico” é um <strong>modelo linear</strong> com uma matriz de delineamento diferente. A partir daí, o caminho é sempre o mesmo: relaxar uma premissa de cada vez — distribuição da resposta (GLM), independência das observações (GLMM), incerteza sobre qual modelo usar (seleção de modelos) e incerteza sobre os próprios parâmetros (inferência bayesiana).</p>
 </section>
+<section id="como-pensamos-aqui-o-ciclo-ppdac" class="level2">
+<h2 class="anchored" data-anchor-id="como-pensamos-aqui-o-ciclo-ppdac">Como pensamos aqui: o ciclo PPDAC</h2>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>P</strong>roblema → <strong>P</strong>lano → <strong>D</strong>ados → <strong>A</strong>nálise → <strong>C</strong>onclusão (<a href="https://doi.org/10.1111/j.1751-5823.1999.tb00442.x">Wild &amp; Pfannkuch 1999</a>). Todo encontro começa indicando em que etapa do ciclo ele vive. Detalhes no <a href="./programa.html">programa</a>.</p>
+</section>
 <section id="cronograma" class="level2">
 <h2 class="anchored" data-anchor-id="cronograma">Cronograma</h2>
 <div id="listing-cronograma" class="quarto-listing quarto-listing-container-table">
@@ -268,7 +287,7 @@ Conteúdo
 </thead>
 <tbody class="list">
 
-<tr data-index="0" data-listing-file-modified-sort="1789341674622" data-listing-reading-time-sort="2" data-listing-word-count-sort="283" data-listing-title-sort="E1 — EDA, reprodutibilidade e literacia em IA" data-listing-filename-sort="index.qmd">
+<tr data-index="0" data-listing-file-modified-sort="1789345342576" data-listing-reading-time-sort="2" data-listing-word-count-sort="355" data-listing-title-sort="E1 — EDA, reprodutibilidade e literacia em IA" data-listing-filename-sort="index.qmd">
 <td>
 <span class="listing-order">1</span>
 </td>
@@ -276,12 +295,12 @@ Conteúdo
 <a href="./encontros/e01-eda-reprodutibilidade/index.html" class="title listing-title">E1 — EDA, reprodutibilidade e literacia em IA</a>
 </td>
 <td>
-<span class="listing-description">Análise exploratória segundo Zuur &amp; Ieno (2016). Fluxo Quarto + git. Pergunta focada, PICO e pré-registro. Uso responsável de LLMs em estatística.</span>
+<span class="listing-description">Ciclo PPDAC e raciocínio estatístico. Análise exploratória segundo Zuur &amp; Ieno (2016). Fluxo Quarto + git. Pergunta focada, PICO e pré-registro. Uso responsável de LLMs em estatística.</span>
 </td>
 
 </tr>
 
-<tr data-index="1" data-listing-file-modified-sort="1789341674623" data-listing-reading-time-sort="2" data-listing-word-count-sort="250" data-listing-title-sort="E2 — O modelo linear como arcabouço unificador" data-listing-filename-sort="index.qmd">
+<tr data-index="1" data-listing-file-modified-sort="1789345342577" data-listing-reading-time-sort="2" data-listing-word-count-sort="262" data-listing-title-sort="E2 — O modelo linear como arcabouço unificador" data-listing-filename-sort="index.qmd">
 <td>
 <span class="listing-order">2</span>
 </td>
@@ -294,7 +313,7 @@ Conteúdo
 
 </tr>
 
-<tr data-index="2" data-listing-file-modified-sort="1789341674623" data-listing-reading-time-sort="1" data-listing-word-count-sort="199" data-listing-title-sort="E3 — ANOVA, ANCOVA e interações como modelos lineares" data-listing-filename-sort="index.qmd">
+<tr data-index="2" data-listing-file-modified-sort="1789345342578" data-listing-reading-time-sort="2" data-listing-word-count-sort="229" data-listing-title-sort="E3 — ANOVA, ANCOVA e interações como modelos lineares" data-listing-filename-sort="index.qmd">
 <td>
 <span class="listing-order">3</span>
 </td>
@@ -307,7 +326,7 @@ Conteúdo
 
 </tr>
 
-<tr data-index="3" data-listing-file-modified-sort="1789341674624" data-listing-reading-time-sort="2" data-listing-word-count-sort="214" data-listing-title-sort="E4 — Distribuições de probabilidade e a família exponencial" data-listing-filename-sort="index.qmd">
+<tr data-index="3" data-listing-file-modified-sort="1789345342579" data-listing-reading-time-sort="2" data-listing-word-count-sort="232" data-listing-title-sort="E4 — Distribuições de probabilidade e a família exponencial" data-listing-filename-sort="index.qmd">
 <td>
 <span class="listing-order">4</span>
 </td>
@@ -320,7 +339,7 @@ Conteúdo
 
 </tr>
 
-<tr data-index="4" data-listing-file-modified-sort="1789341674625" data-listing-reading-time-sort="2" data-listing-word-count-sort="242" data-listing-title-sort="E5 — GLM I: verossimilhança, binomial e Poisson" data-listing-filename-sort="index.qmd">
+<tr data-index="4" data-listing-file-modified-sort="1789345342580" data-listing-reading-time-sort="2" data-listing-word-count-sort="276" data-listing-title-sort="E5 — GLM I: verossimilhança, binomial e Poisson" data-listing-filename-sort="index.qmd">
 <td>
 <span class="listing-order">5</span>
 </td>
@@ -333,7 +352,7 @@ Conteúdo
 
 </tr>
 
-<tr data-index="5" data-listing-file-modified-sort="1789341734886" data-listing-reading-time-sort="2" data-listing-word-count-sort="234" data-listing-title-sort="E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais" data-listing-filename-sort="index.qmd">
+<tr data-index="5" data-listing-file-modified-sort="1789345342581" data-listing-reading-time-sort="2" data-listing-word-count-sort="259" data-listing-title-sort="E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais" data-listing-filename-sort="index.qmd">
 <td>
 <span class="listing-order">6</span>
 </td>
@@ -346,7 +365,7 @@ Conteúdo
 
 </tr>
 
-<tr data-index="6" data-listing-file-modified-sort="1789341734886" data-listing-reading-time-sort="2" data-listing-word-count-sort="254" data-listing-title-sort="E7 — GLMM I: por que efeitos aleatórios" data-listing-filename-sort="index.qmd">
+<tr data-index="6" data-listing-file-modified-sort="1789345342582" data-listing-reading-time-sort="2" data-listing-word-count-sort="268" data-listing-title-sort="E7 — GLMM I: por que efeitos aleatórios" data-listing-filename-sort="index.qmd">
 <td>
 <span class="listing-order">7</span>
 </td>
@@ -359,7 +378,7 @@ Conteúdo
 
 </tr>
 
-<tr data-index="7" data-listing-file-modified-sort="1789341734887" data-listing-reading-time-sort="2" data-listing-word-count-sort="298" data-listing-title-sort="E8 — GLMM II: `lme4`, `glmmTMB` e a ponte bayesiana" data-listing-filename-sort="index.qmd">
+<tr data-index="7" data-listing-file-modified-sort="1789345342583" data-listing-reading-time-sort="2" data-listing-word-count-sort="338" data-listing-title-sort="E8 — GLMM II: `lme4`, `glmmTMB` e a ponte bayesiana" data-listing-filename-sort="index.qmd">
 <td>
 <span class="listing-order">8</span>
 </td>
@@ -372,7 +391,7 @@ Conteúdo
 
 </tr>
 
-<tr data-index="8" data-listing-file-modified-sort="1789341734888" data-listing-reading-time-sort="2" data-listing-word-count-sort="262" data-listing-title-sort="E9 — Teoria da informação e seleção de modelos" data-listing-filename-sort="index.qmd">
+<tr data-index="8" data-listing-file-modified-sort="1789348923421" data-listing-reading-time-sort="3" data-listing-word-count-sort="573" data-listing-title-sort="E9 — Teoria da informação e seleção de modelos" data-listing-filename-sort="index.qmd">
 <td>
 <span class="listing-order">9</span>
 </td>
@@ -385,15 +404,15 @@ Conteúdo
 
 </tr>
 
-<tr data-index="9" data-listing-file-modified-sort="1789341734889" data-listing-reading-time-sort="2" data-listing-word-count-sort="212" data-listing-title-sort="E10 — Multivariados baseados em modelos e JSDM" data-listing-filename-sort="index.qmd">
+<tr data-index="9" data-listing-file-modified-sort="1789344206550" data-listing-reading-time-sort="2" data-listing-word-count-sort="320" data-listing-title-sort="E10 — Clínica Estatística e apresentação de resultados" data-listing-filename-sort="index.qmd">
 <td>
 <span class="listing-order">10</span>
 </td>
 <td>
-<a href="./encontros/e10-jsdm/index.html" class="title listing-title">E10 — Multivariados baseados em modelos e JSDM</a>
+<a href="./encontros/e10-clinica/index.html" class="title listing-title">E10 — Clínica Estatística e apresentação de resultados</a>
 </td>
 <td>
-<span class="listing-description">Por que a ordenação clássica não modela variância. GLM multivariado com <code>mvabund</code>. Introdução aos modelos conjuntos de distribuição de espécies (Hmsc).</span>
+<span class="listing-description">Consultoria sobre os dados de cada aluno, com toda a turma junto. Apresentação dos resultados preliminares. Encerramento e caminhos depois do curso.</span>
 </td>
 
 </tr>
@@ -407,7 +426,7 @@ Conteúdo
 <h2 class="anchored" data-anchor-id="antes-do-primeiro-dia">Antes do primeiro dia</h2>
 <ol type="1">
 <li>Siga o roteiro de <strong><a href="./instalacao.html">instalação</a></strong>. Chegue com R, RStudio, Quarto e os pacotes já funcionando — inclusive o <code>brms</code>, que precisa compilar código C++ na primeira execução e pode levar alguns minutos.</li>
-<li>Leia <strong>Popovic et al.&nbsp;(2024)</strong>, <em>Four principles for improved statistical ecology</em> — discutimos os quatro princípios nos primeiros 30 min do Encontro 1.</li>
+<li>Leia <a href="https://doi.org/10.1111/2041-210X.14270"><strong>Popovic et al.&nbsp;(2024)</strong>, <em>Four principles for improved statistical ecology</em></a> — discutimos os quatro princípios nos primeiros 30 min do Encontro 1.</li>
 <li>Traga <strong>um conjunto de dados seu</strong> (ou de um repositório aberto). Ele será a base do <a href="./trabalho-final.html">trabalho final</a> e vamos usá-lo nos exercícios sempre que possível.</li>
 </ol>
 </section>
@@ -418,7 +437,7 @@ Conteúdo
 </section>
 <section id="metodologia" class="level2">
 <h2 class="anchored" data-anchor-id="metodologia">Metodologia</h2>
-<p>Cada encontro abre com <strong>20 min de <em>productive failure</em></strong> (Kay et al. 2026): apresento uma pergunta ecológica e um conjunto de dados, e vocês, em grupos pequenos e deliberadamente heterogêneos quanto à formação quantitativa, propõem uma análise <strong>antes</strong> de eu apresentar o método. O objetivo não é acertar — é explicitar premissas e dificuldades. Depois disso, exposição e prática em R.</p>
+<p>Cada encontro abre com <strong>20 min de <em>productive failure</em></strong> (<a href="https://doi.org/10.1111/2041-210X.70405">Kay et al. 2026</a>): apresento uma pergunta ecológica e um conjunto de dados, e vocês, em grupos pequenos e deliberadamente heterogêneos quanto à formação quantitativa, propõem uma análise <strong>antes</strong> de eu apresentar o método. O objetivo não é acertar — é explicitar premissas e dificuldades. Depois disso, exposição e prática em R.</p>
 </section>
 <section id="avaliação" class="level2">
 <h2 class="anchored" data-anchor-id="avaliação">Avaliação</h2>
@@ -506,7 +525,7 @@ Conteúdo
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp("https:\/\/diogoprov\.github\.io\/analise-dados-univariados-2026-2\/");
+        var filterRegex = new RegExp("https:\/\/provetelab\.org\/analise-dados-univariados-2026-2\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
