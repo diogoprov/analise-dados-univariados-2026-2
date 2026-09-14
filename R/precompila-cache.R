@@ -4,6 +4,9 @@
 #
 #     Rscript R/precompila-cache.R
 #
+# Ele comeca conferindo que as chamadas brm() daqui sao identicas as dos
+# slides, e para se houver divergencia.
+#
 # Ele ajusta os quatro modelos brms dos Encontros 2, 8 e 9 e grava os
 # .rds em cache/. Depois disso, `quarto render` carrega os ajustes do
 # cache em vez de recompilar o Stan.
@@ -18,6 +21,10 @@ if (!file.exists("_quarto.yml")) {
   stop("Rode a partir da raiz do repositório (onde está o _quarto.yml).")
 }
 
+source("R/confere_cache.R")
+message("Conferindo se as chamadas batem com as dos slides...")
+confere_cache()
+
 suppressPackageStartupMessages({
   library(tidyverse)
   library(palmerpenguins)
@@ -25,10 +32,6 @@ suppressPackageStartupMessages({
 })
 
 dir.create("cache", showWarnings = FALSE)
-
-# O padrão de cores em brm() é 1, ou seja, as quatro cadeias rodam em série.
-# Definir mc.cores acelera sem alterar a chamada brm(), que precisa continuar
-# literalmente idêntica à que aparece nos slides.
 options(mc.cores = min(4, parallel::detectCores()))
 
 cronometra <- function(rotulo, expr) {

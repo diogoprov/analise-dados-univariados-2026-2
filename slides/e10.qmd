@@ -154,7 +154,9 @@ sucessivos do mesmo objeto.
 
 ---
 
-## O que ficou de fora
+## Conteúdo opcional: multivariados e JSDM
+
+Está na ementa e fica como **panorama**, sem prática em sala.
 
 **Multivariados baseados em modelos e JSDM.** Quando a resposta é uma
 matriz de espécies, o GLM vira `mvabund::manyglm()`, e o modelo conjunto

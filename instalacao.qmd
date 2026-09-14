@@ -103,12 +103,12 @@ um Stan pré-compilado. As instruções oficiais estão em
 chamadas a `brm()`.
 :::
 
-### Opcional — depois do curso
+### Opcional — conteúdo de JSDM
 
-**Não instale agora.** Nenhuma sessão da disciplina usa estes pacotes. Eles
-ficam indicados para quem quiser seguir por conta própria pelo caminho dos
-modelos multivariados e dos modelos conjuntos de distribuição de espécies,
-que mencionamos no encerramento da sexta-feira.
+**Não precisa instalar antes do curso.** O bloco de multivariados baseados
+em modelos e JSDM é opcional nesta oferta: ele aparece como panorama no
+encerramento da sexta-feira, sem prática em sala. Estes pacotes ficam
+indicados para quem quiser seguir o assunto depois.
 
 ```{r}
 #| eval: false

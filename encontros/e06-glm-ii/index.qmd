@@ -24,7 +24,8 @@ Diagnóstico primeiro, remédio depois.
    aleatório em nível de observação. Quando cada uma é honesta.
 3. **Excesso de zeros** — zero estrutural *versus* zero amostral, que é
    uma distinção biológica, não estatística. ZIP, ZINB e *hurdle* com
-   `glmmTMB(ziformula = ~ .)`. Como escolher.
+   `glmmTMB(ziformula = ~ .)`, seguindo o capítulo 8 do livro. Como
+   escolher — e como conferir que os zeros foram mesmo resolvidos.
 4. **Respostas ordinais** — o modelo de *odds* proporcionais com
    `ordinal::clm()` e `clmm()`; por que tratar escala ordinal como
    contínua distorce o resultado.
@@ -33,8 +34,10 @@ Diagnóstico primeiro, remédio depois.
 ## Dados
 
 - [`RoadKills.txt`](../../dados/RoadKills.txt) — sobredispersão.
-- [`ParasiteCod.txt`](../../dados/ParasiteCod.txt) — excesso de zeros
-  (Zuur et al. 2009).
+- [`Planilha_Pentastomida.txt`](../../dados/Planilha_Pentastomida.txt) —
+  *Raillietiella mottae* em dois lagartos; excesso de zeros. É o mesmo
+  conjunto do [capítulo 8 de *Análises Ecológicas no
+  R*](https://analises-ecologicas.com/cap8) e do Encontro 4.
 - [`NA.csv`](../../dados/NA.csv) — índice melanofórico, resposta ordinal.
 
 ## Leituras

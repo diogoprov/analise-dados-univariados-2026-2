@@ -49,11 +49,12 @@ Responda antes de chegar — as respostas determinam o modelo:
 
 [{{< fa solid display >}} Abrir slides](../../slides/e10.html){.btn .btn-outline-primary}
 
-## O que ficou de fora
+## Conteúdo opcional: multivariados e JSDM
 
-O programa original previa um bloco de rudimentos multivariados baseados
-em modelos e JSDM. Ele foi trocado por esta tarde de clínica. Os
-ponteiros para quem quiser seguir:
+O bloco de rudimentos multivariados baseados em modelos e JSDM continua na
+ementa, mas nesta oferta é **opcional**: entra como panorama no
+encerramento, sem prática em sala, para liberar a tarde inteira de
+clínica. Os ponteiros para quem quiser seguir:
 
 - [*Análises Ecológicas no R* — cap. 9](https://analises-ecologicas.com/cap9)
 - [Vídeo sobre JSDM](https://youtu.be/x5SlBncka3I) — canal @DiogoBProvete

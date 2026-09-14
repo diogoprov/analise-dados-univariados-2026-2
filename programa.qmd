@@ -23,6 +23,14 @@ com excesso de zeros e ordinais. Modelos lineares generalizados mistos
 modelos. Rudimentos de métodos multivariados baseados em modelos e
 modelos conjuntos de distribuição de espécies (JSDM).
 
+::: {.callout-note appearance="simple"}
+O bloco de multivariados e JSDM é **conteúdo opcional** nesta oferta. A
+tarde de sexta-feira é dedicada à Clínica Estatística, e o assunto entra
+no encerramento como panorama, com indicação de leitura e do vídeo, para
+quem quiser seguir por conta própria. O aprofundamento é a disciplina de
+[análises multidimensionais](https://provetelab.org/teaching/multidimensionais/).
+:::
+
 ## Objetivos
 
 Ao fim da disciplina, o(a) aluno(a) deve ser capaz de:
