@@ -191,6 +191,73 @@ Diogo B. Provete
 <li>Que covariáveis entram, e por qual argumento?</li>
 </ol>
 </section>
+<section id="antes-do-modelo-de-onde-vieram-esses-números" class="slide level2 smaller">
+<h2>Antes do modelo: de onde vieram esses números?</h2>
+<p>Hilborn &amp; Mangel abrem o livro com o que um colega respondeu quando lhe perguntaram o que ele fazia da vida:</p>
+<blockquote>
+<p>“The trouble with fish is that you never get to see the whole population. (…) you tend to get little pieces of information here and there. These bits of information are like the tip of the iceberg; they’re part of a much larger story. My job is to try to put the story together. I’m a detective, really, who assembles clues into a coherent picture.”</p>
+</blockquote>
+<div class="nota">
+<p>Vale para girino em poça, morcego em rede, planta em parcela. As cinco perguntas do slide anterior escolhem a <strong>família</strong>. As dos próximos dois decidem se o modelo tem alguma relação com o seu campo.</p>
+</div>
+<div class="ref">
+<p>Schnute (1987), citado em Hilborn &amp; Mangel (1997), p.&nbsp;xi.</p>
+</div>
+</section>
+<section id="há-um-processo-de-observação-no-meio-do-caminho" class="slide level2 smaller">
+<h2>Há um processo de observação no meio do caminho</h2>
+<blockquote>
+<p>“There is always an observation process interposed between the ecological system and our notebooks. Every effort should be made to understand, calibrate, and model the observation process.”</p>
+</blockquote>
+<p>Eles separam a incerteza em duas, e o livro inteiro depende disso:</p>
+<ul>
+<li><strong>De processo</strong> — a natureza varia. A taxa não é a mesma em todo ano.</li>
+<li><strong>De observação</strong> — você varia. O que foi anotado não é o que aconteceu.</li>
+</ul>
+<div class="ref">
+<p>Hilborn &amp; Mangel (1997), cap. 3, p.&nbsp;59–61.</p>
+</div>
+</section>
+<section id="três-maneiras-de-o-caderno-mentir" class="slide level2 smaller">
+<h2>Três maneiras de o caderno mentir</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>No livro</th>
+<th>Na sua tese</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Viés</strong> (<span class="math inline">\(q\)</span>): registra-se uma fração do que existe</td>
+<td>que proporção do que estava lá você viu? é a mesma em todos os sítios?</td>
+</tr>
+<tr class="even">
+<td><strong>Não linearidade</strong> (<span class="math inline">\(c\)</span>): o observado cresce mais devagar que o real</td>
+<td>seu método satura? um sítio com 200 indivíduos rende 200 registros?</td>
+</tr>
+<tr class="odd">
+<td><strong>Limiar de detecção</strong> (<span class="math inline">\(a\)</span>): abaixo de certa densidade, nada aparece</td>
+<td>seus zeros são ausência ou não-detecção?</td>
+</tr>
+</tbody>
+</table>
+<div class="nota">
+<p>Nenhuma das três aparece no <code>glm()</code>. É por isso que “que modelo eu uso?” é uma pergunta que começa antes do R — e por que o Encontro 6 insistiu em perguntar o que os zeros significam biologicamente.</p>
+</div>
+</section>
+<section id="o-teste-do-colega-ao-lado" class="slide level2">
+<h2>O teste do colega ao lado</h2>
+<p>Hilborn &amp; Mangel dizem que há três níveis de entender uma equação: ler a explicação de alguém, <strong>converter a equação em palavras</strong>, e explicar a origem dela a um colega.</p>
+<p>Antes de rodar qualquer coisa hoje, faça o segundo e o terceiro: diga ao colega ao lado, em uma frase e sem notação, o que o seu modelo afirma sobre o seu bicho.</p>
+<div class="nota">
+<p>Se a frase não sair, o problema não é o R.</p>
+</div>
+</section>
 <section id="a-árvore-de-decisão-do-curso" class="slide level2">
 <h2>A árvore de decisão do curso</h2>
 <div class="cell" data-reveal="true" data-fig-height="4.2" data-layout-align="center">
@@ -345,6 +412,7 @@ Diogo B. Provete
 <li>Davis, S. &amp; Kay, M. 2023. <a href="https://doi.org/10.1002/ecs2.4539">Statistical reporting checklist</a>. <em>Ecosphere</em>.</li>
 <li>Nakagawa, S. et al.&nbsp;2023. <a href="https://doi.org/10.1038/s41467-023-37039-1">Method Reporting with Initials for Transparency (MeRIT)</a>. <em>Nature Communications</em> 14:1788.</li>
 <li>Kurz, A.S. <a href="https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/"><em>Statistical Rethinking recoded</em></a> — o livro do McElreath em <code>brms</code>, <code>ggplot2</code> e tidyverse.</li>
+<li>Hilborn, R. &amp; Mangel, M. 1997. <a href="https://www.jstor.org/stable/j.ctt24hqnx"><em>The Ecological Detective: Confronting Models with Data</em></a>. Princeton University Press. — o cap. 3 sobre incerteza de processo e de observação é a leitura da Clínica.</li>
 <li>Wild, C.J. &amp; Pfannkuch, M. 1999. <a href="https://doi.org/10.1111/j.1751-5823.1999.tb00442.x">Statistical thinking in empirical enquiry</a>. <em>International Statistical Review</em> 67:223–248. — origem do ciclo PPDAC.</li>
 </ul>
 </div>

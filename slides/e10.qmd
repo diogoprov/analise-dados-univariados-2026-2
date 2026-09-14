@@ -89,6 +89,79 @@ Responda antes de chegar — as respostas determinam o modelo.
 
 ---
 
+## Antes do modelo: de onde vieram esses números? {.smaller}
+
+Hilborn & Mangel abrem o livro com o que um colega respondeu quando lhe
+perguntaram o que ele fazia da vida:
+
+> "The trouble with fish is that you never get to see the whole
+> population. (…) you tend to get little pieces of information here and
+> there. These bits of information are like the tip of the iceberg;
+> they're part of a much larger story. My job is to try to put the story
+> together. I'm a detective, really, who assembles clues into a coherent
+> picture."
+
+::: {.nota}
+Vale para girino em poça, morcego em rede, planta em parcela. As cinco
+perguntas do slide anterior escolhem a **família**. As dos próximos dois
+decidem se o modelo tem alguma relação com o seu campo.
+:::
+
+::: {.ref}
+Schnute (1987), citado em Hilborn & Mangel (1997), p. xi.
+:::
+
+---
+
+## Há um processo de observação no meio do caminho {.smaller}
+
+> "There is always an observation process interposed between the
+> ecological system and our notebooks. Every effort should be made to
+> understand, calibrate, and model the observation process."
+
+Eles separam a incerteza em duas, e o livro inteiro depende disso:
+
+- **De processo** — a natureza varia. A taxa não é a mesma em todo ano.
+- **De observação** — você varia. O que foi anotado não é o que aconteceu.
+
+::: {.ref}
+Hilborn & Mangel (1997), cap. 3, p. 59–61.
+:::
+
+---
+
+## Três maneiras de o caderno mentir {.smaller}
+
+| No livro | Na sua tese |
+|---|---|
+| **Viés** ($q$): registra-se uma fração do que existe | que proporção do que estava lá você viu? é a mesma em todos os sítios? |
+| **Não linearidade** ($c$): o observado cresce mais devagar que o real | seu método satura? um sítio com 200 indivíduos rende 200 registros? |
+| **Limiar de detecção** ($a$): abaixo de certa densidade, nada aparece | seus zeros são ausência ou não-detecção? |
+
+::: {.nota}
+Nenhuma das três aparece no `glm()`. É por isso que "que modelo eu uso?"
+é uma pergunta que começa antes do R — e por que o Encontro 6 insistiu em
+perguntar o que os zeros significam biologicamente.
+:::
+
+---
+
+## O teste do colega ao lado
+
+Hilborn & Mangel dizem que há três níveis de entender uma equação: ler a
+explicação de alguém, **converter a equação em palavras**, e explicar a
+origem dela a um colega.
+
+Antes de rodar qualquer coisa hoje, faça o segundo e o terceiro: diga ao
+colega ao lado, em uma frase e sem notação, o que o seu modelo afirma
+sobre o seu bicho.
+
+::: {.nota}
+Se a frase não sair, o problema não é o R.
+:::
+
+---
+
 ## A árvore de decisão do curso
 
 ```{mermaid}
@@ -233,5 +306,6 @@ Dúvidas depois do curso: [diogo.provete@ufms.br](mailto:diogo.provete@ufms.br)
 - Davis, S. & Kay, M. 2023. [Statistical reporting checklist](https://doi.org/10.1002/ecs2.4539). *Ecosphere*.
 - Nakagawa, S. et al. 2023. [Method Reporting with Initials for Transparency (MeRIT)](https://doi.org/10.1038/s41467-023-37039-1). *Nature Communications* 14:1788.
 - Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
+- Hilborn, R. & Mangel, M. 1997. [*The Ecological Detective: Confronting Models with Data*](https://www.jstor.org/stable/j.ctt24hqnx). Princeton University Press. — o cap. 3 sobre incerteza de processo e de observação é a leitura da Clínica.
 - Wild, C.J. & Pfannkuch, M. 1999. [Statistical thinking in empirical enquiry](https://doi.org/10.1111/j.1751-5823.1999.tb00442.x). *International Statistical Review* 67:223–248. — origem do ciclo PPDAC.
 :::

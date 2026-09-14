@@ -556,7 +556,7 @@ escolher — e por que "escolher" talvez não seja a pergunta certa.
 
 ---
 
-## Referências
+## Referências {.smaller}
 
 ::: {.nota}
 - Bolker, B.M. et al. 2009. [Generalized linear mixed models: a practical guide for ecology and evolution](https://doi.org/10.1016/j.tree.2008.10.008). *Trends in Ecology & Evolution* 24:127–135.

@@ -3073,6 +3073,34 @@
     "text": "Triagem: cinco perguntas\nResponda antes de chegar — as respostas determinam o modelo.\n\nA resposta é contagem, proporção, binária, ordinal ou contínua?\nHá observações agrupadas — mesmo sítio, indivíduo ou data?\nO esforço amostral é igual entre unidades?\nQuantos zeros há, e o que significam biologicamente?\nQue covariáveis entram, e por qual argumento?"
   },
   {
+    "objectID": "slides/e10.html#antes-do-modelo-de-onde-vieram-esses-números",
+    "href": "slides/e10.html#antes-do-modelo-de-onde-vieram-esses-números",
+    "title": "Clínica Estatística e encerramento",
+    "section": "Antes do modelo: de onde vieram esses números?",
+    "text": "Antes do modelo: de onde vieram esses números?\nHilborn & Mangel abrem o livro com o que um colega respondeu quando lhe perguntaram o que ele fazia da vida:\n\n“The trouble with fish is that you never get to see the whole population. (…) you tend to get little pieces of information here and there. These bits of information are like the tip of the iceberg; they’re part of a much larger story. My job is to try to put the story together. I’m a detective, really, who assembles clues into a coherent picture.”\n\n\nVale para girino em poça, morcego em rede, planta em parcela. As cinco perguntas do slide anterior escolhem a família. As dos próximos dois decidem se o modelo tem alguma relação com o seu campo.\n\n\nSchnute (1987), citado em Hilborn & Mangel (1997), p. xi."
+  },
+  {
+    "objectID": "slides/e10.html#há-um-processo-de-observação-no-meio-do-caminho",
+    "href": "slides/e10.html#há-um-processo-de-observação-no-meio-do-caminho",
+    "title": "Clínica Estatística e encerramento",
+    "section": "Há um processo de observação no meio do caminho",
+    "text": "Há um processo de observação no meio do caminho\n\n“There is always an observation process interposed between the ecological system and our notebooks. Every effort should be made to understand, calibrate, and model the observation process.”\n\nEles separam a incerteza em duas, e o livro inteiro depende disso:\n\nDe processo — a natureza varia. A taxa não é a mesma em todo ano.\nDe observação — você varia. O que foi anotado não é o que aconteceu.\n\n\nHilborn & Mangel (1997), cap. 3, p. 59–61."
+  },
+  {
+    "objectID": "slides/e10.html#três-maneiras-de-o-caderno-mentir",
+    "href": "slides/e10.html#três-maneiras-de-o-caderno-mentir",
+    "title": "Clínica Estatística e encerramento",
+    "section": "Três maneiras de o caderno mentir",
+    "text": "Três maneiras de o caderno mentir\n\n\n\n\n\n\n\nNo livro\nNa sua tese\n\n\n\n\nViés (\\(q\\)): registra-se uma fração do que existe\nque proporção do que estava lá você viu? é a mesma em todos os sítios?\n\n\nNão linearidade (\\(c\\)): o observado cresce mais devagar que o real\nseu método satura? um sítio com 200 indivíduos rende 200 registros?\n\n\nLimiar de detecção (\\(a\\)): abaixo de certa densidade, nada aparece\nseus zeros são ausência ou não-detecção?\n\n\n\n\nNenhuma das três aparece no glm(). É por isso que “que modelo eu uso?” é uma pergunta que começa antes do R — e por que o Encontro 6 insistiu em perguntar o que os zeros significam biologicamente."
+  },
+  {
+    "objectID": "slides/e10.html#o-teste-do-colega-ao-lado",
+    "href": "slides/e10.html#o-teste-do-colega-ao-lado",
+    "title": "Clínica Estatística e encerramento",
+    "section": "O teste do colega ao lado",
+    "text": "O teste do colega ao lado\nHilborn & Mangel dizem que há três níveis de entender uma equação: ler a explicação de alguém, converter a equação em palavras, e explicar a origem dela a um colega.\nAntes de rodar qualquer coisa hoje, faça o segundo e o terceiro: diga ao colega ao lado, em uma frase e sem notação, o que o seu modelo afirma sobre o seu bicho.\n\nSe a frase não sair, o problema não é o R."
+  },
+  {
     "objectID": "slides/e10.html#a-árvore-de-decisão-do-curso",
     "href": "slides/e10.html#a-árvore-de-decisão-do-curso",
     "title": "Clínica Estatística e encerramento",
@@ -3133,6 +3161,6 @@
     "href": "slides/e10.html#referências",
     "title": "Clínica Estatística e encerramento",
     "section": "Referências",
-    "text": "Referências\n\n\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA.\nOvaskainen, O. & Abrego, N. 2020. Joint Species Distribution Modelling. Cambridge University Press.\nDavis, S. & Kay, M. 2023. Statistical reporting checklist. Ecosphere.\nNakagawa, S. et al. 2023. Method Reporting with Initials for Transparency (MeRIT). Nature Communications 14:1788.\nKurz, A.S. Statistical Rethinking recoded — o livro do McElreath em brms, ggplot2 e tidyverse.\nWild, C.J. & Pfannkuch, M. 1999. Statistical thinking in empirical enquiry. International Statistical Review 67:223–248. — origem do ciclo PPDAC."
+    "text": "Referências\n\n\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA.\nOvaskainen, O. & Abrego, N. 2020. Joint Species Distribution Modelling. Cambridge University Press.\nDavis, S. & Kay, M. 2023. Statistical reporting checklist. Ecosphere.\nNakagawa, S. et al. 2023. Method Reporting with Initials for Transparency (MeRIT). Nature Communications 14:1788.\nKurz, A.S. Statistical Rethinking recoded — o livro do McElreath em brms, ggplot2 e tidyverse.\nHilborn, R. & Mangel, M. 1997. The Ecological Detective: Confronting Models with Data. Princeton University Press. — o cap. 3 sobre incerteza de processo e de observação é a leitura da Clínica.\nWild, C.J. & Pfannkuch, M. 1999. Statistical thinking in empirical enquiry. International Statistical Review 67:223–248. — origem do ciclo PPDAC."
   }
 ]
