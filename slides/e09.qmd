@@ -287,7 +287,7 @@ custo.
 
 ---
 
-## BIC responde outra pergunta
+## BIC responde outra pergunta {.smaller}
 
 $$
 \mathrm{BIC} = -2\log \hat{L} + K\log n
@@ -691,9 +691,16 @@ níveis?" não tem resposta única — está entre 1 e 9, conforme o
 O PSIS-LOO avisa quando a aproximação falha, observação por observação.
 
 ```{r}
-#| fig-height: 3.4
 loo_a <- loo(m_a)
 print(loo_a)        # valores de k-hat; > 0,7 é problema
+```
+
+---
+
+## Onde a aproximação falha {.smaller}
+
+```{r}
+#| fig-height: 3.4
 plot(loo_a)
 ```
 
@@ -767,7 +774,7 @@ Depois, cinco minutos de apresentação por pessoa.
 
 ---
 
-## Referências
+## Referências {.smaller}
 
 ::: {.nota}
 **Por que trabalhar com modelos**
@@ -783,7 +790,7 @@ Depois, cinco minutos de apresentação por pessoa.
 
 ---
 
-## Referências
+## Referências {.smaller}
 
 ::: {.nota}
 **O que não fazer**

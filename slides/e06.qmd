@@ -455,7 +455,7 @@ alguém ter derivado a fórmula certa para cada família.
 
 ---
 
-## Lendo as duas tabelas
+## Lendo as duas tabelas {.smaller}
 
 ```{r}
 summary(ziNB)$coefficients$cond

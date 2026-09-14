@@ -204,6 +204,7 @@ Wild, C.J. & Pfannkuch, M. 1999. *International Statistical Review*.
 ## Por que um ciclo e não uma lista
 
 ```{mermaid}
+%%| echo: false
 %%| fig-height: 2.6
 flowchart LR
   P1[Problema] --> P2[Plano] --> D[Dados] --> A[Análise] --> C[Conclusão]
@@ -423,7 +424,7 @@ hipótese.
 
 ---
 
-## Passo 1 — Outliers
+## Passo 1 — Outliers {.smaller}
 
 O gráfico de Cleveland é mais informativo que o boxplot: mostra cada
 observação contra a ordem no arquivo.
@@ -461,7 +462,7 @@ p-hacking em ecologia.
 
 ---
 
-## Passo 2 — Homogeneidade de variância
+## Passo 2 — Homogeneidade de variância {.smaller}
 
 ```{r}
 #| fig-height: 3.2
@@ -502,7 +503,7 @@ família exponencial, a variância é função da média por construção.
 
 ---
 
-## Passo 3 — Distribuição da resposta
+## Passo 3 — Distribuição da resposta {.smaller}
 
 ```{r}
 #| fig-height: 3.2

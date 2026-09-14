@@ -312,7 +312,14 @@
     "href": "slides/e09.html#a-vantagem-do-hatk",
     "title": "Teoria da informação e seleção de modelos",
     "section": "A vantagem do \\(\\hat{k}\\)",
-    "text": "A vantagem do \\(\\hat{k}\\)\nO PSIS-LOO avisa quando a aproximação falha, observação por observação.\n\nloo_a &lt;- loo(m_a)\nprint(loo_a)        # valores de k-hat; &gt; 0,7 é problema\n\n\nComputed from 4000 by 52 log-likelihood matrix.\n\n         Estimate   SE\nelpd_loo   -196.8  7.6\np_loo         3.1  0.7\nlooic       393.6 15.1\n------\nMCSE of elpd_loo is 0.0.\nMCSE and ESS estimates assume MCMC draws (r_eff in [0.6, 1.1]).\n\nAll Pareto k estimates are good (k &lt; 0.7).\nSee help('pareto-k-diagnostic') for details.\n\nplot(loo_a)\n\n\n\n\n\n\n\n\nNenhum critério de informação frequentista faz isso. Você descobre não só que o modelo é pior, mas quais observações ele não consegue predizer."
+    "text": "A vantagem do \\(\\hat{k}\\)\nO PSIS-LOO avisa quando a aproximação falha, observação por observação.\n\nloo_a &lt;- loo(m_a)\nprint(loo_a)        # valores de k-hat; &gt; 0,7 é problema\n\n\nComputed from 4000 by 52 log-likelihood matrix.\n\n         Estimate   SE\nelpd_loo   -196.8  7.6\np_loo         3.1  0.7\nlooic       393.6 15.1\n------\nMCSE of elpd_loo is 0.0.\nMCSE and ESS estimates assume MCMC draws (r_eff in [0.6, 1.1]).\n\nAll Pareto k estimates are good (k &lt; 0.7).\nSee help('pareto-k-diagnostic') for details."
+  },
+  {
+    "objectID": "slides/e09.html#onde-a-aproximação-falha",
+    "href": "slides/e09.html#onde-a-aproximação-falha",
+    "title": "Teoria da informação e seleção de modelos",
+    "section": "Onde a aproximação falha",
+    "text": "Onde a aproximação falha\n\nplot(loo_a)\n\n\n\n\n\n\n\n\nNenhum critério de informação frequentista faz isso. Você descobre não só que o modelo é pior, mas quais observações ele não consegue predizer."
   },
   {
     "objectID": "slides/e09.html#não-selecionar-mediar",
@@ -725,7 +732,7 @@
     "href": "slides/e05.html#três-papéis-três-decisões",
     "title": "GLM I: verossimilhança, binomial e Poisson",
     "section": "Três papéis, três decisões",
-    "text": "Três papéis, três decisões\n\nflowchart LR\n  A[Área da poça] --&gt; B[Riqueza de anuros]\n  C[Precipitação] --&gt; A\n  C --&gt; B\n  B --&gt; D[Detecção do observador]\n  A --&gt; D\n\n\n\n\nflowchart LR\n  A[Área da poça] --&gt; B[Riqueza de anuros]\n  C[Precipitação] --&gt; A\n  C --&gt; B\n  B --&gt; D[Detecção do observador]\n  A --&gt; D\n\n\n\n\n\n\n\nPrecipitação é um confounder: causa as duas → controlar.\nDetecção é um colisor: é causada pelas duas → não controlar."
+    "text": "Três papéis, três decisões\n\n\n\n\n\nflowchart LR\n  A[Área da poça] --&gt; B[Riqueza de anuros]\n  C[Precipitação] --&gt; A\n  C --&gt; B\n  B --&gt; D[Detecção do observador]\n  A --&gt; D\n\n\n\n\n\n\n\nPrecipitação é um confounder: causa as duas → controlar.\nDetecção é um colisor: é causada pelas duas → não controlar."
   },
   {
     "objectID": "slides/e05.html#colisor-o-viés-que-você-cria",
@@ -1096,7 +1103,7 @@
     "href": "slides/e01.html#por-que-um-ciclo-e-não-uma-lista",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Por que um ciclo e não uma lista",
-    "text": "Por que um ciclo e não uma lista\n\nflowchart LR\n  P1[Problema] --&gt; P2[Plano] --&gt; D[Dados] --&gt; A[Análise] --&gt; C[Conclusão]\n  C -.-&gt; P1\n  A -.-&gt; D\n\n\n\n\nflowchart LR\n  P1[Problema] --&gt; P2[Plano] --&gt; D[Dados] --&gt; A[Análise] --&gt; C[Conclusão]\n  C -.-&gt; P1\n  A -.-&gt; D\n\n\n\n\n\n\nAs setas pontilhadas são o ponto: a análise revela problemas nos dados, e a conclusão quase sempre reformula o problema. Isso é legítimo — o que não é legítimo é apagar o percurso e apresentar a última volta do ciclo como se tivesse sido a primeira."
+    "text": "Por que um ciclo e não uma lista\n\n\n\n\n\nflowchart LR\n  P1[Problema] --&gt; P2[Plano] --&gt; D[Dados] --&gt; A[Análise] --&gt; C[Conclusão]\n  C -.-&gt; P1\n  A -.-&gt; D\n\n\n\n\n\n\nAs setas pontilhadas são o ponto: a análise revela problemas nos dados, e a conclusão quase sempre reformula o problema. Isso é legítimo — o que não é legítimo é apagar o percurso e apresentar a última volta do ciclo como se tivesse sido a primeira."
   },
   {
     "objectID": "slides/e01.html#onde-a-maioria-dos-trabalhos-quebra",
@@ -2888,7 +2895,21 @@
     "href": "slides/e08.html#diagnóstico-de-mcmc",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Diagnóstico de MCMC",
-    "text": "Diagnóstico de MCMC\n\n\n\n\n\n\n\n\nSinal\nSignifica\nO que fazer\n\n\n\n\n\\(\\hat{R} &gt; 1{,}01\\)\ncadeias não convergiram\nmais iterações; reparametrizar\n\n\nESS baixo (&lt; 400)\namostras autocorrelacionadas\nmais iterações\n\n\ntransições divergentes\ngeometria difícil\nadapt_delta = 0.99; priors mais informativas\n\n\nmax_treedepth atingido\nineficiência\nmax_treedepth = 15\n\n\n\n\nplot(m_bayes)                 # traços das cadeias\n\n\n\n\n\n\n\nmcmc_plot(m_bayes, type = \"rhat\")\n\n\n\n\n\n\n\nmcmc_plot(m_bayes, type = \"neff\")"
+    "text": "Diagnóstico de MCMC\n\n\n\n\n\n\n\n\nSinal\nSignifica\nO que fazer\n\n\n\n\n\\(\\hat{R} &gt; 1{,}01\\)\ncadeias não convergiram\nmais iterações; reparametrizar\n\n\nESS baixo (&lt; 400)\namostras autocorrelacionadas\nmais iterações\n\n\ntransições divergentes\ngeometria difícil\nadapt_delta = 0.99; priors mais informativas\n\n\nmax_treedepth atingido\nineficiência\nmax_treedepth = 15"
+  },
+  {
+    "objectID": "slides/e08.html#os-traços-das-cadeias",
+    "href": "slides/e08.html#os-traços-das-cadeias",
+    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "Os traços das cadeias",
+    "text": "Os traços das cadeias\n\nplot(m_bayes)"
+  },
+  {
+    "objectID": "slides/e08.html#hatr-e-ess-em-um-relance",
+    "href": "slides/e08.html#hatr-e-ess-em-um-relance",
+    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "\\(\\hat{R}\\) e ESS em um relance",
+    "text": "\\(\\hat{R}\\) e ESS em um relance\nmcmc_plot(m_bayes, type = \"rhat\")\nmcmc_plot(m_bayes, type = \"neff\")\n\n\n\n\n\n\n\n\n\n\n\nQueremos todos os pontos à esquerda do limiar em \\(\\hat{R}\\) e à direita em ESS. Se um único parâmetro destoa, é ele que precisa de atenção — não o modelo inteiro."
   },
   {
     "objectID": "slides/e08.html#checagem-preditiva-posterior",
@@ -2902,7 +2923,7 @@
     "href": "slides/e08.html#checando-a-estatística-que-interessa",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Checando a estatística que interessa",
-    "text": "Checando a estatística que interessa\n\npp_check(m_bayes, type = \"stat\", stat = \"max\")\n\n\n\n\n\n\n\n\n\npp_check(m_bayes, type = \"stat\", stat = \\(y) mean(y == 0))\n\n\n\n\n\n\n\n\n\npp_check() pergunta: dados simulados pelo modelo se parecem com os dados reais? É o análogo honesto do diagnóstico de resíduos — e você pode checar qualquer estatística que interesse, como a proporção de zeros."
+    "text": "Checando a estatística que interessa\npp_check(m_bayes, type = \"stat\", stat = \"max\")\npp_check(m_bayes, type = \"stat\", stat = \\(y) mean(y == 0))\n\n\n\n\n\n\n\n\n\n\n\npp_check() pergunta: dados simulados pelo modelo se parecem com os dados reais? É o análogo honesto do diagnóstico de resíduos — e você pode checar qualquer estatística que interesse, como a proporção de zeros."
   },
   {
     "objectID": "slides/e08.html#intervalo-de-credibilidade-de-confiança",
@@ -2986,7 +3007,7 @@
     "href": "slides/e10.html#a-árvore-de-decisão-do-curso",
     "title": "Clínica Estatística e encerramento",
     "section": "A árvore de decisão do curso",
-    "text": "A árvore de decisão do curso\n\nflowchart TD\n  A[Que tipo de resposta?] --&gt; B[Contínua e simétrica]\n  A --&gt; C[Contagem]\n  A --&gt; D[Binária ou proporção]\n  A --&gt; E[Ordinal]\n  B --&gt; B1[\"lm() / lmer()\"]\n  C --&gt; C1{Sobredisperso?}\n  C1 -- não --&gt; C2[\"glm(poisson)\"]\n  C1 -- sim --&gt; C3{Excesso de zeros&lt;br/&gt;depois da NB?}\n  C3 -- não --&gt; C4[\"glm.nb() / glmmTMB(nbinom2)\"]\n  C3 -- sim --&gt; C5[\"glmmTMB(ziformula=)\"]\n  D --&gt; D1[\"glm(binomial)\"]\n  E --&gt; E1[\"ordinal::clm() / clmm()\"]\n  B1 --&gt; F{Observações&lt;br/&gt;agrupadas?}\n  C2 --&gt; F\n  C4 --&gt; F\n  D1 --&gt; F\n  F -- sim --&gt; G[\"acrescente (1 | grupo)\"]\n\n\n\n\nflowchart TD\n  A[Que tipo de resposta?] --&gt; B[Contínua e simétrica]\n  A --&gt; C[Contagem]\n  A --&gt; D[Binária ou proporção]\n  A --&gt; E[Ordinal]\n  B --&gt; B1[\"lm() / lmer()\"]\n  C --&gt; C1{Sobredisperso?}\n  C1 -- não --&gt; C2[\"glm(poisson)\"]\n  C1 -- sim --&gt; C3{Excesso de zeros&lt;br/&gt;depois da NB?}\n  C3 -- não --&gt; C4[\"glm.nb() / glmmTMB(nbinom2)\"]\n  C3 -- sim --&gt; C5[\"glmmTMB(ziformula=)\"]\n  D --&gt; D1[\"glm(binomial)\"]\n  E --&gt; E1[\"ordinal::clm() / clmm()\"]\n  B1 --&gt; F{Observações&lt;br/&gt;agrupadas?}\n  C2 --&gt; F\n  C4 --&gt; F\n  D1 --&gt; F\n  F -- sim --&gt; G[\"acrescente (1 | grupo)\"]"
+    "text": "A árvore de decisão do curso\n\n\n\n\n\nflowchart TD\n  A[Que tipo de resposta?] --&gt; B[Contínua e simétrica]\n  A --&gt; C[Contagem]\n  A --&gt; D[Binária ou proporção]\n  A --&gt; E[Ordinal]\n  B --&gt; B1[\"lm() / lmer()\"]\n  C --&gt; C1{Sobredisperso?}\n  C1 -- não --&gt; C2[\"glm(poisson)\"]\n  C1 -- sim --&gt; C3{Excesso de zeros&lt;br/&gt;depois da NB?}\n  C3 -- não --&gt; C4[\"glm.nb() / glmmTMB(nbinom2)\"]\n  C3 -- sim --&gt; C5[\"glmmTMB(ziformula=)\"]\n  D --&gt; D1[\"glm(binomial)\"]\n  E --&gt; E1[\"ordinal::clm() / clmm()\"]\n  B1 --&gt; F{Observações&lt;br/&gt;agrupadas?}\n  C2 --&gt; F\n  C4 --&gt; F\n  D1 --&gt; F\n  F -- sim --&gt; G[\"acrescente (1 | grupo)\"]"
   },
   {
     "objectID": "slides/e10.html#apresentação-5-minutos",

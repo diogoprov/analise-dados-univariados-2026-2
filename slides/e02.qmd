@@ -206,7 +206,7 @@ certo porque nós escrevemos a verdade.**
 
 ---
 
-## E quanto varia de amostra para amostra?
+## E quanto varia de amostra para amostra? {.smaller}
 
 ```{r}
 #| fig-height: 3.2
@@ -649,7 +649,7 @@ boa parte da ecologia de campo.
 
 ---
 
-## O que você ganha de graça
+## O que você ganha de graça {.smaller}
 
 ```{r}
 #| fig-height: 3.2

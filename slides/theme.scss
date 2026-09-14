@@ -8,6 +8,8 @@ $body-bg:      #faf7f0;
 $body-color:   #2d3748;
 $link-color:   $accent;
 $border-color: #e3dccd;
+// o reveal herda a cor da citacao de $border-color e ela some no fundo creme
+$blockquote-color: $body-color;
 
 $font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
                          "Helvetica Neue", Helvetica, Arial, sans-serif !default;
@@ -58,3 +60,31 @@ $code-block-font-size: 0.62em;
 .reveal .ref { font-size: .55em; color: #6c757d; font-style: italic; }
 
 .reveal table { font-size: .72em; }
+
+// Citação de relato (blockquote). O tema do reveal pinta o texto quase
+// na cor do fundo creme; aqui fixamos contraste e damos ao bloco o mesmo
+// visual das caixas .definicao.
+.reveal blockquote,
+.reveal section blockquote {
+  background-color: #f3eee3;
+  border-left: 4px solid $accent;
+  color: $body-color;
+  box-shadow: none;
+  font-style: normal;
+  line-height: 1.35;
+  padding: .6em .9em;
+  margin: .4em 0;
+  width: 100%;
+}
+
+.reveal blockquote p,
+.reveal blockquote code { color: $body-color; }
+
+// Diagramas mermaid: o SVG vem com a altura natural do grafo e passa do
+// slide quando o fluxo é vertical. Limita a altura e deixa a largura seguir.
+.reveal .cell-output-display svg.flowchart {
+  max-height: 540px;
+  height: auto;
+  width: auto;
+  max-width: 100%;
+}

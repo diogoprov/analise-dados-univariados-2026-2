@@ -92,6 +92,7 @@ Responda antes de chegar — as respostas determinam o modelo.
 ## A árvore de decisão do curso
 
 ```{mermaid}
+%%| echo: false
 %%| fig-height: 4.2
 flowchart TD
   A[Que tipo de resposta?] --> B[Contínua e simétrica]

@@ -139,7 +139,7 @@ soma dos quadrados **é** maximizar a verossimilhança.
 
 ---
 
-## Vendo a superfície
+## Vendo a superfície {.smaller}
 
 ```{r}
 #| fig-height: 3.1
@@ -471,6 +471,7 @@ incluídas, introduzem viés onde não havia.
 ## Três papéis, três decisões
 
 ```{mermaid}
+%%| echo: false
 %%| fig-height: 3.2
 flowchart LR
   A[Área da poça] --> B[Riqueza de anuros]

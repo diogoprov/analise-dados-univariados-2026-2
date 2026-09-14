@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-767eba1032040cdc5b63624daf3aadd0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-9e840045cb7dac26506411e9a54f7183.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -561,8 +561,11 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 </tr>
 </tbody>
 </table>
+</section>
+<section id="os-traços-das-cadeias" class="slide level2">
+<h2>Os traços das cadeias</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">plot</span>(m_bayes)                 <span class="co"># traços das cadeias</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">plot</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -570,41 +573,30 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"rhat"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-15-2.png" width="672"></p>
-</figure>
+</div>
+</section>
+<section id="hatr-e-ess-em-um-relance" class="slide level2">
+<h2><span class="math inline">\(\hat{R}\)</span> e ESS em um relance</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"rhat"</span>)</span>
+<span id="cb21-2"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"neff"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-16-1.png" width="672"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-16-2.png" width="672"></p>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"neff"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-15-3.png" width="672"></p>
-</figure>
 </div>
-</div>
+<div class="nota">
+<p>Queremos todos os pontos à esquerda do limiar em <span class="math inline">\(\hat{R}\)</span> e à direita em ESS. Se um único parâmetro destoa, é ele que precisa de atenção — não o modelo inteiro.</p>
 </div>
 </section>
 <section id="checagem-preditiva-posterior" class="slide level2">
 <h2>Checagem preditiva posterior</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">ndraws =</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-16-1.png" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="checando-a-estatística-que-interessa" class="slide level2">
-<h2>Checando a estatística que interessa</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> <span class="st">"max"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">ndraws =</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -613,13 +605,18 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 </div>
 </div>
 </div>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> \(y) <span class="fu">mean</span>(y <span class="sc">==</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure>
+</section>
+<section id="checando-a-estatística-que-interessa" class="slide level2">
+<h2>Checando a estatística que interessa</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> <span class="st">"max"</span>)</span>
+<span id="cb23-2"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> \(y) <span class="fu">mean</span>(y <span class="sc">==</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img data-src="e08_files/figure-revealjs/unnamed-chunk-18-1.png" width="672"></p>
-</figure>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-18-2.png" width="672"></p>
 </div>
 </div>
 </div>

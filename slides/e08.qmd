@@ -407,12 +407,31 @@ evidência os seus dados carregam.
 | transições divergentes | geometria difícil | `adapt_delta = 0.99`; priors mais informativas |
 | `max_treedepth` atingido | ineficiência | `max_treedepth = 15` |
 
+---
+
+## Os traços das cadeias
+
 ```{r}
-#| fig-height: 5.0
-plot(m_bayes)                 # traços das cadeias
+#| fig-height: 4.0
+plot(m_bayes)
+```
+
+---
+
+## $\hat{R}$ e ESS em um relance
+
+```{r}
+#| fig-height: 5.5
+#| layout-ncol: 2
 mcmc_plot(m_bayes, type = "rhat")
 mcmc_plot(m_bayes, type = "neff")
 ```
+
+::: {.nota}
+Queremos todos os pontos à esquerda do limiar em $\hat{R}$ e à direita em
+ESS. Se um único parâmetro destoa, é ele que precisa de atenção — não o
+modelo inteiro.
+:::
 
 ---
 
@@ -428,12 +447,9 @@ pp_check(m_bayes, ndraws = 100)
 ## Checando a estatística que interessa
 
 ```{r}
-#| fig-height: 3.2
+#| fig-height: 5.0
+#| layout-ncol: 2
 pp_check(m_bayes, type = "stat", stat = "max")
-```
-
-```{r}
-#| fig-height: 3.2
 pp_check(m_bayes, type = "stat", stat = \(y) mean(y == 0))
 ```
 

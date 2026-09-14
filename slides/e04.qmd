@@ -274,7 +274,7 @@ usar.
 
 ---
 
-## Vendo isso nos dados
+## Vendo isso nos dados {.smaller}
 
 ```{r}
 #| fig-height: 3.1
@@ -294,7 +294,7 @@ dela: sobredispersão. Amanhã à tarde tratamos disso.
 
 ---
 
-## Simular para decidir
+## Simular para decidir {.smaller}
 
 ```{r}
 #| fig-height: 2.9

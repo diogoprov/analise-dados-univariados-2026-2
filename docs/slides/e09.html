@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-767eba1032040cdc5b63624daf3aadd0.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-9e840045cb7dac26506411e9a54f7183.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -400,7 +400,7 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <p>Regra prática de Burnham &amp; Anderson: use AICc sempre que <span class="math inline">\(n/K &lt; 40\)</span>. Como AICc converge para AIC quando <span class="math inline">\(n\)</span> cresce, <strong>use AICc sempre</strong> — não há custo.</p>
 </div>
 </section>
-<section id="bic-responde-outra-pergunta" class="slide level2">
+<section id="bic-responde-outra-pergunta" class="slide level2 smaller">
 <h2>BIC responde outra pergunta</h2>
 <p><span class="math display">\[
 \mathrm{BIC} = -2\log \hat{L} + K\log n
@@ -814,11 +814,16 @@ MCSE and ESS estimates assume MCMC draws (r_eff in [0.6, 1.1]).
 All Pareto k estimates are good (k &lt; 0.7).
 See help('pareto-k-diagnostic') for details.</code></pre>
 </div>
+</div>
+</section>
+<section id="onde-a-aproximação-falha" class="slide level2 smaller">
+<h2>Onde a aproximação falha</h2>
+<div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">plot</span>(loo_a)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e09_files/figure-revealjs/unnamed-chunk-13-1.png" width="672"></p>
+<p><img data-src="e09_files/figure-revealjs/unnamed-chunk-14-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -903,7 +908,7 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 <h2>À tarde</h2>
 <p><strong>Clínica Estatística.</strong> Tragam os dados carregados e a pergunta escrita. Depois, cinco minutos de apresentação por pessoa.</p>
 </section>
-<section id="referências" class="slide level2">
+<section id="referências" class="slide level2 smaller">
 <h2>Referências</h2>
 <div class="nota">
 <p><strong>Por que trabalhar com modelos</strong></p>
@@ -918,7 +923,7 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 </ul>
 </div>
 </section>
-<section id="referências-1" class="slide level2">
+<section id="referências-1" class="slide level2 smaller">
 <h2>Referências</h2>
 <div class="nota">
 <p><strong>O que não fazer</strong></p>
