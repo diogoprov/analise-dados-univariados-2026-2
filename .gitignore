@@ -1,4 +1,8 @@
 # Quarto
+# Artefatos do render avulso (quarto render slides/eNN.qmd).
+# A barra inicial ancora na raiz: nao afeta docs/, que e publicado.
+/slides/*_files/
+/encontros/*/*_files/
 /.quarto/
 _freeze/
 _site/
