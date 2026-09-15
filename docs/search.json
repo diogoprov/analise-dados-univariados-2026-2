@@ -1365,6 +1365,13 @@
     "text": "Declaração e responsabilidade\n\nDeclarar modelo, versão e que parte do código foi gerada.\nPrompts críticos vão como material suplementar.\nO autor responde pelo código como se o tivesse escrito. Não existe “o ChatGPT errou”.\nIA não pode ser coautora — política vigente em praticamente todos os periódicos da área.\n\nVale igual no trabalho final desta disciplina."
   },
   {
+    "objectID": "slides/e01.html#as-três-normas-que-valem-para-vocês",
+    "href": "slides/e01.html#as-três-normas-que-valem-para-vocês",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "As três normas que valem para vocês",
+    "text": "As três normas que valem para vocês\n\n\n\nNorma\nO que exige\n\n\n\n\nCOPE, Authorship and AI tools\nIA não pode ser autora — não tem como assumir responsabilidade pelo trabalho; o uso deve ser inteiramente transparente\n\n\nCNPq, Portaria nº 2.664, de 6 de março de 2026\nDeclarar qualquer uso de IA generativa, em qualquer fase da pesquisa, especificando ferramenta e finalidade; autores integralmente responsáveis, inclusive por plágio ou imprecisão da ferramenta; uso em pareceres não é recomendado\n\n\nAIdIT (Drobniak et al. 2026)\nO formato da declaração: ferramenta e versão, cada uso mapeado à etapa do ciclo de pesquisa, e como a saída foi verificada\n\n\n\n\nA Portaria do CNPq é a que tem consequência administrativa para bolsista. As três dizem a mesma coisa em graus diferentes: declare o que usou, e responda pelo que saiu."
+  },
+  {
     "objectID": "slides/e01.html#a-frase-para-levar",
     "href": "slides/e01.html#a-frase-para-levar",
     "title": "EDA, reprodutibilidade e literacia em IA",
@@ -1397,7 +1404,7 @@
     "href": "slides/e01.html#referências",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Referências",
-    "text": "Referências\n\n\nWild, C.J. & Pfannkuch, M. 1999. Statistical thinking in empirical enquiry. International Statistical Review 67:223–248. — origem do ciclo PPDAC.\nPopovic, G. et al. 2024. Four principles for improved statistical ecology. Methods in Ecology and Evolution 15:266–281.\nCooper, N. et al. 2024. Harnessing large language models for coding, teaching and inclusion to empower research in ecology and evolution. Methods in Ecology and Evolution 15:1757–1763.\nKay, M. et al. 2026. A century of inertia in quantitative ecology education. Methods in Ecology and Evolution.\nZuur, A.F.; Ieno, E.N. & Elphick, C.S. 2010. A protocol for data exploration to avoid common statistical problems. Methods in Ecology and Evolution 1:3–14.\nZuur, A.F. & Ieno, E.N. 2016. A protocol for conducting and presenting results of regression-type analyses. Methods in Ecology and Evolution 7:636–645.\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA."
+    "text": "Referências\n\n\nWild, C.J. & Pfannkuch, M. 1999. Statistical thinking in empirical enquiry. International Statistical Review 67:223–248. — origem do ciclo PPDAC.\nPopovic, G. et al. 2024. Four principles for improved statistical ecology. Methods in Ecology and Evolution 15:266–281.\nCooper, N. et al. 2024. Harnessing large language models for coding, teaching and inclusion to empower research in ecology and evolution. Methods in Ecology and Evolution 15:1757–1763.\nKay, M. et al. 2026. A century of inertia in quantitative ecology education. Methods in Ecology and Evolution.\nZuur, A.F.; Ieno, E.N. & Elphick, C.S. 2010. A protocol for data exploration to avoid common statistical problems. Methods in Ecology and Evolution 1:3–14.\nZuur, A.F. & Ieno, E.N. 2016. A protocol for conducting and presenting results of regression-type analyses. Methods in Ecology and Evolution 7:636–645.\nCOPE. Authorship and AI tools — position statement.\nCNPq. 2026. Portaria nº 2.664, de 6 de março de 2026 — Política de Integridade na Atividade Científica.\nDrobniak, S.M. et al. 2026. AIdIT: AI disclosure for Improved Transparency. Research Integrity and Peer Review.\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA."
   },
   {
     "objectID": "instalacao.html",
@@ -1505,6 +1512,13 @@
     "text": "Conteúdo\n\nBloco 1 — frequentista (3 h)\n\nGLMM com resposta não normal: glmer() e glmmTMB().\nQuando usar glmmTMB em vez de lme4 — zeros inflados, dispersão modelada, famílias adicionais.\nConvergência — o que os avisos significam, e o que fazer: reescalar preditoras, simplificar a estrutura aleatória, trocar o otimizador.\nDiagnóstico com DHARMa em modelos mistos.\n\\(R^2\\) marginal e condicional (Nakagawa) e relato segundo Davis & Kay (2023).\n\n\n\nBloco 2 — a ponte bayesiana (1,5 h)\n\nA sintaxe do brms é a do lme4 — o custo de transferência é quase zero.\nPriors fracamente informativas — o que são, por que o padrão importa, análise de sensibilidade.\nDiagnóstico de MCMC — \\(\\hat{R}\\), ESS, transições divergentes.\npp_check() — checagem preditiva posterior, que é o análogo honesto do diagnóstico de resíduos.\nIntervalo de credibilidade versus intervalo de confiança — o que cada um permite dizer.\nRelato BARG (Kruschke 2021).\n\n\n\n\n\n\n\nAviso\n\n\n\nTraga o brms já compilado. Os modelos desta aula estão em cache (file = \"cache/...\"), mas o seu primeiro brm() na máquina de vocês vai compilar do zero."
   },
   {
+    "objectID": "encontros/e08-glmm-ii-brms/index.html#prática",
+    "href": "encontros/e08-glmm-ii-brms/index.html#prática",
+    "title": "E8 — GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "Prática",
+    "text": "Prática\nOs enunciados estão no fim do deck e pedem que você use os seus próprios dados. Para acompanhar em sala, o mesmo roteiro rodado nos dados do curso, com um take-home por item:\n\nexercicios/e08.R"
+  },
+  {
     "objectID": "encontros/e08-glmm-ii-brms/index.html#dados",
     "href": "encontros/e08-glmm-ii-brms/index.html#dados",
     "title": "E8 — GLMM II: lme4, glmmTMB e a ponte bayesiana",
@@ -1538,6 +1552,13 @@
     "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Conteúdo",
     "text": "Conteúdo\n\nPor que os resíduos comuns não servem para GLM — e o que são resíduos quantílicos simulados. DHARMa do início ao fim.\nSobredispersão — como detectar (check_overdispersion()), o que causa, e as três saídas: quasi-Poisson, binomial negativa, ou efeito aleatório em nível de observação. Quando cada uma é honesta.\nExcesso de zeros — zero estrutural versus zero amostral, que é uma distinção biológica, não estatística. ZIP, ZINB e hurdle com glmmTMB(ziformula = ~ .), seguindo o capítulo 8 do livro. Como escolher — e como conferir que os zeros foram mesmo resolvidos.\nRespostas ordinais — o modelo de odds proporcionais com ordinal::clm() e clmm(); por que tratar escala ordinal como contínua distorce o resultado.\nRelato — o que precisa aparecer no texto do artigo."
+  },
+  {
+    "objectID": "encontros/e06-glm-ii/index.html#prática",
+    "href": "encontros/e06-glm-ii/index.html#prática",
+    "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Prática",
+    "text": "Prática\nOs enunciados estão no fim do deck e pedem que você use os seus próprios dados. Para acompanhar em sala, o mesmo roteiro rodado nos dados do curso, com um take-home por item:\n\nexercicios/e06.R"
   },
   {
     "objectID": "encontros/e06-glm-ii/index.html#dados",
@@ -1582,6 +1603,13 @@
     "text": "Conteúdo\n\nVariável aleatória, função de densidade e de massa — o mínimo necessário, sem formalismo desnecessário.\nAs distribuições que importam em ecologia — Normal, Gamma, Binomial, Poisson, binomial negativa, Beta. Para cada uma: que tipo de medida gera, quais parâmetros tem, como se parece.\nSimulação em R — rnorm(), rpois(), rnbinom(), rgamma(), rbinom(). Simular antes de ajustar é a melhor forma de entender um modelo.\nA família exponencial — o que essas distribuições têm em comum e por que isso permite um único algoritmo de ajuste.\nFunção de ligação — o problema que ela resolve, e por que não é a mesma coisa que transformar a variável resposta.\nCorrelação — Pearson e Spearman, o que cada uma assume."
   },
   {
+    "objectID": "encontros/e04-distribuicoes/index.html#prática",
+    "href": "encontros/e04-distribuicoes/index.html#prática",
+    "title": "E4 — Distribuições de probabilidade e a família exponencial",
+    "section": "Prática",
+    "text": "Prática\nOs enunciados estão no fim do deck e pedem que você use os seus próprios dados. Para acompanhar em sala, o mesmo roteiro rodado nos dados do curso, com um take-home por item: exercicios/e04.R."
+  },
+  {
     "objectID": "encontros/e04-distribuicoes/index.html#leituras",
     "href": "encontros/e04-distribuicoes/index.html#leituras",
     "title": "E4 — Distribuições de probabilidade e a família exponencial",
@@ -1621,7 +1649,7 @@
     "href": "encontros/e02-modelo-linear-unificador/index.html#prática",
     "title": "E2 — O modelo linear como arcabouço unificador",
     "section": "Prática",
-    "text": "Prática\nExercícios com palmerpenguins e com os dados de diagnóstico. Quem trouxe dados próprios já ajusta o primeiro lm() neles."
+    "text": "Prática\nExercícios com palmerpenguins e com os dados de diagnóstico. Quem trouxe dados próprios já ajusta o primeiro lm() neles.\nO mesmo roteiro rodado nos dados do curso, com um take-home por item: exercicios/e02.R."
   },
   {
     "objectID": "encontros/e02-modelo-linear-unificador/index.html#leituras",
@@ -1708,6 +1736,13 @@
     "text": "Conteúdo\n\nANOVA de um fator como lm() com \\(k-1\\) colunas dummy; a tabela de ANOVA como decomposição da soma de quadrados do mesmo ajuste.\nDois fatores e interação — o que uma interação é na matriz de delineamento, e o que ela significa biologicamente.\nANCOVA — fator mais covariável contínua; a premissa de homogeneidade de inclinações é literalmente a ausência de interação.\nSomas de quadrados I, II e III com car::Anova() — quando dão resultados diferentes e qual usar em delineamento desbalanceado.\nComparações planejadas e post-hoc com emmeans — e por que comparação planejada é quase sempre melhor do que varrer todos os pares.\nRelato segundo o checklist de Davis & Kay (2023)."
   },
   {
+    "objectID": "encontros/e03-anova-ancova/index.html#prática",
+    "href": "encontros/e03-anova-ancova/index.html#prática",
+    "title": "E3 — ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Prática",
+    "text": "Prática\nOs enunciados estão no fim do deck e pedem que você use os seus próprios dados. Para acompanhar em sala, o mesmo roteiro rodado nos dados do curso, com um take-home por item:\n\nexercicios/e03.R"
+  },
+  {
     "objectID": "encontros/e03-anova-ancova/index.html#dados",
     "href": "encontros/e03-anova-ancova/index.html#dados",
     "title": "E3 — ANOVA, ANCOVA e interações como modelos lineares",
@@ -1750,6 +1785,13 @@
     "text": "Conteúdo\n\nMáxima verossimilhança — a ideia, com uma superfície de verossimilhança desenhada em R. Deviance e teste de razão de verossimilhanças.\nGLM binomial — proporções e dados binários; odds, log-odds, razão de chances versus risco relativo; separação completa e a correção de Firth.\nGLM Poisson — contagens; o log como ligação canônica; offset para esforço amostral desigual.\nInterpretar na escala certa — o coeficiente está em log; a biologia está na escala da resposta. ggeffects e marginaleffects.\nDAGs e raciocínio causal (60 min) — dagitty, critério backdoor, confounders (controlar) versus colisores (não controlar). Por que seleção estatística de variáveis não substitui pensar sobre causalidade."
   },
   {
+    "objectID": "encontros/e05-glm-i/index.html#prática",
+    "href": "encontros/e05-glm-i/index.html#prática",
+    "title": "E5 — GLM I: verossimilhança, binomial e Poisson",
+    "section": "Prática",
+    "text": "Prática\nOs enunciados estão no fim do deck e pedem que você use os seus próprios dados. Para acompanhar em sala, o mesmo roteiro rodado nos dados do curso, com um take-home por item:\n\nexercicios/e05.R"
+  },
+  {
     "objectID": "encontros/e05-glm-i/index.html#dados",
     "href": "encontros/e05-glm-i/index.html#dados",
     "title": "E5 — GLM I: verossimilhança, binomial e Poisson",
@@ -1790,6 +1832,13 @@
     "title": "E7 — GLMM I: por que efeitos aleatórios",
     "section": "Conteúdo",
     "text": "Conteúdo\n\nPseudorreplicação (Hurlbert 1984) — reconhecer no seu próprio delineamento. A estrutura do modelo deve espelhar a estrutura da amostragem.\nO que um efeito aleatório é — não “uma variável que não interessa”, mas um conjunto de níveis amostrados de uma população de níveis, cuja variância é o que se estima.\nFixo ou aleatório? — os critérios, e por que a resposta depende da pergunta, não do dado.\nIntercepto aleatório e inclinação aleatória — o que cada um permite, desenhado.\nAnatomia de lmer — (1 | grupo), (x | grupo), (1 | a/b). Shrinkage e por que estimativas de grupos pequenos são puxadas para a média.\nICC, variância dos efeitos aleatórios, e o problema dos graus de liberdade — aproximação de Kenward–Roger e Satterthwaite."
+  },
+  {
+    "objectID": "encontros/e07-glmm-i/index.html#prática",
+    "href": "encontros/e07-glmm-i/index.html#prática",
+    "title": "E7 — GLMM I: por que efeitos aleatórios",
+    "section": "Prática",
+    "text": "Prática\nOs enunciados estão no fim do deck e pedem que você use os seus próprios dados. Para acompanhar em sala, o mesmo roteiro rodado nos dados do curso, com um take-home por item:\n\nexercicios/e07.R"
   },
   {
     "objectID": "encontros/e07-glmm-i/index.html#dados",
@@ -1838,7 +1887,7 @@
     "href": "encontros/e09-selecao-modelos/index.html#prática-para-acompanhar",
     "title": "E9 — Teoria da informação e seleção de modelos",
     "section": "Prática, para acompanhar",
-    "text": "Prática, para acompanhar\n\nModel selection and model averaging — notas do Stat 5421 de Charles Geyer (Universidade de Minnesota).\nModel selection and model averaging — aula 9 do curso EEB313 (UofT Coders)."
+    "text": "Prática, para acompanhar\nO roteiro do fim do deck, rodado nos dados do curso, com um take-home por item: exercicios/e09.R.\n\nModel selection and model averaging — notas do Stat 5421 de Charles Geyer (Universidade de Minnesota).\nModel selection and model averaging — aula 9 do curso EEB313 (UofT Coders)."
   },
   {
     "objectID": "index.html",

@@ -34,6 +34,14 @@ observacional: *que covariáveis entram no modelo, e por quê?*
    que seleção estatística de variáveis não substitui pensar sobre
    causalidade.
 
+## Prática
+
+Os enunciados estão no fim do deck e pedem que você use **os seus próprios
+dados**. Para acompanhar em sala, o mesmo roteiro rodado nos dados do
+curso, com um *take-home* por item:
+
+- [`exercicios/e05.R`](../../exercicios/e05.R)
+
 ## Dados
 
 - [`RoadKills.txt`](../../dados/RoadKills.txt) — anfíbios atropelados em

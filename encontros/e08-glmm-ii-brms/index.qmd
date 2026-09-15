@@ -48,6 +48,14 @@ Traga o `brms` já compilado. Os modelos desta aula estão em cache
 vai compilar do zero.
 :::
 
+## Prática
+
+Os enunciados estão no fim do deck e pedem que você use **os seus próprios
+dados**. Para acompanhar em sala, o mesmo roteiro rodado nos dados do
+curso, com um *take-home* por item:
+
+- [`exercicios/e08.R`](../../exercicios/e08.R)
+
 ## Dados
 
 - [`RIKZ.txt`](../../dados/RIKZ.txt) — o mesmo do E7, agora nos dois

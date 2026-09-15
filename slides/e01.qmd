@@ -789,6 +789,22 @@ Vale igual no trabalho final desta disciplina.
 
 ---
 
+## As três normas que valem para vocês {.smaller}
+
+| Norma | O que exige |
+|---|---|
+| [**COPE**, *Authorship and AI tools*](https://publicationethics.org/guidance/cope-position/authorship-and-ai-tools) | IA **não pode ser autora** — não tem como assumir responsabilidade pelo trabalho; o uso deve ser inteiramente transparente |
+| [**CNPq**, Portaria nº 2.664, de 6 de março de 2026](https://www.in.gov.br/web/dou/-/portaria-cnpq-n-2.664-de-6-de-marco-de-2026-691779232) | Declarar **qualquer** uso de IA generativa, em **qualquer fase** da pesquisa, especificando ferramenta e finalidade; autores integralmente responsáveis, inclusive por plágio ou imprecisão da ferramenta; uso em pareceres não é recomendado |
+| [**AIdIT**](https://doi.org/10.1186/s41073-026-00230-1) (Drobniak et al. 2026) | O **formato** da declaração: ferramenta e versão, cada uso mapeado à etapa do ciclo de pesquisa, e como a saída foi verificada |
+
+::: {.nota}
+A Portaria do CNPq é a que tem consequência administrativa para bolsista.
+As três dizem a mesma coisa em graus diferentes: **declare o que usou, e
+responda pelo que saiu**.
+:::
+
+---
+
 ## A frase para levar
 
 ::: {.definicao}
@@ -835,7 +851,7 @@ coisas.
 
 ---
 
-## Referências
+## Referências {.smaller}
 
 ::: {.nota}
 - Wild, C.J. & Pfannkuch, M. 1999. [Statistical thinking in empirical enquiry](https://doi.org/10.1111/j.1751-5823.1999.tb00442.x). *International Statistical Review* 67:223–248. — origem do ciclo PPDAC.
@@ -844,5 +860,8 @@ coisas.
 - Kay, M. et al. 2026. [A century of inertia in quantitative ecology education](https://doi.org/10.1111/2041-210X.70405). *Methods in Ecology and Evolution*.
 - Zuur, A.F.; Ieno, E.N. & Elphick, C.S. 2010. [A protocol for data exploration to avoid common statistical problems](https://doi.org/10.1111/j.2041-210X.2009.00001.x). *Methods in Ecology and Evolution* 1:3–14.
 - Zuur, A.F. & Ieno, E.N. 2016. [A protocol for conducting and presenting results of regression-type analyses](https://doi.org/10.1111/2041-210X.12577). *Methods in Ecology and Evolution* 7:636–645.
+- COPE. [*Authorship and AI tools*](https://publicationethics.org/guidance/cope-position/authorship-and-ai-tools) — *position statement*.
+- CNPq. 2026. [Portaria nº 2.664, de 6 de março de 2026](https://www.in.gov.br/web/dou/-/portaria-cnpq-n-2.664-de-6-de-marco-de-2026-691779232) — Política de Integridade na Atividade Científica.
+- Drobniak, S.M. et al. 2026. [AIdIT: AI disclosure for Improved Transparency](https://doi.org/10.1186/s41073-026-00230-1). *Research Integrity and Peer Review*.
 - da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
 :::

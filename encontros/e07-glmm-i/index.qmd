@@ -33,6 +33,14 @@ independência das observações.
 6. **ICC**, variância dos efeitos aleatórios, e o problema dos graus de
    liberdade — aproximação de Kenward–Roger e Satterthwaite.
 
+## Prática
+
+Os enunciados estão no fim do deck e pedem que você use **os seus próprios
+dados**. Para acompanhar em sala, o mesmo roteiro rodado nos dados do
+curso, com um *take-home* por item:
+
+- [`exercicios/e07.R`](../../exercicios/e07.R)
+
 ## Dados
 
 - [`RIKZ.txt`](../../dados/RIKZ.txt) — riqueza de invertebrados em

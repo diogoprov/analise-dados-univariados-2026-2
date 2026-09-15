@@ -30,6 +30,14 @@ nenhum conceito novo de inferência.
    pares.
 6. **Relato** segundo o *checklist* de Davis & Kay (2023).
 
+## Prática
+
+Os enunciados estão no fim do deck e pedem que você use **os seus próprios
+dados**. Para acompanhar em sala, o mesmo roteiro rodado nos dados do
+curso, com um *take-home* por item:
+
+- [`exercicios/e03.R`](../../exercicios/e03.R)
+
 ## Dados
 
 - [`anova_dois_fatores.csv`](../../dados/anova_dois_fatores.csv)

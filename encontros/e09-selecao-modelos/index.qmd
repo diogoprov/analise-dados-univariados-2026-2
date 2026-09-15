@@ -79,6 +79,9 @@ e sobre por que ela é mais perigosa do que parece.
 
 ## Prática, para acompanhar
 
+O roteiro do fim do deck, rodado nos dados do curso, com um *take-home*
+por item: [`exercicios/e09.R`](../../exercicios/e09.R).
+
 - [Model selection and model averaging](https://www.stat.umn.edu/geyer/5421/notes/glmbb.html) — notas do Stat 5421 de Charles Geyer (Universidade de Minnesota).
 - [Model selection and model averaging](https://uoftcoders.github.io/rcourse/lec09-model-selection.html) — aula 9 do curso EEB313 (UofT Coders).
 

@@ -31,6 +31,14 @@ Diagnóstico primeiro, remédio depois.
    contínua distorce o resultado.
 5. **Relato** — o que precisa aparecer no texto do artigo.
 
+## Prática
+
+Os enunciados estão no fim do deck e pedem que você use **os seus próprios
+dados**. Para acompanhar em sala, o mesmo roteiro rodado nos dados do
+curso, com um *take-home* por item:
+
+- [`exercicios/e06.R`](../../exercicios/e06.R)
+
 ## Dados
 
 - [`RoadKills.txt`](../../dados/RoadKills.txt) — sobredispersão.

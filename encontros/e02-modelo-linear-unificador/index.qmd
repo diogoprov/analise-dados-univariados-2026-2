@@ -37,6 +37,9 @@ com matrizes de delineamento diferentes.
 Exercícios com `palmerpenguins` e com os dados de diagnóstico. Quem
 trouxe dados próprios já ajusta o primeiro `lm()` neles.
 
+O mesmo roteiro rodado nos dados do curso, com um *take-home* por item:
+[`exercicios/e02.R`](../../exercicios/e02.R).
+
 ## Leituras
 
 **Obrigatória**

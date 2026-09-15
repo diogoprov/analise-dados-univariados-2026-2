@@ -36,7 +36,8 @@ normaliza <- function(x) {
 
 confere_cache <- function(script = "R/precompila-cache.R",
                           decks = c("slides/e02.qmd", "slides/e08.qmd",
-                                    "slides/e09.qmd")) {
+                                    "slides/e09.qmd",
+                                    "exercicios/e08.R")) {
   ref <- normaliza(extrai_brm(script))
   ok <- TRUE
   for (d in decks) {
