@@ -1,0 +1,121 @@
+---
+title: "O teste de normalidade, ao vivo"
+description: "Uma simulação de dez minutos que mostra por que o valor de p de um teste de premissa depende mais do tamanho da amostra do que da violação."
+engine: knitr
+filters:
+  - webr
+webr:
+  show-startup-message: true
+---
+
+::: {.callout-note}
+## O R roda aqui dentro
+
+Os blocos abaixo são editáveis e rodam **no seu navegador**, sem instalar
+nada — é o [webR](https://docs.r-wasm.org/webr/latest/), o R compilado
+para WebAssembly. O primeiro carregamento leva alguns segundos; depois
+fica rápido. Rode os blocos **na ordem**, porque o segundo e o terceiro
+usam as funções definidas no primeiro. Mexa nos números à vontade: nada
+aqui é salvo, e recarregar a página devolve o original.
+:::
+
+O [Encontro 2](encontros/e02-modelo-linear-unificador/index.qmd) afirma
+que a premissa de normalidade está no **resíduo**, e não nos dados, e que
+ela se checa no **gráfico**, não no valor de *p*. A segunda metade dessa
+frase costuma soar como preferência de estilo. Não é — é uma propriedade
+do teste, e dá para ver acontecer em dez minutos.
+
+## A violação é sempre a mesma
+
+Vamos gerar dados de uma distribuição gama com parâmetro de forma 6. Ela é
+assimétrica à direita, com assimetria teórica $2/\sqrt{6} \approx 0{,}82$.
+Esse número **não muda** com o tamanho da amostra: a violação é
+rigorosamente a mesma nas cinco linhas abaixo. Só o *n* muda.
+
+```{webr-r}
+set.seed(2026)
+
+gera <- function(n) rgamma(n, shape = 6, rate = 1)
+
+prop_rejeita <- function(n, vezes = 400) {
+  p <- numeric(vezes)
+  for (i in seq_len(vezes)) p[i] <- shapiro.test(gera(n))$p.value
+  mean(p < 0.05)
+}
+
+ns <- c(20, 50, 200, 1000, 5000)
+
+resultado <- data.frame(n = ns, rejeita = NA_real_)
+for (j in seq_along(ns)) resultado$rejeita[j] <- prop_rejeita(ns[j])
+
+resultado
+```
+
+Leia a coluna `rejeita` como "em que fração das amostras o
+`shapiro.test()` disse que a premissa foi violada". Com *n* = 20 ele diz
+que está tudo bem na maioria das vezes; a partir de *n* = 200 ele quase
+nunca deixa passar. Mesma distribuição, mesma assimetria, veredito oposto.
+
+::: {.callout-tip collapse="true"}
+## Por que um `for` e não `map_dbl()`
+
+Porque o webR carrega só os pacotes da base, e instalar o `purrr` aqui
+dentro custaria mais tempo do que a simulação inteira. No R de vocês, a
+versão idiomática é
+`p <- map_dbl(seq_len(vezes), \(i) shapiro.test(gera(n))$p.value)`, e é
+essa que está no item 6 de [`exercicios/e02.R`](exercicios/e02.R).
+:::
+
+## O gráfico não tem esse problema
+
+O mesmo par de amostras, agora olhado em vez de testado:
+
+```{webr-r}
+set.seed(2026)
+
+par(mfrow = c(1, 2), mar = c(4, 4, 3, 1))
+
+for (n in c(20, 5000)) {
+  x <- gera(n)
+  qqnorm(x, pch = 16, col = "#00000055",
+         main = sprintf("n = %d\np = %.3g", n, shapiro.test(x)$p.value),
+         xlab = "quantis teóricos", ylab = "quantis da amostra")
+  qqline(x, col = "firebrick", lwd = 2)
+}
+```
+
+Nos dois painéis a curvatura é para o mesmo lado, e por um motivo só: a
+cauda direita é longa. O painel da esquerda é mais ruidoso, porque vinte
+pontos são vinte pontos — mas ele não **afirma** que está tudo bem. O
+valor de *p* afirma.
+
+## Agora mexa
+
+`shape` maior deixa a gama mais parecida com uma normal. Com `shape = 20`,
+a assimetria cai para $2/\sqrt{20} \approx 0{,}45$ — um desvio que quase
+certamente não atrapalharia a sua análise. Veja o que o teste faz com ele:
+
+```{webr-r}
+gera <- function(n) rgamma(n, shape = 20, rate = 1)
+
+c(n20 = prop_rejeita(20), n200 = prop_rejeita(200), n5000 = prop_rejeita(5000))
+```
+
+Depois tente o caminho inverso, com `shape = 2`, e procure o menor *n* que
+já rejeita quase sempre. O que muda de um caso para o outro não é a
+qualidade da sua análise — é quantas observações você teve a sorte de
+conseguir.
+
+## O que levar disso
+
+O `shapiro.test()` responde "tenho evidência de que estes dados não vieram
+de uma normal?". Essa não é a pergunta que interessa. A que interessa é "o
+quanto este desvio ameaça a minha inferência?" — e essa depende do
+**tamanho** do desvio e do que o modelo faz com ele, não do *n*.
+
+- Shatz, I. 2024. [Assumption-checking rather than (just) testing: the importance of visualization and effect size in statistical diagnostics](https://doi.org/10.3758/s13428-023-02072-x). *Behavior Research Methods* 56:826–845. Acesso aberto; é o artigo que esta página ilustra.
+- Kozak, M. & Piepho, H.-P. 2018. [What's normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions](https://doi.org/10.1111/jac.12220). *Journal of Agronomy and Crop Science* 204:86–98.
+
+---
+
+*Volta para o [Encontro 2](encontros/e02-modelo-linear-unificador/index.qmd).*

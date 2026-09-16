@@ -2,7 +2,8 @@
 # ---------------------------------------------------------------------
 # Os enunciados do slide pedem "nos SEUS dados". Este script faz os mesmos
 # cinco passos nos dados do curso, para rodar em sala. O aluno troca o
-# conjunto e a fórmula; a sequência é a mesma.
+# conjunto e a fórmula; a sequência é a mesma. O item 6 é extra: não está
+# no deck, e existe para sustentar com simulação o que o item 4 afirma.
 #
 # Rode a partir da raiz do repositório (ou de dentro de exercicios/).
 # ---------------------------------------------------------------------
@@ -68,3 +69,24 @@ all.equal(fitted(m), fitted(m2), check.attributes = FALSE)
 # TAKE-HOME: o nível de referência muda o que os coeficientes DIZEM, não o
 # ajuste. Verossimilhança e valores preditos são idênticos. Escolher a
 # referência é decisão de comunicação, não de estatística.
+
+# 6. A premissa se checa no gráfico, não no teste -----------------------
+# Mesma violação, n diferente. A distribuição é sempre a mesma gama, com
+# assimetria 2/sqrt(6) = 0,82; só o tamanho da amostra muda.
+set.seed(2026)
+
+gera <- function(n) rgamma(n, shape = 6, rate = 1)
+
+prop_rejeita <- function(n, vezes = 400) {
+  p <- map_dbl(seq_len(vezes), \(i) shapiro.test(gera(n))$p.value)
+  mean(p < 0.05)
+}
+
+tibble(n = c(20, 50, 200, 1000, 5000)) |>
+  mutate(rejeita = map_dbl(n, prop_rejeita))
+
+# TAKE-HOME: com n = 20 o shapiro.test() diz que está tudo bem na maioria
+# das vezes; de n = 200 em diante ele nunca deixa passar. Mesma violação,
+# veredito oposto — o que o teste mede é o seu n, não o tamanho do desvio.
+# Kozak & Piepho (2018) e Shatz (2024); a versão interativa está em
+# teste-de-normalidade.qmd, que roda no navegador.

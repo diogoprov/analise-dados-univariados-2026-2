@@ -75,8 +75,9 @@ problema.
 - Kozak, M. & Piepho, H.-P. 2018. [What's normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions](https://doi.org/10.1111/jac.12220). *Journal of Agronomy and Crop Science* 204:86–98.
 - Shatz, I. 2024. [Assumption-checking rather than (just) testing: the importance of visualization and effect size in statistical diagnostics](https://doi.org/10.3758/s13428-023-02072-x). *Behavior Research Methods* 56:826–845. Acesso aberto (CC BY 4.0).
 
-Um terceiro argumento, mais fundo, está nas leituras do
-[Encontro 2](../e02-modelo-linear-unificador/index.qmd).
+Dá para ver isso acontecer: [o teste de normalidade, ao
+vivo](../../teste-de-normalidade.qmd) roda a simulação no navegador, sem
+instalar nada.
 :::
 
 ## Leituras
