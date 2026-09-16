@@ -256,8 +256,14 @@ window.Quarto = {
 <ul>
 <li>Agresti, A. 2015. <a href="https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034"><em>Foundations of Linear and Generalized Linear Models</em></a>. Wiley.</li>
 <li>Lindeløv, J.K. <a href="https://lindeloev.github.io/tests-as-linear/"><em>Common statistical tests are linear models</em></a>.</li>
-<li>Kozak, M. &amp; Piepho, H.-P. 2018. <a href="https://doi.org/10.1111/jac.12220">What’s normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions</a>. <em>Journal of Agronomy and Crop Science</em> 204:86–98. — o argumento para checar a premissa no resíduo e no gráfico, e não no dado bruto e no teste.</li>
 <li>Gelman, A. et al.&nbsp;2026. <a href="https://avehtari.github.io/Bayesian-Workflow/"><em>Bayesian Workflow</em></a>. Chapman &amp; Hall/CRC. Cap. 6, “Using simulations to capture uncertainty”.</li>
+</ul>
+<p><strong>Sobre checar premissas</strong></p>
+<p>O bloco 1 afirma que a premissa de normalidade está no resíduo, e não nos dados. Estes três artigos sustentam isso — e, principalmente, sustentam por que não se decide sobre premissa com valor de <em>p</em>. São argumentos diferentes, não três versões do mesmo:</p>
+<ul>
+<li>Kozak, M. &amp; Piepho, H.-P. 2018. <a href="https://doi.org/10.1111/jac.12220">What’s normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions</a>. <em>Journal of Agronomy and Crop Science</em> 204:86–98. — as duas perguntas, uma de cada vez: checar no dado bruto ou no resíduo? por teste ou por gráfico? Responde a primeira a favor do resíduo e a segunda a favor do gráfico, com dois exemplos trabalhados.</li>
+<li>Shatz, I. 2024. <a href="https://doi.org/10.3758/s13428-023-02072-x">Assumption-checking rather than (just) testing: the importance of visualization and effect size in statistical diagnostics</a>. <em>Behavior Research Methods</em> 56:826–845. Acesso aberto (CC BY 4.0). Consolida por simulação o que dá errado no teste: falso positivo com <span class="math inline">\(n\)</span> grande, falso negativo com <span class="math inline">\(n\)</span> pequeno, falsa binariedade, o <em>p</em> lido como se fosse tamanho de efeito, e o próprio teste de premissa com premissas que ninguém checou. Cita o Shapiro–Wilk pelo nome.</li>
+<li>Tijmstra, J. 2018. <a href="https://doi.org/10.3758/s13423-018-1447-4">Why checking model assumptions using null hypothesis significance tests does not suffice: a plea for plausibility</a>. <em>Psychonomic Bulletin &amp; Review</em> 25:548–559. O argumento lógico, e o mais desconfortável: um teste <strong>não</strong> significativo é ausência de evidência, não evidência de ausência. Por esse caminho a premissa nunca chega a ser verificada — o que ele propõe no lugar é raciocinar sobre plausibilidade, não sobre rejeição.</li>
 </ul>
 </section>
 <section id="recursos-externos" class="level2">
