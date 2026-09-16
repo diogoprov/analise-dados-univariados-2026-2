@@ -160,15 +160,14 @@ Instalação, uma vez só:
 #| eval: false
 install.packages("swirl")
 
-ref <- "traducao-respostas-de-contagem"
 zip <- tempfile(fileext = ".zip")
 download.file(
-  paste0("https://github.com/diogoprov/cursos_swirl-Br/archive/refs/heads/", ref, ".zip"),
+  "https://github.com/paternogbc/cursos_swirl-Br/archive/refs/heads/master.zip",
   zip, mode = "wb"
 )
 pasta <- tempfile(); unzip(zip, exdir = pasta)
 swirl::install_course_directory(
-  file.path(pasta, paste0("cursos_swirl-Br-", ref), "Modelos_de_Regressao")
+  file.path(pasta, "cursos_swirl-Br-master", "Modelos_de_Regressao")
 )
 ```
 

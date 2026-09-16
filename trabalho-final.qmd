@@ -91,6 +91,56 @@ Um modelo que não ajustou bem, com diagnóstico honesto e discussão do
 porquê, vale mais do que um modelo aparentemente perfeito com o
 diagnóstico omitido.
 
+## Como entregar
+
+Por e-mail, para o meu endereço institucional, que eu passo no Encontro 1.
+
+**Assunto:** `ADU 2026/2 — trabalho final — Seu Nome`
+
+**Anexos:** o `.qmd`, o `.html` renderizado e os dados. Se passarem do
+limite de anexo, ou se não puderem circular, mande um link e a instrução
+de download no lugar dos dados.
+
+**No corpo do e-mail**, quatro linhas — e elas contam, porque é por onde
+eu começo a ler:
+
+1. O sistema e o conjunto: que organismo, onde, quantas observações.
+2. A pergunta, em uma frase, formulada de modo que a resposta seja um
+   parâmetro estimável.
+3. A análise é confirmatória ou exploratória? (Ou que parte é qual.)
+4. **Onde você travou.** O que não saiu como queria, o que ficou por
+   fazer, a decisão de que você não gostou. Isto não desconta nota; é
+   onde o meu comentário rende mais, e "em lugar nenhum" costuma ser a
+   resposta menos verdadeira das quatro.
+
+Para reenviar depois de corrigir, **responda no mesmo fio de e-mail**, sem
+abrir outro. Assim o histórico de versões fica junto.
+
+### Antes de apertar enviar
+
+Confira, você mesmo, o que eu vou conferir:
+
+- [ ] Objetivo, variáveis, método e implementação, nas quatro seções de Davis & Kay (2023)
+- [ ] Justificativa de cada preditora — e o DAG, se couber
+- [ ] Exploratória seguindo o protocolo de Zuur & Ieno (2016)
+- [ ] Diagnóstico com `DHARMa`, com os gráficos comentados
+- [ ] Coeficientes traduzidos para a escala da resposta, com unidade
+- [ ] Limitações declaradas
+- [ ] Declaração de uso de IA: modelo, versão, o que foi gerado, prompts críticos
+- [ ] `sessionInfo()` ou `sessioninfo::session_info()` no fim
+- [ ] Extensão bayesiana em `brms`, relatada segundo o BARG (opcional)
+- [ ] **Renderizei do zero numa sessão limpa e funcionou**
+
+O último item é o que mais se perde por descuido, e é critério de
+avaliação.
+
+## Dúvidas sobre o enunciado
+
+No rodapé de cada página de encontro há uma caixa de comentários. Pergunta
+feita ali fica visível para a turma e a resposta serve para todo mundo —
+que é quase sempre o caso, quando a dúvida é sobre o enunciado. Essa caixa
+é **pública**: para falar de dados seus, e-mail.
+
 ## Uso de modelos de linguagem
 
 Permitido e esperado — com declaração. Ao final do relatório, informe:

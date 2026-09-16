@@ -184,6 +184,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#seções-adicionais" id="toc-seções-adicionais" class="nav-link" data-scroll-target="#seções-adicionais">Seções adicionais</a></li>
   <li><a href="#extensão-bayesiana-opcional-recomendada" id="toc-extensão-bayesiana-opcional-recomendada" class="nav-link" data-scroll-target="#extensão-bayesiana-opcional-recomendada">Extensão bayesiana (opcional, recomendada)</a></li>
   <li><a href="#critérios-de-avaliação" id="toc-critérios-de-avaliação" class="nav-link" data-scroll-target="#critérios-de-avaliação">Critérios de avaliação</a></li>
+  <li><a href="#como-entregar" id="toc-como-entregar" class="nav-link" data-scroll-target="#como-entregar">Como entregar</a>
+  <ul class="collapse">
+  <li><a href="#antes-de-apertar-enviar" id="toc-antes-de-apertar-enviar" class="nav-link" data-scroll-target="#antes-de-apertar-enviar">Antes de apertar enviar</a></li>
+  </ul></li>
+  <li><a href="#dúvidas-sobre-o-enunciado" id="toc-dúvidas-sobre-o-enunciado" class="nav-link" data-scroll-target="#dúvidas-sobre-o-enunciado">Dúvidas sobre o enunciado</a></li>
   <li><a href="#uso-de-modelos-de-linguagem" id="toc-uso-de-modelos-de-linguagem" class="nav-link" data-scroll-target="#uso-de-modelos-de-linguagem">Uso de modelos de linguagem</a></li>
   <li><a href="#autoria" id="toc-autoria" class="nav-link" data-scroll-target="#autoria">Autoria</a></li>
   <li><a href="#esqueleto-para-copiar" id="toc-esqueleto-para-copiar" class="nav-link" data-scroll-target="#esqueleto-para-copiar">Esqueleto para copiar</a></li>
@@ -293,6 +298,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p>Um modelo que não ajustou bem, com diagnóstico honesto e discussão do porquê, vale mais do que um modelo aparentemente perfeito com o diagnóstico omitido.</p>
+</section>
+<section id="como-entregar" class="level2">
+<h2 class="anchored" data-anchor-id="como-entregar">Como entregar</h2>
+<p>Por e-mail, para o meu endereço institucional, que eu passo no Encontro 1.</p>
+<p><strong>Assunto:</strong> <code>ADU 2026/2 — trabalho final — Seu Nome</code></p>
+<p><strong>Anexos:</strong> o <code>.qmd</code>, o <code>.html</code> renderizado e os dados. Se passarem do limite de anexo, ou se não puderem circular, mande um link e a instrução de download no lugar dos dados.</p>
+<p><strong>No corpo do e-mail</strong>, quatro linhas — e elas contam, porque é por onde eu começo a ler:</p>
+<ol type="1">
+<li>O sistema e o conjunto: que organismo, onde, quantas observações.</li>
+<li>A pergunta, em uma frase, formulada de modo que a resposta seja um parâmetro estimável.</li>
+<li>A análise é confirmatória ou exploratória? (Ou que parte é qual.)</li>
+<li><strong>Onde você travou.</strong> O que não saiu como queria, o que ficou por fazer, a decisão de que você não gostou. Isto não desconta nota; é onde o meu comentário rende mais, e “em lugar nenhum” costuma ser a resposta menos verdadeira das quatro.</li>
+</ol>
+<p>Para reenviar depois de corrigir, <strong>responda no mesmo fio de e-mail</strong>, sem abrir outro. Assim o histórico de versões fica junto.</p>
+<section id="antes-de-apertar-enviar" class="level3">
+<h3 class="anchored" data-anchor-id="antes-de-apertar-enviar">Antes de apertar enviar</h3>
+<p>Confira, você mesmo, o que eu vou conferir:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">Objetivo, variáveis, método e implementação, nas quatro seções de Davis &amp; Kay (2023)</label></li>
+<li><label><input type="checkbox">Justificativa de cada preditora — e o DAG, se couber</label></li>
+<li><label><input type="checkbox">Exploratória seguindo o protocolo de Zuur &amp; Ieno (2016)</label></li>
+<li><label><input type="checkbox">Diagnóstico com <code>DHARMa</code>, com os gráficos comentados</label></li>
+<li><label><input type="checkbox">Coeficientes traduzidos para a escala da resposta, com unidade</label></li>
+<li><label><input type="checkbox">Limitações declaradas</label></li>
+<li><label><input type="checkbox">Declaração de uso de IA: modelo, versão, o que foi gerado, prompts críticos</label></li>
+<li><label><input type="checkbox"><code>sessionInfo()</code> ou <code>sessioninfo::session_info()</code> no fim</label></li>
+<li><label><input type="checkbox">Extensão bayesiana em <code>brms</code>, relatada segundo o BARG (opcional)</label></li>
+<li><label><input type="checkbox"><strong>Renderizei do zero numa sessão limpa e funcionou</strong></label></li>
+</ul>
+<p>O último item é o que mais se perde por descuido, e é critério de avaliação.</p>
+</section>
+</section>
+<section id="dúvidas-sobre-o-enunciado" class="level2">
+<h2 class="anchored" data-anchor-id="dúvidas-sobre-o-enunciado">Dúvidas sobre o enunciado</h2>
+<p>No rodapé de cada página de encontro há uma caixa de comentários. Pergunta feita ali fica visível para a turma e a resposta serve para todo mundo — que é quase sempre o caso, quando a dúvida é sobre o enunciado. Essa caixa é <strong>pública</strong>: para falar de dados seus, e-mail.</p>
 </section>
 <section id="uso-de-modelos-de-linguagem" class="level2">
 <h2 class="anchored" data-anchor-id="uso-de-modelos-de-linguagem">Uso de modelos de linguagem</h2>

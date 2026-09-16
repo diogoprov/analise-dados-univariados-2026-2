@@ -1,0 +1,42 @@
+# Opções aplicadas a todas as páginas de encontro.
+# ---------------------------------------------------------------------
+# O Quarto valida este arquivo e recusa um arquivo sem nenhum valor, só
+# com comentários. Por isso o `toc: true` abaixo: ele já é o padrão do
+# projeto, não muda nada, e existe para o arquivo ser um mapeamento
+# válido enquanto o bloco do giscus estiver desligado.
+
+toc: true
+
+# Caixa de dúvidas no rodapé — DESLIGADA por enquanto.
+# ---------------------------------------------------------------------
+# O giscus precisa de dois identificadores numéricos que só a página
+# https://giscus.app devolve. Publicar com um valor de mentira põe uma
+# caixa de erro no rodapé de dez páginas, por isso está comentado.
+#
+#   1. No repositório do curso: Settings > General > Features > marcar
+#      "Discussions". Depois, na aba Discussions, criar a categoria
+#      "Dúvidas das aulas", do tipo "Open-ended discussion".
+#   2. Instalar o app: https://github.com/apps/giscus
+#   3. Em https://giscus.app, informar
+#      diogoprov/analise-dados-univariados-2026-2 e escolher a
+#      categoria. A página monta um <script> com data-repo-id e
+#      data-category-id — são esses dois valores.
+#
+# Feito isso, apague os `#` das onze linhas abaixo e preencha os dois
+# COLE_AQUI. Não sei dizer se o Quarto consegue derivar os
+# identificadores sozinho a partir de repo + category; a documentação
+# lista os quatro campos sem marcar quais são obrigatórios, então
+# preencher os quatro é o caminho garantido.
+#
+# comments:
+#   giscus:
+#     repo: diogoprov/analise-dados-univariados-2026-2
+#     repo-id: COLE_AQUI
+#     category: Dúvidas das aulas
+#     category-id: COLE_AQUI
+#     mapping: pathname
+#     reactions-enabled: true
+#     loading: lazy
+#     input-position: top
+#     theme: light
+#     language: pt
