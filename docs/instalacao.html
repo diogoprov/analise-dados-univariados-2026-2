@@ -107,6 +107,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 <meta property="og:title" content="Preparação do ambiente – Análise de Dados Univariados">
@@ -186,7 +215,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#verificação" id="toc-verificação" class="nav-link" data-scroll-target="#verificação">3. Verificação</a></li>
   <li><a href="#projeto-do-curso" id="toc-projeto-do-curso" class="nav-link" data-scroll-target="#projeto-do-curso">4. Projeto do curso</a></li>
-  <li><a href="#o-que-trazer" id="toc-o-que-trazer" class="nav-link" data-scroll-target="#o-que-trazer">5. O que trazer</a></li>
+  <li><a href="#swirl" id="toc-swirl" class="nav-link" data-scroll-target="#swirl">5. Exercícios no <code>swirl</code> (em português)</a>
+  <ul class="collapse">
+  <li><a href="#que-lição-serve-para-qual-encontro" id="toc-que-lição-serve-para-qual-encontro" class="nav-link" data-scroll-target="#que-lição-serve-para-qual-encontro">Que lição serve para qual encontro</a></li>
+  </ul></li>
+  <li><a href="#o-que-trazer" id="toc-o-que-trazer" class="nav-link" data-scroll-target="#o-que-trazer">6. O que trazer</a></li>
   </ul>
 </nav>
     </div>
@@ -328,8 +361,133 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Quem usa git pode simplesmente clonar o repositório do curso:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/diogoprov/analise-dados-univariados-2026-2.git</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
+<section id="swirl" class="level2">
+<h2 class="anchored" data-anchor-id="swirl">5. Exercícios no <code>swirl</code> (em português)</h2>
+<p>O <code>swirl</code> ensina R dentro do próprio console: ele faz a pergunta, você responde no <em>prompt</em>, e ele confere na hora. Traduzimos para o português o curso <em>Regression Models</em>, da Johns Hopkins — treze lições que vão do método dos mínimos quadrados ao GLM de Poisson. A tradução é de Gustavo Paterno e minha, e está em <a href="https://github.com/paternogbc/cursos_swirl-Br"><code>paternogbc/cursos_swirl-Br</code></a>.</p>
+<p>Instalação, uma vez só:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"swirl"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ref <span class="ot">&lt;-</span> <span class="st">"traducao-respostas-de-contagem"</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>zip <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(<span class="at">fileext =</span> <span class="st">".zip"</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">paste0</span>(<span class="st">"https://github.com/diogoprov/cursos_swirl-Br/archive/refs/heads/"</span>, ref, <span class="st">".zip"</span>),</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  zip, <span class="at">mode =</span> <span class="st">"wb"</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>pasta <span class="ot">&lt;-</span> <span class="fu">tempfile</span>(); <span class="fu">unzip</span>(zip, <span class="at">exdir =</span> pasta)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>swirl<span class="sc">::</span><span class="fu">install_course_directory</span>(</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.path</span>(pasta, <span class="fu">paste0</span>(<span class="st">"cursos_swirl-Br-"</span>, ref), <span class="st">"Modelos_de_Regressao"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Depois, a cada sessão:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(swirl)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">swirl</span>()</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Escolha o curso <strong>Modelos de Regressão</strong> e a lição que quiser. Cada uma leva entre 20 e 40 minutos; <code>bye()</code> sai e guarda o progresso.</p>
+<section id="que-lição-serve-para-qual-encontro" class="level3">
+<h3 class="anchored" data-anchor-id="que-lição-serve-para-qual-encontro">Que lição serve para qual encontro</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 20%">
+<col style="width: 29%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">#</th>
+<th>Lição</th>
+<th style="text-align: center;">Encontro</th>
+<th>O que treina</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>Introdução</td>
+<td style="text-align: center;">E2</td>
+<td>Regressão à média, nos dados de Galton</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>Resíduos</td>
+<td style="text-align: center;">E2</td>
+<td>Mínimos quadrados; por que os resíduos somam zero</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>Estimação por Mínimos Quadrados</td>
+<td style="text-align: center;">E2</td>
+<td>A inclinação como <span class="math inline">\(r \times s_y/s_x\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>Variação Residual</td>
+<td style="text-align: center;">E2</td>
+<td><span class="math inline">\(\sigma\)</span>, os <span class="math inline">\(n-2\)</span> graus de liberdade, variação explicada</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>Introdução à Regressão Múltipla</td>
+<td style="text-align: center;">E2 · E3</td>
+<td>O intercepto é o coeficiente de uma coluna de 1s</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>Exemplos de Regressão Múltipla</td>
+<td style="text-align: center;">E3</td>
+<td>Interpretar coeficientes (dados <code>swiss</code>)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td>Exemplos de Regressão Múltipla 2</td>
+<td style="text-align: center;"><strong>E3</strong></td>
+<td>ANOVA como <code>lm()</code>: <code>lm(count ~ spray)</code>, <code>- 1</code>, <code>relevel()</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td>Exemplos de Regressão Múltipla 3</td>
+<td style="text-align: center;"><strong>E3</strong></td>
+<td>Interação <code>Year * Sex</code>: duas retas, duas inclinações</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">9</td>
+<td>Resíduos, Diagnóstico e Variação</td>
+<td style="text-align: center;">E2</td>
+<td>Alavancagem, influência, <code>dfbetas</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">10</td>
+<td>Fatores de Inflação da Variância</td>
+<td style="text-align: center;">E2</td>
+<td>VIF por simulação; viés de variável omitida</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">11</td>
+<td>Sobreajuste e Subajuste</td>
+<td style="text-align: center;">E9</td>
+<td>O custo de incluir e o custo de omitir</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">12</td>
+<td>Respostas Binárias</td>
+<td style="text-align: center;">E5</td>
+<td><em>Odds</em>, <code>glm(..., binomial)</code>, IC dos coeficientes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">13</td>
+<td>Respostas de Contagem</td>
+<td style="text-align: center;"><strong>E5</strong> · E6</td>
+<td>Poisson, <code>offset</code>, e a razão <em>deviance</em>/gl</td>
+</tr>
+</tbody>
+</table>
+<p>Nenhuma é obrigatória, com uma exceção: a lição 13 é a atividade da <a href="./encontros/e05-glm-i/index.html#antes-da-quarta">manhã de quarta</a>, quando eu chego mais tarde.</p>
+</section>
+</section>
 <section id="o-que-trazer" class="level2">
-<h2 class="anchored" data-anchor-id="o-que-trazer">5. O que trazer</h2>
+<h2 class="anchored" data-anchor-id="o-que-trazer">6. O que trazer</h2>
 <ul>
 <li>Notebook com o ambiente acima funcionando;</li>
 <li><strong>um conjunto de dados seu</strong> — de preferência o do seu mestrado ou doutorado, ainda que parcial. Ele é a matéria-prima do <a href="./trabalho-final.html">trabalho final</a> e dos exercícios;</li>

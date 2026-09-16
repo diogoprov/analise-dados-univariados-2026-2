@@ -178,7 +178,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul>
   <li><a href="#slides" id="toc-slides" class="nav-link active" data-scroll-target="#slides">Slides</a></li>
   <li><a href="#conteúdo" id="toc-conteúdo" class="nav-link" data-scroll-target="#conteúdo">Conteúdo</a></li>
-  <li><a href="#antes-da-aula-de-quarta-2309" id="toc-antes-da-aula-de-quarta-2309" class="nav-link" data-scroll-target="#antes-da-aula-de-quarta-2309">Antes da aula de quarta, 23/09</a></li>
+  <li><a href="#antes-da-quarta" id="toc-antes-da-quarta" class="nav-link" data-scroll-target="#antes-da-quarta">Antes da aula de quarta, 23/09</a>
+  <ul class="collapse">
+  <li><a href="#tarefa-1-glm-de-poisson-no-swirl-35-min" id="toc-tarefa-1-glm-de-poisson-no-swirl-35-min" class="nav-link" data-scroll-target="#tarefa-1-glm-de-poisson-no-swirl-35-min">Tarefa 1 — GLM de Poisson no <code>swirl</code> (~35 min)</a></li>
+  <li><a href="#tarefa-2-o-dag-do-seu-sistema" id="toc-tarefa-2-o-dag-do-seu-sistema" class="nav-link" data-scroll-target="#tarefa-2-o-dag-do-seu-sistema">Tarefa 2 — o DAG do seu sistema</a></li>
+  </ul></li>
   <li><a href="#prática" id="toc-prática" class="nav-link" data-scroll-target="#prática">Prática</a></li>
   <li><a href="#dados" id="toc-dados" class="nav-link" data-scroll-target="#dados">Dados</a></li>
   <li><a href="#leituras" id="toc-leituras" class="nav-link" data-scroll-target="#leituras">Leituras</a></li>
@@ -231,8 +235,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>DAGs e raciocínio causal</strong> (60 min) — <code>dagitty</code>, critério <em>backdoor</em>, <em>confounders</em> (controlar) <em>versus</em> colisores (<strong>não</strong> controlar). Por que seleção estatística de variáveis não substitui pensar sobre causalidade.</li>
 </ol>
 </section>
-<section id="antes-da-aula-de-quarta-2309" class="level2">
-<h2 class="anchored" data-anchor-id="antes-da-aula-de-quarta-2309">Antes da aula de quarta, 23/09</h2>
+<section id="antes-da-quarta" class="level2">
+<h2 class="anchored" data-anchor-id="antes-da-quarta">Antes da aula de quarta, 23/09</h2>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -243,9 +247,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nas primeiras 2 h de quarta estarei em reunião. Vocês começam pelo <strong>bloco 5 deste encontro — “Que covariáveis entram”</strong> —, que é o único autocontido e o que mais rende feito em vez de assistido: cada um precisa desenhar o DAG do <strong>próprio</strong> sistema. A teoria dos blocos 1 a 4 eu dou quando chegar.</p>
+<p>Nas primeiras 2 h de quarta estarei em reunião. São <strong>duas tarefas, nesta ordem</strong>: uma lição do <code>swirl</code> em português, que treina no console o GLM de Poisson do bloco 3, e depois o <strong>bloco 5 deste encontro — “Que covariáveis entram”</strong> —, que é o único autocontido e o que mais rende feito em vez de assistido: cada um precisa desenhar o DAG do <strong>próprio</strong> sistema. A teoria dos blocos 1 a 4 eu dou quando chegar — e vou mais rápido no 3, que vocês já terão praticado.</p>
 </div>
 </div>
+<section id="tarefa-1-glm-de-poisson-no-swirl-35-min" class="level3">
+<h3 class="anchored" data-anchor-id="tarefa-1-glm-de-poisson-no-swirl-35-min">Tarefa 1 — GLM de Poisson no <code>swirl</code> (~35 min)</h3>
+<p>Comecem por aqui, porque é mecânico, corrige sozinho e não depende de mim estar na sala. A última lição do curso <em>Regression Models</em> da Johns Hopkins, que traduzimos para o português, chama-se <strong>Respostas de Contagem</strong> e é quase o roteiro do bloco 3 deste encontro: o log de lambda como função linear das preditoras, <code>glm(y ~ x, poisson, dados)</code>, o intervalo na escala multiplicativa com <code>exp(confint())</code> e o <code>offset</code> para esforço amostral desigual. No fim ela ainda calcula <code>deviance(mdl)/df.residual(mdl)</code> e discute sobredispersão — que é por onde a aula da tarde começa.</p>
+<p>A instalação está em <a href="../../instalacao.html#swirl">Instalação › <code>swirl</code></a>. Depois: <code>library(swirl)</code>, <code>swirl()</code>, curso <strong>Modelos de Regressão</strong>, lição <strong>Respostas de Contagem</strong>.</p>
+<p>Três coisas para trazer anotadas:</p>
+<ol type="1">
+<li>A lição estima que as visitas crescem entre 0,2192 % e 0,2399 % por dia. De onde sai esse intervalo, e por que ele é multiplicativo e não aditivo?</li>
+<li>A razão <em>deviance</em>/gl do modelo dá cerca de 4,3. O que isso diz sobre os erros-padrão que o <code>summary()</code> tinha imprimido duas telas antes?</li>
+<li>O <code>offset</code> entra como <code>log(visits + 1)</code>, com coeficiente fixado em 1. Qual seria o <code>offset</code> no <strong>seu</strong> conjunto de dados — ou por que não há nenhum?</li>
+</ol>
+<p>Quem terminar rápido: a lição <strong>Respostas Binárias</strong> é o bloco 2 deste mesmo encontro.</p>
+</section>
+<section id="tarefa-2-o-dag-do-seu-sistema" class="level3">
+<h3 class="anchored" data-anchor-id="tarefa-2-o-dag-do-seu-sistema">Tarefa 2 — o DAG do seu sistema</h3>
 <p><strong>Leitura.</strong> Comecem pelo <a href="https://analises-ecologicas.com/cap2#fluxograma-conectando-vari%C3%A1veis-para-melhorar-o-desenho-experimental-e-as-an%C3%A1lises-estat%C3%ADsticas">fluxograma conectando variáveis</a>, no cap. 2 de <em>Análises Ecológicas no R</em> — é este mesmo raciocínio, em português e com exemplo ecológico. Quem quiser ir além, Arif &amp; MacNeil (2023), <a href="https://doi.org/10.1002/ecm.1554"><em>Applying the structural causal model framework for observational causal inference in ecology</em></a>, <em>Ecological Monographs</em> 93:e1554.</p>
 <p>Leiam com três perguntas sobre o próprio trabalho em mente:</p>
 <ol type="1">
@@ -265,6 +283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">adjustmentSets</span>(g, <span class="at">exposure =</span> <span class="st">"SuaPreditora"</span>, <span class="at">outcome =</span> <span class="st">"SuaResposta"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A pergunta que interessa: <strong>o conjunto que a função devolveu é igual à lista de covariáveis que vocês pretendiam pôr no modelo?</strong> Se não for, qual entrou, qual saiu, e por quê.</p>
 <p><strong>Me mandem por e-mail</strong>, antes do fim da reunião: o código do DAG, a saída do <code>adjustmentSets()</code>, uma frase dizendo que covariável vocês iam incluir e não vão mais — ou o contrário — e onde travaram, se travaram. É com isso que eu começo quando chegar.</p>
+</section>
 </section>
 <section id="prática" class="level2">
 <h2 class="anchored" data-anchor-id="prática">Prática</h2>

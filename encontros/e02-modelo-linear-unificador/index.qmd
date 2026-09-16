@@ -40,6 +40,30 @@ trouxe dados próprios já ajusta o primeiro `lm()` neles.
 O mesmo roteiro rodado nos dados do curso, com um *take-home* por item:
 [`exercicios/e02.R`](../../exercicios/e02.R).
 
+## Exercícios extras no `swirl`
+
+Opcionais, em português, rodando no console com correção automática. São do
+curso *Regression Models* da Johns Hopkins, que
+[traduzimos](https://github.com/paternogbc/cursos_swirl-Br); a instalação
+está em [Instalação › `swirl`](../../instalacao.qmd#swirl).
+
+As quatro primeiras lições são este encontro, do começo ao fim:
+
+1. **Introdução** — regressão à média nos dados de Galton.
+2. **Resíduos** — por que os resíduos somam zero, e por que isso não é um
+   achado empírico, mas consequência de como a reta foi escolhida.
+3. **Estimação por Mínimos Quadrados** — a inclinação como a correlação
+   vezes a razão dos desvios-padrão.
+4. **Variação Residual** — $\sigma$, os $n-2$ graus de liberdade e a
+   decomposição da variação total.
+
+Mais duas, para o fim da aula:
+
+- **Resíduos, Diagnóstico e Variação** — alavancagem, influência e
+  `dfbetas`; vai um pouco além do que vemos em sala.
+- **Fatores de Inflação da Variância** — o bloco 6 por simulação: dá para
+  *ver* a variância inflando conforme as preditoras se correlacionam.
+
 ## Leituras
 
 **Obrigatória**

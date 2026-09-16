@@ -145,7 +145,67 @@ Quem usa git pode simplesmente clonar o repositório do curso:
 git clone https://github.com/diogoprov/analise-dados-univariados-2026-2.git
 ```
 
-## 5. O que trazer
+## 5. Exercícios no `swirl` (em português) {#swirl}
+
+O `swirl` ensina R dentro do próprio console: ele faz a pergunta, você
+responde no *prompt*, e ele confere na hora. Traduzimos para o português o
+curso *Regression Models*, da Johns Hopkins — treze lições que vão do
+método dos mínimos quadrados ao GLM de Poisson. A tradução é de Gustavo
+Paterno e minha, e está em
+[`paternogbc/cursos_swirl-Br`](https://github.com/paternogbc/cursos_swirl-Br).
+
+Instalação, uma vez só:
+
+```{r}
+#| eval: false
+install.packages("swirl")
+
+ref <- "traducao-respostas-de-contagem"
+zip <- tempfile(fileext = ".zip")
+download.file(
+  paste0("https://github.com/diogoprov/cursos_swirl-Br/archive/refs/heads/", ref, ".zip"),
+  zip, mode = "wb"
+)
+pasta <- tempfile(); unzip(zip, exdir = pasta)
+swirl::install_course_directory(
+  file.path(pasta, paste0("cursos_swirl-Br-", ref), "Modelos_de_Regressao")
+)
+```
+
+Depois, a cada sessão:
+
+```{r}
+#| eval: false
+library(swirl)
+swirl()
+```
+
+Escolha o curso **Modelos de Regressão** e a lição que quiser. Cada uma
+leva entre 20 e 40 minutos; `bye()` sai e guarda o progresso.
+
+### Que lição serve para qual encontro
+
+| # | Lição | Encontro | O que treina |
+|--:|-------|:--------:|--------------|
+| 1 | Introdução | E2 | Regressão à média, nos dados de Galton |
+| 2 | Resíduos | E2 | Mínimos quadrados; por que os resíduos somam zero |
+| 3 | Estimação por Mínimos Quadrados | E2 | A inclinação como $r \times s_y/s_x$ |
+| 4 | Variação Residual | E2 | $\sigma$, os $n-2$ graus de liberdade, variação explicada |
+| 5 | Introdução à Regressão Múltipla | E2 · E3 | O intercepto é o coeficiente de uma coluna de 1s |
+| 6 | Exemplos de Regressão Múltipla | E3 | Interpretar coeficientes (dados `swiss`) |
+| 7 | Exemplos de Regressão Múltipla 2 | **E3** | ANOVA como `lm()`: `lm(count ~ spray)`, `- 1`, `relevel()` |
+| 8 | Exemplos de Regressão Múltipla 3 | **E3** | Interação `Year * Sex`: duas retas, duas inclinações |
+| 9 | Resíduos, Diagnóstico e Variação | E2 | Alavancagem, influência, `dfbetas` |
+| 10 | Fatores de Inflação da Variância | E2 | VIF por simulação; viés de variável omitida |
+| 11 | Sobreajuste e Subajuste | E9 | O custo de incluir e o custo de omitir |
+| 12 | Respostas Binárias | E5 | *Odds*, `glm(..., binomial)`, IC dos coeficientes |
+| 13 | Respostas de Contagem | **E5** · E6 | Poisson, `offset`, e a razão *deviance*/gl |
+
+Nenhuma é obrigatória, com uma exceção: a lição 13 é a atividade da
+[manhã de quarta](encontros/e05-glm-i/index.qmd#antes-da-quarta), quando
+eu chego mais tarde.
+
+## 6. O que trazer
 
 - Notebook com o ambiente acima funcionando;
 - **um conjunto de dados seu** — de preferência o do seu mestrado ou

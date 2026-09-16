@@ -43,6 +43,32 @@ curso, com um *take-home* por item:
 - [`anova_dois_fatores.csv`](../../dados/anova_dois_fatores.csv)
 - [`Cap7_exercicio1.csv`](../../dados/Cap7_exercicio1.csv)
 
+## Exercícios extras no `swirl`
+
+Opcionais, em português, com correção automática no console. Instalação em
+[Instalação › `swirl`](../../instalacao.qmd#swirl).
+
+Duas lições são quase o roteiro dos blocos 1 e 2:
+
+- **Exemplos de Regressão Múltipla 2** — ANOVA de um fator escrita como
+  `lm(count ~ spray, InsectSprays)`. A lição faz exatamente o que o bloco 1
+  defende: compara os coeficientes com as médias dos grupos, mostra que
+  `lm(count ~ spray - 1)` devolve as seis médias em vez de cinco
+  diferenças, e usa `relevel()` para trocar o nível de referência.
+- **Exemplos de Regressão Múltipla 3** — interação `Year * Sex` em dados de
+  desnutrição infantil da OMS: uma reta por sexo, depois o modelo aditivo
+  que força inclinações iguais, e então o termo de interação que as libera.
+  Repare que a interação **não** é significativa ($p \approx 0{,}80$) — é um
+  bom exemplo de como relatar uma interação que não se sustenta.
+
+E duas de aquecimento, se o Encontro 2 tiver ficado apertado:
+
+- **Introdução à Regressão Múltipla** — o intercepto como coeficiente de
+  uma coluna de 1s; regressão múltipla como sequência de regressões
+  simples.
+- **Exemplos de Regressão Múltipla** — interpretar coeficientes nos dados
+  `swiss`.
+
 ## Leituras
 
 **Obrigatória**

@@ -34,17 +34,51 @@ observacional: *que covariáveis entram no modelo, e por quê?*
    que seleção estatística de variáveis não substitui pensar sobre
    causalidade.
 
-## Antes da aula de quarta, 23/09
+## Antes da aula de quarta, 23/09 {#antes-da-quarta}
 
 ::: {.callout-important}
 ## Começaremos com uma atividade, não com teoria
 
-Nas primeiras 2 h de quarta estarei em reunião. Vocês começam pelo
-**bloco 5 deste encontro — "Que covariáveis entram"** —, que é o único
-autocontido e o que mais rende feito em vez de assistido: cada um precisa
-desenhar o DAG do **próprio** sistema. A teoria dos blocos 1 a 4 eu dou
-quando chegar.
+Nas primeiras 2 h de quarta estarei em reunião. São **duas tarefas, nesta
+ordem**: uma lição do `swirl` em português, que treina no console o GLM de
+Poisson do bloco 3, e depois o **bloco 5 deste encontro — "Que covariáveis
+entram"** —, que é o único autocontido e o que mais rende feito em vez de
+assistido: cada um precisa desenhar o DAG do **próprio** sistema. A teoria
+dos blocos 1 a 4 eu dou quando chegar — e vou mais rápido no 3, que vocês
+já terão praticado.
 :::
+
+### Tarefa 1 — GLM de Poisson no `swirl` (~35 min)
+
+Comecem por aqui, porque é mecânico, corrige sozinho e não depende de mim
+estar na sala. A última lição do curso *Regression Models* da Johns
+Hopkins, que traduzimos para o português, chama-se **Respostas de
+Contagem** e é quase o roteiro do bloco 3 deste encontro: o log de lambda
+como função linear das preditoras, `glm(y ~ x, poisson, dados)`, o
+intervalo na escala multiplicativa com `exp(confint())` e o `offset` para
+esforço amostral desigual. No fim ela ainda calcula
+`deviance(mdl)/df.residual(mdl)` e discute sobredispersão — que é por onde
+a aula da tarde começa.
+
+A instalação está em [Instalação › `swirl`](../../instalacao.qmd#swirl).
+Depois: `library(swirl)`, `swirl()`, curso **Modelos de Regressão**, lição
+**Respostas de Contagem**.
+
+Três coisas para trazer anotadas:
+
+1. A lição estima que as visitas crescem entre 0,2192 % e 0,2399 % por
+   dia. De onde sai esse intervalo, e por que ele é multiplicativo e não
+   aditivo?
+2. A razão *deviance*/gl do modelo dá cerca de 4,3. O que isso diz sobre
+   os erros-padrão que o `summary()` tinha imprimido duas telas antes?
+3. O `offset` entra como `log(visits + 1)`, com coeficiente fixado em 1.
+   Qual seria o `offset` no **seu** conjunto de dados — ou por que não há
+   nenhum?
+
+Quem terminar rápido: a lição **Respostas Binárias** é o bloco 2 deste
+mesmo encontro.
+
+### Tarefa 2 — o DAG do seu sistema
 
 **Leitura.** Comecem pelo [fluxograma conectando variáveis](https://analises-ecologicas.com/cap2#fluxograma-conectando-vari%C3%A1veis-para-melhorar-o-desenho-experimental-e-as-an%C3%A1lises-estat%C3%ADsticas),
 no cap. 2 de *Análises Ecológicas no R* — é este mesmo raciocínio, em

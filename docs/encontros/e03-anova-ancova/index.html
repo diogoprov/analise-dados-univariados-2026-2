@@ -174,6 +174,7 @@ window.Quarto = {
   <li><a href="#conteúdo" id="toc-conteúdo" class="nav-link" data-scroll-target="#conteúdo">Conteúdo</a></li>
   <li><a href="#prática" id="toc-prática" class="nav-link" data-scroll-target="#prática">Prática</a></li>
   <li><a href="#dados" id="toc-dados" class="nav-link" data-scroll-target="#dados">Dados</a></li>
+  <li><a href="#exercícios-extras-no-swirl" id="toc-exercícios-extras-no-swirl" class="nav-link" data-scroll-target="#exercícios-extras-no-swirl">Exercícios extras no <code>swirl</code></a></li>
   <li><a href="#leituras" id="toc-leituras" class="nav-link" data-scroll-target="#leituras">Leituras</a></li>
   <li><a href="#recursos-externos" id="toc-recursos-externos" class="nav-link" data-scroll-target="#recursos-externos">Recursos externos</a></li>
   </ul>
@@ -237,6 +238,20 @@ window.Quarto = {
 <ul>
 <li><a href="../../dados/anova_dois_fatores.csv"><code>anova_dois_fatores.csv</code></a></li>
 <li><a href="../../dados/Cap7_exercicio1.csv"><code>Cap7_exercicio1.csv</code></a></li>
+</ul>
+</section>
+<section id="exercícios-extras-no-swirl" class="level2">
+<h2 class="anchored" data-anchor-id="exercícios-extras-no-swirl">Exercícios extras no <code>swirl</code></h2>
+<p>Opcionais, em português, com correção automática no console. Instalação em <a href="../../instalacao.html#swirl">Instalação › <code>swirl</code></a>.</p>
+<p>Duas lições são quase o roteiro dos blocos 1 e 2:</p>
+<ul>
+<li><strong>Exemplos de Regressão Múltipla 2</strong> — ANOVA de um fator escrita como <code>lm(count ~ spray, InsectSprays)</code>. A lição faz exatamente o que o bloco 1 defende: compara os coeficientes com as médias dos grupos, mostra que <code>lm(count ~ spray - 1)</code> devolve as seis médias em vez de cinco diferenças, e usa <code>relevel()</code> para trocar o nível de referência.</li>
+<li><strong>Exemplos de Regressão Múltipla 3</strong> — interação <code>Year * Sex</code> em dados de desnutrição infantil da OMS: uma reta por sexo, depois o modelo aditivo que força inclinações iguais, e então o termo de interação que as libera. Repare que a interação <strong>não</strong> é significativa (<span class="math inline">\(p \approx 0{,}80\)</span>) — é um bom exemplo de como relatar uma interação que não se sustenta.</li>
+</ul>
+<p>E duas de aquecimento, se o Encontro 2 tiver ficado apertado:</p>
+<ul>
+<li><strong>Introdução à Regressão Múltipla</strong> — o intercepto como coeficiente de uma coluna de 1s; regressão múltipla como sequência de regressões simples.</li>
+<li><strong>Exemplos de Regressão Múltipla</strong> — interpretar coeficientes nos dados <code>swiss</code>.</li>
 </ul>
 </section>
 <section id="leituras" class="level2">
