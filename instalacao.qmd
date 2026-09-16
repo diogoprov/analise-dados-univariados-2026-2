@@ -197,8 +197,8 @@ leva entre 20 e 40 minutos; `bye()` sai e guarda o progresso.
 | 8 | Exemplos de Regressão Múltipla 3 | **E3** | Interação `Year * Sex`: duas retas, duas inclinações |
 | 9 | Resíduos, Diagnóstico e Variação | E2 | Alavancagem, influência, `dfbetas` |
 | 10 | Fatores de Inflação da Variância | E2 | VIF por simulação; viés de variável omitida |
-| 11 | Sobreajuste e Subajuste | E9 | O custo de incluir e o custo de omitir |
-| 12 | Respostas Binárias | E5 | *Odds*, `glm(..., binomial)`, IC dos coeficientes |
+| 11 | Sobreajuste e Subajuste | **E9** | O custo de incluir e o custo de omitir |
+| 12 | Respostas Binárias | **E5** | *Odds*, `glm(..., binomial)`, IC dos coeficientes |
 | 13 | Respostas de Contagem | **E5** · E6 | Poisson, `offset`, e a razão *deviance*/gl |
 
 Nenhuma é obrigatória, com uma exceção: a lição 13 é a atividade da

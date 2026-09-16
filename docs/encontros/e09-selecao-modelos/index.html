@@ -73,6 +73,35 @@ ul.task-list li input[type="checkbox"] {
 <style>html{ scroll-behavior: smooth; }</style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="E9 — Teoria da informação e seleção de modelos – Análise de Dados Univariados">
@@ -147,8 +176,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#bloco-1-teoria-da-informação-35-h" id="toc-bloco-1-teoria-da-informação-35-h" class="nav-link" data-scroll-target="#bloco-1-teoria-da-informação-35-h">Bloco 1 — teoria da informação (3,5 h)</a></li>
   <li><a href="#bloco-2-bayesiano-45-min" id="toc-bloco-2-bayesiano-45-min" class="nav-link" data-scroll-target="#bloco-2-bayesiano-45-min">Bloco 2 — bayesiano (45 min)</a></li>
   </ul></li>
+  <li><a href="#exercícios-extras-no-swirl" id="toc-exercícios-extras-no-swirl" class="nav-link" data-scroll-target="#exercícios-extras-no-swirl">Exercícios extras no <code>swirl</code></a></li>
   <li><a href="#leituras" id="toc-leituras" class="nav-link" data-scroll-target="#leituras">Leituras</a></li>
   <li><a href="#prática-para-acompanhar" id="toc-prática-para-acompanhar" class="nav-link" data-scroll-target="#prática-para-acompanhar">Prática, para acompanhar</a></li>
+  <li><a href="#recursos-externos" id="toc-recursos-externos" class="nav-link" data-scroll-target="#recursos-externos">Recursos externos</a></li>
   </ul>
 </nav>
     </div>
@@ -210,6 +241,30 @@ ul.task-list li input[type="checkbox"] {
 </ol>
 </section>
 </section>
+<section id="exercícios-extras-no-swirl" class="level2">
+<h2 class="anchored" data-anchor-id="exercícios-extras-no-swirl">Exercícios extras no <code>swirl</code></h2>
+<p>Opcional, em português, no console. A instalação está em <a href="../../instalacao.html#swirl">Instalação › <code>swirl</code></a>.</p>
+<ul>
+<li><strong>Sobreajuste e Subajuste</strong> — as duas metades do problema deste encontro, e sem mencionar AIC uma única vez. A lição simula com <code>simbias()</code> para mostrar que <strong>omitir</strong> uma preditora correlacionada enviesa o coeficiente que sobra, e que <strong>incluir</strong> preditoras a mais infla os erros-padrão sem enviesar nada; depois compara modelos aninhados com <code>anova(fit1, fit3)</code> e reconstrói a estatística F à mão, a partir das <em>deviances</em>. Ver esse par de custos isolado do critério de informação ajuda a entender o que o AIC está tentando equilibrar quando ele aparece no bloco 1.</li>
+<li><strong>Fatores de Inflação da Variância</strong> — a lição anterior, se quiserem a metade “incluir demais” também por simulação.</li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Um detalhe da lição com que eu não concordo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Perto do fim, ela usa <code>shapiro.test()</code> nos resíduos para decidir sobre normalidade. Teste de normalidade em resíduo tem o problema de sempre: com <span class="math inline">\(n\)</span> pequeno ele não detecta nada, e com <span class="math inline">\(n\)</span> grande ele rejeita desvios irrelevantes. Olhem o gráfico quantil-quantil, como fazemos no Encontro 2, e usem o teste no máximo como nota de rodapé.</p>
+</div>
+</div>
+</div>
+</section>
 <section id="leituras" class="level2">
 <h2 class="anchored" data-anchor-id="leituras">Leituras</h2>
 <p><strong>Obrigatória</strong></p>
@@ -250,6 +305,9 @@ ul.task-list li input[type="checkbox"] {
 <section id="prática-para-acompanhar" class="level2">
 <h2 class="anchored" data-anchor-id="prática-para-acompanhar">Prática, para acompanhar</h2>
 <p>O roteiro do fim do deck, rodado nos dados do curso, com um <em>take-home</em> por item: <a href="../../exercicios/e09.R"><code>exercicios/e09.R</code></a>.</p>
+</section>
+<section id="recursos-externos" class="level2">
+<h2 class="anchored" data-anchor-id="recursos-externos">Recursos externos</h2>
 <ul>
 <li><a href="https://www.stat.umn.edu/geyer/5421/notes/glmbb.html">Model selection and model averaging</a> — notas do Stat 5421 de Charles Geyer (Universidade de Minnesota).</li>
 <li><a href="https://uoftcoders.github.io/rcourse/lec09-model-selection.html">Model selection and model averaging</a> — aula 9 do curso EEB313 (UofT Coders).</li>

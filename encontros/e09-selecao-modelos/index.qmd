@@ -41,6 +41,32 @@ e sobre por que ela é mais perigosa do que parece.
 10. **Fecho** — Burnham & Anderson *versus* Gelman, Hill & Vehtari: não
     selecionar, mediar.
 
+## Exercícios extras no `swirl`
+
+Opcional, em português, no console. A instalação está em
+[Instalação › `swirl`](../../instalacao.qmd#swirl).
+
+- **Sobreajuste e Subajuste** — as duas metades do problema deste encontro,
+  e sem mencionar AIC uma única vez. A lição simula com `simbias()` para
+  mostrar que **omitir** uma preditora correlacionada enviesa o coeficiente
+  que sobra, e que **incluir** preditoras a mais infla os erros-padrão sem
+  enviesar nada; depois compara modelos aninhados com `anova(fit1, fit3)` e
+  reconstrói a estatística F à mão, a partir das *deviances*. Ver esse par
+  de custos isolado do critério de informação ajuda a entender o que o AIC
+  está tentando equilibrar quando ele aparece no bloco 1.
+- **Fatores de Inflação da Variância** — a lição anterior, se quiserem a
+  metade "incluir demais" também por simulação.
+
+::: {.callout-note collapse="true"}
+## Um detalhe da lição com que eu não concordo
+
+Perto do fim, ela usa `shapiro.test()` nos resíduos para decidir sobre
+normalidade. Teste de normalidade em resíduo tem o problema de sempre:
+com $n$ pequeno ele não detecta nada, e com $n$ grande ele rejeita
+desvios irrelevantes. Olhem o gráfico quantil-quantil, como fazemos no
+Encontro 2, e usem o teste no máximo como nota de rodapé.
+:::
+
 ## Leituras
 
 **Obrigatória**
@@ -81,6 +107,8 @@ e sobre por que ela é mais perigosa do que parece.
 
 O roteiro do fim do deck, rodado nos dados do curso, com um *take-home*
 por item: [`exercicios/e09.R`](../../exercicios/e09.R).
+
+## Recursos externos
 
 - [Model selection and model averaging](https://www.stat.umn.edu/geyer/5421/notes/glmbb.html) — notas do Stat 5421 de Charles Geyer (Universidade de Minnesota).
 - [Model selection and model averaging](https://uoftcoders.github.io/rcourse/lec09-model-selection.html) — aula 9 do curso EEB313 (UofT Coders).

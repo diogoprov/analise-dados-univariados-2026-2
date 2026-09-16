@@ -108,6 +108,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <style>html{ scroll-behavior: smooth; }</style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="E5 — GLM I: verossimilhança, binomial e Poisson – Análise de Dados Univariados">
@@ -182,6 +211,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#tarefa-1-glm-de-poisson-no-swirl-35-min" id="toc-tarefa-1-glm-de-poisson-no-swirl-35-min" class="nav-link" data-scroll-target="#tarefa-1-glm-de-poisson-no-swirl-35-min">Tarefa 1 — GLM de Poisson no <code>swirl</code> (~35 min)</a></li>
   <li><a href="#tarefa-2-o-dag-do-seu-sistema" id="toc-tarefa-2-o-dag-do-seu-sistema" class="nav-link" data-scroll-target="#tarefa-2-o-dag-do-seu-sistema">Tarefa 2 — o DAG do seu sistema</a></li>
+  <li><a href="#tarefa-3-reserva-se-eu-demorar" id="toc-tarefa-3-reserva-se-eu-demorar" class="nav-link" data-scroll-target="#tarefa-3-reserva-se-eu-demorar">Tarefa 3 — reserva, se eu demorar</a></li>
   </ul></li>
   <li><a href="#prática" id="toc-prática" class="nav-link" data-scroll-target="#prática">Prática</a></li>
   <li><a href="#dados" id="toc-dados" class="nav-link" data-scroll-target="#dados">Dados</a></li>
@@ -247,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Nas primeiras 2 h de quarta estarei em reunião. São <strong>duas tarefas, nesta ordem</strong>: uma lição do <code>swirl</code> em português, que treina no console o GLM de Poisson do bloco 3, e depois o <strong>bloco 5 deste encontro — “Que covariáveis entram”</strong> —, que é o único autocontido e o que mais rende feito em vez de assistido: cada um precisa desenhar o DAG do <strong>próprio</strong> sistema. A teoria dos blocos 1 a 4 eu dou quando chegar — e vou mais rápido no 3, que vocês já terão praticado.</p>
+<p>Nas primeiras 2 h de quarta estarei em reunião. São <strong>duas tarefas, nesta ordem</strong>, mais uma de reserva: uma lição do <code>swirl</code> em português, que treina no console o GLM de Poisson do bloco 3, e depois o <strong>bloco 5 deste encontro — “Que covariáveis entram”</strong> —, que é o único autocontido e o que mais rende feito em vez de assistido: cada um precisa desenhar o DAG do <strong>próprio</strong> sistema. A teoria dos blocos 1 a 4 eu dou quando chegar — e vou mais rápido no 3, que vocês já terão praticado.</p>
 </div>
 </div>
 <section id="tarefa-1-glm-de-poisson-no-swirl-35-min" class="level3">
@@ -260,7 +290,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>A razão <em>deviance</em>/gl do modelo dá cerca de 4,3. O que isso diz sobre os erros-padrão que o <code>summary()</code> tinha imprimido duas telas antes?</li>
 <li>O <code>offset</code> entra como <code>log(visits + 1)</code>, com coeficiente fixado em 1. Qual seria o <code>offset</code> no <strong>seu</strong> conjunto de dados — ou por que não há nenhum?</li>
 </ol>
-<p>Quem terminar rápido: a lição <strong>Respostas Binárias</strong> é o bloco 2 deste mesmo encontro.</p>
 </section>
 <section id="tarefa-2-o-dag-do-seu-sistema" class="level3">
 <h3 class="anchored" data-anchor-id="tarefa-2-o-dag-do-seu-sistema">Tarefa 2 — o DAG do seu sistema</h3>
@@ -283,6 +312,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">adjustmentSets</span>(g, <span class="at">exposure =</span> <span class="st">"SuaPreditora"</span>, <span class="at">outcome =</span> <span class="st">"SuaResposta"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>A pergunta que interessa: <strong>o conjunto que a função devolveu é igual à lista de covariáveis que vocês pretendiam pôr no modelo?</strong> Se não for, qual entrou, qual saiu, e por quê.</p>
 <p><strong>Me mandem por e-mail</strong>, antes do fim da reunião: o código do DAG, a saída do <code>adjustmentSets()</code>, uma frase dizendo que covariável vocês iam incluir e não vão mais — ou o contrário — e onde travaram, se travaram. É com isso que eu começo quando chegar.</p>
+</section>
+<section id="tarefa-3-reserva-se-eu-demorar" class="level3">
+<h3 class="anchored" data-anchor-id="tarefa-3-reserva-se-eu-demorar">Tarefa 3 — reserva, se eu demorar</h3>
+<p>Se a reunião esticar e vocês terminarem as duas primeiras, sigam para a lição <strong>Respostas Binárias</strong>, no mesmo curso do <code>swirl</code> (~30 min). Ela é o bloco 2 deste encontro, com o exemplo mais leve que existe: a chance de o Baltimore Ravens vencer, em função dos pontos que o time marca.</p>
+<p>O que ela treina, quase na ordem em que veremos na aula:</p>
+<ul>
+<li>chance como <span class="math inline">\(p/(1-p)\)</span>, e por que várias maneiras de escrever a mesma razão são a mesma coisa;</li>
+<li><code>glm(ravenWinNum ~ ravenScore, binomial, ravenData)</code>;</li>
+<li>que <code>predict()</code> devolve <strong>log da chance</strong>, não probabilidade — a conversão com <code>exp(lodds)/(1 + exp(lodds))</code> é o bloco 4 em miniatura;</li>
+<li><code>exp(confint(mdl))</code>: o intervalo construído na escala do <em>link</em> e só depois exponenciado, que é a ordem em que eu vou insistir;</li>
+<li><code>anova(mdl)</code>, <code>qchisq(0.95, 1)</code> e <code>pchisq(3.5398, 1, lower.tail = FALSE)</code> — o teste de razão de verossimilhanças do bloco 1, feito à mão.</li>
+</ul>
+<p>Uma pergunta para trazer: o modelo dá aos Ravens 33 % de chance de vitória com 9 pontos, e nos dados <strong>não existe</strong> jogo com menos que isso. Onde fica a região equivalente no conjunto de vocês — aquela em que o modelo responde com toda a confiança sobre o que vocês nunca observaram?</p>
 </section>
 </section>
 <section id="prática" class="level2">
