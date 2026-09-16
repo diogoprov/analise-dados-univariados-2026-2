@@ -260,7 +260,10 @@ window.Quarto = {
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Perto do fim, ela usa <code>shapiro.test()</code> nos resíduos para decidir sobre normalidade. Teste de normalidade em resíduo tem o problema de sempre: com <span class="math inline">\(n\)</span> pequeno ele não detecta nada, e com <span class="math inline">\(n\)</span> grande ele rejeita desvios irrelevantes. Olhem o gráfico quantil-quantil, como fazemos no Encontro 2, e usem o teste no máximo como nota de rodapé.</p>
+<p>Perto do fim, ela usa <code>shapiro.test()</code> nos resíduos para decidir sobre normalidade. <strong>Metade disso está certa</strong>: é no resíduo que a premissa se checa, não no dado bruto. A outra metade, não — teste de significância para checar premissa tem o problema de sempre: com <span class="math inline">\(n\)</span> pequeno ele não detecta nada, e com <span class="math inline">\(n\)</span> grande ele rejeita desvios irrelevantes. As duas metades são exatamente as duas perguntas de Kozak &amp; Piepho (2018), que respondem a primeira a favor do resíduo e a segunda a favor do gráfico. Olhem o quantil-quantil, como fazemos no Encontro 2, e deixem o <code>shapiro.test()</code> no máximo como nota de rodapé.</p>
+<ul>
+<li>Kozak, M. &amp; Piepho, H.-P. 2018. <a href="https://doi.org/10.1111/jac.12220">What’s normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions</a>. <em>Journal of Agronomy and Crop Science</em> 204:86–98.</li>
+</ul>
 </div>
 </div>
 </div>

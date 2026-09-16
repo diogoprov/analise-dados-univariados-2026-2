@@ -76,6 +76,28 @@ Mais duas, para o fim da aula:
 - Lindeløv, J.K. [*Common statistical tests are linear models*](https://lindeloev.github.io/tests-as-linear/).
 - Gelman, A. et al. 2026. [*Bayesian Workflow*](https://avehtari.github.io/Bayesian-Workflow/). Chapman & Hall/CRC. Cap. 6, "Using simulations to capture uncertainty".
 
+**Sobre checar premissas**
+
+O bloco 1 afirma que a premissa de normalidade está no resíduo, e não nos
+dados. Estes três artigos sustentam isso — e, principalmente, sustentam
+por que não se decide sobre premissa com valor de *p*. São argumentos
+diferentes, não três versões do mesmo:
+
+- Kozak, M. & Piepho, H.-P. 2018. [What's normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions](https://doi.org/10.1111/jac.12220). *Journal of Agronomy and Crop Science* 204:86–98. — as duas perguntas,
+  uma de cada vez: checar no dado bruto ou no resíduo? por teste ou por
+  gráfico? Responde a primeira a favor do resíduo e a segunda a favor do
+  gráfico, com dois exemplos trabalhados.
+- Shatz, I. 2024. [Assumption-checking rather than (just) testing: the importance of visualization and effect size in statistical diagnostics](https://doi.org/10.3758/s13428-023-02072-x). *Behavior Research Methods* 56:826–845. Acesso aberto (CC BY 4.0).
+  Consolida por simulação o que dá errado no teste: falso positivo com $n$
+  grande, falso negativo com $n$ pequeno, falsa binariedade, o *p* lido
+  como se fosse tamanho de efeito, e o próprio teste de premissa com
+  premissas que ninguém checou. Cita o Shapiro–Wilk pelo nome.
+- Tijmstra, J. 2018. [Why checking model assumptions using null hypothesis significance tests does not suffice: a plea for plausibility](https://doi.org/10.3758/s13423-018-1447-4). *Psychonomic Bulletin & Review* 25:548–559.
+  O argumento lógico, e o mais desconfortável: um teste **não**
+  significativo é ausência de evidência, não evidência de ausência. Por
+  esse caminho a premissa nunca chega a ser verificada — o que ele propõe
+  no lugar é raciocinar sobre plausibilidade, não sobre rejeição.
+
 ## Recursos externos
 
 - [*Análises Ecológicas no R* — cap. 7](https://analises-ecologicas.com/cap7)

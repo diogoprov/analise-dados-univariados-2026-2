@@ -61,10 +61,22 @@ Opcional, em português, no console. A instalação está em
 ## Um detalhe da lição com que eu não concordo
 
 Perto do fim, ela usa `shapiro.test()` nos resíduos para decidir sobre
-normalidade. Teste de normalidade em resíduo tem o problema de sempre:
-com $n$ pequeno ele não detecta nada, e com $n$ grande ele rejeita
-desvios irrelevantes. Olhem o gráfico quantil-quantil, como fazemos no
-Encontro 2, e usem o teste no máximo como nota de rodapé.
+normalidade. **Metade disso está certa**: é no resíduo que a premissa se
+checa, não no dado bruto. A outra metade, não — teste de significância
+para checar premissa tem o problema de sempre: com $n$ pequeno ele não
+detecta nada, e com $n$ grande ele rejeita desvios irrelevantes. As duas
+metades são exatamente as duas perguntas de Kozak & Piepho (2018), que
+respondem a primeira a favor do resíduo e a segunda a favor do gráfico.
+Olhem o quantil-quantil, como fazemos no Encontro 2, e deixem o
+`shapiro.test()` no máximo como nota de rodapé — Shatz (2024) faz a mesma
+crítica por simulação e cita o Shapiro–Wilk pelo nome como exemplo do
+problema.
+
+- Kozak, M. & Piepho, H.-P. 2018. [What's normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions](https://doi.org/10.1111/jac.12220). *Journal of Agronomy and Crop Science* 204:86–98.
+- Shatz, I. 2024. [Assumption-checking rather than (just) testing: the importance of visualization and effect size in statistical diagnostics](https://doi.org/10.3758/s13428-023-02072-x). *Behavior Research Methods* 56:826–845. Acesso aberto (CC BY 4.0).
+
+Um terceiro argumento, mais fundo, está nas leituras do
+[Encontro 2](../e02-modelo-linear-unificador/index.qmd).
 :::
 
 ## Leituras
