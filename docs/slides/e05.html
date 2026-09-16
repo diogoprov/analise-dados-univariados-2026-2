@@ -706,6 +706,7 @@ scale(CRC)                       1.038      0.245   4.237    0.000</code></pre>
 <pre><code>{ Precipitacao }</code></pre>
 </div>
 </div>
+<p><strong>Lendo a saída:</strong> o único ajuste necessário é <code>Precipitacao</code>. E repare no que <strong>não</strong> está lá: <code>Deteccao</code> é colisor (<code>Area</code> → <code>Deteccao</code> ← <code>Riqueza</code>), e condicionar nela criaria associação onde não existe.</p>
 <div class="definicao">
 <p>Desenhe o DAG <strong>antes</strong> de rodar o modelo. Ele diz o que incluir — e a resposta quase nunca é “tudo”.</p>
 </div>
@@ -756,8 +757,9 @@ scale(CRC)                       1.038      0.245   4.237    0.000</code></pre>
 <div class="nota">
 <ul>
 <li>Agresti, A. 2015. <a href="https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034"><em>Foundations of Linear and Generalized Linear Models</em></a>. Wiley.</li>
-<li>da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; <strong>Provete, D.B.</strong> &amp; Vancine, M.A.&nbsp;2022. <a href="https://analises-ecologicas.com"><em>Análises Ecológicas no R</em></a>. NUPEEA.</li>
-<li>Gelman, A.; Hill, J. &amp; Vehtari, A. 2020. <a href="https://avehtari.github.io/ROS-Examples/"><em>Regression and Other Stories</em></a>. Cambridge University Press. — código e exemplos no site.</li>
+<li>da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; <strong>Provete, D.B.</strong> &amp; Vancine, M.A.&nbsp;2022. <a href="https://analises-ecologicas.com"><em>Análises Ecológicas no R</em></a>. NUPEEA. — o <a href="https://analises-ecologicas.com/cap2#fluxograma-conectando-vari%C3%A1veis-para-melhorar-o-desenho-experimental-e-as-an%C3%A1lises-estat%C3%ADsticas">fluxograma conectando variáveis</a>, no cap. 2, é este mesmo raciocínio em português; cap. 8 para os GLMs.</li>
+<li>Gelman, A.; Hill, J. &amp; Vehtari, A. 2020. <a href="https://avehtari.github.io/ROS-Examples/"><em>Regression and Other Stories</em></a>. Cambridge University Press. Cap. 13 (<em>Logistic regression</em>), 14 (<em>Working with logistic regression</em>) e 15 (<em>Other generalized linear models</em>).</li>
+<li>McElreath, R. 2020. <em>Statistical Rethinking</em>, 2ª ed., cap. 5 — <a href="https://bookdown.org/content/70a06054-8138-4d90-aaa0-895f57aab1b4/the-many-variables-the-spurious-waffles.html"><em>The Many Variables &amp; The Spurious Waffles</em></a>, na versão em <code>brms</code> de Kurz: associação espúria, relação encoberta e DAGs.</li>
 <li>Zuur, A.F. et al.&nbsp;2009. <a href="https://doi.org/10.1007/978-0-387-87458-6"><em>Mixed Effects Models and Extensions in Ecology with R</em></a>. Springer.</li>
 <li>Arif, S. &amp; MacNeil, M.A.&nbsp;2023. <a href="https://doi.org/10.1002/ecm.1554">Applying the structural causal model framework for observational causal inference in ecology</a>. <em>Ecological Monographs</em> 93:e1554.</li>
 <li>Gelman, A. et al.&nbsp;2026. <a href="https://avehtari.github.io/Bayesian-Workflow/"><em>Bayesian Workflow</em></a>. Chapman &amp; Hall/CRC. Cap. 7, “Prediction, generalization, and causal inference”.</li>

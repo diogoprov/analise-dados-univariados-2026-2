@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -143,6 +178,7 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#slides" id="toc-slides" class="nav-link active" data-scroll-target="#slides">Slides</a></li>
   <li><a href="#conteúdo" id="toc-conteúdo" class="nav-link" data-scroll-target="#conteúdo">Conteúdo</a></li>
+  <li><a href="#antes-da-aula-de-quarta-2309" id="toc-antes-da-aula-de-quarta-2309" class="nav-link" data-scroll-target="#antes-da-aula-de-quarta-2309">Antes da aula de quarta, 23/09</a></li>
   <li><a href="#prática" id="toc-prática" class="nav-link" data-scroll-target="#prática">Prática</a></li>
   <li><a href="#dados" id="toc-dados" class="nav-link" data-scroll-target="#dados">Dados</a></li>
   <li><a href="#leituras" id="toc-leituras" class="nav-link" data-scroll-target="#leituras">Leituras</a></li>
@@ -195,6 +231,41 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>DAGs e raciocínio causal</strong> (60 min) — <code>dagitty</code>, critério <em>backdoor</em>, <em>confounders</em> (controlar) <em>versus</em> colisores (<strong>não</strong> controlar). Por que seleção estatística de variáveis não substitui pensar sobre causalidade.</li>
 </ol>
 </section>
+<section id="antes-da-aula-de-quarta-2309" class="level2">
+<h2 class="anchored" data-anchor-id="antes-da-aula-de-quarta-2309">Antes da aula de quarta, 23/09</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Começaremos com uma atividade, não com teoria
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nas primeiras 2 h de quarta estarei em reunião. Vocês começam pelo <strong>bloco 5 deste encontro — “Que covariáveis entram”</strong> —, que é o único autocontido e o que mais rende feito em vez de assistido: cada um precisa desenhar o DAG do <strong>próprio</strong> sistema. A teoria dos blocos 1 a 4 eu dou quando chegar.</p>
+</div>
+</div>
+<p><strong>Leitura.</strong> Comecem pelo <a href="https://analises-ecologicas.com/cap2#fluxograma-conectando-vari%C3%A1veis-para-melhorar-o-desenho-experimental-e-as-an%C3%A1lises-estat%C3%ADsticas">fluxograma conectando variáveis</a>, no cap. 2 de <em>Análises Ecológicas no R</em> — é este mesmo raciocínio, em português e com exemplo ecológico. Quem quiser ir além, Arif &amp; MacNeil (2023), <a href="https://doi.org/10.1002/ecm.1554"><em>Applying the structural causal model framework for observational causal inference in ecology</em></a>, <em>Ecological Monographs</em> 93:e1554.</p>
+<p>Leiam com três perguntas sobre o próprio trabalho em mente:</p>
+<ol type="1">
+<li>Qual é a variável cujo efeito vocês querem estimar? Uma só.</li>
+<li>Que outras vocês mediram porque “é bom controlar”? Listem.</li>
+<li>Para cada uma: ela causa a preditora de interesse, é causada por ela, ou as duas são causadas por um terceiro fator?</li>
+</ol>
+<p><strong>Exercício.</strong> Abram os slides na seção <em>Que covariáveis entram</em> e sigam o exemplo com <code>dagitty</code>. Depois façam o de vocês:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dagitty)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>g <span class="ot">&lt;-</span> <span class="fu">dagitty</span>(<span class="st">'dag {</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="st">  SuaPreditora -&gt; SuaResposta</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="st">  Confundidor  -&gt; SuaPreditora</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="st">  Confundidor  -&gt; SuaResposta</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="st">}'</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">adjustmentSets</span>(g, <span class="at">exposure =</span> <span class="st">"SuaPreditora"</span>, <span class="at">outcome =</span> <span class="st">"SuaResposta"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A pergunta que interessa: <strong>o conjunto que a função devolveu é igual à lista de covariáveis que vocês pretendiam pôr no modelo?</strong> Se não for, qual entrou, qual saiu, e por quê.</p>
+<p><strong>Me mandem por e-mail</strong>, antes do fim da reunião: o código do DAG, a saída do <code>adjustmentSets()</code>, uma frase dizendo que covariável vocês iam incluir e não vão mais — ou o contrário — e onde travaram, se travaram. É com isso que eu começo quando chegar.</p>
+</section>
 <section id="prática" class="level2">
 <h2 class="anchored" data-anchor-id="prática">Prática</h2>
 <p>Os enunciados estão no fim do deck e pedem que você use <strong>os seus próprios dados</strong>. Para acompanhar em sala, o mesmo roteiro rodado nos dados do curso, com um <em>take-home</em> por item:</p>
@@ -217,7 +288,9 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p><strong>Complementar</strong></p>
 <ul>
-<li>da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; <strong>Provete, D.B.</strong> &amp; Vancine, M.A.&nbsp;2022. <a href="https://analises-ecologicas.com"><em>Análises Ecológicas no R</em></a>. NUPEEA.</li>
+<li>da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; <strong>Provete, D.B.</strong> &amp; Vancine, M.A.&nbsp;2022. <a href="https://analises-ecologicas.com"><em>Análises Ecológicas no R</em></a>. NUPEEA. — o <a href="https://analises-ecologicas.com/cap2#fluxograma-conectando-vari%C3%A1veis-para-melhorar-o-desenho-experimental-e-as-an%C3%A1lises-estat%C3%ADsticas">fluxograma conectando variáveis</a>, no cap. 2, é este mesmo raciocínio em português; cap. 8 para os GLMs.</li>
+<li>Gelman, A.; Hill, J. &amp; Vehtari, A. 2020. <a href="https://avehtari.github.io/ROS-Examples/"><em>Regression and Other Stories</em></a>. Cap. 13 (<em>Logistic regression</em>), 14 (<em>Working with logistic regression</em>) e 15 (<em>Other generalized linear models</em>).</li>
+<li>McElreath, R. 2020. <em>Statistical Rethinking</em>, 2ª ed., cap. 5 — <a href="https://bookdown.org/content/70a06054-8138-4d90-aaa0-895f57aab1b4/the-many-variables-the-spurious-waffles.html"><em>The Many Variables &amp; The Spurious Waffles</em></a>, na versão em <code>brms</code> de Kurz.</li>
 <li>Zuur, A.F. et al.&nbsp;2009. <a href="https://doi.org/10.1007/978-0-387-87458-6"><em>Mixed Effects Models and Extensions in Ecology with R</em></a>. Springer.</li>
 <li>Arif, S. &amp; MacNeil, M.A.&nbsp;2023. <a href="https://doi.org/10.1002/ecm.1554">Applying the structural causal model framework for observational causal inference in ecology</a>. <em>Ecological Monographs</em> 93:e1554.</li>
 <li>Gelman, A. et al.&nbsp;2026. <a href="https://avehtari.github.io/Bayesian-Workflow/"><em>Bayesian Workflow</em></a>. Chapman &amp; Hall/CRC. Cap. 7, “Prediction, generalization, and causal inference”.</li>

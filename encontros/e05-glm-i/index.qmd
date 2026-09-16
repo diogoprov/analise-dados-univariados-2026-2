@@ -34,6 +34,56 @@ observacional: *que covariáveis entram no modelo, e por quê?*
    que seleção estatística de variáveis não substitui pensar sobre
    causalidade.
 
+## Antes da aula de quarta, 23/09
+
+::: {.callout-important}
+## Começaremos com uma atividade, não com teoria
+
+Nas primeiras 2 h de quarta estarei em reunião. Vocês começam pelo
+**bloco 5 deste encontro — "Que covariáveis entram"** —, que é o único
+autocontido e o que mais rende feito em vez de assistido: cada um precisa
+desenhar o DAG do **próprio** sistema. A teoria dos blocos 1 a 4 eu dou
+quando chegar.
+:::
+
+**Leitura.** Comecem pelo [fluxograma conectando variáveis](https://analises-ecologicas.com/cap2#fluxograma-conectando-vari%C3%A1veis-para-melhorar-o-desenho-experimental-e-as-an%C3%A1lises-estat%C3%ADsticas),
+no cap. 2 de *Análises Ecológicas no R* — é este mesmo raciocínio, em
+português e com exemplo ecológico. Quem quiser ir além, Arif & MacNeil
+(2023), [*Applying the structural causal model framework for observational
+causal inference in ecology*](https://doi.org/10.1002/ecm.1554),
+*Ecological Monographs* 93:e1554.
+
+Leiam com três perguntas sobre o próprio trabalho em mente:
+
+1. Qual é a variável cujo efeito vocês querem estimar? Uma só.
+2. Que outras vocês mediram porque "é bom controlar"? Listem.
+3. Para cada uma: ela causa a preditora de interesse, é causada por ela, ou
+   as duas são causadas por um terceiro fator?
+
+**Exercício.** Abram os slides na seção *Que covariáveis entram* e sigam o
+exemplo com `dagitty`. Depois façam o de vocês:
+
+```r
+library(dagitty)
+
+g <- dagitty('dag {
+  SuaPreditora -> SuaResposta
+  Confundidor  -> SuaPreditora
+  Confundidor  -> SuaResposta
+}')
+
+adjustmentSets(g, exposure = "SuaPreditora", outcome = "SuaResposta")
+```
+
+A pergunta que interessa: **o conjunto que a função devolveu é igual à
+lista de covariáveis que vocês pretendiam pôr no modelo?** Se não for, qual
+entrou, qual saiu, e por quê.
+
+**Me mandem por e-mail**, antes do fim da reunião: o código do DAG, a saída
+do `adjustmentSets()`, uma frase dizendo que covariável vocês iam incluir e
+não vão mais — ou o contrário — e onde travaram, se travaram. É com isso
+que eu começo quando chegar.
+
 ## Prática
 
 Os enunciados estão no fim do deck e pedem que você use **os seus próprios
@@ -56,7 +106,9 @@ curso, com um *take-home* por item:
 
 **Complementar**
 
-- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
+- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA. — o [fluxograma conectando variáveis](https://analises-ecologicas.com/cap2#fluxograma-conectando-vari%C3%A1veis-para-melhorar-o-desenho-experimental-e-as-an%C3%A1lises-estat%C3%ADsticas), no cap. 2, é este mesmo raciocínio em português; cap. 8 para os GLMs.
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cap. 13 (*Logistic regression*), 14 (*Working with logistic regression*) e 15 (*Other generalized linear models*).
+- McElreath, R. 2020. *Statistical Rethinking*, 2ª ed., cap. 5 — [*The Many Variables & The Spurious Waffles*](https://bookdown.org/content/70a06054-8138-4d90-aaa0-895f57aab1b4/the-many-variables-the-spurious-waffles.html), na versão em `brms` de Kurz.
 - Zuur, A.F. et al. 2009. [*Mixed Effects Models and Extensions in Ecology with R*](https://doi.org/10.1007/978-0-387-87458-6). Springer.
 - Arif, S. & MacNeil, M.A. 2023. [Applying the structural causal model framework for observational causal inference in ecology](https://doi.org/10.1002/ecm.1554). *Ecological Monographs* 93:e1554.
 - Gelman, A. et al. 2026. [*Bayesian Workflow*](https://avehtari.github.io/Bayesian-Workflow/). Chapman & Hall/CRC. Cap. 7, "Prediction, generalization, and causal inference".

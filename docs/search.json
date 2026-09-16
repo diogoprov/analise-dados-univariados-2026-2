@@ -760,7 +760,7 @@
     "href": "slides/e05.html#na-prática",
     "title": "GLM I: verossimilhança, binomial e Poisson",
     "section": "Na prática",
-    "text": "Na prática\n\nlibrary(dagitty)\n\ng &lt;- dagitty('dag {\n  Precipitacao -&gt; Area\n  Precipitacao -&gt; Riqueza\n  Area -&gt; Riqueza\n  Area -&gt; Deteccao\n  Riqueza -&gt; Deteccao\n}')\n\nadjustmentSets(g, exposure = \"Area\", outcome = \"Riqueza\")\n\n{ Precipitacao }\n\n\n\nDesenhe o DAG antes de rodar o modelo. Ele diz o que incluir — e a resposta quase nunca é “tudo”."
+    "text": "Na prática\n\nlibrary(dagitty)\n\ng &lt;- dagitty('dag {\n  Precipitacao -&gt; Area\n  Precipitacao -&gt; Riqueza\n  Area -&gt; Riqueza\n  Area -&gt; Deteccao\n  Riqueza -&gt; Deteccao\n}')\n\nadjustmentSets(g, exposure = \"Area\", outcome = \"Riqueza\")\n\n{ Precipitacao }\n\n\nLendo a saída: o único ajuste necessário é Precipitacao. E repare no que não está lá: Deteccao é colisor (Area → Deteccao ← Riqueza), e condicionar nela criaria associação onde não existe.\n\nDesenhe o DAG antes de rodar o modelo. Ele diz o que incluir — e a resposta quase nunca é “tudo”."
   },
   {
     "objectID": "slides/e05.html#e-por-que-seleção-automática-não-resolve",
@@ -795,7 +795,7 @@
     "href": "slides/e05.html#referências",
     "title": "GLM I: verossimilhança, binomial e Poisson",
     "section": "Referências",
-    "text": "Referências\n\n\nAgresti, A. 2015. Foundations of Linear and Generalized Linear Models. Wiley.\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA.\nGelman, A.; Hill, J. & Vehtari, A. 2020. Regression and Other Stories. Cambridge University Press. — código e exemplos no site.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer.\nArif, S. & MacNeil, M.A. 2023. Applying the structural causal model framework for observational causal inference in ecology. Ecological Monographs 93:e1554.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Cap. 7, “Prediction, generalization, and causal inference”."
+    "text": "Referências\n\n\nAgresti, A. 2015. Foundations of Linear and Generalized Linear Models. Wiley.\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA. — o fluxograma conectando variáveis, no cap. 2, é este mesmo raciocínio em português; cap. 8 para os GLMs.\nGelman, A.; Hill, J. & Vehtari, A. 2020. Regression and Other Stories. Cambridge University Press. Cap. 13 (Logistic regression), 14 (Working with logistic regression) e 15 (Other generalized linear models).\nMcElreath, R. 2020. Statistical Rethinking, 2ª ed., cap. 5 — The Many Variables & The Spurious Waffles, na versão em brms de Kurz: associação espúria, relação encoberta e DAGs.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer.\nArif, S. & MacNeil, M.A. 2023. Applying the structural causal model framework for observational causal inference in ecology. Ecological Monographs 93:e1554.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Cap. 7, “Prediction, generalization, and causal inference”."
   },
   {
     "objectID": "slides/e03.html#onde-estamos-no-ciclo-ppdac",
@@ -1670,7 +1670,7 @@
     "href": "encontros/e01-eda-reprodutibilidade/index.html",
     "title": "E1 — EDA, reprodutibilidade e literacia em IA",
     "section": "",
-    "text": "Segunda, 21 de setembro de 2026 · manhã · 4,5 h\nAntes de qualquer modelo: como olhar os dados sem enganar a si mesmo, como formular a pergunta antes de olhar, e como documentar tudo de modo que outra pessoa — inclusive você daqui a dois anos — consiga refazer."
+    "text": "Segunda, 21 de setembro de 2026 · manhã · 4,5 h\nAntes de começar a pensar na análise: como olhar para os dados, como formular a pergunta antes de olhar, e como documentar tudo de modo que outra pessoa — inclusive você daqui a dois anos — consiga refazer."
   },
   {
     "objectID": "encontros/e01-eda-reprodutibilidade/index.html#slides",
@@ -1785,6 +1785,13 @@
     "text": "Conteúdo\n\nMáxima verossimilhança — a ideia, com uma superfície de verossimilhança desenhada em R. Deviance e teste de razão de verossimilhanças.\nGLM binomial — proporções e dados binários; odds, log-odds, razão de chances versus risco relativo; separação completa e a correção de Firth.\nGLM Poisson — contagens; o log como ligação canônica; offset para esforço amostral desigual.\nInterpretar na escala certa — o coeficiente está em log; a biologia está na escala da resposta. ggeffects e marginaleffects.\nDAGs e raciocínio causal (60 min) — dagitty, critério backdoor, confounders (controlar) versus colisores (não controlar). Por que seleção estatística de variáveis não substitui pensar sobre causalidade."
   },
   {
+    "objectID": "encontros/e05-glm-i/index.html#antes-da-aula-de-quarta-2309",
+    "href": "encontros/e05-glm-i/index.html#antes-da-aula-de-quarta-2309",
+    "title": "E5 — GLM I: verossimilhança, binomial e Poisson",
+    "section": "Antes da aula de quarta, 23/09",
+    "text": "Antes da aula de quarta, 23/09\n\n\n\n\n\n\nImportanteComeçaremos com uma atividade, não com teoria\n\n\n\nNas primeiras 2 h de quarta estarei em reunião. Vocês começam pelo bloco 5 deste encontro — “Que covariáveis entram” —, que é o único autocontido e o que mais rende feito em vez de assistido: cada um precisa desenhar o DAG do próprio sistema. A teoria dos blocos 1 a 4 eu dou quando chegar.\n\n\nLeitura. Comecem pelo fluxograma conectando variáveis, no cap. 2 de Análises Ecológicas no R — é este mesmo raciocínio, em português e com exemplo ecológico. Quem quiser ir além, Arif & MacNeil (2023), Applying the structural causal model framework for observational causal inference in ecology, Ecological Monographs 93:e1554.\nLeiam com três perguntas sobre o próprio trabalho em mente:\n\nQual é a variável cujo efeito vocês querem estimar? Uma só.\nQue outras vocês mediram porque “é bom controlar”? Listem.\nPara cada uma: ela causa a preditora de interesse, é causada por ela, ou as duas são causadas por um terceiro fator?\n\nExercício. Abram os slides na seção Que covariáveis entram e sigam o exemplo com dagitty. Depois façam o de vocês:\nlibrary(dagitty)\n\ng &lt;- dagitty('dag {\n  SuaPreditora -&gt; SuaResposta\n  Confundidor  -&gt; SuaPreditora\n  Confundidor  -&gt; SuaResposta\n}')\n\nadjustmentSets(g, exposure = \"SuaPreditora\", outcome = \"SuaResposta\")\nA pergunta que interessa: o conjunto que a função devolveu é igual à lista de covariáveis que vocês pretendiam pôr no modelo? Se não for, qual entrou, qual saiu, e por quê.\nMe mandem por e-mail, antes do fim da reunião: o código do DAG, a saída do adjustmentSets(), uma frase dizendo que covariável vocês iam incluir e não vão mais — ou o contrário — e onde travaram, se travaram. É com isso que eu começo quando chegar."
+  },
+  {
     "objectID": "encontros/e05-glm-i/index.html#prática",
     "href": "encontros/e05-glm-i/index.html#prática",
     "title": "E5 — GLM I: verossimilhança, binomial e Poisson",
@@ -1803,7 +1810,7 @@
     "href": "encontros/e05-glm-i/index.html#leituras",
     "title": "E5 — GLM I: verossimilhança, binomial e Poisson",
     "section": "Leituras",
-    "text": "Leituras\nObrigatória\n\nAgresti, A. 2015. Foundations of Linear and Generalized Linear Models. Wiley.\n\nComplementar\n\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer.\nArif, S. & MacNeil, M.A. 2023. Applying the structural causal model framework for observational causal inference in ecology. Ecological Monographs 93:e1554.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Cap. 7, “Prediction, generalization, and causal inference”."
+    "text": "Leituras\nObrigatória\n\nAgresti, A. 2015. Foundations of Linear and Generalized Linear Models. Wiley.\n\nComplementar\n\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA. — o fluxograma conectando variáveis, no cap. 2, é este mesmo raciocínio em português; cap. 8 para os GLMs.\nGelman, A.; Hill, J. & Vehtari, A. 2020. Regression and Other Stories. Cap. 13 (Logistic regression), 14 (Working with logistic regression) e 15 (Other generalized linear models).\nMcElreath, R. 2020. Statistical Rethinking, 2ª ed., cap. 5 — The Many Variables & The Spurious Waffles, na versão em brms de Kurz.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer.\nArif, S. & MacNeil, M.A. 2023. Applying the structural causal model framework for observational causal inference in ecology. Ecological Monographs 93:e1554.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Cap. 7, “Prediction, generalization, and causal inference”."
   },
   {
     "objectID": "encontros/e05-glm-i/index.html#recursos-externos",

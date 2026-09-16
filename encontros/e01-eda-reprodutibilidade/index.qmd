@@ -8,7 +8,7 @@ description: "Ciclo PPDAC e raciocínio estatístico. Análise exploratória seg
 **Segunda, 21 de setembro de 2026** · <span class="bloco">manhã</span> · 4,5 h
 :::
 
-Antes de qualquer modelo: como olhar os dados sem enganar a si mesmo, como
+Antes de começar a pensar na análise: como olhar para os dados, como
 formular a pergunta antes de olhar, e como documentar tudo de modo que
 outra pessoa — inclusive você daqui a dois anos — consiga refazer.
 

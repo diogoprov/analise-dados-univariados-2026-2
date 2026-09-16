@@ -525,6 +525,10 @@ g <- dagitty('dag {
 adjustmentSets(g, exposure = "Area", outcome = "Riqueza")
 ```
 
+**Lendo a saída:** o único ajuste necessário é `Precipitacao`. E repare no
+que **não** está lá: `Deteccao` é colisor (`Area` → `Deteccao` ←
+`Riqueza`), e condicionar nela criaria associação onde não existe.
+
 ::: {.definicao}
 Desenhe o DAG **antes** de rodar o modelo. Ele diz o que incluir — e a
 resposta quase nunca é "tudo".
@@ -585,8 +589,9 @@ quasi-verossimilhança.
 
 ::: {.nota}
 - Agresti, A. 2015. [*Foundations of Linear and Generalized Linear Models*](https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034). Wiley.
-- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
-- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
+- da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA. — o [fluxograma conectando variáveis](https://analises-ecologicas.com/cap2#fluxograma-conectando-vari%C3%A1veis-para-melhorar-o-desenho-experimental-e-as-an%C3%A1lises-estat%C3%ADsticas), no cap. 2, é este mesmo raciocínio em português; cap. 8 para os GLMs.
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. Cap. 13 (*Logistic regression*), 14 (*Working with logistic regression*) e 15 (*Other generalized linear models*).
+- McElreath, R. 2020. *Statistical Rethinking*, 2ª ed., cap. 5 — [*The Many Variables & The Spurious Waffles*](https://bookdown.org/content/70a06054-8138-4d90-aaa0-895f57aab1b4/the-many-variables-the-spurious-waffles.html), na versão em `brms` de Kurz: associação espúria, relação encoberta e DAGs.
 - Zuur, A.F. et al. 2009. [*Mixed Effects Models and Extensions in Ecology with R*](https://doi.org/10.1007/978-0-387-87458-6). Springer.
 - Arif, S. & MacNeil, M.A. 2023. [Applying the structural causal model framework for observational causal inference in ecology](https://doi.org/10.1002/ecm.1554). *Ecological Monographs* 93:e1554.
 - Gelman, A. et al. 2026. [*Bayesian Workflow*](https://avehtari.github.io/Bayesian-Workflow/). Chapman & Hall/CRC. Cap. 7, "Prediction, generalization, and causal inference".
