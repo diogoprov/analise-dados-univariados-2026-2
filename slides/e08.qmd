@@ -265,6 +265,14 @@ Relate os dois.
 
 ---
 
+# Intervalo {.secao}
+
+15 minutos.
+
+Na volta: a ponte bayesiana — o mesmo modelo em `brms`.
+
+---
+
 # Bloco 2 — A ponte bayesiana {.secao}
 
 ---

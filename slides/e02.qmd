@@ -401,6 +401,14 @@ influente — vale olhar o gráfico antes de escolher.
 
 ---
 
+# Intervalo {.secao}
+
+15 minutos.
+
+Na volta: interpretar coeficientes — comparação, não efeito.
+
+---
+
 # 5. Interpretar coeficientes {.secao}
 
 ---

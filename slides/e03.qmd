@@ -314,6 +314,14 @@ Duas regras práticas:
 
 ---
 
+# Intervalo {.secao}
+
+15 minutos.
+
+Na volta: ANCOVA, e por que homogeneidade de inclinações é a ausência de uma interação.
+
+---
+
 # 4. ANCOVA {.secao}
 
 ---

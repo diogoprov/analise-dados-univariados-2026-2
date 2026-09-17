@@ -36,9 +36,14 @@ outra pessoa — inclusive você daqui a dois anos — consiga refazer.
 
 ## Dados
 
+- [`RoadKills.txt`](../../dados/RoadKills.txt) — anfíbios atropelados em 52
+  sítios em Portugal (Zuur et al. 2009). É o conjunto do *productive
+  failure* que abre a aula, e volta nos Encontros 5, 6 e 9.
 - [`dados_com_outliers_e_faltantes.csv`](../../dados/dados_com_outliers_e_faltantes.csv)
-- [`dados_heterocedasticidade.csv`](../../dados/dados_heterocedasticidade.csv)
-- [`dados_nao_normais.csv`](../../dados/dados_nao_normais.csv)
+  — passo 1, o gráfico de Cleveland.
+- [`RIKZ.txt`](../../dados/RIKZ.txt) — riqueza de macrofauna em 9 praias
+  holandesas (Zuur et al. 2009); passo 2, heterogeneidade entre grupos.
+  Volta nos Encontros 7 e 8.
 
 ## Preparação prévia (sala de aula invertida)
 

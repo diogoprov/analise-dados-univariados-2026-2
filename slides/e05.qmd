@@ -339,6 +339,14 @@ do ROS, cap. 13.
 
 ---
 
+# Intervalo {.secao}
+
+15 minutos.
+
+Na volta: GLM de Poisson: contagens e *offset*.
+
+---
+
 # 3. GLM Poisson {.secao}
 
 ---

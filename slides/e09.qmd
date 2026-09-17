@@ -261,6 +261,14 @@ A NB gasta **um** parâmetro a mais e ganha centenas de unidades de AIC.
 
 ---
 
+# Intervalo {.secao}
+
+15 minutos.
+
+Na volta: AICc, BIC, e quando usar cada um.
+
+---
+
 # 3. AICc e BIC {.secao}
 
 ---

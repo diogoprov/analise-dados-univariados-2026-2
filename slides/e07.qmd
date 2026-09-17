@@ -104,6 +104,43 @@ faz?
 
 ---
 
+## Três cenários {.smaller}
+
+Cinco minutos, em duplas. Em quais destes há réplica de verdade?
+
+1. Para testar o efeito de uma dieta sobre o peso, **um** rato é pesado
+   todos os dias durante trinta dias. *n* = 30?
+2. Para comparar duas espécies de formiga, coletam-se cinquenta operárias
+   de **um** formigueiro de cada espécie. *n* = 50 por espécie?
+3. Para comparar a herbivoria entre duas florestas, medem-se cem folhas de
+   **uma** árvore em cada floresta. *n* = 100 por floresta?
+
+::: {.definicao}
+A pergunta que resolve os três: qual é a unidade que foi de fato
+**replicada no fator que me interessa**?
+:::
+
+---
+
+## Os três são o mesmo erro {.smaller}
+
+Em todos, o que se replicou foi a **medida**, não a unidade que recebe o
+tratamento. O rato é um, o formigueiro é um, a árvore é uma. Trinta
+pesagens do mesmo rato dizem muito sobre aquele rato e quase nada sobre a
+dieta.
+
+E repare que nenhum deles é erro de conta: os trinta pesos existem, foram
+medidos com cuidado e estão corretos. O que não existe é a informação que
+o *n* = 30 promete.
+
+::: {.nota}
+Não se conserta na análise: ou o delineamento replicou a unidade certa, ou
+não replicou. O que dá para fazer — e é o resto desta manhã — é **modelar
+a dependência** em vez de fingir que ela não existe.
+:::
+
+---
+
 ## A definição
 
 ::: {.definicao}
@@ -243,6 +280,14 @@ Regra prática comum: abaixo de 5 níveis, considere tratar como fixo.
 Não é uma lei; é um aviso de que você tem pouca informação para estimar
 uma variância.
 :::
+
+---
+
+# Intervalo {.secao}
+
+15 minutos.
+
+Na volta: intercepto e inclinação aleatórios.
 
 ---
 

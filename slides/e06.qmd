@@ -327,6 +327,14 @@ bind_rows(
 
 ---
 
+# Intervalo {.secao}
+
+15 minutos.
+
+Na volta: zeros estruturais e zeros amostrais.
+
+---
+
 # 3. Zeros {.secao}
 
 ---

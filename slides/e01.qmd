@@ -359,18 +359,47 @@ significativo a partir de ruído.
 
 ---
 
-## PICO / FINER
+## Uma pergunta que dá para responder {.smaller}
 
-Duas estruturas emprestadas da área biomédica para afiar a pergunta:
+> Qual o efeito da quantidade de nitrogênio do solo na taxa de crescimento
+> per capita de árvores adultas do gênero *Pinus*?
 
-**PICO** — População, Intervenção (ou exposição), Comparação, *Outcome*.
+Antes de qualquer estatística, ela já traz a **resposta** (taxa de
+crescimento per capita), a **preditora** (nitrogênio no solo), a
+**unidade** (árvore adulta) e o **grupo** (*Pinus*).
 
-**FINER** — *Feasible, Interesting, Novel, Ethical, Relevant*.
+E a hipótese que a sustenta diz o **mecanismo**:
+
+> O nitrogênio está presente em várias moléculas orgânicas envolvidas no
+> processo de crescimento de plantas em geral. Logo, espero que quanto
+> maior a quantidade de nitrogênio disponível no solo, maior seja a taxa
+> de crescimento per capita de uma população de plantas do gênero *Pinus*.
 
 ::: {.definicao}
-Exercício de 5 min: escrevam a pergunta do capítulo de vocês no formato
-PICO. Quem não conseguir preencher os quatro campos descobriu algo
-importante sobre o próprio projeto.
+Pergunta → hipótese (o mecanismo) → previsão (a direção). Sem o meio não
+há o que testar; há só uma correlação para comentar depois.
+:::
+
+---
+
+## Atividade (10 min) {.smaller}
+
+Uma pergunta de projeto de verdade:
+
+> Será que a poluição afeta os girinos?
+
+**Sozinhos (3 min).** Reescrevam num papel, de modo que a pergunta diga:
+que poluente e medido como; que resposta e em que unidade; que espécie e
+que estágio; onde e quando.
+
+**Em duplas (4 min).** Comparem as duas versões e cheguem a uma só.
+
+**Duas duplas compartilham (3 min).**
+
+::: {.nota}
+Depois façam o mesmo com a pergunta do capítulo de vocês. Se ela não
+couber numa frase com resposta, preditora e unidade, o problema não é de
+redação — é que a análise ainda não tem alvo.
 :::
 
 ---
@@ -385,6 +414,14 @@ ou de analisar.
 - não impede análise exploratória — apenas separa claramente as duas;
 - em ecologia observacional, registrar **antes de olhar os dados** já
   resolve a maior parte do problema.
+
+---
+
+# Intervalo {.secao}
+
+15 minutos.
+
+Na volta: o protocolo de exploração de dados, em oito passos.
 
 ---
 
@@ -421,6 +458,43 @@ hipótese.
 6. Como é a **relação** entre resposta e preditoras?
 7. Há **interações** plausíveis?
 8. As observações são **independentes**?
+
+---
+
+## Antes dos oito passos: olhe {.smaller}
+
+```{r}
+#| fig-height: 3.1
+# o anscombe vem em oito colunas: x1..x4 e y1..y4
+quarteto <- data.frame(
+  conjunto = rep(1:4, each = nrow(anscombe)),
+  x = unlist(anscombe[, 1:4]),
+  y = unlist(anscombe[, 5:8])
+)
+
+ggplot(quarteto, aes(x, y)) +
+  geom_smooth(method = "lm", se = FALSE, colour = "#c08a3e", linewidth = .8) +
+  geom_point(size = 2, colour = "#1c6e8c") +
+  facet_wrap(~ conjunto, nrow = 1) +
+  theme_minimal(base_size = 13)
+```
+
+Os quatro conjuntos de Anscombe (1973) têm a **mesma** média de *x* e de
+*y*, o mesmo desvio-padrão, a mesma correlação (0,816) e a mesma reta de
+regressão ($y = 3 + 0{,}5x$) — idênticos até a terceira casa decimal.
+
+::: {.definicao}
+Nenhuma estatística-resumo distingue os quatro. O gráfico distingue em um
+segundo. É por isso que o protocolo abaixo começa por olhar, e não por
+calcular.
+:::
+
+::: {.nota}
+O pacote [`quartets`](https://r-causal.github.io/quartets/) reúne este e
+outros conjuntos com a mesma moral — inclusive um quarteto **causal**, em
+que as quatro estruturas causais produzem números idênticos. Voltamos a
+ele no Encontro 5.
+:::
 
 ---
 
@@ -466,13 +540,14 @@ p-hacking em ecologia.
 
 ```{r}
 #| fig-height: 3.2
-het <- read_delim("../dados/dados_heterocedasticidade.csv", delim = ";")
+rikz <- read.table("../dados/RIKZ.txt", header = TRUE, row.names = 1) |>
+  mutate(Beach = factor(Beach))
 
-ggplot(het, aes(Dificuldade, Desempenho, fill = Metodo)) +
-  geom_boxplot(alpha = .75) +
-  scale_fill_manual(values = c("#1c6e8c", "#c08a3e", "#6b8f71")) +
+ggplot(rikz, aes(Beach, Richness)) +
+  geom_boxplot(fill = "#1c6e8c", alpha = .45, outlier.shape = NA) +
+  geom_jitter(width = .12, colour = "#144f64", size = 1.7) +
   theme_minimal(base_size = 14) +
-  labs(x = "Dificuldade", y = "Desempenho")
+  labs(x = "Praia", y = "Riqueza de espécies")
 ```
 
 ---
@@ -480,25 +555,21 @@ ggplot(het, aes(Dificuldade, Desempenho, fill = Metodo)) +
 ## Passo 2 — quanto difere? {.smaller}
 
 ```{r}
-het |>
-  group_by(Metodo, Dificuldade) |>
-  summarise(media = round(mean(Desempenho), 1),
-            dp    = round(sd(Desempenho), 1), .groups = "drop")
+rikz |>
+  group_by(Beach) |>
+  summarise(n = n(), media = round(mean(Richness), 1),
+            dp = round(sd(Richness), 2), .groups = "drop")
 ```
 
-Olhem a coluna `dp`: as médias de `M1` e `M2` são parecidas, mas a
-dispersão de `M2` é várias vezes maior. A variância **depende do nível da
-preditora** — exatamente o que o modelo linear supõe que não acontece.
+Olhem a coluna `dp`: vai de **1,22** na praia 1 a **8,53** na praia 5 —
+sete vezes. Cinco amostras em cada uma, o mesmo protocolo em todas. A
+dispersão não é constante entre praias, que é exatamente o que o modelo
+linear supõe que seja.
 
 ::: {.nota}
-Repare que um teste de médias aqui responderia "não há diferença" e
-perderia o achado mais interessante do conjunto de dados.
-:::
-
-::: {.definicao}
-Guardem: no Encontro 4 isso deixa de ser um problema a corrigir e passa a
-ser uma **informação sobre a distribuição** — em muitas famílias da
-família exponencial, a variância é função da média por construção.
+E repare de onde vem a heterogeneidade: não de uma preditora contínua, mas
+do **agrupamento**. Isso não é ruído a corrigir — é estrutura do
+delineamento, e é o Encontro 7.
 :::
 
 ---
@@ -507,14 +578,16 @@ família exponencial, a variância é função da média por construção.
 
 ```{r}
 #| fig-height: 3.2
-nn <- read_delim("../dados/dados_nao_normais.csv", delim = ";")
-
-ggplot(nn, aes(Tempo_Reacao, fill = Tratamento)) +
-  geom_histogram(bins = 25, colour = "white", alpha = .8) +
-  scale_fill_manual(values = c("#1c6e8c", "#c08a3e")) +
+ggplot(RK, aes(TOT.N)) +
+  geom_histogram(bins = 20, fill = "#1c6e8c", colour = "white", alpha = .85) +
   theme_minimal(base_size = 14) +
-  labs(x = "Tempo de reação", y = "Frequência")
+  labs(x = "Anfíbios mortos por sítio", y = "Frequência")
 ```
+
+Contagem, assimétrica à direita, de 2 a 104 em 52 sítios. Média 25,9 e
+variância 589,3 — a variância é **22,7 vezes** a média. Para uma Poisson
+elas seriam iguais; já dá para saber, aqui, que ela não vai servir
+(Encontro 6).
 
 ::: {.definicao}
 Atenção: o modelo linear **não** assume que a resposta é normal. Assume
@@ -612,6 +685,29 @@ texto?
 Reprodutibilidade é, antes de tudo, um favor que você faz a si mesmo.
 :::
 
+. . .
+
+> Your best collaborator is yourself six months from now, and your past
+> self doesn't answer emails.
+
+---
+
+## O mesmo problema, em 2016 {.smaller}
+
+> Dear past-Hadley: PLEASE COMMENT YOUR CODE BETTER. Love present-Hadley.
+>
+> — Hadley Wickham ([@hadleywickham](https://x.com/hadleywickham), 7 de abril de 2016)
+
+Quem escreveu boa parte do `tidyverse` também não entende o próprio código
+de seis meses atrás. A conclusão não é que ele seja desorganizado — é que
+**ninguém** consegue, e por isso o comentário não é firula.
+
+::: {.definicao}
+Comente o **porquê**, não o quê. `# filtra juvenis` é redundante com o
+código; `# juvenis fora: o protocolo de campo mudou em 2019 e a medida
+não é comparável` é o que o seu eu de 2028 precisa.
+:::
+
 ---
 
 ## Um projeto, um diretório
@@ -649,6 +745,37 @@ máquina, na do orientando e no GitHub Actions.
 
 ---
 
+## Como o `here()` acha a raiz {.smaller}
+
+Ao ser carregado, o `here` sobe a árvore de diretórios a partir de onde o R
+está e para no primeiro diretório que contenha uma **âncora**. As duas que
+importam na prática: um arquivo `.Rproj` e uma pasta `.git`. Esse diretório
+vira a raiz, e `here("dados", "x.csv")` monta o caminho a partir dele.
+
+```{r}
+#| eval: false
+here::here()                       # qual raiz ele encontrou
+here::here("dados", "anuros.csv")  # o caminho, montado na hora
+```
+
+O detalhe que morde: **um `.Rproj` vazio não conta**. O critério exige que
+o arquivo comece com `Version:`. Sem âncora válida, o `here` não avisa
+nada — ele simplesmente devolve o diretório de trabalho atual, e o script
+passa a funcionar só quando você o abre do lugar certo.
+
+::: {.nota}
+Se `here::here()` apontar para um lugar estranho, é isso. Crie o projeto
+do RStudio, ou declare a raiz à mão com `here::i_am("scripts/analise.R")`.
+:::
+
+::: {.definicao}
+`setwd()` faz o oposto: fixa no código um caminho que só existe no seu
+computador. É a única linha de um script que tem garantia de quebrar na
+máquina de outra pessoa.
+:::
+
+---
+
 ## Quarto
 
 Texto, código e resultado no mesmo arquivo. O número do texto **é** o
@@ -678,7 +805,11 @@ O que você ganha:
 - colaboração sem `analise_final_v2_REALFINAL.R`.
 
 ::: {.nota}
-Detalhes em [Happy Git with R](https://happygitwithr.com/).
+Se estes três comandos não forem familiares, a
+[aula 3 da minha disciplina de introdução ao R](https://provetelab.org/intro-r/slides/aula-03.html)
+cobre git e GitHub do começo, incluindo a configuração inicial. Para os
+detalhes e para quando algo der errado, [Happy Git with
+R](https://happygitwithr.com/).
 :::
 
 ---
@@ -837,16 +968,17 @@ etapa "Análise".
 
 ---
 
-## Para amanhã
+## Hoje à tarde
 
 **Leitura:** Gelman, Hill & Vehtari (2020), *Regression and Other
-Stories*, Parte I.
+Stories*, caps. 1 (*Introduction*) e 2 (*Data and measurement*) — dá para
+ler no intervalo do almoço.
 
-**Exercício:** rode o protocolo de oito passos nos **seus** dados e
-escreva meia página sobre o que encontrou. Traga amanhã — vamos usar nas
-práticas.
+**Exercício:** rodem o protocolo de oito passos nos **seus** dados e
+escrevam meia página sobre o que encontraram. Vamos usar isso nas práticas
+da semana inteira, então não deixem para depois.
 
-**Amanhã de manhã:** teste t, correlação e regressão deixam de ser três
+**Daqui a pouco:** teste t, correlação e regressão deixam de ser três
 coisas.
 
 ---
@@ -858,6 +990,7 @@ coisas.
 - Popovic, G. et al. 2024. [Four principles for improved statistical ecology](https://doi.org/10.1111/2041-210X.14270). *Methods in Ecology and Evolution* 15:266–281.
 - Cooper, N. et al. 2024. [Harnessing large language models for coding, teaching and inclusion to empower research in ecology and evolution](https://doi.org/10.1111/2041-210X.14325). *Methods in Ecology and Evolution* 15:1757–1763.
 - Kay, M. et al. 2026. [A century of inertia in quantitative ecology education](https://doi.org/10.1111/2041-210X.70405). *Methods in Ecology and Evolution*.
+- Anscombe, F.J. 1973. [Graphs in statistical analysis](https://doi.org/10.1080/00031305.1973.10478966). *The American Statistician* 27:17–21.
 - Zuur, A.F.; Ieno, E.N. & Elphick, C.S. 2010. [A protocol for data exploration to avoid common statistical problems](https://doi.org/10.1111/j.2041-210X.2009.00001.x). *Methods in Ecology and Evolution* 1:3–14.
 - Zuur, A.F. & Ieno, E.N. 2016. [A protocol for conducting and presenting results of regression-type analyses](https://doi.org/10.1111/2041-210X.12577). *Methods in Ecology and Evolution* 7:636–645.
 - COPE. [*Authorship and AI tools*](https://publicationethics.org/guidance/cope-position/authorship-and-ai-tools) — *position statement*.

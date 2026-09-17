@@ -508,7 +508,7 @@
     "href": "slides/e06.html#os-mesmos-diagnósticos-com-valor-de-p",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Os mesmos diagnósticos, com valor de p",
-    "text": "Os mesmos diagnósticos, com valor de p\n\ntestDispersion(res, plot = FALSE)       # sobredispersão\n\n\n    DHARMa nonparametric dispersion test via sd of residuals fitted vs.\n    simulated\n\ndata:  simulationOutput\ndispersion = 11.132, p-value &lt; 2.2e-16\nalternative hypothesis: two.sided\n\ntestZeroInflation(res, plot = FALSE)    # excesso de zeros\n\n\n    DHARMa zero-inflation test via comparison to expected zeros with\n    simulation under H0 = fitted model\n\ndata:  simulationOutput\nratioObsSim = 0, p-value = 1\nalternative hypothesis: two.sided\n\ntestOutliers(res, plot = FALSE)\n\n\n    DHARMa bootstrapped outlier test\n\ndata:  res\noutliers at both margin(s) = 8, observations = 52, p-value &lt; 2.2e-16\nalternative hypothesis: two.sided\n percent confidence interval:\n 0.00000000 0.01923077\nsample estimates:\noutlier frequency (expected: 0.0025 ) \n                            0.1538462"
+    "text": "Os mesmos diagnósticos, com valor de p\n\ntestDispersion(res, plot = FALSE)       # sobredispersão\n\n\n    DHARMa nonparametric dispersion test via sd of residuals fitted vs.\n    simulated\n\ndata:  simulationOutput\ndispersion = 11.132, p-value &lt; 2.2e-16\nalternative hypothesis: two.sided\n\ntestZeroInflation(res, plot = FALSE)    # excesso de zeros\n\n\n    DHARMa zero-inflation test via comparison to expected zeros with\n    simulation under H0 = fitted model\n\ndata:  simulationOutput\nratioObsSim = 0, p-value = 1\nalternative hypothesis: two.sided\n\ntestOutliers(res, plot = FALSE)\n\n\n    DHARMa bootstrapped outlier test\n\ndata:  res\noutliers at both margin(s) = 8, observations = 52, p-value &lt; 2.2e-16\nalternative hypothesis: two.sided\n percent confidence interval:\n 0.00000000 0.01923077\nsample estimates:\noutlier frequency (expected: 0.00365384615384615 ) \n                                         0.1538462"
   },
   {
     "objectID": "slides/e06.html#lendo-os-gráficos-do-dharma",
@@ -1628,7 +1628,7 @@
     "href": "encontros/e01-eda-reprodutibilidade/index.html#dados",
     "title": "E1 — EDA, reprodutibilidade e literacia em IA",
     "section": "Dados",
-    "text": "Dados\n\ndados_com_outliers_e_faltantes.csv\ndados_heterocedasticidade.csv\ndados_nao_normais.csv"
+    "text": "Dados\n\nRoadKills.txt — anfíbios atropelados em 52 sítios em Portugal (Zuur et al. 2009). É o conjunto do productive failure que abre a aula, e volta nos Encontros 5, 6 e 9.\ndados_com_outliers_e_faltantes.csv — passo 1, o gráfico de Cleveland.\nRIKZ.txt — riqueza de macrofauna em 9 praias holandesas (Zuur et al. 2009); passo 2, heterogeneidade entre grupos. Volta nos Encontros 7 e 8."
   },
   {
     "objectID": "encontros/e01-eda-reprodutibilidade/index.html#preparação-prévia-sala-de-aula-invertida",
@@ -2065,11 +2065,18 @@
     "text": "Confirmatório × exploratório\n\n\n\n\nConfirmatório\nExploratório\n\n\n\n\nHipótese\nanterior aos dados\nemerge dos dados\n\n\nNº de modelos\npoucos, definidos a priori\nmuitos\n\n\nValor de p\ninterpretável\ndescritivo\n\n\nO que produz\num teste\numa hipótese para testar depois\n\n\n\nAs duas são ciência legítima. O que não é legítimo é trocar o rótulo."
   },
   {
-    "objectID": "slides/e01.html#pico-finer",
-    "href": "slides/e01.html#pico-finer",
+    "objectID": "slides/e01.html#uma-pergunta-que-dá-para-responder",
+    "href": "slides/e01.html#uma-pergunta-que-dá-para-responder",
     "title": "EDA, reprodutibilidade e literacia em IA",
-    "section": "PICO / FINER",
-    "text": "PICO / FINER\nDuas estruturas emprestadas da área biomédica para afiar a pergunta:\nPICO — População, Intervenção (ou exposição), Comparação, Outcome.\nFINER — Feasible, Interesting, Novel, Ethical, Relevant.\n\nExercício de 5 min: escrevam a pergunta do capítulo de vocês no formato PICO. Quem não conseguir preencher os quatro campos descobriu algo importante sobre o próprio projeto."
+    "section": "Uma pergunta que dá para responder",
+    "text": "Uma pergunta que dá para responder\n\nQual o efeito da quantidade de nitrogênio do solo na taxa de crescimento per capita de árvores adultas do gênero Pinus?\n\nAntes de qualquer estatística, ela já traz a resposta (taxa de crescimento per capita), a preditora (nitrogênio no solo), a unidade (árvore adulta) e o grupo (Pinus).\nE a hipótese que a sustenta diz o mecanismo:\n\nO nitrogênio está presente em várias moléculas orgânicas envolvidas no processo de crescimento de plantas em geral. Logo, espero que quanto maior a quantidade de nitrogênio disponível no solo, maior seja a taxa de crescimento per capita de uma população de plantas do gênero Pinus.\n\n\nPergunta → hipótese (o mecanismo) → previsão (a direção). Sem o meio não há o que testar; há só uma correlação para comentar depois."
+  },
+  {
+    "objectID": "slides/e01.html#atividade-10-min",
+    "href": "slides/e01.html#atividade-10-min",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Atividade (10 min)",
+    "text": "Atividade (10 min)\nUma pergunta de projeto de verdade:\n\nSerá que a poluição afeta os girinos?\n\nSozinhos (3 min). Reescrevam num papel, de modo que a pergunta diga: que poluente e medido como; que resposta e em que unidade; que espécie e que estágio; onde e quando.\nEm duplas (4 min). Comparem as duas versões e cheguem a uma só.\nDuas duplas compartilham (3 min).\n\nDepois façam o mesmo com a pergunta do capítulo de vocês. Se ela não couber numa frase com resposta, preditora e unidade, o problema não é de redação — é que a análise ainda não tem alvo."
   },
   {
     "objectID": "slides/e01.html#pré-registro",
@@ -2093,6 +2100,13 @@
     "text": "Os oito passos\n\nHá outliers na resposta e nas preditoras?\nA variância é homogênea?\nQual a distribuição da resposta?\nHá excesso de zeros?\nHá colinearidade entre preditoras?\nComo é a relação entre resposta e preditoras?\nHá interações plausíveis?\nAs observações são independentes?"
   },
   {
+    "objectID": "slides/e01.html#antes-dos-oito-passos-olhe",
+    "href": "slides/e01.html#antes-dos-oito-passos-olhe",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Antes dos oito passos: olhe",
+    "text": "Antes dos oito passos: olhe\n\n# o anscombe vem em oito colunas: x1..x4 e y1..y4\nquarteto &lt;- data.frame(\n  conjunto = rep(1:4, each = nrow(anscombe)),\n  x = unlist(anscombe[, 1:4]),\n  y = unlist(anscombe[, 5:8])\n)\n\nggplot(quarteto, aes(x, y)) +\n  geom_smooth(method = \"lm\", se = FALSE, colour = \"#c08a3e\", linewidth = .8) +\n  geom_point(size = 2, colour = \"#1c6e8c\") +\n  facet_wrap(~ conjunto, nrow = 1) +\n  theme_minimal(base_size = 13)\n\n\n\n\n\n\n\n\nOs quatro conjuntos de Anscombe (1973) têm a mesma média de x e de y, o mesmo desvio-padrão, a mesma correlação (0,816) e a mesma reta de regressão (\\(y = 3 + 0{,}5x\\)) — idênticos até a terceira casa decimal.\n\nNenhuma estatística-resumo distingue os quatro. O gráfico distingue em um segundo. É por isso que o protocolo abaixo começa por olhar, e não por calcular.\n\n\nO pacote quartets reúne este e outros conjuntos com a mesma moral — inclusive um quarteto causal, em que as quatro estruturas causais produzem números idênticos. Voltamos a ele no Encontro 5."
+  },
+  {
     "objectID": "slides/e01.html#passo-1-outliers",
     "href": "slides/e01.html#passo-1-outliers",
     "title": "EDA, reprodutibilidade e literacia em IA",
@@ -2111,21 +2125,21 @@
     "href": "slides/e01.html#passo-2-homogeneidade-de-variância",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Passo 2 — Homogeneidade de variância",
-    "text": "Passo 2 — Homogeneidade de variância\n\nhet &lt;- read_delim(\"../dados/dados_heterocedasticidade.csv\", delim = \";\")\n\nggplot(het, aes(Dificuldade, Desempenho, fill = Metodo)) +\n  geom_boxplot(alpha = .75) +\n  scale_fill_manual(values = c(\"#1c6e8c\", \"#c08a3e\", \"#6b8f71\")) +\n  theme_minimal(base_size = 14) +\n  labs(x = \"Dificuldade\", y = \"Desempenho\")"
+    "text": "Passo 2 — Homogeneidade de variância\n\nrikz &lt;- read.table(\"../dados/RIKZ.txt\", header = TRUE, row.names = 1) |&gt;\n  mutate(Beach = factor(Beach))\n\nggplot(rikz, aes(Beach, Richness)) +\n  geom_boxplot(fill = \"#1c6e8c\", alpha = .45, outlier.shape = NA) +\n  geom_jitter(width = .12, colour = \"#144f64\", size = 1.7) +\n  theme_minimal(base_size = 14) +\n  labs(x = \"Praia\", y = \"Riqueza de espécies\")"
   },
   {
     "objectID": "slides/e01.html#passo-2-quanto-difere",
     "href": "slides/e01.html#passo-2-quanto-difere",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Passo 2 — quanto difere?",
-    "text": "Passo 2 — quanto difere?\n\nhet |&gt;\n  group_by(Metodo, Dificuldade) |&gt;\n  summarise(media = round(mean(Desempenho), 1),\n            dp    = round(sd(Desempenho), 1), .groups = \"drop\")\n\n# A tibble: 4 × 4\n  Metodo Dificuldade media    dp\n  &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;\n1 M1     Alta         40.1   1.7\n2 M1     Baixa        29.8   1.7\n3 M2     Alta         39    12.8\n4 M2     Baixa        29.7  23.8\n\n\nOlhem a coluna dp: as médias de M1 e M2 são parecidas, mas a dispersão de M2 é várias vezes maior. A variância depende do nível da preditora — exatamente o que o modelo linear supõe que não acontece.\n\nRepare que um teste de médias aqui responderia “não há diferença” e perderia o achado mais interessante do conjunto de dados.\n\n\nGuardem: no Encontro 4 isso deixa de ser um problema a corrigir e passa a ser uma informação sobre a distribuição — em muitas famílias da família exponencial, a variância é função da média por construção."
+    "text": "Passo 2 — quanto difere?\n\nrikz |&gt;\n  group_by(Beach) |&gt;\n  summarise(n = n(), media = round(mean(Richness), 1),\n            dp = round(sd(Richness), 2), .groups = \"drop\")\n\n# A tibble: 9 × 4\n  Beach     n media    dp\n  &lt;fct&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 1         5  11    1.22\n2 2         5  12.2  5.36\n3 3         5   3.4  1.82\n4 4         5   2.4  1.34\n5 5         5   7.4  8.53\n6 6         5   4    1.87\n7 7         5   2.2  1.3 \n8 8         5   4    2.65\n9 9         5   4.6  4.39\n\n\nOlhem a coluna dp: vai de 1,22 na praia 1 a 8,53 na praia 5 — sete vezes. Cinco amostras em cada uma, o mesmo protocolo em todas. A dispersão não é constante entre praias, que é exatamente o que o modelo linear supõe que seja.\n\nE repare de onde vem a heterogeneidade: não de uma preditora contínua, mas do agrupamento. Isso não é ruído a corrigir — é estrutura do delineamento, e é o Encontro 7."
   },
   {
     "objectID": "slides/e01.html#passo-3-distribuição-da-resposta",
     "href": "slides/e01.html#passo-3-distribuição-da-resposta",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Passo 3 — Distribuição da resposta",
-    "text": "Passo 3 — Distribuição da resposta\n\nnn &lt;- read_delim(\"../dados/dados_nao_normais.csv\", delim = \";\")\n\nggplot(nn, aes(Tempo_Reacao, fill = Tratamento)) +\n  geom_histogram(bins = 25, colour = \"white\", alpha = .8) +\n  scale_fill_manual(values = c(\"#1c6e8c\", \"#c08a3e\")) +\n  theme_minimal(base_size = 14) +\n  labs(x = \"Tempo de reação\", y = \"Frequência\")\n\n\n\n\n\n\n\n\n\nAtenção: o modelo linear não assume que a resposta é normal. Assume que o resíduo é. Voltaremos a isso no Encontro 2 — é um dos mal-entendidos mais caros da estatística aplicada."
+    "text": "Passo 3 — Distribuição da resposta\n\nggplot(RK, aes(TOT.N)) +\n  geom_histogram(bins = 20, fill = \"#1c6e8c\", colour = \"white\", alpha = .85) +\n  theme_minimal(base_size = 14) +\n  labs(x = \"Anfíbios mortos por sítio\", y = \"Frequência\")\n\n\n\n\n\n\n\n\nContagem, assimétrica à direita, de 2 a 104 em 52 sítios. Média 25,9 e variância 589,3 — a variância é 22,7 vezes a média. Para uma Poisson elas seriam iguais; já dá para saber, aqui, que ela não vai servir (Encontro 6).\n\nAtenção: o modelo linear não assume que a resposta é normal. Assume que o resíduo é. Voltaremos a isso no Encontro 2 — é um dos mal-entendidos mais caros da estatística aplicada."
   },
   {
     "objectID": "slides/e01.html#passo-4-excesso-de-zeros",
@@ -2167,7 +2181,14 @@
     "href": "slides/e01.html#o-problema-concreto",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "O problema concreto",
-    "text": "O problema concreto\nVocê submete. Volta em 14 meses com “refaça a Figura 3 excluindo os juvenis”.\nE então: em qual das sete pastas está o script que gerou a Figura 3? Que versão dos dados ela usou? Por que o número na tabela não bate com o do texto?\n\nReprodutibilidade é, antes de tudo, um favor que você faz a si mesmo."
+    "text": "O problema concreto\nVocê submete. Volta em 14 meses com “refaça a Figura 3 excluindo os juvenis”.\nE então: em qual das sete pastas está o script que gerou a Figura 3? Que versão dos dados ela usou? Por que o número na tabela não bate com o do texto?\n\nReprodutibilidade é, antes de tudo, um favor que você faz a si mesmo.\n\n\n\nYour best collaborator is yourself six months from now, and your past self doesn’t answer emails."
+  },
+  {
+    "objectID": "slides/e01.html#o-mesmo-problema-em-2016",
+    "href": "slides/e01.html#o-mesmo-problema-em-2016",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "O mesmo problema, em 2016",
+    "text": "O mesmo problema, em 2016\n\nDear past-Hadley: PLEASE COMMENT YOUR CODE BETTER. Love present-Hadley.\n— Hadley Wickham (@hadleywickham, 7 de abril de 2016)\n\nQuem escreveu boa parte do tidyverse também não entende o próprio código de seis meses atrás. A conclusão não é que ele seja desorganizado — é que ninguém consegue, e por isso o comentário não é firula.\n\nComente o porquê, não o quê. # filtra juvenis é redundante com o código; # juvenis fora: o protocolo de campo mudou em 2019 e a medida não é comparável é o que o seu eu de 2028 precisa."
   },
   {
     "objectID": "slides/e01.html#um-projeto-um-diretório",
@@ -2184,6 +2205,13 @@
     "text": "Caminhos\n\n# Nunca:\nread.csv(\"/Users/diogo/Documents/projeto-final-v3/dados.csv\")\n\n# Sempre:\nlibrary(here)\nread_csv(here(\"dados\", \"brutos\", \"anuros.csv\"))\n\nhere() resolve a partir da raiz do projeto. O script roda na sua máquina, na do orientando e no GitHub Actions."
   },
   {
+    "objectID": "slides/e01.html#como-o-here-acha-a-raiz",
+    "href": "slides/e01.html#como-o-here-acha-a-raiz",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Como o here() acha a raiz",
+    "text": "Como o here() acha a raiz\nAo ser carregado, o here sobe a árvore de diretórios a partir de onde o R está e para no primeiro diretório que contenha uma âncora. As duas que importam na prática: um arquivo .Rproj e uma pasta .git. Esse diretório vira a raiz, e here(\"dados\", \"x.csv\") monta o caminho a partir dele.\n\nhere::here()                       # qual raiz ele encontrou\nhere::here(\"dados\", \"anuros.csv\")  # o caminho, montado na hora\n\nO detalhe que morde: um .Rproj vazio não conta. O critério exige que o arquivo comece com Version:. Sem âncora válida, o here não avisa nada — ele simplesmente devolve o diretório de trabalho atual, e o script passa a funcionar só quando você o abre do lugar certo.\n\nSe here::here() apontar para um lugar estranho, é isso. Crie o projeto do RStudio, ou declare a raiz à mão com here::i_am(\"scripts/analise.R\").\n\n\nsetwd() faz o oposto: fixa no código um caminho que só existe no seu computador. É a única linha de um script que tem garantia de quebrar na máquina de outra pessoa."
+  },
+  {
     "objectID": "slides/e01.html#quarto",
     "href": "slides/e01.html#quarto",
     "title": "EDA, reprodutibilidade e literacia em IA",
@@ -2195,7 +2223,7 @@
     "href": "slides/e01.html#git-em-três-comandos",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "git, em três comandos",
-    "text": "git, em três comandos\ngit add .\ngit commit -m \"Adiciona diagnóstico do modelo Poisson\"\ngit push\nO que você ganha:\n\nhistórico de por que cada mudança foi feita;\nliberdade para experimentar sem medo de quebrar o que funcionava;\ncolaboração sem analise_final_v2_REALFINAL.R.\n\n\nDetalhes em Happy Git with R."
+    "text": "git, em três comandos\ngit add .\ngit commit -m \"Adiciona diagnóstico do modelo Poisson\"\ngit push\nO que você ganha:\n\nhistórico de por que cada mudança foi feita;\nliberdade para experimentar sem medo de quebrar o que funcionava;\ncolaboração sem analise_final_v2_REALFINAL.R.\n\n\nSe estes três comandos não forem familiares, a aula 3 da minha disciplina de introdução ao R cobre git e GitHub do começo, incluindo a configuração inicial. Para os detalhes e para quando algo der errado, Happy Git with R."
   },
   {
     "objectID": "slides/e01.html#fair",
@@ -2275,18 +2303,18 @@
     "text": "O que fica de hoje, em uma linha\n\nO ciclo PPDAC é o mapa; os quatro princípios são o critério de qualidade; o protocolo de oito passos é a lista de verificação. O resto do curso é a etapa “Análise”."
   },
   {
-    "objectID": "slides/e01.html#para-amanhã",
-    "href": "slides/e01.html#para-amanhã",
+    "objectID": "slides/e01.html#hoje-à-tarde",
+    "href": "slides/e01.html#hoje-à-tarde",
     "title": "EDA, reprodutibilidade e literacia em IA",
-    "section": "Para amanhã",
-    "text": "Para amanhã\nLeitura: Gelman, Hill & Vehtari (2020), Regression and Other Stories, Parte I.\nExercício: rode o protocolo de oito passos nos seus dados e escreva meia página sobre o que encontrou. Traga amanhã — vamos usar nas práticas.\nAmanhã de manhã: teste t, correlação e regressão deixam de ser três coisas."
+    "section": "Hoje à tarde",
+    "text": "Hoje à tarde\nLeitura: Gelman, Hill & Vehtari (2020), Regression and Other Stories, caps. 1 (Introduction) e 2 (Data and measurement) — dá para ler no intervalo do almoço.\nExercício: rodem o protocolo de oito passos nos seus dados e escrevam meia página sobre o que encontraram. Vamos usar isso nas práticas da semana inteira, então não deixem para depois.\nDaqui a pouco: teste t, correlação e regressão deixam de ser três coisas."
   },
   {
     "objectID": "slides/e01.html#referências",
     "href": "slides/e01.html#referências",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Referências",
-    "text": "Referências\n\n\nWild, C.J. & Pfannkuch, M. 1999. Statistical thinking in empirical enquiry. International Statistical Review 67:223–248. — origem do ciclo PPDAC.\nPopovic, G. et al. 2024. Four principles for improved statistical ecology. Methods in Ecology and Evolution 15:266–281.\nCooper, N. et al. 2024. Harnessing large language models for coding, teaching and inclusion to empower research in ecology and evolution. Methods in Ecology and Evolution 15:1757–1763.\nKay, M. et al. 2026. A century of inertia in quantitative ecology education. Methods in Ecology and Evolution.\nZuur, A.F.; Ieno, E.N. & Elphick, C.S. 2010. A protocol for data exploration to avoid common statistical problems. Methods in Ecology and Evolution 1:3–14.\nZuur, A.F. & Ieno, E.N. 2016. A protocol for conducting and presenting results of regression-type analyses. Methods in Ecology and Evolution 7:636–645.\nCOPE. Authorship and AI tools — position statement.\nCNPq. 2026. Portaria nº 2.664, de 6 de março de 2026 — Política de Integridade na Atividade Científica.\nDrobniak, S.M. et al. 2026. AIdIT: AI disclosure for Improved Transparency. Research Integrity and Peer Review.\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA."
+    "text": "Referências\n\n\nWild, C.J. & Pfannkuch, M. 1999. Statistical thinking in empirical enquiry. International Statistical Review 67:223–248. — origem do ciclo PPDAC.\nPopovic, G. et al. 2024. Four principles for improved statistical ecology. Methods in Ecology and Evolution 15:266–281.\nCooper, N. et al. 2024. Harnessing large language models for coding, teaching and inclusion to empower research in ecology and evolution. Methods in Ecology and Evolution 15:1757–1763.\nKay, M. et al. 2026. A century of inertia in quantitative ecology education. Methods in Ecology and Evolution.\nAnscombe, F.J. 1973. Graphs in statistical analysis. The American Statistician 27:17–21.\nZuur, A.F.; Ieno, E.N. & Elphick, C.S. 2010. A protocol for data exploration to avoid common statistical problems. Methods in Ecology and Evolution 1:3–14.\nZuur, A.F. & Ieno, E.N. 2016. A protocol for conducting and presenting results of regression-type analyses. Methods in Ecology and Evolution 7:636–645.\nCOPE. Authorship and AI tools — position statement.\nCNPq. 2026. Portaria nº 2.664, de 6 de março de 2026 — Política de Integridade na Atividade Científica.\nDrobniak, S.M. et al. 2026. AIdIT: AI disclosure for Improved Transparency. Research Integrity and Peer Review.\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA."
   },
   {
     "objectID": "slides/e03.html#onde-estamos-no-ciclo-ppdac",
@@ -2791,6 +2819,20 @@
     "title": "GLMM I: por que efeitos aleatórios",
     "section": "Productive failure",
     "text": "Productive failure\nRiqueza de invertebrados em 45 amostras, distribuídas em 9 praias, com a altura da amostra em relação ao nível do mar (NAP).\n\n\n\n\n\n\n\n\n\nEm grupos: qual o n desta análise — 45 ou 9? E que diferença isso faz?"
+  },
+  {
+    "objectID": "slides/e07.html#três-cenários",
+    "href": "slides/e07.html#três-cenários",
+    "title": "GLMM I: por que efeitos aleatórios",
+    "section": "Três cenários",
+    "text": "Três cenários\nCinco minutos, em duplas. Em quais destes há réplica de verdade?\n\nPara testar o efeito de uma dieta sobre o peso, um rato é pesado todos os dias durante trinta dias. n = 30?\nPara comparar duas espécies de formiga, coletam-se cinquenta operárias de um formigueiro de cada espécie. n = 50 por espécie?\nPara comparar a herbivoria entre duas florestas, medem-se cem folhas de uma árvore em cada floresta. n = 100 por floresta?\n\n\nA pergunta que resolve os três: qual é a unidade que foi de fato replicada no fator que me interessa?"
+  },
+  {
+    "objectID": "slides/e07.html#os-três-são-o-mesmo-erro",
+    "href": "slides/e07.html#os-três-são-o-mesmo-erro",
+    "title": "GLMM I: por que efeitos aleatórios",
+    "section": "Os três são o mesmo erro",
+    "text": "Os três são o mesmo erro\nEm todos, o que se replicou foi a medida, não a unidade que recebe o tratamento. O rato é um, o formigueiro é um, a árvore é uma. Trinta pesagens do mesmo rato dizem muito sobre aquele rato e quase nada sobre a dieta.\nE repare que nenhum deles é erro de conta: os trinta pesos existem, foram medidos com cuidado e estão corretos. O que não existe é a informação que o n = 30 promete.\n\nNão se conserta na análise: ou o delineamento replicou a unidade certa, ou não replicou. O que dá para fazer — e é o resto desta manhã — é modelar a dependência em vez de fingir que ela não existe."
   },
   {
     "objectID": "slides/e07.html#a-definição",

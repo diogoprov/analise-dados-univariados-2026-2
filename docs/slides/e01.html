@@ -575,13 +575,31 @@ Diogo B. Provete
 </table>
 <p><strong>As duas são ciência legítima.</strong> O que não é legítimo é trocar o rótulo.</p>
 </section>
-<section id="pico-finer" class="slide level2">
-<h2>PICO / FINER</h2>
-<p>Duas estruturas emprestadas da área biomédica para afiar a pergunta:</p>
-<p><strong>PICO</strong> — População, Intervenção (ou exposição), Comparação, <em>Outcome</em>.</p>
-<p><strong>FINER</strong> — <em>Feasible, Interesting, Novel, Ethical, Relevant</em>.</p>
+<section id="uma-pergunta-que-dá-para-responder" class="slide level2 smaller">
+<h2>Uma pergunta que dá para responder</h2>
+<blockquote>
+<p>Qual o efeito da quantidade de nitrogênio do solo na taxa de crescimento per capita de árvores adultas do gênero <em>Pinus</em>?</p>
+</blockquote>
+<p>Antes de qualquer estatística, ela já traz a <strong>resposta</strong> (taxa de crescimento per capita), a <strong>preditora</strong> (nitrogênio no solo), a <strong>unidade</strong> (árvore adulta) e o <strong>grupo</strong> (<em>Pinus</em>).</p>
+<p>E a hipótese que a sustenta diz o <strong>mecanismo</strong>:</p>
+<blockquote>
+<p>O nitrogênio está presente em várias moléculas orgânicas envolvidas no processo de crescimento de plantas em geral. Logo, espero que quanto maior a quantidade de nitrogênio disponível no solo, maior seja a taxa de crescimento per capita de uma população de plantas do gênero <em>Pinus</em>.</p>
+</blockquote>
 <div class="definicao">
-<p>Exercício de 5 min: escrevam a pergunta do capítulo de vocês no formato PICO. Quem não conseguir preencher os quatro campos descobriu algo importante sobre o próprio projeto.</p>
+<p>Pergunta → hipótese (o mecanismo) → previsão (a direção). Sem o meio não há o que testar; há só uma correlação para comentar depois.</p>
+</div>
+</section>
+<section id="atividade-10-min" class="slide level2 smaller">
+<h2>Atividade (10 min)</h2>
+<p>Uma pergunta de projeto de verdade:</p>
+<blockquote>
+<p>Será que a poluição afeta os girinos?</p>
+</blockquote>
+<p><strong>Sozinhos (3 min).</strong> Reescrevam num papel, de modo que a pergunta diga: que poluente e medido como; que resposta e em que unidade; que espécie e que estágio; onde e quando.</p>
+<p><strong>Em duplas (4 min).</strong> Comparem as duas versões e cheguem a uma só.</p>
+<p><strong>Duas duplas compartilham (3 min).</strong></p>
+<div class="nota">
+<p>Depois façam o mesmo com a pergunta do capítulo de vocês. Se ela não couber numa frase com resposta, preditora e unidade, o problema não é de redação — é que a análise ainda não tem alvo.</p>
 </div>
 </section>
 <section id="pré-registro" class="slide level2">
@@ -592,6 +610,15 @@ Diogo B. Provete
 <li>não impede análise exploratória — apenas separa claramente as duas;</li>
 <li>em ecologia observacional, registrar <strong>antes de olhar os dados</strong> já resolve a maior parte do problema.</li>
 </ul>
+</section>
+<section class="slide level2">
+
+</section></section>
+<section>
+<section id="intervalo" class="title-slide slide level1 secao center">
+<h1>Intervalo</h1>
+<p>15 minutos.</p>
+<p>Na volta: o protocolo de exploração de dados, em oito passos.</p>
 </section>
 <section class="slide level2">
 
@@ -624,24 +651,55 @@ Diogo B. Provete
 <li>As observações são <strong>independentes</strong>?</li>
 </ol>
 </section>
-<section id="passo-1-outliers" class="slide level2 smaller">
-<h2>Passo 1 — Outliers</h2>
-<p>O gráfico de Cleveland é mais informativo que o boxplot: mostra cada observação contra a ordem no arquivo.</p>
+<section id="antes-dos-oito-passos-olhe" class="slide level2 smaller">
+<h2>Antes dos oito passos: olhe</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb5-2"><a></a>dados <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"../dados/dados_com_outliers_e_faltantes.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span>
-<span id="cb5-3"><a></a></span>
-<span id="cb5-4"><a></a>dados <span class="sc">|&gt;</span></span>
-<span id="cb5-5"><a></a>  <span class="fu">mutate</span>(<span class="at">ordem =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb5-6"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Pontuacao, <span class="at">y =</span> ordem, <span class="at">colour =</span> Grupo)) <span class="sc">+</span></span>
-<span id="cb5-7"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb5-8"><a></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>)) <span class="sc">+</span></span>
-<span id="cb5-9"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Valor observado"</span>, <span class="at">y =</span> <span class="st">"Ordem no arquivo"</span>) <span class="sc">+</span></span>
-<span id="cb5-10"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a><span class="co"># o anscombe vem em oito colunas: x1..x4 e y1..y4</span></span>
+<span id="cb5-2"><a></a>quarteto <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-3"><a></a>  <span class="at">conjunto =</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="at">each =</span> <span class="fu">nrow</span>(anscombe)),</span>
+<span id="cb5-4"><a></a>  <span class="at">x =</span> <span class="fu">unlist</span>(anscombe[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>]),</span>
+<span id="cb5-5"><a></a>  <span class="at">y =</span> <span class="fu">unlist</span>(anscombe[, <span class="dv">5</span><span class="sc">:</span><span class="dv">8</span>])</span>
+<span id="cb5-6"><a></a>)</span>
+<span id="cb5-7"><a></a></span>
+<span id="cb5-8"><a></a><span class="fu">ggplot</span>(quarteto, <span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb5-9"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">"#c08a3e"</span>, <span class="at">linewidth =</span> .<span class="dv">8</span>) <span class="sc">+</span></span>
+<span id="cb5-10"><a></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>, <span class="at">colour =</span> <span class="st">"#1c6e8c"</span>) <span class="sc">+</span></span>
+<span id="cb5-11"><a></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> conjunto, <span class="at">nrow =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-12"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
 <p><img data-src="e01_files/figure-revealjs/unnamed-chunk-5-1.png" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Os quatro conjuntos de Anscombe (1973) têm a <strong>mesma</strong> média de <em>x</em> e de <em>y</em>, o mesmo desvio-padrão, a mesma correlação (0,816) e a mesma reta de regressão (<span class="math inline">\(y = 3 + 0{,}5x\)</span>) — idênticos até a terceira casa decimal.</p>
+<div class="definicao">
+<p>Nenhuma estatística-resumo distingue os quatro. O gráfico distingue em um segundo. É por isso que o protocolo abaixo começa por olhar, e não por calcular.</p>
+</div>
+<div class="nota">
+<p>O pacote <a href="https://r-causal.github.io/quartets/"><code>quartets</code></a> reúne este e outros conjuntos com a mesma moral — inclusive um quarteto <strong>causal</strong>, em que as quatro estruturas causais produzem números idênticos. Voltamos a ele no Encontro 5.</p>
+</div>
+</section>
+<section id="passo-1-outliers" class="slide level2 smaller">
+<h2>Passo 1 — Outliers</h2>
+<p>O gráfico de Cleveland é mais informativo que o boxplot: mostra cada observação contra a ordem no arquivo.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb6-2"><a></a>dados <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"../dados/dados_com_outliers_e_faltantes.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span>
+<span id="cb6-3"><a></a></span>
+<span id="cb6-4"><a></a>dados <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a></a>  <span class="fu">mutate</span>(<span class="at">ordem =</span> <span class="fu">row_number</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Pontuacao, <span class="at">y =</span> ordem, <span class="at">colour =</span> Grupo)) <span class="sc">+</span></span>
+<span id="cb6-7"><a></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-8"><a></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>)) <span class="sc">+</span></span>
+<span id="cb6-9"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Valor observado"</span>, <span class="at">y =</span> <span class="st">"Ordem no arquivo"</span>) <span class="sc">+</span></span>
+<span id="cb6-10"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-6-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -662,17 +720,18 @@ Diogo B. Provete
 <section id="passo-2-homogeneidade-de-variância" class="slide level2">
 <h2>Passo 2 — Homogeneidade de variância</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a></a>het <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"../dados/dados_heterocedasticidade.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span>
-<span id="cb6-2"><a></a></span>
-<span id="cb6-3"><a></a><span class="fu">ggplot</span>(het, <span class="fu">aes</span>(Dificuldade, Desempenho, <span class="at">fill =</span> Metodo)) <span class="sc">+</span></span>
-<span id="cb6-4"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> .<span class="dv">75</span>) <span class="sc">+</span></span>
-<span id="cb6-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>, <span class="st">"#6b8f71"</span>)) <span class="sc">+</span></span>
-<span id="cb6-6"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
-<span id="cb6-7"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Dificuldade"</span>, <span class="at">y =</span> <span class="st">"Desempenho"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>rikz <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"../dados/RIKZ.txt"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>, <span class="at">row.names =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a></a>  <span class="fu">mutate</span>(<span class="at">Beach =</span> <span class="fu">factor</span>(Beach))</span>
+<span id="cb7-3"><a></a></span>
+<span id="cb7-4"><a></a><span class="fu">ggplot</span>(rikz, <span class="fu">aes</span>(Beach, Richness)) <span class="sc">+</span></span>
+<span id="cb7-5"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"#1c6e8c"</span>, <span class="at">alpha =</span> .<span class="dv">45</span>, <span class="at">outlier.shape =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb7-6"><a></a>  <span class="fu">geom_jitter</span>(<span class="at">width =</span> .<span class="dv">12</span>, <span class="at">colour =</span> <span class="st">"#144f64"</span>, <span class="at">size =</span> <span class="fl">1.7</span>) <span class="sc">+</span></span>
+<span id="cb7-7"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Praia"</span>, <span class="at">y =</span> <span class="st">"Riqueza de espécies"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-6-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-7-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -681,46 +740,46 @@ Diogo B. Provete
 <section id="passo-2-quanto-difere" class="slide level2 smaller">
 <h2>Passo 2 — quanto difere?</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a>het <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a></a>  <span class="fu">group_by</span>(Metodo, Dificuldade) <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Desempenho), <span class="dv">1</span>),</span>
-<span id="cb7-4"><a></a>            <span class="at">dp    =</span> <span class="fu">round</span>(<span class="fu">sd</span>(Desempenho), <span class="dv">1</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a>rikz <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a></a>  <span class="fu">group_by</span>(Beach) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n</span>(), <span class="at">media =</span> <span class="fu">round</span>(<span class="fu">mean</span>(Richness), <span class="dv">1</span>),</span>
+<span id="cb8-4"><a></a>            <span class="at">dp =</span> <span class="fu">round</span>(<span class="fu">sd</span>(Richness), <span class="dv">2</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 4
-  Metodo Dificuldade media    dp
-  &lt;chr&gt;  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt;
-1 M1     Alta         40.1   1.7
-2 M1     Baixa        29.8   1.7
-3 M2     Alta         39    12.8
-4 M2     Baixa        29.7  23.8</code></pre>
+<pre><code># A tibble: 9 × 4
+  Beach     n media    dp
+  &lt;fct&gt; &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 1         5  11    1.22
+2 2         5  12.2  5.36
+3 3         5   3.4  1.82
+4 4         5   2.4  1.34
+5 5         5   7.4  8.53
+6 6         5   4    1.87
+7 7         5   2.2  1.3 
+8 8         5   4    2.65
+9 9         5   4.6  4.39</code></pre>
 </div>
 </div>
-<p>Olhem a coluna <code>dp</code>: as médias de <code>M1</code> e <code>M2</code> são parecidas, mas a dispersão de <code>M2</code> é várias vezes maior. A variância <strong>depende do nível da preditora</strong> — exatamente o que o modelo linear supõe que não acontece.</p>
+<p>Olhem a coluna <code>dp</code>: vai de <strong>1,22</strong> na praia 1 a <strong>8,53</strong> na praia 5 — sete vezes. Cinco amostras em cada uma, o mesmo protocolo em todas. A dispersão não é constante entre praias, que é exatamente o que o modelo linear supõe que seja.</p>
 <div class="nota">
-<p>Repare que um teste de médias aqui responderia “não há diferença” e perderia o achado mais interessante do conjunto de dados.</p>
-</div>
-<div class="definicao">
-<p>Guardem: no Encontro 4 isso deixa de ser um problema a corrigir e passa a ser uma <strong>informação sobre a distribuição</strong> — em muitas famílias da família exponencial, a variância é função da média por construção.</p>
+<p>E repare de onde vem a heterogeneidade: não de uma preditora contínua, mas do <strong>agrupamento</strong>. Isso não é ruído a corrigir — é estrutura do delineamento, e é o Encontro 7.</p>
 </div>
 </section>
 <section id="passo-3-distribuição-da-resposta" class="slide level2 smaller">
 <h2>Passo 3 — Distribuição da resposta</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>nn <span class="ot">&lt;-</span> <span class="fu">read_delim</span>(<span class="st">"../dados/dados_nao_normais.csv"</span>, <span class="at">delim =</span> <span class="st">";"</span>)</span>
-<span id="cb9-2"><a></a></span>
-<span id="cb9-3"><a></a><span class="fu">ggplot</span>(nn, <span class="fu">aes</span>(Tempo_Reacao, <span class="at">fill =</span> Tratamento)) <span class="sc">+</span></span>
-<span id="cb9-4"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">25</span>, <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> .<span class="dv">8</span>) <span class="sc">+</span></span>
-<span id="cb9-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>)) <span class="sc">+</span></span>
-<span id="cb9-6"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
-<span id="cb9-7"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Tempo de reação"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">ggplot</span>(RK, <span class="fu">aes</span>(TOT.N)) <span class="sc">+</span></span>
+<span id="cb10-2"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">fill =</span> <span class="st">"#1c6e8c"</span>, <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> .<span class="dv">85</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>) <span class="sc">+</span></span>
+<span id="cb10-4"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Anfíbios mortos por sítio"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-8-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-9-1.png" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>Contagem, assimétrica à direita, de 2 a 104 em 52 sítios. Média 25,9 e variância 589,3 — a variância é <strong>22,7 vezes</strong> a média. Para uma Poisson elas seriam iguais; já dá para saber, aqui, que ela não vai servir (Encontro 6).</p>
 <div class="definicao">
 <p>Atenção: o modelo linear <strong>não</strong> assume que a resposta é normal. Assume que o <strong>resíduo</strong> é. Voltaremos a isso no Encontro 2 — é um dos mal-entendidos mais caros da estatística aplicada.</p>
 </div>
@@ -728,14 +787,14 @@ Diogo B. Provete
 <section id="passo-4-excesso-de-zeros" class="slide level2">
 <h2>Passo 4 — Excesso de zeros</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">ggplot</span>(RK, <span class="fu">aes</span>(TOT.N)) <span class="sc">+</span></span>
-<span id="cb10-2"><a></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#1c6e8c"</span>) <span class="sc">+</span></span>
-<span id="cb10-3"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Anfíbios mortos"</span>, <span class="at">y =</span> <span class="st">"Nº de sítios"</span>) <span class="sc">+</span></span>
-<span id="cb10-4"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">ggplot</span>(RK, <span class="fu">aes</span>(TOT.N)) <span class="sc">+</span></span>
+<span id="cb11-2"><a></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#1c6e8c"</span>) <span class="sc">+</span></span>
+<span id="cb11-3"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Anfíbios mortos"</span>, <span class="at">y =</span> <span class="st">"Nº de sítios"</span>) <span class="sc">+</span></span>
+<span id="cb11-4"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-9-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-10-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -745,10 +804,10 @@ Diogo B. Provete
 <section id="passo-5-colinearidade" class="slide level2">
 <h2>Passo 5 — Colinearidade</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>RK <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a></a>  <span class="fu">select</span>(D.PARK, OPEN.L, L.WAT.C, MONT.S) <span class="sc">|&gt;</span></span>
-<span id="cb11-3"><a></a>  <span class="fu">cor</span>(<span class="at">use =</span> <span class="st">"complete.obs"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-4"><a></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>RK <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a></a>  <span class="fu">select</span>(D.PARK, OPEN.L, L.WAT.C, MONT.S) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a></a>  <span class="fu">cor</span>(<span class="at">use =</span> <span class="st">"complete.obs"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        D.PARK OPEN.L L.WAT.C MONT.S
 D.PARK    1.00   0.27    0.28   0.07
@@ -762,15 +821,15 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <section id="passos-6-e-7-relações-e-interações" class="slide level2">
 <h2>Passos 6 e 7 — Relações e interações</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">ggplot</span>(RK, <span class="fu">aes</span>(D.PARK, TOT.N)) <span class="sc">+</span></span>
-<span id="cb13-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#1c6e8c"</span>) <span class="sc">+</span></span>
-<span id="cb13-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">"#144f64"</span>) <span class="sc">+</span></span>
-<span id="cb13-4"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Distância ao parque (m)"</span>, <span class="at">y =</span> <span class="st">"Anfíbios mortos"</span>) <span class="sc">+</span></span>
-<span id="cb13-5"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">ggplot</span>(RK, <span class="fu">aes</span>(D.PARK, TOT.N)) <span class="sc">+</span></span>
+<span id="cb14-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#1c6e8c"</span>) <span class="sc">+</span></span>
+<span id="cb14-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">"#144f64"</span>) <span class="sc">+</span></span>
+<span id="cb14-4"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Distância ao parque (m)"</span>, <span class="at">y =</span> <span class="st">"Anfíbios mortos"</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-11-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-12-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -811,6 +870,22 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <div class="definicao">
 <p>Reprodutibilidade é, antes de tudo, um favor que você faz a si mesmo.</p>
 </div>
+<div class="fragment">
+<blockquote>
+<p>Your best collaborator is yourself six months from now, and your past self doesn’t answer emails.</p>
+</blockquote>
+</div>
+</section>
+<section id="o-mesmo-problema-em-2016" class="slide level2 smaller">
+<h2>O mesmo problema, em 2016</h2>
+<blockquote>
+<p>Dear past-Hadley: PLEASE COMMENT YOUR CODE BETTER. Love present-Hadley.</p>
+<p>— Hadley Wickham (<a href="https://x.com/hadleywickham"><span class="citation" data-cites="hadleywickham">@hadleywickham</span></a>, 7 de abril de 2016)</p>
+</blockquote>
+<p>Quem escreveu boa parte do <code>tidyverse</code> também não entende o próprio código de seis meses atrás. A conclusão não é que ele seja desorganizado — é que <strong>ninguém</strong> consegue, e por isso o comentário não é firula.</p>
+<div class="definicao">
+<p>Comente o <strong>porquê</strong>, não o quê. <code># filtra juvenis</code> é redundante com o código; <code># juvenis fora: o protocolo de campo mudou em 2019 e a medida não é comparável</code> é o que o seu eu de 2028 precisa.</p>
+</div>
 </section>
 <section id="um-projeto-um-diretório" class="slide level2">
 <h2>Um projeto, um diretório</h2>
@@ -827,26 +902,41 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <section id="caminhos" class="slide level2">
 <h2>Caminhos</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="co"># Nunca:</span></span>
-<span id="cb15-2"><a></a><span class="fu">read.csv</span>(<span class="st">"/Users/diogo/Documents/projeto-final-v3/dados.csv"</span>)</span>
-<span id="cb15-3"><a></a></span>
-<span id="cb15-4"><a></a><span class="co"># Sempre:</span></span>
-<span id="cb15-5"><a></a><span class="fu">library</span>(here)</span>
-<span id="cb15-6"><a></a><span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"dados"</span>, <span class="st">"brutos"</span>, <span class="st">"anuros.csv"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="co"># Nunca:</span></span>
+<span id="cb16-2"><a></a><span class="fu">read.csv</span>(<span class="st">"/Users/diogo/Documents/projeto-final-v3/dados.csv"</span>)</span>
+<span id="cb16-3"><a></a></span>
+<span id="cb16-4"><a></a><span class="co"># Sempre:</span></span>
+<span id="cb16-5"><a></a><span class="fu">library</span>(here)</span>
+<span id="cb16-6"><a></a><span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"dados"</span>, <span class="st">"brutos"</span>, <span class="st">"anuros.csv"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><code>here()</code> resolve a partir da raiz do projeto. O script roda na sua máquina, na do orientando e no GitHub Actions.</p>
+</section>
+<section id="como-o-here-acha-a-raiz" class="slide level2 smaller">
+<h2>Como o <code>here()</code> acha a raiz</h2>
+<p>Ao ser carregado, o <code>here</code> sobe a árvore de diretórios a partir de onde o R está e para no primeiro diretório que contenha uma <strong>âncora</strong>. As duas que importam na prática: um arquivo <code>.Rproj</code> e uma pasta <code>.git</code>. Esse diretório vira a raiz, e <code>here("dados", "x.csv")</code> monta o caminho a partir dele.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>here<span class="sc">::</span><span class="fu">here</span>()                       <span class="co"># qual raiz ele encontrou</span></span>
+<span id="cb17-2"><a></a>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dados"</span>, <span class="st">"anuros.csv"</span>)  <span class="co"># o caminho, montado na hora</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>O detalhe que morde: <strong>um <code>.Rproj</code> vazio não conta</strong>. O critério exige que o arquivo comece com <code>Version:</code>. Sem âncora válida, o <code>here</code> não avisa nada — ele simplesmente devolve o diretório de trabalho atual, e o script passa a funcionar só quando você o abre do lugar certo.</p>
+<div class="nota">
+<p>Se <code>here::here()</code> apontar para um lugar estranho, é isso. Crie o projeto do RStudio, ou declare a raiz à mão com <code>here::i_am("scripts/analise.R")</code>.</p>
+</div>
+<div class="definicao">
+<p><code>setwd()</code> faz o oposto: fixa no código um caminho que só existe no seu computador. É a única linha de um script que tem garantia de quebrar na máquina de outra pessoa.</p>
+</div>
 </section>
 <section id="quarto" class="slide level2">
 <h2>Quarto</h2>
 <p>Texto, código e resultado no mesmo arquivo. O número do texto <strong>é</strong> o número que o código calculou.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a></a>A riqueza média foi de <span class="in">`r round(mean(dados$riqueza), 1)`</span> espécies.</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a></a>A riqueza média foi de <span class="in">`r round(mean(dados$riqueza), 1)`</span> espécies.</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Nunca mais copiar e colar um resultado — e nunca mais esquecer de atualizar o texto quando o dado muda.</p>
 </section>
 <section id="git-em-três-comandos" class="slide level2">
 <h2>git, em três comandos</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a></a><span class="fu">git</span> add .</span>
-<span id="cb17-2"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Adiciona diagnóstico do modelo Poisson"</span></span>
-<span id="cb17-3"><a></a><span class="fu">git</span> push</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a></a><span class="fu">git</span> add .</span>
+<span id="cb19-2"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Adiciona diagnóstico do modelo Poisson"</span></span>
+<span id="cb19-3"><a></a><span class="fu">git</span> push</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O que você ganha:</p>
 <ul>
 <li>histórico de <strong>por que</strong> cada mudança foi feita;</li>
@@ -854,7 +944,7 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <li>colaboração sem <code>analise_final_v2_REALFINAL.R</code>.</li>
 </ul>
 <div class="nota">
-<p>Detalhes em <a href="https://happygitwithr.com/">Happy Git with R</a>.</p>
+<p>Se estes três comandos não forem familiares, a <a href="https://provetelab.org/intro-r/slides/aula-03.html">aula 3 da minha disciplina de introdução ao R</a> cobre git e GitHub do começo, incluindo a configuração inicial. Para os detalhes e para quando algo der errado, <a href="https://happygitwithr.com/">Happy Git with R</a>.</p>
 </div>
 </section>
 <section id="fair" class="slide level2">
@@ -991,11 +1081,11 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <p>O ciclo PPDAC é o mapa; os quatro princípios são o critério de qualidade; o protocolo de oito passos é a lista de verificação. O resto do curso é a etapa “Análise”.</p>
 </div>
 </section>
-<section id="para-amanhã" class="slide level2">
-<h2>Para amanhã</h2>
-<p><strong>Leitura:</strong> Gelman, Hill &amp; Vehtari (2020), <em>Regression and Other Stories</em>, Parte I.</p>
-<p><strong>Exercício:</strong> rode o protocolo de oito passos nos <strong>seus</strong> dados e escreva meia página sobre o que encontrou. Traga amanhã — vamos usar nas práticas.</p>
-<p><strong>Amanhã de manhã:</strong> teste t, correlação e regressão deixam de ser três coisas.</p>
+<section id="hoje-à-tarde" class="slide level2">
+<h2>Hoje à tarde</h2>
+<p><strong>Leitura:</strong> Gelman, Hill &amp; Vehtari (2020), <em>Regression and Other Stories</em>, caps. 1 (<em>Introduction</em>) e 2 (<em>Data and measurement</em>) — dá para ler no intervalo do almoço.</p>
+<p><strong>Exercício:</strong> rodem o protocolo de oito passos nos <strong>seus</strong> dados e escrevam meia página sobre o que encontraram. Vamos usar isso nas práticas da semana inteira, então não deixem para depois.</p>
+<p><strong>Daqui a pouco:</strong> teste t, correlação e regressão deixam de ser três coisas.</p>
 </section>
 <section id="referências" class="slide level2 smaller">
 <h2>Referências</h2>
@@ -1005,6 +1095,7 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <li>Popovic, G. et al.&nbsp;2024. <a href="https://doi.org/10.1111/2041-210X.14270">Four principles for improved statistical ecology</a>. <em>Methods in Ecology and Evolution</em> 15:266–281.</li>
 <li>Cooper, N. et al.&nbsp;2024. <a href="https://doi.org/10.1111/2041-210X.14325">Harnessing large language models for coding, teaching and inclusion to empower research in ecology and evolution</a>. <em>Methods in Ecology and Evolution</em> 15:1757–1763.</li>
 <li>Kay, M. et al.&nbsp;2026. <a href="https://doi.org/10.1111/2041-210X.70405">A century of inertia in quantitative ecology education</a>. <em>Methods in Ecology and Evolution</em>.</li>
+<li>Anscombe, F.J. 1973. <a href="https://doi.org/10.1080/00031305.1973.10478966">Graphs in statistical analysis</a>. <em>The American Statistician</em> 27:17–21.</li>
 <li>Zuur, A.F.; Ieno, E.N. &amp; Elphick, C.S. 2010. <a href="https://doi.org/10.1111/j.2041-210X.2009.00001.x">A protocol for data exploration to avoid common statistical problems</a>. <em>Methods in Ecology and Evolution</em> 1:3–14.</li>
 <li>Zuur, A.F. &amp; Ieno, E.N. 2016. <a href="https://doi.org/10.1111/2041-210X.12577">A protocol for conducting and presenting results of regression-type analyses</a>. <em>Methods in Ecology and Evolution</em> 7:636–645.</li>
 <li>COPE. <a href="https://publicationethics.org/guidance/cope-position/authorship-and-ai-tools"><em>Authorship and AI tools</em></a> — <em>position statement</em>.</li>

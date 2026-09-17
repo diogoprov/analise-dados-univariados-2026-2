@@ -316,6 +316,14 @@ parece com o que você tem.
 
 ---
 
+# Intervalo {.secao}
+
+15 minutos.
+
+Na volta: a família exponencial.
+
+---
+
 # 4. A família exponencial {.secao}
 
 ---
