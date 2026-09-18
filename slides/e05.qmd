@@ -34,9 +34,14 @@ execute:
 ```{r}
 #| echo: false
 library(tidyverse)
+library(plotly)
 theme_set(theme_minimal(base_size = 14))
 lagartos <- read_tsv("../dados/camila_cauda_lagartos.txt", show_col_types = FALSE) |>
-  drop_na(SVL, Tail_state, Sex) |> mutate(Sex = factor(Sex))
+  drop_na(SVL, Tail_state) |>
+  # no arquivo original, Tail_state == 1 é a cauda INTACTA; a pergunta é
+  # sobre perder a cauda, então recodificamos para a direção da pergunta
+  mutate(cauda_perdida = 1 - Tail_state,
+         Sex = factor(Sex), SVLc = SVL - mean(SVL))
 uv <- read_delim("../dados/UV.csv", delim = ";", show_col_types = FALSE) |>
   mutate(UV = factor(UV), Pigmentation = factor(Pigmentation))
 penta <- read_tsv("../dados/Planilha_Pentastomida.txt", show_col_types = FALSE) |>
@@ -90,8 +95,9 @@ verossimilhança** no lugar de mínimos quadrados.
 
 ## *Productive failure*
 
-Nos 223 lagartos, `Tail_state` indica se o indivíduo tinha ou não a cauda
-autotomizada (0/1).
+Nos 223 lagartos, `Tail_state` vale 1 quando a cauda está **intacta**.
+Como a pergunta é sobre o evento contrário, no setup recodificamos
+`cauda_perdida = 1 - Tail_state`.
 
 ::: {.definicao}
 **Pergunta:** lagartos maiores têm maior probabilidade de já ter perdido
@@ -99,7 +105,13 @@ a cauda?
 :::
 
 **Em grupos, 10 minutos:** que análise? E o que acontece se vocês
-simplesmente ajustarem `lm(Tail_state ~ SVL)`?
+simplesmente ajustarem `lm(cauda_perdida ~ SVL)`?
+
+::: {.nota}
+Qual dos dois níveis é o "1" não muda o ajuste — só troca o sinal de
+todos os coeficientes. Muda o que a frase final diz, e é por isso que
+vale decidir isso antes de ajustar.
+:::
 
 ---
 
@@ -108,10 +120,10 @@ simplesmente ajustarem `lm(Tail_state ~ SVL)`?
 ```{r}
 #| fig-height: 3.0
 #| echo: false
-ggplot(lagartos, aes(SVL, Tail_state)) +
+ggplot(lagartos, aes(SVL, cauda_perdida)) +
   geom_jitter(height = .03, alpha = .4, colour = "#1c6e8c") +
   geom_smooth(method = "lm", se = FALSE, colour = "#c08a3e") +
-  labs(x = "SVL (mm)", y = "Cauda autotomizada (0/1)")
+  labs(x = "SVL (mm)", y = "Cauda perdida (0/1)")
 ```
 
 A reta prevê valores fora de [0, 1]; o resíduo só pode assumir dois
@@ -139,26 +151,55 @@ soma dos quadrados **é** maximizar a verossimilhança.
 
 ---
 
-## Vendo a superfície {.smaller}
+## Uma grade de candidatos {.smaller}
 
 ```{r}
-#| fig-height: 2.6
-y <- lagartos$Tail_state
-x <- lagartos$SVL
+y <- lagartos$cauda_perdida
+x <- lagartos$SVLc   # SVL centrada na média — ver a nota dois slides adiante
 
 log_vero <- function(b0, b1) {
   p <- plogis(b0 + b1 * x)
   sum(dbinom(y, size = 1, prob = p, log = TRUE))
 }
 
-grade <- crossing(b0 = seq(-6, 2, .12), b1 = seq(-.05, .2, .004)) |>
-  mutate(ll = map2_dbl(b0, b1, log_vero))
+b0_grade <- seq(-0.75, 0.65, length.out = 60)
+b1_grade <- seq(-0.07, 0.42, length.out = 60)
 
-ggplot(grade, aes(b0, b1, fill = ll)) +
-  geom_raster() +
-  scale_fill_viridis_c(option = "mako") +
-  labs(x = expression(beta[0]), y = expression(beta[1]), fill = "log L")
+grade <- crossing(b0 = b0_grade, b1 = b1_grade) |>
+  mutate(ll = map2_dbl(b0, b1, log_vero))
 ```
+
+Cada linha da grade é um par de candidatos $(\beta_0, \beta_1)$, e `ll` diz
+o quanto os dados que observamos seriam prováveis se aquele par fosse o
+verdadeiro.
+
+---
+
+## Vendo a superfície {.smaller}
+
+```{r}
+#| echo: false
+superficie <- matrix(grade$ll, nrow = length(b0_grade), byrow = TRUE)
+mle <- coef(glm(cauda_perdida ~ SVLc, family = binomial, data = lagartos))
+escala <- map2(seq(0, 1, length.out = 9), hcl.colors(9, "Mako"), ~ list(.x, .y))
+
+plot_ly(height = 430) |>
+  add_surface(x = b0_grade, y = b1_grade, z = t(superficie),
+              colorscale = escala, showscale = FALSE,
+              contours = list(z = list(show = TRUE, usecolormap = TRUE,
+                                       project = list(z = TRUE)))) |>
+  add_markers(x = mle[1], y = mle[2], z = log_vero(mle[1], mle[2]),
+              name = "EMV", marker = list(size = 7, color = "#c08a3e")) |>
+  layout(showlegend = FALSE, margin = list(l = 0, r = 0, b = 0, t = 0),
+         scene = list(xaxis = list(title = "b0 (intercepto)"),
+                      yaxis = list(title = "b1 (inclinacao)"),
+                      zaxis = list(title = "log L"),
+                      aspectratio = list(x = 1.25, y = 1.1, z = .75),
+                      camera = list(eye = list(x = -1.55, y = -1.45, z = .7))))
+```
+
+Arraste para girar. O ponto dourado é o topo; as curvas no piso são as
+curvas de nível.
 
 ---
 
@@ -167,7 +208,7 @@ ggplot(grade, aes(b0, b1, fill = ll)) +
 ```{r}
 grade |> slice_max(ll, n = 1)
 
-coef(glm(Tail_state ~ SVL, family = binomial, data = lagartos))
+coef(glm(cauda_perdida ~ SVLc, family = binomial, data = lagartos))
 ```
 
 ::: {.nota}
@@ -175,6 +216,20 @@ A busca em grade serve só para enxergar. O `glm()` usa mínimos quadrados
 reponderados iterativamente, que chega no mesmo lugar com muito menos
 esforço.
 :::
+
+---
+
+## Por que a SVL centrada {.smaller}
+
+Com a SVL crua, $\beta_0$ é a log-chance em SVL $= 0$ — um lagarto de
+comprimento zero, muito fora dos dados. Intercepto e inclinação ficam
+quase perfeitamente correlacionados ($r = -0{,}99$) e a superfície vira
+uma lâmina diagonal: não dá para enxergar um morro.
+
+Centrar a SVL **não muda o modelo** — a inclinação, a *deviance* e o AIC
+são idênticos. Só muda o que $\beta_0$ significa: a log-chance no
+comprimento médio. E aí a correlação cai para quase zero e a superfície
+fica redonda.
 
 ---
 
@@ -188,7 +243,7 @@ Distância entre o seu modelo e um modelo que acerta todas as observações.
 :::
 
 ```{r}
-m_bin <- glm(Tail_state ~ SVL, family = binomial, data = lagartos)
+m_bin <- glm(cauda_perdida ~ SVL, family = binomial, data = lagartos)
 c(nula = m_bin$null.deviance, residual = m_bin$deviance, AIC = AIC(m_bin))
 ```
 
@@ -197,7 +252,7 @@ c(nula = m_bin$null.deviance, residual = m_bin$deviance, AIC = AIC(m_bin))
 ## Teste de razão de verossimilhanças
 
 ```{r}
-m0 <- glm(Tail_state ~ 1, family = binomial, data = lagartos)
+m0 <- glm(cauda_perdida ~ 1, family = binomial, data = lagartos)
 anova(m0, m_bin, test = "LRT")
 ```
 
@@ -219,7 +274,7 @@ parâmetros. É o análogo do teste *F* do modelo linear.
 
 ```{r}
 #| eval: false
-glm(Tail_state ~ SVL, family = binomial, data = lagartos)
+glm(cauda_perdida ~ SVL, family = binomial, data = lagartos)
 ```
 
 **Binomial agregada** — sucessos e fracassos por unidade:
@@ -275,11 +330,11 @@ novo <- novo |> mutate(p = plogis(pred$fit),
                        lo = plogis(pred$fit - 1.96 * pred$se.fit),
                        hi = plogis(pred$fit + 1.96 * pred$se.fit))
 
-ggplot(lagartos, aes(SVL, Tail_state)) +
+ggplot(lagartos, aes(SVL, cauda_perdida)) +
   geom_jitter(height = .03, alpha = .3, colour = "#1c6e8c") +
   geom_ribbon(data = novo, aes(y = p, ymin = lo, ymax = hi), alpha = .2) +
   geom_line(data = novo, aes(y = p), colour = "#c08a3e", linewidth = 1) +
-  labs(x = "SVL (mm)", y = "P(cauda autotomizada)")
+  labs(x = "SVL (mm)", y = "P(cauda perdida)")
 ```
 
 ---
@@ -300,11 +355,11 @@ depois `plogis()`.
 ## Razão de chances não é risco relativo
 
 ```{r}
-p_30 <- plogis(b[1] + b[2] * 30)
-p_35 <- plogis(b[1] + b[2] * 35)
-c(prob_30mm = p_30, prob_35mm = p_35,
-  razao_de_chances = (p_35/(1-p_35)) / (p_30/(1-p_30)),
-  risco_relativo = p_35 / p_30)
+p_18 <- plogis(b[1] + b[2] * 18)
+p_22 <- plogis(b[1] + b[2] * 22)
+c(prob_18mm = p_18, prob_22mm = p_22,
+  razao_de_chances = (p_22/(1-p_22)) / (p_18/(1-p_18)),
+  risco_relativo = p_22 / p_18)
 ```
 
 ::: {.definicao}

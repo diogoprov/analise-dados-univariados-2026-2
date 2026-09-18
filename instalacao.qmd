@@ -47,6 +47,7 @@ pacotes <- c(
   # manipulação e visualização
   "tidyverse", "here", "janitor", "palmerpenguins", "patchwork",
   "GGally", "ggeffects", "broom", "broom.mixed", "knitr", "rmarkdown",
+  "plotly",
   # modelos lineares e GLM
   "car", "emmeans", "MASS", "performance", "see", "sjPlot", "marginaleffects",
   "usdm",

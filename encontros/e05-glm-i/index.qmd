@@ -155,7 +155,9 @@ curso, com um *take-home* por item:
 - [`camila_cauda_lagartos.txt`](../../dados/camila_cauda_lagartos.txt) — 223
   lagartos *Coleodactylus meridionalis*: sexo, CRC, comprimento da cauda
   intacta e da regenerada, e se o indivíduo já sofreu autotomia.
-  Aqui, `Tail_state` é a resposta binária do bloco 2.
+  Aqui, `Tail_state` é a resposta binária do bloco 2 — atenção: vale 1
+  quando a cauda está **intacta**, e nos slides ela é recodificada para
+  `cauda_perdida = 1 - Tail_state`.
 - [`Planilha_Pentastomida.txt`](../../dados/Planilha_Pentastomida.txt) —
   contagens de *Raillietiella mottae* em 195 lagartos; muitos zeros. É o
   conjunto do [capítulo 8 de *Análises Ecológicas no
