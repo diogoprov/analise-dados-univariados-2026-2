@@ -3372,5 +3372,40 @@
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Por que isso precisa de MCMC",
     "text": "Por que isso precisa de MCMC\nPara quase todo modelo interessante, a posterior não tem fórmula fechada: não dá para escrevê-la e resolver.\nO MCMC (Markov chain Monte Carlo) contorna isso por força bruta elegante: um algoritmo passeia pelo espaço dos parâmetros e visita cada região proporcionalmente à densidade da posterior. Você não obtém a equação da distribuição — obtém uma amostra dela.\n\nchains = 4, iter = 2000   # 4 passeios independentes, 2000 passos cada;\n                          # a 1a metade e aquecimento e se descarta\n\nSão 4 × 1000 = 4000 sorteios da posterior. Cada número do summary() é uma estatística desses 4000: a média deles, o desvio-padrão deles, os quantis 2,5 % e 97,5 % deles.\n\nDaí vêm os diagnósticos de que falaremos adiante. Rhat e ESS não dizem se o modelo é bom — dizem se o passeio funcionou. São duas perguntas diferentes, e é comum confundi-las."
+  },
+  {
+    "objectID": "slides/e03.html#primeiro-a-tabela-de-códigos",
+    "href": "slides/e03.html#primeiro-a-tabela-de-códigos",
+    "title": "ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Primeiro, a tabela de códigos",
+    "text": "Primeiro, a tabela de códigos\nNo Encontro 2 uma coluna 0/1 bastava, porque havia dois grupos. Com três, o R cria duas colunas:\n\n\n\nEspécie\nspeciesChinstrap\nspeciesGentoo\n\n\n\n\nAdelie (referência)\n0\n0\n\n\nChinstrap\n1\n0\n\n\nGentoo\n0\n1\n\n\n\n\nA referência não ganha coluna própria. Ela é a linha de zeros — o caso que sobra quando todas as outras colunas valem 0.\n\nRegra geral: \\(k\\) grupos, \\(k-1\\) colunas."
+  },
+  {
+    "objectID": "slides/e03.html#a-matriz-uma-linha-de-cada-espécie",
+    "href": "slides/e03.html#a-matriz-uma-linha-de-cada-espécie",
+    "title": "ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "A matriz, uma linha de cada espécie",
+    "text": "A matriz, uma linha de cada espécie\n\nX &lt;- model.matrix(m)\nX[c(1, 266, 147), ]   # 1 é Adelie, 266 é Chinstrap, 147 é Gentoo\n\n    (Intercept) speciesChinstrap speciesGentoo\n1             1                0             0\n266           1                1             0\n147           1                0             1\n\n\nA primeira coluna é só de 1: é o intercepto. As outras duas são a tabela do slide anterior, repetida uma vez por pinguim."
+  },
+  {
+    "objectID": "slides/e03.html#substituindo-uma-espécie-de-cada-vez",
+    "href": "slides/e03.html#substituindo-uma-espécie-de-cada-vez",
+    "title": "ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Substituindo, uma espécie de cada vez",
+    "text": "Substituindo, uma espécie de cada vez\nO modelo é \\(\\hat{y} = \\beta_0 \\cdot 1 + \\beta_1 x_1 + \\beta_2 x_2\\). Basta pôr a linha de cada espécie no lugar de \\(x_1\\) e \\(x_2\\):\nAdelie — linha \\((1, 0, 0)\\): \\[\\hat{y} = \\beta_0 + \\beta_1 \\cdot 0 + \\beta_2 \\cdot 0 = \\beta_0\\]\nChinstrap — linha \\((1, 1, 0)\\): \\[\\hat{y} = \\beta_0 + \\beta_1\\]\nGentoo — linha \\((1, 0, 1)\\): \\[\\hat{y} = \\beta_0 + \\beta_2\\]\n\n\\(\\beta_0\\) é a média de Adelie. \\(\\beta_1\\) e \\(\\beta_2\\) são diferenças em relação a ela — nenhum dos dois é a média do próprio grupo."
+  },
+  {
+    "objectID": "slides/e03.html#conferindo-na-mão",
+    "href": "slides/e03.html#conferindo-na-mão",
+    "title": "ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Conferindo na mão",
+    "text": "Conferindo na mão\n\ncoef(m)\n\n     (Intercept) speciesChinstrap    speciesGentoo \n      3706.16438         26.92385       1386.27259 \n\npinguins |&gt;\n  group_by(species) |&gt;\n  summarise(media = mean(body_mass_g)) |&gt;\n  mutate(diferenca_para_Adelie = media - first(media))\n\n# A tibble: 3 × 3\n  species   media diferenca_para_Adelie\n  &lt;fct&gt;     &lt;dbl&gt;                 &lt;dbl&gt;\n1 Adelie    3706.                   0  \n2 Chinstrap 3733.                  26.9\n3 Gentoo    5092.                1386. \n\n\nO intercepto é 3706 g, que é a média de Adelie. O coeficiente de Gentoo é 1386 g, que é 5092 − 3706. Os mesmos números, nas duas tabelas."
+  },
+  {
+    "objectID": "slides/e03.html#por-que-k-1-e-não-k",
+    "href": "slides/e03.html#por-que-k-1-e-não-k",
+    "title": "ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Por que \\(k-1\\) e não \\(k\\)",
+    "text": "Por que \\(k-1\\) e não \\(k\\)\nE se déssemos uma coluna também para Adelie?\n\nX3 &lt;- cbind(X, speciesAdelie = as.numeric(pinguins$species == \"Adelie\"))\n\nc(colunas = ncol(X3), posto = qr(X3)$rank)\n\ncolunas   posto \n      4       3 \n\n\nQuatro colunas, posto 3: uma delas é redundante. E dá para ver qual — as três colunas de espécie somam exatamente a coluna do intercepto, já que todo pinguim é de uma espécie e só uma.\n\nNesse caso o R não erra: ele descarta uma e devolve NA no coeficiente correspondente. Mas a escolha de qual descartar passa a ser dele, e não sua — e é por isso que existe a ideia de nível de referência."
   }
 ]

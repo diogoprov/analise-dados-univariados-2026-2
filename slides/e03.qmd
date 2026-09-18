@@ -141,31 +141,96 @@ graus de liberdade, mesmo *p*.
 
 ---
 
-## A matriz, de novo
+## Primeiro, a tabela de códigos {.smaller}
+
+No Encontro 2 uma coluna 0/1 bastava, porque havia dois grupos. Com três,
+o R cria **duas** colunas:
+
+| Espécie | `speciesChinstrap` | `speciesGentoo` |
+|:--|:--:|:--:|
+| `Adelie` (referência) | 0 | 0 |
+| `Chinstrap` | 1 | 0 |
+| `Gentoo` | 0 | 1 |
+
+::: {.definicao}
+A referência **não ganha coluna própria**. Ela é a linha de zeros — o caso
+que sobra quando todas as outras colunas valem 0.
+:::
+
+Regra geral: $k$ grupos, $k-1$ colunas.
+
+---
+
+## A matriz, uma linha de cada espécie {.smaller}
 
 ```{r}
 X <- model.matrix(m)
-X[c(1, 160, 280), ]
+X[c(1, 266, 147), ]   # 1 é Adelie, 266 é Chinstrap, 147 é Gentoo
 ```
 
-Duas colunas 0/1 para três espécies. `Adelie` é o nível de referência:
-é a linha $(1, 0, 0)$.
+A primeira coluna é só de 1: é o intercepto. As outras duas são a tabela
+do slide anterior, repetida uma vez por pinguim.
 
-::: {.nota}
-$k$ grupos exigem $k-1$ colunas. Se houvesse uma terceira coluna para
-`Adelie`, a matriz seria singular — o intercepto já a contém.
+---
+
+## Substituindo, uma espécie de cada vez {.smaller}
+
+O modelo é $\hat{y} = \beta_0 \cdot 1 + \beta_1 x_1 + \beta_2 x_2$. Basta
+pôr a linha de cada espécie no lugar de $x_1$ e $x_2$:
+
+**Adelie** — linha $(1, 0, 0)$:
+$$\hat{y} = \beta_0 + \beta_1 \cdot 0 + \beta_2 \cdot 0 = \beta_0$$
+
+**Chinstrap** — linha $(1, 1, 0)$:
+$$\hat{y} = \beta_0 + \beta_1$$
+
+**Gentoo** — linha $(1, 0, 1)$:
+$$\hat{y} = \beta_0 + \beta_2$$
+
+::: {.definicao}
+$\beta_0$ é a **média de Adelie**. $\beta_1$ e $\beta_2$ são
+**diferenças** em relação a ela — nenhum dos dois é a média do próprio
+grupo.
 :::
 
 ---
 
-## Coeficientes são diferenças
+## Conferindo na mão {.smaller}
 
 ```{r}
 coef(m)
-pinguins |> group_by(species) |> summarise(media = mean(body_mass_g))
+
+pinguins |>
+  group_by(species) |>
+  summarise(media = mean(body_mass_g)) |>
+  mutate(diferenca_para_Adelie = media - first(media))
 ```
 
-`Gentoo` pesa em média `r round(coef(m)[3])` g a mais que `Adelie`.
+O intercepto é 3706 g, que é a média de `Adelie`. O coeficiente de
+`Gentoo` é 1386 g, que é 5092 − 3706. **Os mesmos números, nas duas
+tabelas.**
+
+---
+
+## Por que $k-1$ e não $k$ {.smaller}
+
+E se déssemos uma coluna também para `Adelie`?
+
+```{r}
+X3 <- cbind(X, speciesAdelie = as.numeric(pinguins$species == "Adelie"))
+
+c(colunas = ncol(X3), posto = qr(X3)$rank)
+```
+
+Quatro colunas, posto 3: uma delas é redundante. E dá para ver qual — as
+três colunas de espécie **somam exatamente a coluna do intercepto**, já
+que todo pinguim é de uma espécie e só uma.
+
+::: {.nota}
+Nesse caso o R não erra: ele descarta uma e devolve `NA` no coeficiente
+correspondente. Mas a escolha de qual descartar passa a ser dele, e não
+sua — e é por isso que existe a ideia de nível de referência.
+:::
 
 ---
 

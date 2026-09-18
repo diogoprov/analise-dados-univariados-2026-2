@@ -312,42 +312,103 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><code>aov()</code> é literalmente uma casca em volta de <code>lm()</code>. Mesmo <em>F</em>, mesmos graus de liberdade, mesmo <em>p</em>.</p>
 </div>
 </section>
-<section id="a-matriz-de-novo" class="slide level2">
-<h2>A matriz, de novo</h2>
+<section id="primeiro-a-tabela-de-códigos" class="slide level2 smaller">
+<h2>Primeiro, a tabela de códigos</h2>
+<p>No Encontro 2 uma coluna 0/1 bastava, porque havia dois grupos. Com três, o R cria <strong>duas</strong> colunas:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Espécie</th>
+<th style="text-align: center;"><code>speciesChinstrap</code></th>
+<th style="text-align: center;"><code>speciesGentoo</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>Adelie</code> (referência)</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Chinstrap</code></td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Gentoo</code></td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<div class="definicao">
+<p>A referência <strong>não ganha coluna própria</strong>. Ela é a linha de zeros — o caso que sobra quando todas as outras colunas valem 0.</p>
+</div>
+<p>Regra geral: <span class="math inline">\(k\)</span> grupos, <span class="math inline">\(k-1\)</span> colunas.</p>
+</section>
+<section id="a-matriz-uma-linha-de-cada-espécie" class="slide level2 smaller">
+<h2>A matriz, uma linha de cada espécie</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(m)</span>
-<span id="cb5-2"><a></a>X[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">160</span>, <span class="dv">280</span>), ]</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-2"><a></a>X[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">266</span>, <span class="dv">147</span>), ]   <span class="co"># 1 é Adelie, 266 é Chinstrap, 147 é Gentoo</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    (Intercept) speciesChinstrap speciesGentoo
 1             1                0             0
-160           1                0             1
-280           1                1             0</code></pre>
+266           1                1             0
+147           1                0             1</code></pre>
 </div>
 </div>
-<p>Duas colunas 0/1 para três espécies. <code>Adelie</code> é o nível de referência: é a linha <span class="math inline">\((1, 0, 0)\)</span>.</p>
-<div class="nota">
-<p><span class="math inline">\(k\)</span> grupos exigem <span class="math inline">\(k-1\)</span> colunas. Se houvesse uma terceira coluna para <code>Adelie</code>, a matriz seria singular — o intercepto já a contém.</p>
+<p>A primeira coluna é só de 1: é o intercepto. As outras duas são a tabela do slide anterior, repetida uma vez por pinguim.</p>
+</section>
+<section id="substituindo-uma-espécie-de-cada-vez" class="slide level2 smaller">
+<h2>Substituindo, uma espécie de cada vez</h2>
+<p>O modelo é <span class="math inline">\(\hat{y} = \beta_0 \cdot 1 + \beta_1 x_1 + \beta_2 x_2\)</span>. Basta pôr a linha de cada espécie no lugar de <span class="math inline">\(x_1\)</span> e <span class="math inline">\(x_2\)</span>:</p>
+<p><strong>Adelie</strong> — linha <span class="math inline">\((1, 0, 0)\)</span>: <span class="math display">\[\hat{y} = \beta_0 + \beta_1 \cdot 0 + \beta_2 \cdot 0 = \beta_0\]</span></p>
+<p><strong>Chinstrap</strong> — linha <span class="math inline">\((1, 1, 0)\)</span>: <span class="math display">\[\hat{y} = \beta_0 + \beta_1\]</span></p>
+<p><strong>Gentoo</strong> — linha <span class="math inline">\((1, 0, 1)\)</span>: <span class="math display">\[\hat{y} = \beta_0 + \beta_2\]</span></p>
+<div class="definicao">
+<p><span class="math inline">\(\beta_0\)</span> é a <strong>média de Adelie</strong>. <span class="math inline">\(\beta_1\)</span> e <span class="math inline">\(\beta_2\)</span> são <strong>diferenças</strong> em relação a ela — nenhum dos dois é a média do próprio grupo.</p>
 </div>
 </section>
-<section id="coeficientes-são-diferenças" class="slide level2">
-<h2>Coeficientes são diferenças</h2>
+<section id="conferindo-na-mão" class="slide level2 smaller">
+<h2>Conferindo na mão</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">coef</span>(m)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     (Intercept) speciesChinstrap    speciesGentoo 
       3706.16438         26.92385       1386.27259 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>pinguins <span class="sc">|&gt;</span> <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span> <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(body_mass_g))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a></a>pinguins <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a></a>  <span class="fu">group_by</span>(species) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a></a>  <span class="fu">summarise</span>(<span class="at">media =</span> <span class="fu">mean</span>(body_mass_g)) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a></a>  <span class="fu">mutate</span>(<span class="at">diferenca_para_Adelie =</span> media <span class="sc">-</span> <span class="fu">first</span>(media))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 2
-  species   media
-  &lt;fct&gt;     &lt;dbl&gt;
-1 Adelie    3706.
-2 Chinstrap 3733.
-3 Gentoo    5092.</code></pre>
+<pre><code># A tibble: 3 × 3
+  species   media diferenca_para_Adelie
+  &lt;fct&gt;     &lt;dbl&gt;                 &lt;dbl&gt;
+1 Adelie    3706.                   0  
+2 Chinstrap 3733.                  26.9
+3 Gentoo    5092.                1386. </code></pre>
 </div>
 </div>
-<p><code>Gentoo</code> pesa em média 1386 g a mais que <code>Adelie</code>.</p>
+<p>O intercepto é 3706 g, que é a média de <code>Adelie</code>. O coeficiente de <code>Gentoo</code> é 1386 g, que é 5092 − 3706. <strong>Os mesmos números, nas duas tabelas.</strong></p>
+</section>
+<section id="por-que-k-1-e-não-k" class="slide level2 smaller">
+<h2>Por que <span class="math inline">\(k-1\)</span> e não <span class="math inline">\(k\)</span></h2>
+<p>E se déssemos uma coluna também para <code>Adelie</code>?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>X3 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(X, <span class="at">speciesAdelie =</span> <span class="fu">as.numeric</span>(pinguins<span class="sc">$</span>species <span class="sc">==</span> <span class="st">"Adelie"</span>))</span>
+<span id="cb11-2"><a></a></span>
+<span id="cb11-3"><a></a><span class="fu">c</span>(<span class="at">colunas =</span> <span class="fu">ncol</span>(X3), <span class="at">posto =</span> <span class="fu">qr</span>(X3)<span class="sc">$</span>rank)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>colunas   posto 
+      4       3 </code></pre>
+</div>
+</div>
+<p>Quatro colunas, posto 3: uma delas é redundante. E dá para ver qual — as três colunas de espécie <strong>somam exatamente a coluna do intercepto</strong>, já que todo pinguim é de uma espécie e só uma.</p>
+<div class="nota">
+<p>Nesse caso o R não erra: ele descarta uma e devolve <code>NA</code> no coeficiente correspondente. Mas a escolha de qual descartar passa a ser dele, e não sua — e é por isso que existe a ideia de nível de referência.</p>
+</div>
 </section>
 <section class="slide level2">
 
@@ -365,9 +426,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 \underbrace{\sum (y_i - \hat{y}_i)^2}_{\text{SQ residual}}
 \]</span></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>sq_total <span class="ot">&lt;-</span> <span class="fu">sum</span>((pinguins<span class="sc">$</span>body_mass_g <span class="sc">-</span> <span class="fu">mean</span>(pinguins<span class="sc">$</span>body_mass_g))<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb11-2"><a></a>sq_res   <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">resid</span>(m)<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb11-3"><a></a><span class="fu">c</span>(<span class="at">total =</span> sq_total, <span class="at">modelo =</span> sq_total <span class="sc">-</span> sq_res, <span class="at">residual =</span> sq_res)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a>sq_total <span class="ot">&lt;-</span> <span class="fu">sum</span>((pinguins<span class="sc">$</span>body_mass_g <span class="sc">-</span> <span class="fu">mean</span>(pinguins<span class="sc">$</span>body_mass_g))<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb13-2"><a></a>sq_res   <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="fu">resid</span>(m)<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb13-3"><a></a><span class="fu">c</span>(<span class="at">total =</span> sq_total, <span class="at">modelo =</span> sq_total <span class="sc">-</span> sq_res, <span class="at">residual =</span> sq_res)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    total    modelo  residual 
 215259666 145190219  70069447 </code></pre>
@@ -386,7 +447,7 @@ F = \frac{\text{SQ do modelo} / \text{gl do modelo}}
 </div>
 <p>E <span class="math inline">\(R^2\)</span> é simplesmente SQ do modelo / SQ total:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">c</span>(<span class="at">r2_manual =</span> (sq_total <span class="sc">-</span> sq_res) <span class="sc">/</span> sq_total, <span class="at">r2_lm =</span> <span class="fu">summary</span>(m)<span class="sc">$</span>r.squared)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">c</span>(<span class="at">r2_manual =</span> (sq_total <span class="sc">-</span> sq_res) <span class="sc">/</span> sq_total, <span class="at">r2_lm =</span> <span class="fu">summary</span>(m)<span class="sc">$</span>r.squared)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>r2_manual     r2_lm 
 0.6744887 0.6744887 </code></pre>
@@ -429,7 +490,7 @@ F = \frac{\text{SQ do modelo} / \text{gl do modelo}}
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e03_files/figure-revealjs/unnamed-chunk-11-1.png" width="672"></p>
+<p><img data-src="e03_files/figure-revealjs/unnamed-chunk-12-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -439,9 +500,9 @@ F = \frac{\text{SQ do modelo} / \text{gl do modelo}}
 <section id="aditivo-e-com-interação" class="slide level2">
 <h2>Aditivo e com interação</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a>m_adit <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species <span class="sc">+</span> sex, <span class="at">data =</span> pinguins)</span>
-<span id="cb16-2"><a></a>m_int  <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species <span class="sc">*</span> sex, <span class="at">data =</span> pinguins)</span>
-<span id="cb16-3"><a></a><span class="fu">anova</span>(m_adit, m_int)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>m_adit <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species <span class="sc">+</span> sex, <span class="at">data =</span> pinguins)</span>
+<span id="cb18-2"><a></a>m_int  <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species <span class="sc">*</span> sex, <span class="at">data =</span> pinguins)</span>
+<span id="cb18-3"><a></a><span class="fu">anova</span>(m_adit, m_int)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -461,7 +522,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="a-interação-na-matriz" class="slide level2">
 <h2>A interação na matriz</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">colnames</span>(<span class="fu">model.matrix</span>(m_int))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">colnames</span>(<span class="fu">model.matrix</span>(m_int))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "(Intercept)"              "speciesChinstrap"        
 [3] "speciesGentoo"            "sexmale"                 
@@ -473,7 +534,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="interpretando-com-interação" class="slide level2">
 <h2>Interpretando com interação</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(m_int), <span class="dv">1</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(m_int), <span class="dv">1</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             (Intercept)         speciesChinstrap            speciesGentoo 
                   3368.8                    158.4                   1310.9 
@@ -521,7 +582,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e03_files/figure-revealjs/unnamed-chunk-15-1.png" width="672"></p>
+<p><img data-src="e03_files/figure-revealjs/unnamed-chunk-16-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -530,8 +591,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="o-modelo" class="slide level2">
 <h2>O modelo</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>anc <span class="ot">&lt;-</span> <span class="fu">lm</span>(Autotomized_tail_length <span class="sc">~</span> SVL <span class="sc">+</span> Sex, <span class="at">data =</span> lagartos)</span>
-<span id="cb22-2"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(anc), <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>anc <span class="ot">&lt;-</span> <span class="fu">lm</span>(Autotomized_tail_length <span class="sc">~</span> SVL <span class="sc">+</span> Sex, <span class="at">data =</span> lagartos)</span>
+<span id="cb24-2"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(anc), <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)         SVL     SexMale 
        3.13        0.31       -0.32 </code></pre>
@@ -545,8 +606,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="testando-a-premissa" class="slide level2">
 <h2>Testando a premissa</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a>anc_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(Autotomized_tail_length <span class="sc">~</span> SVL <span class="sc">*</span> Sex, <span class="at">data =</span> lagartos)</span>
-<span id="cb24-2"><a></a><span class="fu">anova</span>(anc, anc_int)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>anc_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(Autotomized_tail_length <span class="sc">~</span> SVL <span class="sc">*</span> Sex, <span class="at">data =</span> lagartos)</span>
+<span id="cb26-2"><a></a><span class="fu">anova</span>(anc, anc_int)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -558,7 +619,7 @@ Model 2: Autotomized_tail_length ~ SVL * Sex
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(anc_int), <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(anc_int), <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)         SVL     SexMale SVL:SexMale 
       -1.90        0.53       16.59       -0.79 </code></pre>
@@ -568,8 +629,8 @@ Model 2: Autotomized_tail_length ~ SVL * Sex
 <section id="centrar-muda-o-que-o-coeficiente-significa" class="slide level2">
 <h2>Centrar muda o que o coeficiente significa</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a>lagartos <span class="ot">&lt;-</span> lagartos <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">SVL_c =</span> SVL <span class="sc">-</span> <span class="fu">mean</span>(SVL))</span>
-<span id="cb28-2"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(<span class="fu">lm</span>(Autotomized_tail_length <span class="sc">~</span> SVL_c <span class="sc">*</span> Sex, <span class="at">data =</span> lagartos)), <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a>lagartos <span class="ot">&lt;-</span> lagartos <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">SVL_c =</span> SVL <span class="sc">-</span> <span class="fu">mean</span>(SVL))</span>
+<span id="cb30-2"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(<span class="fu">lm</span>(Autotomized_tail_length <span class="sc">~</span> SVL_c <span class="sc">*</span> Sex, <span class="at">data =</span> lagartos)), <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  (Intercept)         SVL_c       SexMale SVL_c:SexMale 
          9.74          0.53         -0.61         -0.79 </code></pre>
@@ -592,7 +653,7 @@ Model 2: Autotomized_tail_length ~ SVL * Sex
 <h2>Por que existem três tipos</h2>
 <p>Com delineamento <strong>balanceado</strong>, os fatores são ortogonais e a ordem não importa. Com <strong>desbalanceado</strong> — que é o caso de quase todo dado de campo —, a variação compartilhada entre fatores precisa ser atribuída a alguém.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">table</span>(pinguins<span class="sc">$</span>species, pinguins<span class="sc">$</span>sex)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="fu">table</span>(pinguins<span class="sc">$</span>species, pinguins<span class="sc">$</span>sex)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           
             female male
@@ -605,14 +666,14 @@ Model 2: Autotomized_tail_length ~ SVL * Sex
 <section id="tipo-i-sequencial" class="slide level2">
 <h2>Tipo I: sequencial</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="fu">anova</span>(<span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species <span class="sc">+</span> flipper_length_mm, <span class="at">data =</span> pinguins))[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="fu">anova</span>(<span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species <span class="sc">+</span> flipper_length_mm, <span class="at">data =</span> pinguins))[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   Df    Sum Sq
 species             2 145190219
 flipper_length_mm   1  24226302
 Residuals         329  45843144</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="fu">anova</span>(<span class="fu">lm</span>(body_mass_g <span class="sc">~</span> flipper_length_mm <span class="sc">+</span> species, <span class="at">data =</span> pinguins))[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="fu">anova</span>(<span class="fu">lm</span>(body_mass_g <span class="sc">~</span> flipper_length_mm <span class="sc">+</span> species, <span class="at">data =</span> pinguins))[, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>]</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   Df    Sum Sq
 flipper_length_mm   1 164047703
@@ -627,7 +688,7 @@ Residuals         329  45843144</code></pre>
 <section id="tipos-ii-e-iii" class="slide level2">
 <h2>Tipos II e III</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a>car<span class="sc">::</span><span class="fu">Anova</span>(m_int, <span class="at">type =</span> <span class="st">"II"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>car<span class="sc">::</span><span class="fu">Anova</span>(m_int, <span class="at">type =</span> <span class="st">"II"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Anova Table (Type II tests)
 
@@ -649,9 +710,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="tipo-iii-exige-contr.sum" class="slide level2">
 <h2>Tipo III exige <code>contr.sum</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>m_int3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species <span class="sc">*</span> sex, <span class="at">data =</span> pinguins,</span>
-<span id="cb38-2"><a></a>             <span class="at">contrasts =</span> <span class="fu">list</span>(<span class="at">species =</span> <span class="st">"contr.sum"</span>, <span class="at">sex =</span> <span class="st">"contr.sum"</span>))</span>
-<span id="cb38-3"><a></a>car<span class="sc">::</span><span class="fu">Anova</span>(m_int3, <span class="at">type =</span> <span class="st">"III"</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, ]</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>m_int3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species <span class="sc">*</span> sex, <span class="at">data =</span> pinguins,</span>
+<span id="cb40-2"><a></a>             <span class="at">contrasts =</span> <span class="fu">list</span>(<span class="at">species =</span> <span class="st">"contr.sum"</span>, <span class="at">sex =</span> <span class="st">"contr.sum"</span>))</span>
+<span id="cb40-3"><a></a>car<span class="sc">::</span><span class="fu">Anova</span>(m_int3, <span class="at">type =</span> <span class="st">"III"</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, ]</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Anova Table (Type III tests)
 
@@ -713,8 +774,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="emmeans-médias-marginais-estimadas" class="slide level2">
 <h2><code>emmeans</code>: médias marginais estimadas</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">library</span>(emmeans)</span>
-<span id="cb40-2"><a></a><span class="fu">emmeans</span>(m_int, <span class="sc">~</span> sex <span class="sc">|</span> species)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb42-2"><a></a><span class="fu">emmeans</span>(m_int, <span class="sc">~</span> sex <span class="sc">|</span> species)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>species = Adelie:
  sex    emmean   SE  df lower.CL upper.CL
@@ -739,7 +800,7 @@ Confidence level used: 0.95 </code></pre>
 <section id="contrastes" class="slide level2">
 <h2>Contrastes</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">pairs</span>(<span class="fu">emmeans</span>(m_int, <span class="sc">~</span> sex <span class="sc">|</span> species))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="fu">pairs</span>(<span class="fu">emmeans</span>(m_int, <span class="sc">~</span> sex <span class="sc">|</span> species))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>species = Adelie:
  contrast      estimate   SE  df t.ratio p.value
@@ -763,7 +824,7 @@ species = Gentoo:
 <p><strong>Post-hoc</strong>: você olhou os dados e decidiu o que comparar. Todas contra todas, com correção mais severa.</p>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="fu">pairs</span>(<span class="fu">emmeans</span>(m, <span class="sc">~</span> species), <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="fu">pairs</span>(<span class="fu">emmeans</span>(m, <span class="sc">~</span> species), <span class="at">adjust =</span> <span class="st">"tukey"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> contrast           estimate   SE  df t.ratio p.value
  Adelie - Chinstrap    -26.9 67.7 330  -0.398  0.9164
@@ -810,7 +871,7 @@ P value adjustment: tukey method for comparing a family of 3 estimates </code></
 </div>
 <p>Relate sempre: a estimativa da diferença, com unidade e intervalo.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a><span class="fu">confint</span>(<span class="fu">pairs</span>(<span class="fu">emmeans</span>(m_int, <span class="sc">~</span> sex <span class="sc">|</span> species)))[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">7</span>)]</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a><span class="fu">confint</span>(<span class="fu">pairs</span>(<span class="fu">emmeans</span>(m_int, <span class="sc">~</span> sex <span class="sc">|</span> species)))[, <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">7</span>)]</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       contrast   species  estimate  lower.CL  upper.CL
 1 female - male    Adelie -674.6575 -775.4037 -573.9114
