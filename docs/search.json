@@ -581,6 +581,13 @@
     "text": "Dois zeros muito diferentes\n\nZero amostral — o parasita podia estar ali e não estava, ou estava e não foi detectado. O processo de contagem podia gerar zero, e gerou.\nZero estrutural — o parasita não podia estar ali. O hospedeiro é imune, ou está fora da área de ocorrência do parasita.\n\nA distinção é biológica. Ela decide o modelo, e não há teste estatístico que a substitua."
   },
   {
+    "objectID": "slides/e06.html#quatro-origens-para-o-mesmo-zero",
+    "href": "slides/e06.html#quatro-origens-para-o-mesmo-zero",
+    "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Quatro origens para o mesmo zero",
+    "text": "Quatro origens para o mesmo zero\n\n\n\n\n\n\nEsquema desenhado para esta aula a partir da classificação de Blasco-Moreno, A.; Pérez-Casany, M.; Puig, P.; Morante, M. & Castells, E. 2019. What does a zero mean? Understanding false, random and structural zeros in ecology. Methods in Ecology and Evolution 10(7):949–959. Silhueta de Coleodactylus meridionalis por Jose Carlos Arenas-Monroy, no PhyloPic, sob CC0 1.0."
+  },
+  {
     "objectID": "slides/e06.html#duas-famílias-de-solução",
     "href": "slides/e06.html#duas-famílias-de-solução",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
@@ -1810,14 +1817,14 @@
     "href": "encontros/e06-glm-ii/index.html#leituras",
     "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Leituras",
-    "text": "Leituras\nObrigatória\n\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer.\n\nComplementar\n\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA.\nKurz, A.S. Statistical Rethinking recoded — o livro do McElreath em brms, ggplot2 e tidyverse.\nHartig, F. DHARMa: residual diagnostics for hierarchical regression models.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Cap. 8, “Visualizing and checking fitted models”."
+    "text": "Leituras\nObrigatória\n\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer.\n\nComplementar\n\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA.\nKurz, A.S. Statistical Rethinking recoded — o livro do McElreath em brms, ggplot2 e tidyverse.\nBlasco-Moreno, A.; Pérez-Casany, M.; Puig, P.; Morante, M. & Castells, E.\n\nWhat does a zero mean? Understanding false, random and structural zeros in ecology. Methods in Ecology and Evolution 10(7):949–959. — a classificação dos zeros usada no slide “Quatro origens para o mesmo zero”.\n\nHartig, F. DHARMa: residual diagnostics for hierarchical regression models.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Cap. 8, “Visualizing and checking fitted models”."
   },
   {
     "objectID": "encontros/e06-glm-ii/index.html#recursos-externos",
     "href": "encontros/e06-glm-ii/index.html#recursos-externos",
     "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Recursos externos",
-    "text": "Recursos externos\n\nDHARMa — vinheta\nglmmTMB — vinhetas\nAnálises Ecológicas no R — cap. 8\n\n\nVolta para o índice do curso."
+    "text": "Recursos externos\n\nDHARMa — vinheta\nglmmTMB — vinhetas\nAnálises Ecológicas no R — cap. 8\nPrabhakaran, S. Zero-Inflated and Hurdle Models in R — tutorial curto com pscl::zeroinfl() e pscl::hurdle() lado a lado, no mesmo conjunto de dados.\n\n\nVolta para o índice do curso."
   },
   {
     "objectID": "encontros/e08-glmm-ii-brms/index.html",

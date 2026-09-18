@@ -58,6 +58,11 @@ curso, com um *take-home* por item:
 
 - da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
 - Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
+- Blasco-Moreno, A.; Pérez-Casany, M.; Puig, P.; Morante, M. & Castells, E.
+  2019. [What does a zero mean? Understanding false, random and structural
+  zeros in ecology](https://doi.org/10.1111/2041-210X.13185). *Methods in
+  Ecology and Evolution* 10(7):949–959. — a classificação dos zeros usada no
+  slide "Quatro origens para o mesmo zero".
 - Hartig, F. [`DHARMa`: residual diagnostics for hierarchical regression models](https://cran.r-project.org/package=DHARMa).
 - Gelman, A. et al. 2026. [*Bayesian Workflow*](https://avehtari.github.io/Bayesian-Workflow/). Chapman & Hall/CRC. Cap. 8, "Visualizing and checking fitted models".
 
@@ -66,6 +71,10 @@ curso, com um *take-home* por item:
 - [`DHARMa` — vinheta](https://cran.r-project.org/package=DHARMa)
 - [`glmmTMB` — vinhetas](https://cran.r-project.org/package=glmmTMB)
 - [*Análises Ecológicas no R* — cap. 8](https://analises-ecologicas.com/cap8)
+- Prabhakaran, S. [*Zero-Inflated and Hurdle Models in
+  R*](https://r-statistics.co/Zero-Inflated-Hurdle-Models-in-R.html) —
+  tutorial curto com `pscl::zeroinfl()` e `pscl::hurdle()` lado a lado,
+  no mesmo conjunto de dados.
 
 ---
 
