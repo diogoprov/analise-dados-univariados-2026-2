@@ -240,7 +240,7 @@ Diogo B. Provete
 <li><strong>Intervalo</strong></li>
 <li>A família exponencial</li>
 <li>Função de ligação — e por que não é transformar a resposta</li>
-<li>Correlação: Pearson e Spearman</li>
+<li>Correlação: Pearson e Spearman (retomada do Encontro 2)</li>
 </ol>
 </section>
 <section id="productive-failure" class="slide level2">
@@ -692,8 +692,9 @@ f(y \mid \theta, \phi) =
 <h1>6. Correlação</h1>
 
 </section>
-<section id="pearson-e-spearman" class="slide level2">
-<h2>Pearson e Spearman</h2>
+<section id="de-volta-a-pearson-e-spearman" class="slide level2 smaller">
+<h2>De volta a Pearson e Spearman</h2>
+<p>No Encontro 2 as duas apareceram sobre os pinguins. Nos lagartos:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>lag <span class="ot">&lt;-</span> lagartos <span class="sc">|&gt;</span> <span class="fu">drop_na</span>(SVL, Autotomized_tail_length)</span>
 <span id="cb10-2"><a></a><span class="fu">c</span>(<span class="at">pearson  =</span> <span class="fu">cor</span>(lag<span class="sc">$</span>SVL, lag<span class="sc">$</span>Autotomized_tail_length),</span>
@@ -703,30 +704,10 @@ f(y \mid \theta, \phi) =
 0.2291663 0.1827049 </code></pre>
 </div>
 </div>
-<ul>
-<li><strong>Pearson</strong> — associação <strong>linear</strong>, nas unidades originais.</li>
-<li><strong>Spearman</strong> — Pearson <strong>nos postos</strong>: associação <strong>monotônica</strong>, robusta a outliers e a curvatura.</li>
-</ul>
-</section>
-<section id="quando-elas-divergem" class="slide level2">
-<h2>Quando elas divergem</h2>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="e04_files/figure-revealjs/unnamed-chunk-15-1.png" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Relação perfeitamente monotônica, mas não linear: Spearman próximo de 1, Pearson menor. <strong>Divergência grande é sinal para olhar o gráfico</strong>, não para escolher a maior.</p>
-</section>
-<section id="e-o-principal" class="slide level2">
-<h2>E o principal</h2>
+<p>Pearson mede associação <strong>linear</strong>; Spearman é Pearson <strong>nos postos</strong> e mede associação <strong>monotônica</strong>. Divergência grande entre as duas é sinal para olhar o gráfico — não para escolher a maior.</p>
 <div class="definicao">
-<p>Correlação é uma estatística descritiva de <strong>duas</strong> variáveis. Ela não controla nada, não prediz nada e não acomoda covariáveis.</p>
+<p>Correlação é uma estatística descritiva de <strong>duas</strong> variáveis. Ela não controla nada, não prediz nada e não acomoda covariáveis. Quando a pergunta tem direção, ou mais de uma preditora, você quer um modelo — que é o assunto do curso inteiro.</p>
 </div>
-<p>Quando a pergunta tem direção ou mais de uma preditora, você quer um modelo — que é o assunto do curso inteiro.</p>
 </section>
 <section class="slide level2">
 

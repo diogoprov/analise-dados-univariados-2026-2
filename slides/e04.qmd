@@ -81,7 +81,7 @@ para o GLM, que começa amanhã.
 5. **Intervalo**
 6. A família exponencial
 7. Função de ligação — e por que não é transformar a resposta
-8. Correlação: Pearson e Spearman
+8. Correlação: Pearson e Spearman (retomada do Encontro 2)
 
 ---
 
@@ -401,7 +401,8 @@ $+\infty$. Mas:
 #| fig-height: 2.7
 #| echo: false
 tibble(eta = seq(-4, 4, .05)) |>
-  mutate(`log → exp(η)` = exp(eta), `logit → 1/(1+e⁻ᵑ)` = plogis(eta)) |>
+  mutate(`log → exp(η)` = exp(eta),
+         `logit → 1/(1 + exp(-η))` = plogis(eta)) |>
   pivot_longer(-eta) |>
   ggplot(aes(eta, value)) + geom_line(colour = "#1c6e8c", linewidth = 1) +
   facet_wrap(~name, scales = "free_y") +
@@ -467,7 +468,9 @@ melhor.
 
 ---
 
-## Pearson e Spearman
+## De volta a Pearson e Spearman {.smaller}
+
+No Encontro 2 as duas apareceram sobre os pinguins. Nos lagartos:
 
 ```{r}
 lag <- lagartos |> drop_na(SVL, Autotomized_tail_length)
@@ -475,39 +478,16 @@ c(pearson  = cor(lag$SVL, lag$Autotomized_tail_length),
   spearman = cor(lag$SVL, lag$Autotomized_tail_length, method = "spearman"))
 ```
 
-- **Pearson** — associação **linear**, nas unidades originais.
-- **Spearman** — Pearson **nos postos**: associação **monotônica**,
-  robusta a outliers e a curvatura.
-
----
-
-## Quando elas divergem
-
-```{r}
-#| fig-height: 2.8
-#| echo: false
-set.seed(3)
-d <- tibble(x = 1:60, y = exp(x / 12) + rnorm(60, 0, 2))
-ggplot(d, aes(x, y)) + geom_point(colour = "#1c6e8c") +
-  labs(subtitle = sprintf("Pearson = %.2f   ·   Spearman = %.2f",
-                          cor(d$x, d$y), cor(d$x, d$y, method = "spearman")))
-```
-
-Relação perfeitamente monotônica, mas não linear: Spearman próximo de 1,
-Pearson menor. **Divergência grande é sinal para olhar o gráfico**, não
-para escolher a maior.
-
----
-
-## E o principal
+Pearson mede associação **linear**; Spearman é Pearson **nos postos** e
+mede associação **monotônica**. Divergência grande entre as duas é sinal
+para olhar o gráfico — não para escolher a maior.
 
 ::: {.definicao}
 Correlação é uma estatística descritiva de **duas** variáveis. Ela não
-controla nada, não prediz nada e não acomoda covariáveis.
+controla nada, não prediz nada e não acomoda covariáveis. Quando a
+pergunta tem direção, ou mais de uma preditora, você quer um modelo — que
+é o assunto do curso inteiro.
 :::
-
-Quando a pergunta tem direção ou mais de uma preditora, você quer um
-modelo — que é o assunto do curso inteiro.
 
 ---
 
