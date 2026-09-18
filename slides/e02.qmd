@@ -607,6 +607,13 @@ que você vai escrever em `lmer()`, `glmmTMB()` e `brm()` nos Encontros 7 e
 8 — só acrescentando `(1 | grupo)`.
 :::
 
+::: {.nota}
+Hoje é só isso: **a fórmula é a mesma**. O que são prior, posterior,
+MCMC, `Rhat` e `ESS` fica para o Encontro 8, que abre o bloco bayesiano
+com dois slides de definição. Se a saída aqui parecer críptica, é porque ainda é — olhe a
+coluna `Estimate` e compare com o `lm()`.
+:::
+
 ---
 
 ## O que o `brm()` devolve {.smaller}
@@ -710,11 +717,32 @@ individualmente mal identificados: o modelo prediz bem e interpreta mal.
 
 ---
 
-## VIF
+## VIF {.smaller}
 
 ```{r}
-car::vif(m_mult)
+# o usdm quer um data frame de preditoras, nao um modelo — e nao aceita
+# tibble: sem o as.data.frame() ele para com "invalid type (list)"
+preditoras <- as.data.frame(
+  pinguins[, c("bill_length_mm", "bill_depth_mm", "flipper_length_mm")]
+)
+
+usdm::vifcor(preditoras, th = 0.7)
 ```
+
+---
+
+## O que essa saída diz a mais {.smaller}
+
+O `car::vif()` devolve só os valores. O `vifcor()` devolve, além deles,
+**qual par é o mais correlacionado e quanto** — que é a informação de que
+você precisa para decidir. Aqui o par mais apertado é comprimento de
+nadadeira com comprimento de bico, *r* = 0,65, e nenhum VIF passa de 2,6.
+
+::: {.nota}
+A função também **exclui** variáveis sozinha, quando alguma passa do
+limiar. Use a saída, não a exclusão: baixar o `th` até alguma coisa cair é
+a versão com nome técnico de escolher preditora pelo resultado.
+:::
 
 Regras práticas: acima de 5 desconfie, acima de 10 preocupe-se. Mas a
 decisão é **biológica**, não mecânica:

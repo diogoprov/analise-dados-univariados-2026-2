@@ -821,6 +821,9 @@ sexmale      3.132877  0.3569599   8.77655  4.440460e-15</code></pre>
 <div class="definicao">
 <p>A fórmula é exatamente a mesma que você escreveria em <code>lm()</code>. E a mesma que você vai escrever em <code>lmer()</code>, <code>glmmTMB()</code> e <code>brm()</code> nos Encontros 7 e 8 — só acrescentando <code>(1 | grupo)</code>.</p>
 </div>
+<div class="nota">
+<p>Hoje é só isso: <strong>a fórmula é a mesma</strong>. O que são prior, posterior, MCMC, <code>Rhat</code> e <code>ESS</code> fica para o Encontro 8, que abre o bloco bayesiano com dois slides de definição. Se a saída aqui parecer críptica, é porque ainda é — olhe a coluna <code>Estimate</code> e compare com o <code>lm()</code>.</p>
+</div>
 </section>
 <section id="o-que-o-brm-devolve" class="slide level2 smaller">
 <h2>O que o <code>brm()</code> devolve</h2>
@@ -971,14 +974,36 @@ body_mass_g                 0.59         -0.47              0.87        1.00</co
 <p>Colinearidade <strong>não viola premissa nenhuma</strong>. Ela torna os coeficientes individualmente mal identificados: o modelo prediz bem e interpreta mal.</p>
 </div>
 </section>
-<section id="vif" class="slide level2">
+<section id="vif" class="slide level2 smaller">
 <h2>VIF</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a>car<span class="sc">::</span><span class="fu">vif</span>(m_mult)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="co"># o usdm quer um data frame de preditoras, nao um modelo — e nao aceita</span></span>
+<span id="cb51-2"><a></a><span class="co"># tibble: sem o as.data.frame() ele para com "invalid type (list)"</span></span>
+<span id="cb51-3"><a></a>preditoras <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(</span>
+<span id="cb51-4"><a></a>  pinguins[, <span class="fu">c</span>(<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>)]</span>
+<span id="cb51-5"><a></a>)</span>
+<span id="cb51-6"><a></a></span>
+<span id="cb51-7"><a></a>usdm<span class="sc">::</span><span class="fu">vifcor</span>(preditoras, <span class="at">th =</span> <span class="fl">0.7</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   bill_length_mm flipper_length_mm 
-         1.743782          1.743782 </code></pre>
+<pre><code>No variable from the 3 input variables has collinearity problem. 
+
+The linear correlation coefficients ranges between: 
+min correlation ( bill_depth_mm ~ bill_length_mm ):  -0.2286256 
+max correlation ( flipper_length_mm ~ bill_length_mm ):  0.6530956 
+
+---------- VIFs of the remained variables -------- 
+          Variables      VIF
+1    bill_length_mm 1.850958
+2     bill_depth_mm 1.593411
+3 flipper_length_mm 2.633327</code></pre>
 </div>
+</div>
+</section>
+<section id="o-que-essa-saída-diz-a-mais" class="slide level2 smaller">
+<h2>O que essa saída diz a mais</h2>
+<p>O <code>car::vif()</code> devolve só os valores. O <code>vifcor()</code> devolve, além deles, <strong>qual par é o mais correlacionado e quanto</strong> — que é a informação de que você precisa para decidir. Aqui o par mais apertado é comprimento de nadadeira com comprimento de bico, <em>r</em> = 0,65, e nenhum VIF passa de 2,6.</p>
+<div class="nota">
+<p>A função também <strong>exclui</strong> variáveis sozinha, quando alguma passa do limiar. Use a saída, não a exclusão: baixar o <code>th</code> até alguma coisa cair é a versão com nome técnico de escolher preditora pelo resultado.</p>
 </div>
 <p>Regras práticas: acima de 5 desconfie, acima de 10 preocupe-se. Mas a decisão é <strong>biológica</strong>, não mecânica:</p>
 <ul>

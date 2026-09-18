@@ -463,19 +463,45 @@ alternative hypothesis: two.sided</code></pre>
 <h1>Bloco 2 — A ponte bayesiana</h1>
 
 </section>
+<section id="três-palavras-antes-de-qualquer-código" class="slide level2 smaller">
+<h2>Três palavras, antes de qualquer código</h2>
+<div class="definicao">
+<p><strong>Prior.</strong> O que você considera plausível para um parâmetro <strong>antes</strong> de olhar estes dados, escrito como distribuição. “A inclinação está entre −3 e 3” é uma prior.</p>
+</div>
+<div class="definicao">
+<p><strong>Verossimilhança.</strong> O que <strong>estes</strong> dados dizem sobre o parâmetro, dado o modelo. É a mesma função que o <code>glmer()</code> maximizou de manhã.</p>
+</div>
+<div class="definicao">
+<p><strong>Posterior.</strong> As duas combinadas — o que sobra de plausível depois de ver os dados. <strong>É a resposta</strong>: tudo que o <code>brms</code> imprime é resumo dela.</p>
+</div>
+<p>Com dados informativos, a verossimilhança domina e a prior quase não importa. Com poucos dados, ela segura o modelo — que é exatamente o caso das nove praias.</p>
+</section>
+<section id="por-que-isso-precisa-de-mcmc" class="slide level2 smaller">
+<h2>Por que isso precisa de MCMC</h2>
+<p>Para quase todo modelo interessante, a posterior <strong>não tem fórmula fechada</strong>: não dá para escrevê-la e resolver.</p>
+<p>O <strong>MCMC</strong> (<em>Markov chain Monte Carlo</em>) contorna isso por força bruta elegante: um algoritmo passeia pelo espaço dos parâmetros e visita cada região proporcionalmente à densidade da posterior. Você não obtém a equação da distribuição — obtém uma <strong>amostra</strong> dela.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>chains <span class="ot">=</span> <span class="dv">4</span>, iter <span class="ot">=</span> <span class="dv">2000</span>   <span class="co"># 4 passeios independentes, 2000 passos cada;</span></span>
+<span id="cb18-2"><a></a>                          <span class="co"># a 1a metade e aquecimento e se descarta</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>São 4 × 1000 = <strong>4000 sorteios</strong> da posterior. Cada número do <code>summary()</code> é uma estatística desses 4000: a média deles, o desvio-padrão deles, os quantis 2,5 % e 97,5 % deles.</p>
+<div class="nota">
+<p>Daí vêm os diagnósticos de que falaremos adiante. <code>Rhat</code> e <code>ESS</code> não dizem se o <strong>modelo</strong> é bom — dizem se o <strong>passeio</strong> funcionou. São duas perguntas diferentes, e é comum confundi-las.</p>
+</div>
+</section>
 <section id="a-mesma-fórmula" class="slide level2">
 <h2>A mesma fórmula</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">library</span>(brms)</span>
-<span id="cb18-2"><a></a></span>
-<span id="cb18-3"><a></a>m_bayes <span class="ot">&lt;-</span> <span class="fu">brm</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach),</span>
-<span id="cb18-4"><a></a>               <span class="at">family =</span> <span class="fu">poisson</span>(), <span class="at">data =</span> rikz,</span>
-<span id="cb18-5"><a></a>               <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">seed =</span> <span class="dv">2026</span>,</span>
-<span id="cb18-6"><a></a>               <span class="at">file =</span> <span class="st">"../cache/e08_rikz_pois"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">library</span>(brms)</span>
+<span id="cb19-2"><a></a></span>
+<span id="cb19-3"><a></a>m_bayes <span class="ot">&lt;-</span> <span class="fu">brm</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach),</span>
+<span id="cb19-4"><a></a>               <span class="at">family =</span> <span class="fu">poisson</span>(), <span class="at">data =</span> rikz,</span>
+<span id="cb19-5"><a></a>               <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">seed =</span> <span class="dv">2026</span>,</span>
+<span id="cb19-6"><a></a>               <span class="at">file =</span> <span class="st">"../cache/e08_rikz_pois"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Compare com a linha do bloco 1:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">glmer</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> poisson, <span class="at">data =</span> rikz)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">glmer</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> poisson, <span class="at">data =</span> rikz)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="nota">
 <p>Reajustamos o modelo que de fato <strong>escolhemos</strong> de manhã, o Poisson com intercepto aleatório. Não o binomial negativo, que a comparação de AIC mostrou ser desnecessário.</p>
@@ -487,7 +513,7 @@ alternative hypothesis: two.sided</code></pre>
 <section id="e-o-que-ele-devolve" class="slide level2 smaller">
 <h2>E o que ele devolve</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">summary</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">summary</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: poisson 
   Links: mu = log 
@@ -552,7 +578,7 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 <section id="priors" class="slide level2 smaller">
 <h2>Priors</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">get_prior</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> <span class="fu">poisson</span>(), <span class="at">data =</span> rikz)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">get_prior</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> <span class="fu">poisson</span>(), <span class="at">data =</span> rikz)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  prior     class      coef group resp dpar nlpar lb ub tag
                  (flat)         b                                          
@@ -569,9 +595,9 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
  (vectorized)
  (vectorized)</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>priors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>),     <span class="at">class =</span> <span class="st">"b"</span>),</span>
-<span id="cb25-2"><a></a>            <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">2</span>, <span class="dv">1</span>),     <span class="at">class =</span> <span class="st">"Intercept"</span>),</span>
-<span id="cb25-3"><a></a>            <span class="fu">prior</span>(<span class="fu">exponential</span>(<span class="dv">1</span>),   <span class="at">class =</span> <span class="st">"sd"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>priors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>),     <span class="at">class =</span> <span class="st">"b"</span>),</span>
+<span id="cb26-2"><a></a>            <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">2</span>, <span class="dv">1</span>),     <span class="at">class =</span> <span class="st">"Intercept"</span>),</span>
+<span id="cb26-3"><a></a>            <span class="fu">prior</span>(<span class="fu">exponential</span>(<span class="dv">1</span>),   <span class="at">class =</span> <span class="st">"sd"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="definicao">
 <p><strong>Fracamente informativa</strong> não é “sem informação”. É dizer ao modelo que um coeficiente de 500 na escala log é absurdo — o que você sabe, e os dados nem sempre conseguem dizer sozinhos.</p>
@@ -581,10 +607,10 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 <h2>Sensibilidade à prior</h2>
 <p>O teste honesto: ajuste com duas priors razoavelmente diferentes e veja se a conclusão muda.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(..., <span class="at">prior =</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>),  <span class="at">class =</span> <span class="st">"b"</span>), <span class="at">file =</span> <span class="st">"../cache/pa"</span>)</span>
-<span id="cb26-2"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(..., <span class="at">prior =</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> <span class="st">"b"</span>), <span class="at">file =</span> <span class="st">"../cache/pb"</span>)</span>
-<span id="cb26-3"><a></a></span>
-<span id="cb26-4"><a></a><span class="fu">fixef</span>(m_a); <span class="fu">fixef</span>(m_b)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(..., <span class="at">prior =</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>),  <span class="at">class =</span> <span class="st">"b"</span>), <span class="at">file =</span> <span class="st">"../cache/pa"</span>)</span>
+<span id="cb27-2"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(..., <span class="at">prior =</span> <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">10</span>), <span class="at">class =</span> <span class="st">"b"</span>), <span class="at">file =</span> <span class="st">"../cache/pb"</span>)</span>
+<span id="cb27-3"><a></a></span>
+<span id="cb27-4"><a></a><span class="fu">fixef</span>(m_a); <span class="fu">fixef</span>(m_b)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Se mudar muito, <strong>diga isso no artigo</strong>. É informação sobre quanta evidência os seus dados carregam.</p>
 </section>
@@ -630,11 +656,11 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 <section id="os-traços-das-cadeias" class="slide level2">
 <h2>Os traços das cadeias</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">plot</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">plot</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-17-1.png" width="672"></p>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-18-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -642,15 +668,15 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 </section>
 <section id="hatr-e-ess-em-um-relance" class="slide level2 smaller">
 <h2><span class="math inline">\(\hat{R}\)</span> e ESS em um relance</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"rhat"</span>)</span>
-<span id="cb28-2"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"neff"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"rhat"</span>)</span>
+<span id="cb29-2"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"neff"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-18-1.png" width="672"></p>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-19-1.png" width="672"></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-18-2.png" width="672"></p>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-19-2.png" width="672"></p>
 </div>
 </div>
 </div>
@@ -661,11 +687,11 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 <section id="checagem-preditiva-posterior" class="slide level2">
 <h2>Checagem preditiva posterior</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">ndraws =</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">ndraws =</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-19-1.png" width="672"></p>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-20-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -673,15 +699,15 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 </section>
 <section id="checando-a-estatística-que-interessa" class="slide level2">
 <h2>Checando a estatística que interessa</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> <span class="st">"max"</span>)</span>
-<span id="cb30-2"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> \(y) <span class="fu">mean</span>(y <span class="sc">==</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> <span class="st">"max"</span>)</span>
+<span id="cb31-2"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> \(y) <span class="fu">mean</span>(y <span class="sc">==</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-20-1.png" width="672"></p>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-21-1.png" width="672"></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-20-2.png" width="672"></p>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-21-2.png" width="672"></p>
 </div>
 </div>
 </div>

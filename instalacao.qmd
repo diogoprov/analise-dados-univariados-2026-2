@@ -49,6 +49,7 @@ pacotes <- c(
   "GGally", "ggeffects", "broom", "broom.mixed", "knitr", "rmarkdown",
   # modelos lineares e GLM
   "car", "emmeans", "MASS", "performance", "see", "sjPlot", "marginaleffects",
+  "usdm",
   # versão bayesiana dos mesmos modelos
   "loo", "bayesplot",
   # GLMM, zeros inflados e ordinais

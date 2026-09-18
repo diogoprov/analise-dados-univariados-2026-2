@@ -277,6 +277,58 @@ Na volta: a ponte bayesiana — o mesmo modelo em `brms`.
 
 ---
 
+## Três palavras, antes de qualquer código {.smaller}
+
+::: {.definicao}
+**Prior.** O que você considera plausível para um parâmetro **antes** de
+olhar estes dados, escrito como distribuição. "A inclinação está entre −3
+e 3" é uma prior.
+:::
+
+::: {.definicao}
+**Verossimilhança.** O que **estes** dados dizem sobre o parâmetro, dado o
+modelo. É a mesma função que o `glmer()` maximizou de manhã.
+:::
+
+::: {.definicao}
+**Posterior.** As duas combinadas — o que sobra de plausível depois de ver
+os dados. **É a resposta**: tudo que o `brms` imprime é resumo dela.
+:::
+
+Com dados informativos, a verossimilhança domina e a prior quase não
+importa. Com poucos dados, ela segura o modelo — que é exatamente o caso
+das nove praias.
+
+---
+
+## Por que isso precisa de MCMC {.smaller}
+
+Para quase todo modelo interessante, a posterior **não tem fórmula
+fechada**: não dá para escrevê-la e resolver.
+
+O **MCMC** (*Markov chain Monte Carlo*) contorna isso por força bruta
+elegante: um algoritmo passeia pelo espaço dos parâmetros e visita cada
+região proporcionalmente à densidade da posterior. Você não obtém a
+equação da distribuição — obtém uma **amostra** dela.
+
+```{r}
+#| eval: false
+chains = 4, iter = 2000   # 4 passeios independentes, 2000 passos cada;
+                          # a 1a metade e aquecimento e se descarta
+```
+
+São 4 × 1000 = **4000 sorteios** da posterior. Cada número do `summary()`
+é uma estatística desses 4000: a média deles, o desvio-padrão deles, os
+quantis 2,5 % e 97,5 % deles.
+
+::: {.nota}
+Daí vêm os diagnósticos de que falaremos adiante. `Rhat` e `ESS` não dizem
+se o **modelo** é bom — dizem se o **passeio** funcionou. São duas
+perguntas diferentes, e é comum confundi-las.
+:::
+
+---
+
 ## A mesma fórmula
 
 ```{r}
