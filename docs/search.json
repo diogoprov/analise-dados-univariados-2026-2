@@ -1516,7 +1516,7 @@
     "href": "encontros/e07-glmm-i/index.html#leituras",
     "title": "E7 — GLMM I: por que efeitos aleatórios",
     "section": "Leituras",
-    "text": "Leituras\nObrigatória\n\nBolker, B.M. et al. 2009. Generalized linear mixed models: a practical guide for ecology and evolution. Trends in Ecology & Evolution 24:127–135.\n\nComplementar\n\nHarrison, X.A. et al. 2018. A brief introduction to mixed effects modelling and multi-model inference in ecology. PeerJ 6:e4794.\nHurlbert, S.H. 1984. Pseudoreplication and the design of ecological field experiments. Ecological Monographs 54:187–211.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer."
+    "text": "Leituras\nObrigatória\n\nBolker, B.M. et al. 2009. Generalized linear mixed models: a practical guide for ecology and evolution. Trends in Ecology & Evolution 24:127–135.\nBolker, B.M. e colaboradores. GLMM FAQ — a referência viva sobre modelos mistos em R. Veja em especial “Should I treat factor xxx as fixed or random?”.\n\nComplementar\n\nHarrison, X.A. et al. 2018. A brief introduction to mixed effects modelling and multi-model inference in ecology. PeerJ 6:e4794.\nHurlbert, S.H. 1984. Pseudoreplication and the design of ecological field experiments. Ecological Monographs 54:187–211.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer."
   },
   {
     "objectID": "encontros/e05-glm-i/index.html",
@@ -2923,7 +2923,7 @@
     "href": "slides/e07.html#três-cenários",
     "title": "GLMM I: por que efeitos aleatórios",
     "section": "Três cenários",
-    "text": "Três cenários\nCinco minutos, em duplas. Em quais destes há réplica de verdade?\n\nPara testar o efeito de uma dieta sobre o peso, um rato é pesado todos os dias durante trinta dias. n = 30?\nPara comparar duas espécies de formiga, coletam-se cinquenta operárias de um formigueiro de cada espécie. n = 50 por espécie?\nPara comparar a herbivoria entre duas florestas, medem-se cem folhas de uma árvore em cada floresta. n = 100 por floresta?\n\n\nA pergunta que resolve os três: qual é a unidade que foi de fato replicada no fator que me interessa?"
+    "text": "Três cenários\nCinco minutos, em duplas. Em quais destes há réplica de verdade?\n\n\n\n\n\n\nA pergunta que resolve os três: qual é a unidade que foi de fato replicada no fator que me interessa?\n\n\nSilhuetas do PhyloPic, todas sob CC0 1.0: Rattus norvegicus por Arcadia Science, Solenopsis invicta por Richard J. Harris e a folha de Quercus petraea por Pablo Castro Sánchez-Bermejo."
   },
   {
     "objectID": "slides/e07.html#os-três-são-o-mesmo-erro",
@@ -2940,11 +2940,11 @@
     "text": "A definição\n\nTratar como réplicas independentes observações que compartilham a mesma unidade experimental (Hurlbert 1984).\n\nO efeito prático é sempre o mesmo: o modelo acha que tem mais informação do que tem, os erros-padrão encolhem, e o valor de p fica otimista."
   },
   {
-    "objectID": "slides/e07.html#quatro-formas-comuns-em-ecologia",
-    "href": "slides/e07.html#quatro-formas-comuns-em-ecologia",
+    "objectID": "slides/e07.html#cinco-formas-comuns-em-ecologia",
+    "href": "slides/e07.html#cinco-formas-comuns-em-ecologia",
     "title": "GLMM I: por que efeitos aleatórios",
-    "section": "Quatro formas comuns em ecologia",
-    "text": "Quatro formas comuns em ecologia\n\nTemporal — o mesmo sítio medido em vários meses.\nEspacial — parcelas vizinhas dentro do mesmo fragmento.\nIndivíduo — várias medidas do mesmo animal.\nAninhamento de delineamento — sub-amostras dentro de unidades tratadas.\n\n\nEm nenhum desses casos a solução é “tirar a média por grupo”. Isso joga fora variação real e desperdiça graus de liberdade."
+    "section": "Cinco formas comuns em ecologia",
+    "text": "Cinco formas comuns em ecologia\n\nTemporal — o mesmo sítio medido em vários meses.\nEspacial — parcelas vizinhas dentro do mesmo fragmento.\nFilogenética — espécies não são réplicas independentes: estão ligadas por ancestralidade comum, e as mais próximas tendem a ser mais parecidas. É o sinal filogenético.\nIndivíduo — várias medidas do mesmo animal.\nAninhamento de delineamento — sub-amostras dentro de unidades tratadas.\n\n\nEm nenhum desses casos a solução é “tirar a média por grupo”. Isso joga fora variação real e desperdiça graus de liberdade. As três primeiras têm a mesma forma — pares mais próximos no espaço, no tempo ou na filogenia são mais parecidos — e é por isso que os remédios se parecem: uma estrutura de correlação que diz quem é vizinho de quem. Para a filogenética, isso é PGLS ou modelo misto filogenético."
   },
   {
     "objectID": "slides/e07.html#vendo-o-estrago",
@@ -2986,7 +2986,7 @@
     "href": "slides/e07.html#fixo-ou-aleatório",
     "title": "GLMM I: por que efeitos aleatórios",
     "section": "Fixo ou aleatório?",
-    "text": "Fixo ou aleatório?\n\n\n\n\n\n\n\n\nPergunte\nFixo\nAleatório\n\n\n\n\nOs níveis são os que interessam, ou uma amostra?\nsão estes\nsão uma amostra de muitos\n\n\nVocê quer estimar cada nível?\nsim\nnão, quer a variância\n\n\nQuantos níveis há?\npoucos\nidealmente ≥ 5\n\n\nQuer prever para níveis novos?\nnão dá\nsim\n\n\n\n\n“Espécie” pode ser fixo ou aleatório na mesma tabela de dados — o que decide é a pergunta. Duas espécies comparadas: fixo. Quarenta espécies como amostra de uma comunidade: aleatório."
+    "text": "Fixo ou aleatório?\n\n\n\n\n\n\n\n\nPergunte\nFixo\nAleatório\n\n\n\n\nOs níveis são os que interessam, ou uma amostra?\nsão estes\nsão uma amostra de muitos\n\n\nVocê quer estimar cada nível?\nsim\nnão, quer a variância\n\n\nQuantos níveis há?\npoucos\nidealmente ≥ 5\n\n\nQuer prever para níveis novos?\nnão dá\nsim\n\n\n\n\n“Espécie” pode ser fixo ou aleatório na mesma tabela de dados — o que decide é a pergunta. Duas espécies comparadas: fixo. Quarenta espécies como amostra de uma comunidade: aleatório.\n\n\nA tabela acima é uma regra de bolso, não uma definição. A seção “Should I treat factor xxx as fixed or random?” do GLMM FAQ, de Ben Bolker e colaboradores, reúne cinco definições diferentes de “efeito aleatório” catalogadas por Gelman (2005) — e elas não coincidem. Vale ler antes de discutir com um revisor."
   },
   {
     "objectID": "slides/e07.html#poucos-níveis",
@@ -3084,7 +3084,7 @@
     "href": "slides/e07.html#referências",
     "title": "GLMM I: por que efeitos aleatórios",
     "section": "Referências",
-    "text": "Referências\n\n\nBolker, B.M. et al. 2009. Generalized linear mixed models: a practical guide for ecology and evolution. Trends in Ecology & Evolution 24:127–135.\nHarrison, X.A. et al. 2018. A brief introduction to mixed effects modelling and multi-model inference in ecology. PeerJ 6:e4794.\nHurlbert, S.H. 1984. Pseudoreplication and the design of ecological field experiments. Ecological Monographs 54:187–211.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer."
+    "text": "Referências\n\n\nBolker, B.M. et al. 2009. Generalized linear mixed models: a practical guide for ecology and evolution. Trends in Ecology & Evolution 24:127–135.\nBolker, B.M. e colaboradores. GLMM FAQ — a referência viva sobre modelos mistos em R: o que é efeito aleatório, quantos níveis bastam, convergência, teste de hipótese.\nHarrison, X.A. et al. 2018. A brief introduction to mixed effects modelling and multi-model inference in ecology. PeerJ 6:e4794.\nHurlbert, S.H. 1984. Pseudoreplication and the design of ecological field experiments. Ecological Monographs 54:187–211.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer."
   },
   {
     "objectID": "slides/e09.html#onde-estamos-no-ciclo-ppdac",

@@ -108,16 +108,18 @@ faz?
 
 Cinco minutos, em duplas. Em quais destes há réplica de verdade?
 
-1. Para testar o efeito de uma dieta sobre o peso, **um** rato é pesado
-   todos os dias durante trinta dias. *n* = 30?
-2. Para comparar duas espécies de formiga, coletam-se cinquenta operárias
-   de **um** formigueiro de cada espécie. *n* = 50 por espécie?
-3. Para comparar a herbivoria entre duas florestas, medem-se cem folhas de
-   **uma** árvore em cada floresta. *n* = 100 por floresta?
+![](../assets/tres-cenarios.svg){fig-align="center" width="97%"}
 
 ::: {.definicao}
 A pergunta que resolve os três: qual é a unidade que foi de fato
 **replicada no fator que me interessa**?
+:::
+
+::: {.nota}
+Silhuetas do [PhyloPic](https://www.phylopic.org), todas sob CC0 1.0:
+*Rattus norvegicus* por Arcadia Science, *Solenopsis invicta* por
+Richard J. Harris e a folha de *Quercus petraea* por Pablo Castro
+Sánchez-Bermejo.
 :::
 
 ---
@@ -153,17 +155,24 @@ do que tem, os erros-padrão encolhem, e o valor de *p* fica otimista.
 
 ---
 
-## Quatro formas comuns em ecologia
+## Cinco formas comuns em ecologia {.smaller}
 
 1. **Temporal** — o mesmo sítio medido em vários meses.
 2. **Espacial** — parcelas vizinhas dentro do mesmo fragmento.
-3. **Indivíduo** — várias medidas do mesmo animal.
-4. **Aninhamento de delineamento** — sub-amostras dentro de unidades
+3. **Filogenética** — espécies não são réplicas independentes: estão
+   ligadas por ancestralidade comum, e as mais próximas tendem a ser mais
+   parecidas. É o sinal filogenético.
+4. **Indivíduo** — várias medidas do mesmo animal.
+5. **Aninhamento de delineamento** — sub-amostras dentro de unidades
    tratadas.
 
 ::: {.nota}
 Em nenhum desses casos a solução é "tirar a média por grupo". Isso joga
-fora variação real e desperdiça graus de liberdade.
+fora variação real e desperdiça graus de liberdade. As três primeiras têm
+a mesma forma — pares mais próximos no espaço, no tempo ou na filogenia
+são mais parecidos — e é por isso que os remédios se parecem: uma
+estrutura de correlação que diz quem é vizinho de quem. Para a
+filogenética, isso é PGLS ou modelo misto filogenético.
 :::
 
 ---
@@ -266,6 +275,15 @@ bastante. Ignorar isso seria caro.
 "Espécie" pode ser fixo ou aleatório **na mesma tabela de dados** — o que
 decide é a pergunta. Duas espécies comparadas: fixo. Quarenta espécies
 como amostra de uma comunidade: aleatório.
+:::
+
+::: {.nota}
+A tabela acima é uma regra de bolso, não uma definição. A seção
+["Should I treat factor xxx as fixed or
+random?"](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#should-i-treat-factor-xxx-as-fixed-or-random)
+do *GLMM FAQ*, de Ben Bolker e colaboradores, reúne cinco definições
+diferentes de "efeito aleatório" catalogadas por Gelman (2005) — e elas
+não coincidem. Vale ler antes de discutir com um revisor.
 :::
 
 ---
@@ -485,6 +503,7 @@ modelo em bayesiano.
 
 ::: {.nota}
 - Bolker, B.M. et al. 2009. [Generalized linear mixed models: a practical guide for ecology and evolution](https://doi.org/10.1016/j.tree.2008.10.008). *Trends in Ecology & Evolution* 24:127–135.
+- Bolker, B.M. e colaboradores. [*GLMM FAQ*](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html) — a referência viva sobre modelos mistos em R: o que é efeito aleatório, quantos níveis bastam, convergência, teste de hipótese.
 - Harrison, X.A. et al. 2018. [A brief introduction to mixed effects modelling and multi-model inference in ecology](https://doi.org/10.7717/peerj.4794). *PeerJ* 6:e4794.
 - Hurlbert, S.H. 1984. [Pseudoreplication and the design of ecological field experiments](https://doi.org/10.2307/1942661). *Ecological Monographs* 54:187–211.
 - Zuur, A.F. et al. 2009. [*Mixed Effects Models and Extensions in Ecology with R*](https://doi.org/10.1007/978-0-387-87458-6). Springer.

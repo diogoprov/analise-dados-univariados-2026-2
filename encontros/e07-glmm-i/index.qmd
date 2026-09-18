@@ -52,6 +52,7 @@ curso, com um *take-home* por item:
 **Obrigatória**
 
 - Bolker, B.M. et al. 2009. [Generalized linear mixed models: a practical guide for ecology and evolution](https://doi.org/10.1016/j.tree.2008.10.008). *Trends in Ecology & Evolution* 24:127–135.
+- Bolker, B.M. e colaboradores. [*GLMM FAQ*](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html) — a referência viva sobre modelos mistos em R. Veja em especial ["Should I treat factor xxx as fixed or random?"](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#should-i-treat-factor-xxx-as-fixed-or-random).
 
 **Complementar**
 
