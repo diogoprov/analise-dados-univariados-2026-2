@@ -441,13 +441,20 @@ b_j \sim \mathcal{N}(0, \sigma^2_{\text{praia}}),
 </section>
 <section id="poucos-níveis-depende-do-que-você-quer" class="slide level2 smaller">
 <h2>Poucos níveis: depende do que você quer</h2>
-<p>Gomes (2022) simulou exatamente esse caso e a resposta tem duas partes.</p>
-<div class="definicao">
-<p>Com poucos níveis, as estimativas dos <strong>efeitos fixos</strong> e a incerteza em torno delas quase não mudam — a cobertura do intervalo depende do <strong>tamanho amostral</strong>, não do número de níveis. O que de fato piora é a variância do efeito aleatório, e os ajustes singulares ficam mais frequentes.</p>
+<div class="columns">
+<div class="column" style="width:44%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/gomes-2022-fig2.jpg" class="quarto-figure quarto-figure-center" height="440"></p>
+</figure>
 </div>
-<p>Ou seja: se o agrupamento entra só para acomodar a dependência — um <em>nuisance</em> — e a inferência é sobre os efeitos fixos, menos de cinco níveis pode ser aceitável. Se a variância entre grupos <strong>é</strong> a sua pergunta, a regra continua valendo.</p>
+</div><div class="column" style="width:56%;">
+<p>No eixo <em>y</em>, a <strong>cobertura</strong> do intervalo de 95% dos efeitos fixos: em quantas das 10 mil simulações o valor verdadeiro caiu dentro do intervalo. No eixo <em>x</em>, o número de níveis do fator de agrupamento.</p>
+<p>Ela fica em torno de 0,95 com 3, 5 ou 10 níveis. A única série claramente abaixo é o modelo misto com <em>n</em> = 30 — o que derruba a cobertura é o <strong>tamanho amostral</strong>, não o número de níveis.</p>
+<p>Se o agrupamento entra só para acomodar a dependência — um <em>nuisance</em> — menos de cinco níveis pode ser aceitável. Se a variância entre grupos <strong>é</strong> a sua pergunta, a regra continua valendo: essa variância segue subestimada com poucos níveis.</p>
+</div></div>
 <div class="nota">
-<p>Gomes, D.G.E. 2022. <a href="https://doi.org/10.7717/peerj.12794">Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model?</a> <em>PeerJ</em> 10:e12794. Nos cenários de amostra pequena (<em>n</em> = 30) o autor encontra perda de desempenho, e fecha pedindo mais simulações antes de generalizar.</p>
+<p>Figura 2 de Gomes, D.G.E. 2022. <a href="https://doi.org/10.7717/peerj.12794">Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model?</a> <em>PeerJ</em> 10:e12794, sob CC BY 4.0. O próprio autor fecha pedindo mais simulações antes de generalizar.</p>
 </div>
 </section>
 <section class="slide level2">
@@ -494,6 +501,10 @@ b_j \sim \mathcal{N}(0, \sigma^2_{\text{praia}}),
 <section id="a-sintaxe-resumida" class="slide level2">
 <h2>A sintaxe, resumida</h2>
 <table class="caption-top">
+<colgroup>
+<col style="width: 31%">
+<col style="width: 68%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Fórmula</th>
@@ -502,29 +513,29 @@ b_j \sim \mathcal{N}(0, \sigma^2_{\text{praia}}),
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>(1 \| g)</code></td>
+<td><code>(1 | g)</code></td>
 <td>intercepto aleatório por <code>g</code></td>
 </tr>
 <tr class="even">
-<td><code>(x \| g)</code></td>
+<td><code>(x | g)</code></td>
 <td>intercepto e inclinação de <code>x</code>, correlacionados</td>
 </tr>
 <tr class="odd">
-<td><code>(0 + x \| g)</code></td>
+<td><code>(0 + x | g)</code></td>
 <td>só inclinação</td>
 </tr>
 <tr class="even">
-<td><code>(1 \| g/h)</code></td>
+<td><code>(1 | g/h)</code></td>
 <td><code>h</code> aninhado em <code>g</code></td>
 </tr>
 <tr class="odd">
-<td><code>(1 \| g) + (1 \| h)</code></td>
+<td><code>(1 | g) + (1 | h)</code></td>
 <td>fatores cruzados</td>
 </tr>
 </tbody>
 </table>
 <div class="nota">
-<p>Aninhado × cruzado é fonte constante de erro. Regra: se o nível “1” de <code>h</code> na praia A <strong>não é o mesmo</strong> que o “1” da praia B, é aninhado.</p>
+<p>Aninhado × cruzado é fonte constante de erro. Regra: se o nível “1” de <code>h</code> na praia A <strong>não é o mesmo</strong> que o “1” da praia B, é aninhado. A seção <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#model-specification">“Model specification”</a> do <em>GLMM FAQ</em> traz esta mesma tabela com mais linhas, cada fórmula ao lado da equação correspondente, e um conselho que evita o problema na origem: nomeie os níveis aninhados de forma única (A1, A2, …, B1, B2, …), e aí não há como confundir aninhado com cruzado.</p>
 </div>
 </section>
 <section id="shrinkage" class="slide level2">

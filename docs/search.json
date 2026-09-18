@@ -431,7 +431,7 @@
     "href": "slides/e08.html#a-tabela-de-tradução",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "A tabela de tradução",
-    "text": "A tabela de tradução\n\n\n\n\n\n\n\nFrequentista\nBayesiano (brms)\n\n\n\n\nlmer(y ~ x + (1\\|g))\nbrm(y ~ x + (1\\|g))\n\n\nglmer(..., family = poisson)\nbrm(..., family = poisson())\n\n\nglmmTMB(..., family = nbinom2)\nbrm(..., family = negbinomial())\n\n\nglmmTMB(..., ziformula = ~1)\nbrm(..., family = zero_inflated_poisson())\n\n\nclmm(...)\nbrm(..., family = cumulative())\n\n\nconfint()\nposterior_interval()\n\n\nDHARMa::simulateResiduals()\npp_check()\n\n\nAIC()\nloo() — Encontro 9"
+    "text": "A tabela de tradução\n\n\n\n\n\n\n\nFrequentista\nBayesiano (brms)\n\n\n\n\nlmer(y ~ x + (1|g))\nbrm(y ~ x + (1|g))\n\n\nglmer(..., family = poisson)\nbrm(..., family = poisson())\n\n\nglmmTMB(..., family = nbinom2)\nbrm(..., family = negbinomial())\n\n\nglmmTMB(..., ziformula = ~1)\nbrm(..., family = zero_inflated_poisson())\n\n\nclmm(...)\nbrm(..., family = cumulative())\n\n\nconfint()\nposterior_interval()\n\n\nDHARMa::simulateResiduals()\npp_check()\n\n\nAIC()\nloo() — Encontro 9"
   },
   {
     "objectID": "slides/e08.html#o-que-fica-de-hoje",
@@ -3000,7 +3000,7 @@
     "href": "slides/e07.html#poucos-níveis-depende-do-que-você-quer",
     "title": "GLMM I: por que efeitos aleatórios",
     "section": "Poucos níveis: depende do que você quer",
-    "text": "Poucos níveis: depende do que você quer\nGomes (2022) simulou exatamente esse caso e a resposta tem duas partes.\n\nCom poucos níveis, as estimativas dos efeitos fixos e a incerteza em torno delas quase não mudam — a cobertura do intervalo depende do tamanho amostral, não do número de níveis. O que de fato piora é a variância do efeito aleatório, e os ajustes singulares ficam mais frequentes.\n\nOu seja: se o agrupamento entra só para acomodar a dependência — um nuisance — e a inferência é sobre os efeitos fixos, menos de cinco níveis pode ser aceitável. Se a variância entre grupos é a sua pergunta, a regra continua valendo.\n\nGomes, D.G.E. 2022. Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model? PeerJ 10:e12794. Nos cenários de amostra pequena (n = 30) o autor encontra perda de desempenho, e fecha pedindo mais simulações antes de generalizar."
+    "text": "Poucos níveis: depende do que você quer\n\n\n\n\n\n\n\n\nNo eixo y, a cobertura do intervalo de 95% dos efeitos fixos: em quantas das 10 mil simulações o valor verdadeiro caiu dentro do intervalo. No eixo x, o número de níveis do fator de agrupamento.\nEla fica em torno de 0,95 com 3, 5 ou 10 níveis. A única série claramente abaixo é o modelo misto com n = 30 — o que derruba a cobertura é o tamanho amostral, não o número de níveis.\nSe o agrupamento entra só para acomodar a dependência — um nuisance — menos de cinco níveis pode ser aceitável. Se a variância entre grupos é a sua pergunta, a regra continua valendo: essa variância segue subestimada com poucos níveis.\n\n\nFigura 2 de Gomes, D.G.E. 2022. Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model? PeerJ 10:e12794, sob CC BY 4.0. O próprio autor fecha pedindo mais simulações antes de generalizar."
   },
   {
     "objectID": "slides/e07.html#três-modelos-possíveis",
@@ -3021,7 +3021,7 @@
     "href": "slides/e07.html#a-sintaxe-resumida",
     "title": "GLMM I: por que efeitos aleatórios",
     "section": "A sintaxe, resumida",
-    "text": "A sintaxe, resumida\n\n\n\nFórmula\nSignificado\n\n\n\n\n(1 \\| g)\nintercepto aleatório por g\n\n\n(x \\| g)\nintercepto e inclinação de x, correlacionados\n\n\n(0 + x \\| g)\nsó inclinação\n\n\n(1 \\| g/h)\nh aninhado em g\n\n\n(1 \\| g) + (1 \\| h)\nfatores cruzados\n\n\n\n\nAninhado × cruzado é fonte constante de erro. Regra: se o nível “1” de h na praia A não é o mesmo que o “1” da praia B, é aninhado."
+    "text": "A sintaxe, resumida\n\n\n\n\n\n\n\nFórmula\nSignificado\n\n\n\n\n(1 | g)\nintercepto aleatório por g\n\n\n(x | g)\nintercepto e inclinação de x, correlacionados\n\n\n(0 + x | g)\nsó inclinação\n\n\n(1 | g/h)\nh aninhado em g\n\n\n(1 | g) + (1 | h)\nfatores cruzados\n\n\n\n\nAninhado × cruzado é fonte constante de erro. Regra: se o nível “1” de h na praia A não é o mesmo que o “1” da praia B, é aninhado. A seção “Model specification” do GLMM FAQ traz esta mesma tabela com mais linhas, cada fórmula ao lado da equação correspondente, e um conselho que evita o problema na origem: nomeie os níveis aninhados de forma única (A1, A2, …, B1, B2, …), e aí não há como confundir aninhado com cruzado."
   },
   {
     "objectID": "slides/e07.html#shrinkage",

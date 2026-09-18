@@ -303,27 +303,35 @@ uma variância.
 
 ## Poucos níveis: depende do que você quer {.smaller}
 
-Gomes (2022) simulou exatamente esse caso e a resposta tem duas partes.
+:::: {.columns}
 
-::: {.definicao}
-Com poucos níveis, as estimativas dos **efeitos fixos** e a incerteza em
-torno delas quase não mudam — a cobertura do intervalo depende do
-**tamanho amostral**, não do número de níveis. O que de fato piora é a
-variância do efeito aleatório, e os ajustes singulares ficam mais
-frequentes.
+::: {.column width="44%"}
+![](../assets/gomes-2022-fig2.jpg){fig-align="center" height="440"}
 :::
 
-Ou seja: se o agrupamento entra só para acomodar a dependência — um
-*nuisance* — e a inferência é sobre os efeitos fixos, menos de cinco
-níveis pode ser aceitável. Se a variância entre grupos **é** a sua
-pergunta, a regra continua valendo.
+::: {.column width="56%"}
+No eixo *y*, a **cobertura** do intervalo de 95% dos efeitos fixos: em
+quantas das 10 mil simulações o valor verdadeiro caiu dentro do
+intervalo. No eixo *x*, o número de níveis do fator de agrupamento.
+
+Ela fica em torno de 0,95 com 3, 5 ou 10 níveis. A única série
+claramente abaixo é o modelo misto com *n* = 30 — o que derruba a
+cobertura é o **tamanho amostral**, não o número de níveis.
+
+Se o agrupamento entra só para acomodar a dependência — um *nuisance* —
+menos de cinco níveis pode ser aceitável. Se a variância entre grupos
+**é** a sua pergunta, a regra continua valendo: essa variância segue
+subestimada com poucos níveis.
+:::
+
+::::
 
 ::: {.nota}
-Gomes, D.G.E. 2022. [Should I use fixed effects or random effects when I
-have fewer than five levels of a grouping factor in a mixed-effects
-model?](https://doi.org/10.7717/peerj.12794) *PeerJ* 10:e12794. Nos
-cenários de amostra pequena (*n* = 30) o autor encontra perda de
-desempenho, e fecha pedindo mais simulações antes de generalizar.
+Figura 2 de Gomes, D.G.E. 2022. [Should I use fixed effects or random
+effects when I have fewer than five levels of a grouping factor in a
+mixed-effects model?](https://doi.org/10.7717/peerj.12794) *PeerJ*
+10:e12794, sob CC BY 4.0. O próprio autor fecha pedindo mais simulações
+antes de generalizar.
 :::
 
 ---
@@ -378,17 +386,29 @@ ggplot(pred, aes(NAP, fit, colour = Beach)) +
 
 ## A sintaxe, resumida
 
-| Fórmula | Significado |
-|---|---|
-| `(1 \| g)` | intercepto aleatório por `g` |
-| `(x \| g)` | intercepto e inclinação de `x`, correlacionados |
-| `(0 + x \| g)` | só inclinação |
-| `(1 \| g/h)` | `h` aninhado em `g` |
-| `(1 \| g) + (1 \| h)` | fatores cruzados |
++----------------------+--------------------------------------------------+
+| Fórmula              | Significado                                      |
++======================+==================================================+
+| `(1 | g)`            | intercepto aleatório por `g`                     |
++----------------------+--------------------------------------------------+
+| `(x | g)`            | intercepto e inclinação de `x`, correlacionados  |
++----------------------+--------------------------------------------------+
+| `(0 + x | g)`        | só inclinação                                    |
++----------------------+--------------------------------------------------+
+| `(1 | g/h)`          | `h` aninhado em `g`                              |
++----------------------+--------------------------------------------------+
+| `(1 | g) + (1 | h)`  | fatores cruzados                                 |
++----------------------+--------------------------------------------------+
 
 ::: {.nota}
 Aninhado × cruzado é fonte constante de erro. Regra: se o nível "1" de
-`h` na praia A **não é o mesmo** que o "1" da praia B, é aninhado.
+`h` na praia A **não é o mesmo** que o "1" da praia B, é aninhado. A
+seção ["Model
+specification"](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#model-specification)
+do *GLMM FAQ* traz esta mesma tabela com mais linhas, cada fórmula ao
+lado da equação correspondente, e um conselho que evita o problema na
+origem: nomeie os níveis aninhados de forma única (A1, A2, …, B1, B2, …),
+e aí não há como confundir aninhado com cruzado.
 :::
 
 ---
