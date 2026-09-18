@@ -1516,7 +1516,7 @@
     "href": "encontros/e07-glmm-i/index.html#leituras",
     "title": "E7 — GLMM I: por que efeitos aleatórios",
     "section": "Leituras",
-    "text": "Leituras\nObrigatória\n\nBolker, B.M. et al. 2009. Generalized linear mixed models: a practical guide for ecology and evolution. Trends in Ecology & Evolution 24:127–135.\nBolker, B.M. e colaboradores. GLMM FAQ — a referência viva sobre modelos mistos em R. Veja em especial “Should I treat factor xxx as fixed or random?”.\n\nComplementar\n\nHarrison, X.A. et al. 2018. A brief introduction to mixed effects modelling and multi-model inference in ecology. PeerJ 6:e4794.\nHurlbert, S.H. 1984. Pseudoreplication and the design of ecological field experiments. Ecological Monographs 54:187–211.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer."
+    "text": "Leituras\nObrigatória\n\nBolker, B.M. et al. 2009. Generalized linear mixed models: a practical guide for ecology and evolution. Trends in Ecology & Evolution 24:127–135.\nGomes, D.G.E. 2022. Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model?. PeerJ 10:e12794. — a regra dos cinco níveis posta à prova por simulação.\nBolker, B.M. e colaboradores. GLMM FAQ — a referência viva sobre modelos mistos em R. Veja em especial “Should I treat factor xxx as fixed or random?”.\n\nComplementar\n\nHarrison, X.A. et al. 2018. A brief introduction to mixed effects modelling and multi-model inference in ecology. PeerJ 6:e4794.\nHurlbert, S.H. 1984. Pseudoreplication and the design of ecological field experiments. Ecological Monographs 54:187–211.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer."
   },
   {
     "objectID": "encontros/e05-glm-i/index.html",
@@ -2996,6 +2996,13 @@
     "text": "Poucos níveis\nCom 3 ou 4 níveis, a variância do efeito aleatório é estimada com péssima precisão — frequentemente colapsa para zero.\n\nRegra prática comum: abaixo de 5 níveis, considere tratar como fixo. Não é uma lei; é um aviso de que você tem pouca informação para estimar uma variância."
   },
   {
+    "objectID": "slides/e07.html#poucos-níveis-depende-do-que-você-quer",
+    "href": "slides/e07.html#poucos-níveis-depende-do-que-você-quer",
+    "title": "GLMM I: por que efeitos aleatórios",
+    "section": "Poucos níveis: depende do que você quer",
+    "text": "Poucos níveis: depende do que você quer\nGomes (2022) simulou exatamente esse caso e a resposta tem duas partes.\n\nCom poucos níveis, as estimativas dos efeitos fixos e a incerteza em torno delas quase não mudam — a cobertura do intervalo depende do tamanho amostral, não do número de níveis. O que de fato piora é a variância do efeito aleatório, e os ajustes singulares ficam mais frequentes.\n\nOu seja: se o agrupamento entra só para acomodar a dependência — um nuisance — e a inferência é sobre os efeitos fixos, menos de cinco níveis pode ser aceitável. Se a variância entre grupos é a sua pergunta, a regra continua valendo.\n\nGomes, D.G.E. 2022. Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model? PeerJ 10:e12794. Nos cenários de amostra pequena (n = 30) o autor encontra perda de desempenho, e fecha pedindo mais simulações antes de generalizar."
+  },
+  {
     "objectID": "slides/e07.html#três-modelos-possíveis",
     "href": "slides/e07.html#três-modelos-possíveis",
     "title": "GLMM I: por que efeitos aleatórios",
@@ -3084,7 +3091,7 @@
     "href": "slides/e07.html#referências",
     "title": "GLMM I: por que efeitos aleatórios",
     "section": "Referências",
-    "text": "Referências\n\n\nBolker, B.M. et al. 2009. Generalized linear mixed models: a practical guide for ecology and evolution. Trends in Ecology & Evolution 24:127–135.\nBolker, B.M. e colaboradores. GLMM FAQ — a referência viva sobre modelos mistos em R: o que é efeito aleatório, quantos níveis bastam, convergência, teste de hipótese.\nHarrison, X.A. et al. 2018. A brief introduction to mixed effects modelling and multi-model inference in ecology. PeerJ 6:e4794.\nHurlbert, S.H. 1984. Pseudoreplication and the design of ecological field experiments. Ecological Monographs 54:187–211.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer."
+    "text": "Referências\n\n\nBolker, B.M. et al. 2009. Generalized linear mixed models: a practical guide for ecology and evolution. Trends in Ecology & Evolution 24:127–135.\nGomes, D.G.E. 2022. Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model?. PeerJ 10:e12794.\nBolker, B.M. e colaboradores. GLMM FAQ — a referência viva sobre modelos mistos em R: o que é efeito aleatório, quantos níveis bastam, convergência, teste de hipótese.\nHarrison, X.A. et al. 2018. A brief introduction to mixed effects modelling and multi-model inference in ecology. PeerJ 6:e4794.\nHurlbert, S.H. 1984. Pseudoreplication and the design of ecological field experiments. Ecological Monographs 54:187–211.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer."
   },
   {
     "objectID": "slides/e09.html#onde-estamos-no-ciclo-ppdac",

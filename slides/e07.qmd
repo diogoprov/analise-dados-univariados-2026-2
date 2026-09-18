@@ -288,7 +288,7 @@ não coincidem. Vale ler antes de discutir com um revisor.
 
 ---
 
-## Poucos níveis
+## Poucos níveis {.smaller}
 
 Com 3 ou 4 níveis, a variância do efeito aleatório é estimada com
 péssima precisão — frequentemente colapsa para zero.
@@ -297,6 +297,33 @@ péssima precisão — frequentemente colapsa para zero.
 Regra prática comum: abaixo de 5 níveis, considere tratar como fixo.
 Não é uma lei; é um aviso de que você tem pouca informação para estimar
 uma variância.
+:::
+
+---
+
+## Poucos níveis: depende do que você quer {.smaller}
+
+Gomes (2022) simulou exatamente esse caso e a resposta tem duas partes.
+
+::: {.definicao}
+Com poucos níveis, as estimativas dos **efeitos fixos** e a incerteza em
+torno delas quase não mudam — a cobertura do intervalo depende do
+**tamanho amostral**, não do número de níveis. O que de fato piora é a
+variância do efeito aleatório, e os ajustes singulares ficam mais
+frequentes.
+:::
+
+Ou seja: se o agrupamento entra só para acomodar a dependência — um
+*nuisance* — e a inferência é sobre os efeitos fixos, menos de cinco
+níveis pode ser aceitável. Se a variância entre grupos **é** a sua
+pergunta, a regra continua valendo.
+
+::: {.nota}
+Gomes, D.G.E. 2022. [Should I use fixed effects or random effects when I
+have fewer than five levels of a grouping factor in a mixed-effects
+model?](https://doi.org/10.7717/peerj.12794) *PeerJ* 10:e12794. Nos
+cenários de amostra pequena (*n* = 30) o autor encontra perda de
+desempenho, e fecha pedindo mais simulações antes de generalizar.
 :::
 
 ---
@@ -503,6 +530,7 @@ modelo em bayesiano.
 
 ::: {.nota}
 - Bolker, B.M. et al. 2009. [Generalized linear mixed models: a practical guide for ecology and evolution](https://doi.org/10.1016/j.tree.2008.10.008). *Trends in Ecology & Evolution* 24:127–135.
+- Gomes, D.G.E. 2022. [Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model?](https://doi.org/10.7717/peerj.12794). *PeerJ* 10:e12794.
 - Bolker, B.M. e colaboradores. [*GLMM FAQ*](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html) — a referência viva sobre modelos mistos em R: o que é efeito aleatório, quantos níveis bastam, convergência, teste de hipótese.
 - Harrison, X.A. et al. 2018. [A brief introduction to mixed effects modelling and multi-model inference in ecology](https://doi.org/10.7717/peerj.4794). *PeerJ* 6:e4794.
 - Hurlbert, S.H. 1984. [Pseudoreplication and the design of ecological field experiments](https://doi.org/10.2307/1942661). *Ecological Monographs* 54:187–211.

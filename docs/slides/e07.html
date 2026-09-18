@@ -432,11 +432,22 @@ b_j \sim \mathcal{N}(0, \sigma^2_{\text{praia}}),
 <p>A tabela acima é uma regra de bolso, não uma definição. A seção <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#should-i-treat-factor-xxx-as-fixed-or-random">“Should I treat factor xxx as fixed or random?”</a> do <em>GLMM FAQ</em>, de Ben Bolker e colaboradores, reúne cinco definições diferentes de “efeito aleatório” catalogadas por Gelman (2005) — e elas não coincidem. Vale ler antes de discutir com um revisor.</p>
 </div>
 </section>
-<section id="poucos-níveis" class="slide level2">
+<section id="poucos-níveis" class="slide level2 smaller">
 <h2>Poucos níveis</h2>
 <p>Com 3 ou 4 níveis, a variância do efeito aleatório é estimada com péssima precisão — frequentemente colapsa para zero.</p>
 <div class="nota">
 <p>Regra prática comum: abaixo de 5 níveis, considere tratar como fixo. Não é uma lei; é um aviso de que você tem pouca informação para estimar uma variância.</p>
+</div>
+</section>
+<section id="poucos-níveis-depende-do-que-você-quer" class="slide level2 smaller">
+<h2>Poucos níveis: depende do que você quer</h2>
+<p>Gomes (2022) simulou exatamente esse caso e a resposta tem duas partes.</p>
+<div class="definicao">
+<p>Com poucos níveis, as estimativas dos <strong>efeitos fixos</strong> e a incerteza em torno delas quase não mudam — a cobertura do intervalo depende do <strong>tamanho amostral</strong>, não do número de níveis. O que de fato piora é a variância do efeito aleatório, e os ajustes singulares ficam mais frequentes.</p>
+</div>
+<p>Ou seja: se o agrupamento entra só para acomodar a dependência — um <em>nuisance</em> — e a inferência é sobre os efeitos fixos, menos de cinco níveis pode ser aceitável. Se a variância entre grupos <strong>é</strong> a sua pergunta, a regra continua valendo.</p>
+<div class="nota">
+<p>Gomes, D.G.E. 2022. <a href="https://doi.org/10.7717/peerj.12794">Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model?</a> <em>PeerJ</em> 10:e12794. Nos cenários de amostra pequena (<em>n</em> = 30) o autor encontra perda de desempenho, e fecha pedindo mais simulações antes de generalizar.</p>
 </div>
 </section>
 <section class="slide level2">
@@ -658,6 +669,7 @@ NAP -3.538 -1.599</code></pre>
 <div class="nota">
 <ul>
 <li>Bolker, B.M. et al.&nbsp;2009. <a href="https://doi.org/10.1016/j.tree.2008.10.008">Generalized linear mixed models: a practical guide for ecology and evolution</a>. <em>Trends in Ecology &amp; Evolution</em> 24:127–135.</li>
+<li>Gomes, D.G.E. 2022. <a href="https://doi.org/10.7717/peerj.12794">Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model?</a>. <em>PeerJ</em> 10:e12794.</li>
 <li>Bolker, B.M. e colaboradores. <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html"><em>GLMM FAQ</em></a> — a referência viva sobre modelos mistos em R: o que é efeito aleatório, quantos níveis bastam, convergência, teste de hipótese.</li>
 <li>Harrison, X.A. et al.&nbsp;2018. <a href="https://doi.org/10.7717/peerj.4794">A brief introduction to mixed effects modelling and multi-model inference in ecology</a>. <em>PeerJ</em> 6:e4794.</li>
 <li>Hurlbert, S.H. 1984. <a href="https://doi.org/10.2307/1942661">Pseudoreplication and the design of ecological field experiments</a>. <em>Ecological Monographs</em> 54:187–211.</li>
