@@ -3421,5 +3421,12 @@
     "title": "ANOVA, ANCOVA e interações como modelos lineares",
     "section": "Três erros com nome",
     "text": "Três erros com nome\nO artigo batiza os três modos de errar, e os nomes ajudam a lembrar:\n\n\n\n\n\n\n\n\nO que se erra\n\n\n\n\nTipo D\na detecção e a magnitude — achar interação onde a escala a criou, ou não achar onde a escala a escondeu\n\n\nTipo S\no sinal da modificação do efeito\n\n\nTipo A\no processo por trás — atribuir a um mecanismo biológico o que é artefato de escala\n\n\n\n\nEles mostram que meta-análise é especialmente vulnerável aos três, o que importa para quem for por esse caminho: razão de chances e diferença de médias padronizada vivem em escalas diferentes, e a mesma literatura pode dar respostas opostas sobre dependência de contexto conforme a métrica escolhida."
+  },
+  {
+    "objectID": "slides/e03.html#vendo-acontecer",
+    "href": "slides/e03.html#vendo-acontecer",
+    "title": "ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Vendo acontecer",
+    "text": "Vendo acontecer\n\n\n\n\n\nEm B: riqueza de formigas contra cobertura de gramíneas exóticas, em dois níveis de uso da terra. À esquerda, escala aditiva — as linhas convergem, há interação. À direita, os mesmos dados em escala multiplicativa — ficam paralelas, não há.\n\nFigura 4 de Spake, R. et al. 2023, Biological Reviews 98:983–1002, doi:10.1111/brv.12939. Reproduzida sob CC BY 4.0, sem alterações."
   }
 ]

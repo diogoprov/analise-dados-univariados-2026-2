@@ -406,6 +406,24 @@ interação.
 
 ---
 
+## Vendo acontecer {.smaller}
+
+![](../assets/spake-2023-fig4.jpg){fig-align="center" height="410"}
+
+Em **B**: riqueza de formigas contra cobertura de gramíneas exóticas, em
+dois níveis de uso da terra. À esquerda, escala aditiva — as linhas
+**convergem**, há interação. À direita, os **mesmos dados** em escala
+multiplicativa — ficam **paralelas**, não há.
+
+::: {.nota}
+Figura 4 de Spake, R. et al. 2023, *Biological Reviews* 98:983–1002,
+[doi:10.1111/brv.12939](https://doi.org/10.1111/brv.12939). Reproduzida
+sob [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/), sem
+alterações.
+:::
+
+---
+
 ## Três erros com nome {.smaller}
 
 O artigo batiza os três modos de errar, e os nomes ajudam a lembrar:
