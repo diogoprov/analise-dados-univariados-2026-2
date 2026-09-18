@@ -64,6 +64,22 @@ curso, com um *take-home* por item:
 
 ## Recursos externos
 
+**Interativos — o parentesco entre as distribuições**
+
+- [Probability Playground](https://probabilityplayground.com), de Adam
+  Cunningham — 33 distribuições com gráficos interativos e os parâmetros
+  ajustáveis no próprio navegador. "Interactive graphs of probability
+  distributions and their relationships", nas palavras do site.
+- [Univariate Distribution
+  Relationships](https://www.math.wm.edu/~leemis/chart/UDR/UDR.html), de
+  Lawrence Leemis — o mapa clicável com 76 distribuições e as relações
+  entre elas: limites, transformações e casos especiais. Publicado como
+  Leemis, L.M. & McQueston, J.T. 2008, [Univariate distribution
+  relationships](https://doi.org/10.1198/000313008x270448), *The American
+  Statistician* 62:45–53.
+
+**Do curso**
+
 - [Bioestatística — aula 05, probabilidade](https://provetelab.org/teaching/bioestatistica/aula-05-probabilidade/)
 
 ---

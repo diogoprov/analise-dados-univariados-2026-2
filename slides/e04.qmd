@@ -346,6 +346,30 @@ mesmo `glm()`, com um argumento `family` diferente.
 
 ---
 
+## Duas ferramentas para brincar com isso {.smaller}
+
+O parentesco entre as distribuições é mais fácil de ver mexendo do que
+lendo. Duas que valem a hora:
+
+**[Probability Playground](https://probabilityplayground.com)** — 33
+distribuições com gráficos interativos: você arrasta os parâmetros e vê a
+forma mudar. É o jeito mais rápido de sentir por que a binomial negativa
+vira Poisson quando a dispersão some, ou a Poisson vira normal quando
+$\lambda$ cresce.
+
+**[Univariate Distribution
+Relationships](https://www.math.wm.edu/~leemis/chart/UDR/UDR.html)** — o
+mapa completo: 76 distribuições e as setas que as ligam, tudo clicável.
+Cada seta é uma relação com nome (limite, transformação, caso especial).
+
+::: {.nota}
+Um exercício de cinco minutos que rende: no mapa, encontrem as quatro
+famílias que vimos hoje e sigam as setas entre elas. As que o curso usa
+não são um punhado de escolhas soltas — são vizinhas no mapa.
+:::
+
+---
+
 ## Os três ingredientes de um GLM
 
 1. **Componente aleatório** — a distribuição de $Y$ na família

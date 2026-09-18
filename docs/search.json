@@ -1775,7 +1775,7 @@
     "href": "encontros/e04-distribuicoes/index.html#recursos-externos",
     "title": "E4 — Distribuições de probabilidade e a família exponencial",
     "section": "Recursos externos",
-    "text": "Recursos externos\n\nBioestatística — aula 05, probabilidade\n\n\nVolta para o índice do curso."
+    "text": "Recursos externos\nInterativos — o parentesco entre as distribuições\n\nProbability Playground, de Adam Cunningham — 33 distribuições com gráficos interativos e os parâmetros ajustáveis no próprio navegador. “Interactive graphs of probability distributions and their relationships”, nas palavras do site.\nUnivariate Distribution Relationships, de Lawrence Leemis — o mapa clicável com 76 distribuições e as relações entre elas: limites, transformações e casos especiais. Publicado como Leemis, L.M. & McQueston, J.T. 2008, Univariate distribution relationships, The American Statistician 62:45–53.\n\nDo curso\n\nBioestatística — aula 05, probabilidade\n\n\nVolta para o índice do curso."
   },
   {
     "objectID": "encontros/e06-glm-ii/index.html",
@@ -3428,5 +3428,12 @@
     "title": "O teste de normalidade, ao vivo",
     "section": "O que levar disso",
     "text": "O que levar disso\nO shapiro.test() responde “tenho evidência de que estes dados não vieram de uma normal?”. Essa não é a pergunta que interessa. A que interessa é “o quanto este desvio ameaça a minha inferência?” — e essa depende do tamanho do desvio e do que o modelo faz com ele, não do n.\n\nShatz, I. 2024. Assumption-checking rather than (just) testing: the importance of visualization and effect size in statistical diagnostics. Behavior Research Methods 56:826–845. Acesso aberto; é o artigo que esta página ilustra.\nKozak, M. & Piepho, H.-P. 2018. What’s normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions. Journal of Agronomy and Crop Science 204:86–98.\n\n\nVolta para o Encontro 2."
+  },
+  {
+    "objectID": "slides/e04.html#duas-ferramentas-para-brincar-com-isso",
+    "href": "slides/e04.html#duas-ferramentas-para-brincar-com-isso",
+    "title": "Distribuições de probabilidade e a família exponencial",
+    "section": "Duas ferramentas para brincar com isso",
+    "text": "Duas ferramentas para brincar com isso\nO parentesco entre as distribuições é mais fácil de ver mexendo do que lendo. Duas que valem a hora:\nProbability Playground — 33 distribuições com gráficos interativos: você arrasta os parâmetros e vê a forma mudar. É o jeito mais rápido de sentir por que a binomial negativa vira Poisson quando a dispersão some, ou a Poisson vira normal quando \\(\\lambda\\) cresce.\nUnivariate Distribution Relationships — o mapa completo: 76 distribuições e as setas que as ligam, tudo clicável. Cada seta é uma relação com nome (limite, transformação, caso especial).\n\nUm exercício de cinco minutos que rende: no mapa, encontrem as quatro famílias que vimos hoje e sigam as setas entre elas. As que o curso usa não são um punhado de escolhas soltas — são vizinhas no mapa."
   }
 ]
