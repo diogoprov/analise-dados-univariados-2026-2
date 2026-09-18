@@ -970,7 +970,7 @@
     "href": "slides/e02.html#as-quatro-premissas-na-ordem-que-importa",
     "title": "O modelo linear como arcabouço unificador",
     "section": "As quatro premissas, na ordem que importa",
-    "text": "As quatro premissas, na ordem que importa\n\nLinearidade — a relação é aditiva na escala em que foi escrita.\nIndependência — os resíduos não carregam informação uns dos outros. Vem do delineamento, não do gráfico.\nHomocedasticidade — a variância do resíduo não depende do predito.\nNormalidade do resíduo — a menos importante das quatro, e a única que quase todo mundo testa.\n\n\nEm amostras razoáveis, violar (4) modestamente é quase inofensivo. Violar (2) invalida tudo."
+    "text": "As quatro premissas, na ordem que importa\n\nLinearidade — a relação é aditiva na escala em que foi escrita.\nIndependência — os resíduos não carregam informação uns dos outros. Vem do delineamento, não do gráfico.\nHomocedasticidade — a variância do resíduo não depende do predito.\nNormalidade do resíduo — a menos importante das quatro, e a única que quase todo mundo testa.\n\n\nEm amostras razoáveis, violar (4) modestamente é quase inofensivo. Violar (2) invalida tudo.\nE a ordem não é opinião. As premissas 2 e 3 são as condições do teorema de Gauss–Markov — que pede até menos, só resíduos não correlacionados —, e delas vem a garantia de que os mínimos quadrados têm a menor variância entre os estimadores lineares não enviesados. A normalidade não está entre elas: não serve para estimar, e sim para a inferência, porque dela saem as distribuições t e F."
   },
   {
     "objectID": "slides/e02.html#o-hábito-mais-útil-do-ros",

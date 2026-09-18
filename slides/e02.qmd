@@ -169,6 +169,14 @@ disso é um erro comum e caro.
 ::: {.nota}
 Em amostras razoáveis, violar (4) modestamente é quase inofensivo.
 Violar (2) invalida tudo.
+
+**E a ordem não é opinião.** As premissas 2 e 3 são as condições do
+[teorema de Gauss–Markov](https://en.wikipedia.org/wiki/Gauss%E2%80%93Markov_theorem)
+— que pede até menos, só resíduos *não correlacionados* —, e delas vem a
+garantia de que os mínimos quadrados têm a menor variância entre os
+estimadores lineares não enviesados. A normalidade **não** está entre
+elas: não serve para estimar, e sim para a inferência, porque dela saem
+as distribuições *t* e *F*.
 :::
 
 ---
