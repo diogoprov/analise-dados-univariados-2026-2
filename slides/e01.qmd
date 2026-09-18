@@ -581,7 +581,7 @@ delineamento, e é o Encontro 7.
 ## Passo 3 — Distribuição da resposta {.smaller}
 
 ```{r}
-#| fig-height: 3.2
+#| fig-height: 2.7
 ggplot(RK, aes(TOT.N)) +
   geom_histogram(bins = 20, fill = "#1c6e8c", colour = "white", alpha = .85) +
   theme_minimal(base_size = 14) +
