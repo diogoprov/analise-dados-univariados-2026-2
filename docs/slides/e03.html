@@ -552,11 +552,56 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="definicao">
 <p>Em ecologia, a interação costuma ser <strong>a pergunta</strong>, não um incômodo: o efeito da temperatura depende da altitude? O efeito do predador depende da densidade de refúgios?</p>
 </div>
-<p>Duas regras práticas:</p>
+<p>Três regras práticas:</p>
 <ul>
 <li>não interprete efeitos principais isoladamente quando a interação é relevante — interprete o gráfico;</li>
-<li>não remova a interação só porque o <em>p</em> passou de 0,05. A decisão é da pergunta, não do limiar.</li>
+<li>não remova a interação só porque o <em>p</em> passou de 0,05. A decisão é da pergunta, não do limiar;</li>
+<li><strong>olhe nas duas direções.</strong> “O efeito da temperatura depende da altitude” e “o efeito da altitude depende da temperatura” são o <strong>mesmo termo</strong> do modelo. Escolher só uma leitura é escolha de narrativa, e costuma ser feita sem perceber.</li>
 </ul>
+</section>
+<section id="a-interação-depende-da-escala" class="slide level2 smaller">
+<h2>A interação depende da escala</h2>
+<p>Spake et al.&nbsp;(2023) mostram que duas propriedades passam batidas quando se interpreta interação em ecologia. A segunda é a simetria do slide anterior. A primeira é mais incômoda: a <strong>escala de medida</strong> — nas palavras deles,</p>
+<blockquote>
+<p>whether a response is analysed on an additive or multiplicative scale, such as a ratio or logarithmic scale.</p>
+</blockquote>
+<div class="definicao">
+<p>A mesma relação pode <strong>ter</strong> interação na escala aditiva e <strong>não ter</strong> na multiplicativa, ou o contrário. Não é erro de análise: são perguntas diferentes. “A diferença entre tratamentos é a mesma?” e “a <em>razão</em> entre tratamentos é a mesma?” não são a mesma pergunta.</p>
+</div>
+<p>Guardem isto para o <strong>Encontro 4</strong>, quando a função de ligação entrar: um GLM com ligação log modela a escala multiplicativa por construção. A escolha da família decide, sem avisar, em que escala você está procurando interação.</p>
+</section>
+<section id="três-erros-com-nome" class="slide level2 smaller">
+<h2>Três erros com nome</h2>
+<p>O artigo batiza os três modos de errar, e os nomes ajudam a lembrar:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: left;">O que se erra</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Tipo D</strong></td>
+<td style="text-align: left;">a <em>detecção</em> e a magnitude — achar interação onde a escala a criou, ou não achar onde a escala a escondeu</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Tipo S</strong></td>
+<td style="text-align: left;">o <strong>sinal</strong> da modificação do efeito</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Tipo A</strong></td>
+<td style="text-align: left;">o processo por trás — atribuir a um mecanismo biológico o que é artefato de escala</td>
+</tr>
+</tbody>
+</table>
+<div class="nota">
+<p>Eles mostram que <strong>meta-análise</strong> é especialmente vulnerável aos três, o que importa para quem for por esse caminho: razão de chances e diferença de médias padronizada vivem em escalas diferentes, e a mesma literatura pode dar respostas opostas sobre dependência de contexto conforme a métrica escolhida.</p>
+</div>
 </section>
 <section class="slide level2">
 
@@ -921,6 +966,7 @@ P value adjustment: tukey method for comparing a family of 3 estimates </code></
 <li>Quinn, G.P. &amp; Keough, M.J. 2023. <a href="https://doi.org/10.1017/9781139568173"><em>Experimental Design and Data Analysis for Biologists</em></a>. 2ª ed.&nbsp;Cambridge University Press.</li>
 <li>Gelman, A.; Hill, J. &amp; Vehtari, A. 2020. <a href="https://avehtari.github.io/ROS-Examples/"><em>Regression and Other Stories</em></a>. Cambridge University Press. — código e exemplos no site.</li>
 <li>Agresti, A. 2015. <a href="https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034"><em>Foundations of Linear and Generalized Linear Models</em></a>. Wiley.</li>
+<li>Spake, R.; Bowler, D.E.; Callaghan, C.T.; Blowes, S.A.; Doncaster, C.P.; Antão, L.H.; Nakagawa, S.; McElreath, R. &amp; Chase, J.M. 2023. <a href="https://doi.org/10.1111/brv.12939">Understanding ‘it depends’ in ecology: a guide to hypothesising, visualising and interpreting statistical interactions</a>. <em>Biological Reviews</em> 98:983–1002. Acesso aberto.</li>
 <li>Davis, S. &amp; Kay, M. 2023. <a href="https://doi.org/10.1002/ecs2.4539">Statistical reporting checklist</a>. <em>Ecosphere</em>.</li>
 <li>Lenth, R. <a href="https://cran.r-project.org/package=emmeans"><code>emmeans</code>: estimated marginal means</a>.</li>
 <li>da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; <strong>Provete, D.B.</strong> &amp; Vancine, M.A.&nbsp;2022. <a href="https://analises-ecologicas.com"><em>Análises Ecológicas no R</em></a>. NUPEEA.</li>

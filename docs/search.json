@@ -2426,7 +2426,7 @@
     "href": "slides/e03.html#interação-é-resultado-não-estorvo",
     "title": "ANOVA, ANCOVA e interações como modelos lineares",
     "section": "Interação é resultado, não estorvo",
-    "text": "Interação é resultado, não estorvo\n\nEm ecologia, a interação costuma ser a pergunta, não um incômodo: o efeito da temperatura depende da altitude? O efeito do predador depende da densidade de refúgios?\n\nDuas regras práticas:\n\nnão interprete efeitos principais isoladamente quando a interação é relevante — interprete o gráfico;\nnão remova a interação só porque o p passou de 0,05. A decisão é da pergunta, não do limiar."
+    "text": "Interação é resultado, não estorvo\n\nEm ecologia, a interação costuma ser a pergunta, não um incômodo: o efeito da temperatura depende da altitude? O efeito do predador depende da densidade de refúgios?\n\nTrês regras práticas:\n\nnão interprete efeitos principais isoladamente quando a interação é relevante — interprete o gráfico;\nnão remova a interação só porque o p passou de 0,05. A decisão é da pergunta, não do limiar;\nolhe nas duas direções. “O efeito da temperatura depende da altitude” e “o efeito da altitude depende da temperatura” são o mesmo termo do modelo. Escolher só uma leitura é escolha de narrativa, e costuma ser feita sem perceber."
   },
   {
     "objectID": "slides/e03.html#fator-covariável-contínua",
@@ -2559,7 +2559,7 @@
     "href": "slides/e03.html#referências",
     "title": "ANOVA, ANCOVA e interações como modelos lineares",
     "section": "Referências",
-    "text": "Referências\n\n\nQuinn, G.P. & Keough, M.J. 2023. Experimental Design and Data Analysis for Biologists. 2ª ed. Cambridge University Press.\nGelman, A.; Hill, J. & Vehtari, A. 2020. Regression and Other Stories. Cambridge University Press. — código e exemplos no site.\nAgresti, A. 2015. Foundations of Linear and Generalized Linear Models. Wiley.\nDavis, S. & Kay, M. 2023. Statistical reporting checklist. Ecosphere.\nLenth, R. emmeans: estimated marginal means.\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA."
+    "text": "Referências\n\n\nQuinn, G.P. & Keough, M.J. 2023. Experimental Design and Data Analysis for Biologists. 2ª ed. Cambridge University Press.\nGelman, A.; Hill, J. & Vehtari, A. 2020. Regression and Other Stories. Cambridge University Press. — código e exemplos no site.\nAgresti, A. 2015. Foundations of Linear and Generalized Linear Models. Wiley.\nSpake, R.; Bowler, D.E.; Callaghan, C.T.; Blowes, S.A.; Doncaster, C.P.; Antão, L.H.; Nakagawa, S.; McElreath, R. & Chase, J.M. 2023. Understanding ‘it depends’ in ecology: a guide to hypothesising, visualising and interpreting statistical interactions. Biological Reviews 98:983–1002. Acesso aberto.\nDavis, S. & Kay, M. 2023. Statistical reporting checklist. Ecosphere.\nLenth, R. emmeans: estimated marginal means.\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA."
   },
   {
     "objectID": "slides/e05.html#onde-estamos-no-ciclo-ppdac",
@@ -3407,5 +3407,19 @@
     "title": "ANOVA, ANCOVA e interações como modelos lineares",
     "section": "Por que \\(k-1\\) e não \\(k\\)",
     "text": "Por que \\(k-1\\) e não \\(k\\)\nE se déssemos uma coluna também para Adelie?\n\nX3 &lt;- cbind(X, speciesAdelie = as.numeric(pinguins$species == \"Adelie\"))\n\nc(colunas = ncol(X3), posto = qr(X3)$rank)\n\ncolunas   posto \n      4       3 \n\n\nQuatro colunas, posto 3: uma delas é redundante. E dá para ver qual — as três colunas de espécie somam exatamente a coluna do intercepto, já que todo pinguim é de uma espécie e só uma.\n\nNesse caso o R não erra: ele descarta uma e devolve NA no coeficiente correspondente. Mas a escolha de qual descartar passa a ser dele, e não sua — e é por isso que existe a ideia de nível de referência."
+  },
+  {
+    "objectID": "slides/e03.html#a-interação-depende-da-escala",
+    "href": "slides/e03.html#a-interação-depende-da-escala",
+    "title": "ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "A interação depende da escala",
+    "text": "A interação depende da escala\nSpake et al. (2023) mostram que duas propriedades passam batidas quando se interpreta interação em ecologia. A segunda é a simetria do slide anterior. A primeira é mais incômoda: a escala de medida — nas palavras deles,\n\nwhether a response is analysed on an additive or multiplicative scale, such as a ratio or logarithmic scale.\n\n\nA mesma relação pode ter interação na escala aditiva e não ter na multiplicativa, ou o contrário. Não é erro de análise: são perguntas diferentes. “A diferença entre tratamentos é a mesma?” e “a razão entre tratamentos é a mesma?” não são a mesma pergunta.\n\nGuardem isto para o Encontro 4, quando a função de ligação entrar: um GLM com ligação log modela a escala multiplicativa por construção. A escolha da família decide, sem avisar, em que escala você está procurando interação."
+  },
+  {
+    "objectID": "slides/e03.html#três-erros-com-nome",
+    "href": "slides/e03.html#três-erros-com-nome",
+    "title": "ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Três erros com nome",
+    "text": "Três erros com nome\nO artigo batiza os três modos de errar, e os nomes ajudam a lembrar:\n\n\n\n\n\n\n\n\nO que se erra\n\n\n\n\nTipo D\na detecção e a magnitude — achar interação onde a escala a criou, ou não achar onde a escala a escondeu\n\n\nTipo S\no sinal da modificação do efeito\n\n\nTipo A\no processo por trás — atribuir a um mecanismo biológico o que é artefato de escala\n\n\n\n\nEles mostram que meta-análise é especialmente vulnerável aos três, o que importa para quem for por esse caminho: razão de chances e diferença de médias padronizada vivem em escalas diferentes, e a mesma literatura pode dar respostas opostas sobre dependência de contexto conforme a métrica escolhida."
   }
 ]

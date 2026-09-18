@@ -370,12 +370,59 @@ efeito da temperatura depende da altitude? O efeito do predador depende
 da densidade de refúgios?
 :::
 
-Duas regras práticas:
+Três regras práticas:
 
 - não interprete efeitos principais isoladamente quando a interação é
   relevante — interprete o gráfico;
 - não remova a interação só porque o *p* passou de 0,05. A decisão é da
-  pergunta, não do limiar.
+  pergunta, não do limiar;
+- **olhe nas duas direções.** "O efeito da temperatura depende da
+  altitude" e "o efeito da altitude depende da temperatura" são o **mesmo
+  termo** do modelo. Escolher só uma leitura é escolha de narrativa, e
+  costuma ser feita sem perceber.
+
+---
+
+## A interação depende da escala {.smaller}
+
+Spake et al. (2023) mostram que duas propriedades passam batidas quando se
+interpreta interação em ecologia. A segunda é a simetria do slide anterior.
+A primeira é mais incômoda: a **escala de medida** — nas palavras deles,
+
+> whether a response is analysed on an additive or multiplicative scale,
+> such as a ratio or logarithmic scale.
+
+::: {.definicao}
+A mesma relação pode **ter** interação na escala aditiva e **não ter** na
+multiplicativa, ou o contrário. Não é erro de análise: são perguntas
+diferentes. "A diferença entre tratamentos é a mesma?" e "a *razão* entre
+tratamentos é a mesma?" não são a mesma pergunta.
+:::
+
+Guardem isto para o **Encontro 4**, quando a função de ligação entrar: um
+GLM com ligação log modela a escala multiplicativa por construção. A
+escolha da família decide, sem avisar, em que escala você está procurando
+interação.
+
+---
+
+## Três erros com nome {.smaller}
+
+O artigo batiza os três modos de errar, e os nomes ajudam a lembrar:
+
+| | O que se erra |
+|:--|:--|
+| **Tipo D** | a *detecção* e a magnitude — achar interação onde a escala a criou, ou não achar onde a escala a escondeu |
+| **Tipo S** | o **sinal** da modificação do efeito |
+| **Tipo A** | o processo por trás — atribuir a um mecanismo biológico o que é artefato de escala |
+
+::: {.nota}
+Eles mostram que **meta-análise** é especialmente vulnerável aos três, o
+que importa para quem for por esse caminho: razão de chances e diferença
+de médias padronizada vivem em escalas diferentes, e a mesma literatura
+pode dar respostas opostas sobre dependência de contexto conforme a
+métrica escolhida.
+:::
 
 ---
 
@@ -660,6 +707,7 @@ confint(pairs(emmeans(m_int, ~ sex | species)))[, c(1, 2, 3, 6, 7)]
 - Quinn, G.P. & Keough, M.J. 2023. [*Experimental Design and Data Analysis for Biologists*](https://doi.org/10.1017/9781139568173). 2ª ed. Cambridge University Press.
 - Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
 - Agresti, A. 2015. [*Foundations of Linear and Generalized Linear Models*](https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034). Wiley.
+- Spake, R.; Bowler, D.E.; Callaghan, C.T.; Blowes, S.A.; Doncaster, C.P.; Antão, L.H.; Nakagawa, S.; McElreath, R. & Chase, J.M. 2023. [Understanding ‘it depends’ in ecology: a guide to hypothesising, visualising and interpreting statistical interactions](https://doi.org/10.1111/brv.12939). *Biological Reviews* 98:983–1002. Acesso aberto.
 - Davis, S. & Kay, M. 2023. [Statistical reporting checklist](https://doi.org/10.1002/ecs2.4539). *Ecosphere*.
 - Lenth, R. [`emmeans`: estimated marginal means](https://cran.r-project.org/package=emmeans).
 - da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
