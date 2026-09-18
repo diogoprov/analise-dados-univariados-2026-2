@@ -2104,7 +2104,7 @@
     "href": "slides/e01.html#antes-dos-oito-passos-olhe",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Antes dos oito passos: olhe",
-    "text": "Antes dos oito passos: olhe\n\n# o anscombe vem em oito colunas: x1..x4 e y1..y4\nquarteto &lt;- data.frame(\n  conjunto = rep(1:4, each = nrow(anscombe)),\n  x = unlist(anscombe[, 1:4]),\n  y = unlist(anscombe[, 5:8])\n)\n\nggplot(quarteto, aes(x, y)) +\n  geom_smooth(method = \"lm\", se = FALSE, colour = \"#c08a3e\", linewidth = .8) +\n  geom_point(size = 2, colour = \"#1c6e8c\") +\n  facet_wrap(~ conjunto, nrow = 1) +\n  theme_minimal(base_size = 13)\n\n\n\n\n\n\n\n\nOs quatro conjuntos de Anscombe (1973) têm a mesma média de x e de y, o mesmo desvio-padrão, a mesma correlação (0,816) e a mesma reta de regressão (\\(y = 3 + 0{,}5x\\)) — idênticos até a terceira casa decimal.\n\nNenhuma estatística-resumo distingue os quatro. O gráfico distingue em um segundo. É por isso que o protocolo abaixo começa por olhar, e não por calcular.\n\n\nO pacote quartets reúne este e outros conjuntos com a mesma moral — inclusive um quarteto causal, em que as quatro estruturas causais produzem números idênticos. Voltamos a ele no Encontro 5."
+    "text": "Antes dos oito passos: olhe\n\n# o anscombe vem em oito colunas: x1..x4 e y1..y4\nquarteto &lt;- data.frame(\n  conjunto = rep(1:4, each = nrow(anscombe)),\n  x = unlist(anscombe[, 1:4]),\n  y = unlist(anscombe[, 5:8])\n)\n\nggplot(quarteto, aes(x, y)) +\n  geom_smooth(method = \"lm\", se = FALSE, colour = \"#c08a3e\", linewidth = .8) +\n  geom_point(size = 2, colour = \"#1c6e8c\") +\n  facet_wrap(~ conjunto, nrow = 1) +\n  theme_minimal(base_size = 13)"
   },
   {
     "objectID": "slides/e01.html#passo-1-outliers",
@@ -3344,5 +3344,12 @@
     "title": "O teste de normalidade, ao vivo",
     "section": "O que levar disso",
     "text": "O que levar disso\nO shapiro.test() responde “tenho evidência de que estes dados não vieram de uma normal?”. Essa não é a pergunta que interessa. A que interessa é “o quanto este desvio ameaça a minha inferência?” — e essa depende do tamanho do desvio e do que o modelo faz com ele, não do n.\n\nShatz, I. 2024. Assumption-checking rather than (just) testing: the importance of visualization and effect size in statistical diagnostics. Behavior Research Methods 56:826–845. Acesso aberto; é o artigo que esta página ilustra.\nKozak, M. & Piepho, H.-P. 2018. What’s normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions. Journal of Agronomy and Crop Science 204:86–98.\n\n\nVolta para o Encontro 2."
+  },
+  {
+    "objectID": "slides/e01.html#os-quatro-dão-os-mesmos-números",
+    "href": "slides/e01.html#os-quatro-dão-os-mesmos-números",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Os quatro dão os mesmos números",
+    "text": "Os quatro dão os mesmos números\nMédia de x, média de y, desvio-padrão, correlação (0,816) e reta de regressão (\\(y = 3 + 0{,}5x\\)): idênticos até a terceira casa decimal nos quatro conjuntos de Anscombe (1973).\n\nNenhuma estatística-resumo distingue os quatro. O gráfico distingue em um segundo. É por isso que o protocolo abaixo começa por olhar, e não por calcular.\n\n\nO pacote quartets reúne este e outros conjuntos com a mesma moral — inclusive um quarteto causal, em que as quatro estruturas causais produzem números idênticos. Voltamos a ele no Encontro 5."
   }
 ]

@@ -479,9 +479,13 @@ ggplot(quarteto, aes(x, y)) +
   theme_minimal(base_size = 13)
 ```
 
-Os quatro conjuntos de Anscombe (1973) têm a **mesma** média de *x* e de
-*y*, o mesmo desvio-padrão, a mesma correlação (0,816) e a mesma reta de
-regressão ($y = 3 + 0{,}5x$) — idênticos até a terceira casa decimal.
+---
+
+## Os quatro dão os mesmos números {.smaller}
+
+Média de *x*, média de *y*, desvio-padrão, correlação (0,816) e reta de
+regressão ($y = 3 + 0{,}5x$): **idênticos até a terceira casa decimal**
+nos quatro conjuntos de Anscombe (1973).
 
 ::: {.definicao}
 Nenhuma estatística-resumo distingue os quatro. O gráfico distingue em um
