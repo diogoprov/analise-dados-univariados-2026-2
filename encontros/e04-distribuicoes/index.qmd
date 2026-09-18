@@ -39,6 +39,18 @@ dados**. Para acompanhar em sala, o mesmo roteiro rodado nos dados do
 curso, com um *take-home* por item:
 [`exercicios/e04.R`](../../exercicios/e04.R).
 
+## Dados
+
+- [`Planilha_Pentastomida.txt`](../../dados/Planilha_Pentastomida.txt) —
+  contagens de *Raillietiella mottae* em 195 lagartos; muitos zeros. É o
+  conjunto do [capítulo 8 de *Análises Ecológicas no
+  R*](https://analises-ecologicas.com/cap8), e volta nos Encontros 5 e 6.
+- [`camila_cauda_lagartos.txt`](../../dados/camila_cauda_lagartos.txt) — 223
+  lagartos *Coleodactylus meridionalis*: sexo, CRC, comprimento da cauda
+  intacta e da regenerada, e se o indivíduo já sofreu autotomia.
+- [`UV.csv`](../../dados/UV.csv) — contagem de tipos celulares sob
+  tratamento de radiação UV; resposta em proporção.
+
 ## Leituras
 
 **Obrigatória**

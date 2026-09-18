@@ -40,8 +40,14 @@ curso, com um *take-home* por item:
 
 ## Dados
 
-- [`anova_dois_fatores.csv`](../../dados/anova_dois_fatores.csv)
-- [`Cap7_exercicio1.csv`](../../dados/Cap7_exercicio1.csv)
+- [`camila_cauda_lagartos.txt`](../../dados/camila_cauda_lagartos.txt) — 223
+  lagartos *Coleodactylus meridionalis*: sexo, CRC, comprimento da cauda
+  intacta e da regenerada, e se o indivíduo já sofreu autotomia.
+  É o conjunto da ANCOVA do bloco 3.
+- [`anova_dois_fatores.csv`](../../dados/anova_dois_fatores.csv) — para a
+  prática.
+- [`Cap7_exercicio1.csv`](../../dados/Cap7_exercicio1.csv) — para a
+  prática.
 
 ## Exercícios extras no `swirl`
 

@@ -301,6 +301,20 @@
     "text": "O que relatar (Davis & Kay 2023)\n\n“Ajustamos um GLMM de Poisson com ligação log (lme4 1.1.x), com NAP como efeito fixo e intercepto aleatório por praia (9 praias, 45 amostras). A estrutura aleatória reflete que as amostras foram coletadas em transectos dentro de praias. A razão entre deviance residual e graus de liberdade foi 1,15 e a comparação por AIC com alternativas binomial negativa e com efeito aleatório em nível de observação não indicou sobredispersão relevante (ΔAIC &lt; 2). Diagnóstico com resíduos quantílicos simulados (DHARMa, 1000 simulações). \\(R^2\\) marginal = …, condicional = ….”\n\nSempre diga o que o efeito aleatório representa no delineamento."
   },
   {
+    "objectID": "slides/e08.html#três-palavras-antes-de-qualquer-código",
+    "href": "slides/e08.html#três-palavras-antes-de-qualquer-código",
+    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "Três palavras, antes de qualquer código",
+    "text": "Três palavras, antes de qualquer código\n\nPrior. O que você considera plausível para um parâmetro antes de olhar estes dados, escrito como distribuição. “A inclinação está entre −3 e 3” é uma prior.\n\n\nVerossimilhança. O que estes dados dizem sobre o parâmetro, dado o modelo. É a mesma função que o glmer() maximizou de manhã.\n\n\nPosterior. As duas combinadas — o que sobra de plausível depois de ver os dados. É a resposta: tudo que o brms imprime é resumo dela.\n\nCom dados informativos, a verossimilhança domina e a prior quase não importa. Com poucos dados, ela segura o modelo — que é exatamente o caso das nove praias."
+  },
+  {
+    "objectID": "slides/e08.html#por-que-isso-precisa-de-mcmc",
+    "href": "slides/e08.html#por-que-isso-precisa-de-mcmc",
+    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "Por que isso precisa de MCMC",
+    "text": "Por que isso precisa de MCMC\nPara quase todo modelo interessante, a posterior não tem fórmula fechada: não dá para escrevê-la e resolver.\nO MCMC (Markov chain Monte Carlo) contorna isso por força bruta elegante: um algoritmo passeia pelo espaço dos parâmetros e visita cada região proporcionalmente à densidade da posterior. Você não obtém a equação da distribuição — obtém uma amostra dela.\n\nchains = 4, iter = 2000   # 4 passeios independentes, 2000 passos cada;\n                          # a 1a metade e aquecimento e se descarta\n\nSão 4 × 1000 = 4000 sorteios da posterior. Cada número do summary() é uma estatística desses 4000: a média deles, o desvio-padrão deles, os quantis 2,5 % e 97,5 % deles.\n\nDaí vêm os diagnósticos de que falaremos adiante. Rhat e ESS não dizem se o modelo é bom — dizem se o passeio funcionou. São duas perguntas diferentes, e é comum confundi-las."
+  },
+  {
     "objectID": "slides/e08.html#a-mesma-fórmula",
     "href": "slides/e08.html#a-mesma-fórmula",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
@@ -1197,6 +1211,13 @@
     "text": "VIF\n\n# o usdm quer um data frame de preditoras, nao um modelo — e nao aceita\n# tibble: sem o as.data.frame() ele para com \"invalid type (list)\"\npreditoras &lt;- as.data.frame(\n  pinguins[, c(\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\")]\n)\n\nusdm::vifcor(preditoras, th = 0.7)\n\nNo variable from the 3 input variables has collinearity problem. \n\nThe linear correlation coefficients ranges between: \nmin correlation ( bill_depth_mm ~ bill_length_mm ):  -0.2286256 \nmax correlation ( flipper_length_mm ~ bill_length_mm ):  0.6530956 \n\n---------- VIFs of the remained variables -------- \n          Variables      VIF\n1    bill_length_mm 1.850958\n2     bill_depth_mm 1.593411\n3 flipper_length_mm 2.633327"
   },
   {
+    "objectID": "slides/e02.html#o-que-essa-saída-diz-a-mais",
+    "href": "slides/e02.html#o-que-essa-saída-diz-a-mais",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "O que essa saída diz a mais",
+    "text": "O que essa saída diz a mais\nO car::vif() devolve só os valores. O vifcor() devolve, além deles, qual par é o mais correlacionado e quanto — que é a informação de que você precisa para decidir. Aqui o par mais apertado é comprimento de nadadeira com comprimento de bico, r = 0,65, e nenhum VIF passa de 2,6.\n\nA função também exclui variáveis sozinha, quando alguma passa do limiar. Use a saída, não a exclusão: baixar o th até alguma coisa cair é a versão com nome técnico de escolher preditora pelo resultado.\n\nRegras práticas: acima de 5 desconfie, acima de 10 preocupe-se. Mas a decisão é biológica, não mecânica:\n\nas duas preditoras medem coisas distintas na sua hipótese? → mantenha e relate a incerteza;\nsão proxies da mesma coisa? → escolha uma, pelo argumento, não pelo p."
+  },
+  {
     "objectID": "slides/e02.html#os-quatro-gráficos",
     "href": "slides/e02.html#os-quatro-gráficos",
     "title": "O modelo linear como arcabouço unificador",
@@ -1421,6 +1442,13 @@
     "text": "Conteúdo\n\nBloco 1 — teoria da informação (3,5 h)\n\nContexto — Akaike (1974), Burnham & Anderson (2002), e a virada de “testar hipóteses” para “comparar modelos”.\nDivergência de Kullback–Leibler — a distância entre o modelo e a realidade, e por que o AIC é uma estimativa dela.\nAIC, AICc e BIC — o que cada um penaliza, quando usar, e por que não se comparam modelos ajustados a conjuntos de dados diferentes.\nPesos de Akaike e razões de evidência — como se leem, o que não dizem.\nModel averaging com MuMIn::model.avg() — e as condições em que faz sentido.\nCrítica ao garimpo — por que dredge() sobre 20 preditoras não é análise, e o que fazer no lugar: conjunto de modelos definido a priori a partir de hipóteses biológicas.\nRelato segundo Gerstner et al. (2017).\n\n\n\nBloco 2 — bayesiano (45 min)\n\nWAIC e PSIS-LOO com loo::loo_compare().\nQuando LOO é preferível a AIC em modelos hierárquicos.\nFecho — Burnham & Anderson versus Gelman, Hill & Vehtari: não selecionar, mediar."
   },
   {
+    "objectID": "encontros/e09-selecao-modelos/index.html#dados",
+    "href": "encontros/e09-selecao-modelos/index.html#dados",
+    "title": "E9 — Teoria da informação e seleção de modelos",
+    "section": "Dados",
+    "text": "Dados\n\nRoadKills.txt — anfíbios atropelados em 52 sítios em Portugal (Zuur et al. 2009). O mesmo conjunto do Encontro 1; aqui ele vira o conjunto de modelos definidos a priori."
+  },
+  {
     "objectID": "encontros/e09-selecao-modelos/index.html#exercícios-extras-no-swirl",
     "href": "encontros/e09-selecao-modelos/index.html#exercícios-extras-no-swirl",
     "title": "E9 — Teoria da informação e seleção de modelos",
@@ -1530,7 +1558,7 @@
     "href": "encontros/e05-glm-i/index.html#dados",
     "title": "E5 — GLM I: verossimilhança, binomial e Poisson",
     "section": "Dados",
-    "text": "Dados\n\nRoadKills.txt — anfíbios atropelados em 52 sítios em Portugal (Zuur et al. 2009).\nUV.csv — resposta binomial, contagem de células."
+    "text": "Dados\n\nRoadKills.txt — anfíbios atropelados em 52 sítios em Portugal (Zuur et al. 2009).\nUV.csv — resposta binomial, contagem de células.\ncamila_cauda_lagartos.txt — 223 lagartos Coleodactylus meridionalis: sexo, CRC, comprimento da cauda intacta e da regenerada, e se o indivíduo já sofreu autotomia. Aqui, Tail_state é a resposta binária do bloco 2.\nPlanilha_Pentastomida.txt — contagens de Raillietiella mottae em 195 lagartos; muitos zeros. É o conjunto do capítulo 8 de Análises Ecológicas no R, e volta nos Encontros 5 e 6."
   },
   {
     "objectID": "encontros/e05-glm-i/index.html#leituras",
@@ -1579,7 +1607,7 @@
     "href": "encontros/e03-anova-ancova/index.html#dados",
     "title": "E3 — ANOVA, ANCOVA e interações como modelos lineares",
     "section": "Dados",
-    "text": "Dados\n\nanova_dois_fatores.csv\nCap7_exercicio1.csv"
+    "text": "Dados\n\ncamila_cauda_lagartos.txt — 223 lagartos Coleodactylus meridionalis: sexo, CRC, comprimento da cauda intacta e da regenerada, e se o indivíduo já sofreu autotomia. É o conjunto da ANCOVA do bloco 3.\nanova_dois_fatores.csv — para a prática.\nCap7_exercicio1.csv — para a prática."
   },
   {
     "objectID": "encontros/e03-anova-ancova/index.html#exercícios-extras-no-swirl",
@@ -1727,6 +1755,13 @@
     "title": "E4 — Distribuições de probabilidade e a família exponencial",
     "section": "Prática",
     "text": "Prática\nOs enunciados estão no fim do deck e pedem que você use os seus próprios dados. Para acompanhar em sala, o mesmo roteiro rodado nos dados do curso, com um take-home por item: exercicios/e04.R."
+  },
+  {
+    "objectID": "encontros/e04-distribuicoes/index.html#dados",
+    "href": "encontros/e04-distribuicoes/index.html#dados",
+    "title": "E4 — Distribuições de probabilidade e a família exponencial",
+    "section": "Dados",
+    "text": "Dados\n\nPlanilha_Pentastomida.txt — contagens de Raillietiella mottae em 195 lagartos; muitos zeros. É o conjunto do capítulo 8 de Análises Ecológicas no R, e volta nos Encontros 5 e 6.\ncamila_cauda_lagartos.txt — 223 lagartos Coleodactylus meridionalis: sexo, CRC, comprimento da cauda intacta e da regenerada, e se o indivíduo já sofreu autotomia.\nUV.csv — contagem de tipos celulares sob tratamento de radiação UV; resposta em proporção."
   },
   {
     "objectID": "encontros/e04-distribuicoes/index.html#leituras",
@@ -2107,6 +2142,13 @@
     "text": "Antes dos oito passos: olhe\n\n# o anscombe vem em oito colunas: x1..x4 e y1..y4\nquarteto &lt;- data.frame(\n  conjunto = rep(1:4, each = nrow(anscombe)),\n  x = unlist(anscombe[, 1:4]),\n  y = unlist(anscombe[, 5:8])\n)\n\nggplot(quarteto, aes(x, y)) +\n  geom_smooth(method = \"lm\", se = FALSE, colour = \"#c08a3e\", linewidth = .8) +\n  geom_point(size = 2, colour = \"#1c6e8c\") +\n  facet_wrap(~ conjunto, nrow = 1) +\n  theme_minimal(base_size = 13)"
   },
   {
+    "objectID": "slides/e01.html#os-quatro-dão-os-mesmos-números",
+    "href": "slides/e01.html#os-quatro-dão-os-mesmos-números",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Os quatro dão os mesmos números",
+    "text": "Os quatro dão os mesmos números\nMédia de x, média de y, desvio-padrão, correlação (0,816) e reta de regressão (\\(y = 3 + 0{,}5x\\)): idênticos até a terceira casa decimal nos quatro conjuntos de Anscombe (1973).\n\nNenhuma estatística-resumo distingue os quatro. O gráfico distingue em um segundo. É por isso que o protocolo abaixo começa por olhar, e não por calcular.\n\n\nO pacote quartets reúne este e outros conjuntos com a mesma moral — inclusive um quarteto causal, em que as quatro estruturas causais produzem números idênticos. Voltamos a ele no Encontro 5."
+  },
+  {
     "objectID": "slides/e01.html#passo-1-outliers",
     "href": "slides/e01.html#passo-1-outliers",
     "title": "EDA, reprodutibilidade e literacia em IA",
@@ -2359,18 +2401,39 @@
     "text": "Os dois caminhos, lado a lado\n\nm &lt;- lm(body_mass_g ~ species, data = pinguins)\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: body_mass_g\n           Df    Sum Sq  Mean Sq F value    Pr(&gt;F)    \nspecies     2 145190219 72595110  341.89 &lt; 2.2e-16 ***\nResiduals 330  70069447   212332                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\nsummary(aov(body_mass_g ~ species, data = pinguins))\n\n             Df    Sum Sq  Mean Sq F value Pr(&gt;F)    \nspecies       2 145190219 72595110   341.9 &lt;2e-16 ***\nResiduals   330  70069447   212332                   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\naov() é literalmente uma casca em volta de lm(). Mesmo F, mesmos graus de liberdade, mesmo p."
   },
   {
-    "objectID": "slides/e03.html#a-matriz-de-novo",
-    "href": "slides/e03.html#a-matriz-de-novo",
+    "objectID": "slides/e03.html#primeiro-a-tabela-de-códigos",
+    "href": "slides/e03.html#primeiro-a-tabela-de-códigos",
     "title": "ANOVA, ANCOVA e interações como modelos lineares",
-    "section": "A matriz, de novo",
-    "text": "A matriz, de novo\n\nX &lt;- model.matrix(m)\nX[c(1, 160, 280), ]\n\n    (Intercept) speciesChinstrap speciesGentoo\n1             1                0             0\n160           1                0             1\n280           1                1             0\n\n\nDuas colunas 0/1 para três espécies. Adelie é o nível de referência: é a linha \\((1, 0, 0)\\).\n\n\\(k\\) grupos exigem \\(k-1\\) colunas. Se houvesse uma terceira coluna para Adelie, a matriz seria singular — o intercepto já a contém."
+    "section": "Primeiro, a tabela de códigos",
+    "text": "Primeiro, a tabela de códigos\nNo Encontro 2 uma coluna 0/1 bastava, porque havia dois grupos. Com três, o R cria duas colunas:\n\n\n\nEspécie\nspeciesChinstrap\nspeciesGentoo\n\n\n\n\nAdelie (referência)\n0\n0\n\n\nChinstrap\n1\n0\n\n\nGentoo\n0\n1\n\n\n\n\nA referência não ganha coluna própria. Ela é a linha de zeros — o caso que sobra quando todas as outras colunas valem 0.\n\nRegra geral: \\(k\\) grupos, \\(k-1\\) colunas."
   },
   {
-    "objectID": "slides/e03.html#coeficientes-são-diferenças",
-    "href": "slides/e03.html#coeficientes-são-diferenças",
+    "objectID": "slides/e03.html#a-matriz-uma-linha-de-cada-espécie",
+    "href": "slides/e03.html#a-matriz-uma-linha-de-cada-espécie",
     "title": "ANOVA, ANCOVA e interações como modelos lineares",
-    "section": "Coeficientes são diferenças",
-    "text": "Coeficientes são diferenças\n\ncoef(m)\n\n     (Intercept) speciesChinstrap    speciesGentoo \n      3706.16438         26.92385       1386.27259 \n\npinguins |&gt; group_by(species) |&gt; summarise(media = mean(body_mass_g))\n\n# A tibble: 3 × 2\n  species   media\n  &lt;fct&gt;     &lt;dbl&gt;\n1 Adelie    3706.\n2 Chinstrap 3733.\n3 Gentoo    5092.\n\n\nGentoo pesa em média 1386 g a mais que Adelie."
+    "section": "A matriz, uma linha de cada espécie",
+    "text": "A matriz, uma linha de cada espécie\n\nX &lt;- model.matrix(m)\nX[c(1, 266, 147), ]   # 1 é Adelie, 266 é Chinstrap, 147 é Gentoo\n\n    (Intercept) speciesChinstrap speciesGentoo\n1             1                0             0\n266           1                1             0\n147           1                0             1\n\n\nA primeira coluna é só de 1: é o intercepto. As outras duas são a tabela do slide anterior, repetida uma vez por pinguim."
+  },
+  {
+    "objectID": "slides/e03.html#substituindo-uma-espécie-de-cada-vez",
+    "href": "slides/e03.html#substituindo-uma-espécie-de-cada-vez",
+    "title": "ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Substituindo, uma espécie de cada vez",
+    "text": "Substituindo, uma espécie de cada vez\nO modelo é \\(\\hat{y} = \\beta_0 \\cdot 1 + \\beta_1 x_1 + \\beta_2 x_2\\). Basta pôr a linha de cada espécie no lugar de \\(x_1\\) e \\(x_2\\):\nAdelie — linha \\((1, 0, 0)\\): \\[\\hat{y} = \\beta_0 + \\beta_1 \\cdot 0 + \\beta_2 \\cdot 0 = \\beta_0\\]\nChinstrap — linha \\((1, 1, 0)\\): \\[\\hat{y} = \\beta_0 + \\beta_1\\]\nGentoo — linha \\((1, 0, 1)\\): \\[\\hat{y} = \\beta_0 + \\beta_2\\]\n\n\\(\\beta_0\\) é a média de Adelie. \\(\\beta_1\\) e \\(\\beta_2\\) são diferenças em relação a ela — nenhum dos dois é a média do próprio grupo."
+  },
+  {
+    "objectID": "slides/e03.html#conferindo-na-mão",
+    "href": "slides/e03.html#conferindo-na-mão",
+    "title": "ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Conferindo na mão",
+    "text": "Conferindo na mão\n\ncoef(m)\n\n     (Intercept) speciesChinstrap    speciesGentoo \n      3706.16438         26.92385       1386.27259 \n\npinguins |&gt;\n  group_by(species) |&gt;\n  summarise(media = mean(body_mass_g)) |&gt;\n  mutate(diferenca_para_Adelie = media - first(media))\n\n# A tibble: 3 × 3\n  species   media diferenca_para_Adelie\n  &lt;fct&gt;     &lt;dbl&gt;                 &lt;dbl&gt;\n1 Adelie    3706.                   0  \n2 Chinstrap 3733.                  26.9\n3 Gentoo    5092.                1386. \n\n\nO intercepto é 3706 g, que é a média de Adelie. O coeficiente de Gentoo é 1386 g, que é 5092 − 3706. Os mesmos números, nas duas tabelas."
+  },
+  {
+    "objectID": "slides/e03.html#por-que-k-1-e-não-k",
+    "href": "slides/e03.html#por-que-k-1-e-não-k",
+    "title": "ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Por que \\(k-1\\) e não \\(k\\)",
+    "text": "Por que \\(k-1\\) e não \\(k\\)\nE se déssemos uma coluna também para Adelie?\n\nX3 &lt;- cbind(X, speciesAdelie = as.numeric(pinguins$species == \"Adelie\"))\n\nc(colunas = ncol(X3), posto = qr(X3)$rank)\n\ncolunas   posto \n      4       3 \n\n\nQuatro colunas, posto 3: uma delas é redundante. E dá para ver qual — as três colunas de espécie somam exatamente a coluna do intercepto, já que todo pinguim é de uma espécie e só uma.\n\nNesse caso o R não erra: ele descarta uma e devolve NA no coeficiente correspondente. Mas a escolha de qual descartar passa a ser dele, e não sua — e é por isso que existe a ideia de nível de referência."
   },
   {
     "objectID": "slides/e03.html#decomposição-da-variação",
@@ -2427,6 +2490,27 @@
     "title": "ANOVA, ANCOVA e interações como modelos lineares",
     "section": "Interação é resultado, não estorvo",
     "text": "Interação é resultado, não estorvo\n\nEm ecologia, a interação costuma ser a pergunta, não um incômodo: o efeito da temperatura depende da altitude? O efeito do predador depende da densidade de refúgios?\n\nTrês regras práticas:\n\nnão interprete efeitos principais isoladamente quando a interação é relevante — interprete o gráfico;\nnão remova a interação só porque o p passou de 0,05. A decisão é da pergunta, não do limiar;\nolhe nas duas direções. “O efeito da temperatura depende da altitude” e “o efeito da altitude depende da temperatura” são o mesmo termo do modelo. Escolher só uma leitura é escolha de narrativa, e costuma ser feita sem perceber."
+  },
+  {
+    "objectID": "slides/e03.html#a-interação-depende-da-escala",
+    "href": "slides/e03.html#a-interação-depende-da-escala",
+    "title": "ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "A interação depende da escala",
+    "text": "A interação depende da escala\nSpake et al. (2023) mostram que duas propriedades passam batidas quando se interpreta interação em ecologia. A segunda é a simetria do slide anterior. A primeira é mais incômoda: a escala de medida — nas palavras deles,\n\nwhether a response is analysed on an additive or multiplicative scale, such as a ratio or logarithmic scale.\n\n\nA mesma relação pode ter interação na escala aditiva e não ter na multiplicativa, ou o contrário. Não é erro de análise: são perguntas diferentes. “A diferença entre tratamentos é a mesma?” e “a razão entre tratamentos é a mesma?” não são a mesma pergunta.\n\nGuardem isto para o Encontro 4, quando a função de ligação entrar: um GLM com ligação log modela a escala multiplicativa por construção. A escolha da família decide, sem avisar, em que escala você está procurando interação."
+  },
+  {
+    "objectID": "slides/e03.html#vendo-acontecer",
+    "href": "slides/e03.html#vendo-acontecer",
+    "title": "ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Vendo acontecer",
+    "text": "Vendo acontecer\n\n\n\n\n\nEm B: riqueza de formigas contra cobertura de gramíneas exóticas, em dois níveis de uso da terra. À esquerda, escala aditiva — as linhas convergem, há interação. À direita, os mesmos dados em escala multiplicativa — ficam paralelas, não há.\n\nFigura 4 de Spake, R. et al. 2023, Biological Reviews 98:983–1002, doi:10.1111/brv.12939. Reproduzida sob CC BY 4.0, sem alterações."
+  },
+  {
+    "objectID": "slides/e03.html#três-erros-com-nome",
+    "href": "slides/e03.html#três-erros-com-nome",
+    "title": "ANOVA, ANCOVA e interações como modelos lineares",
+    "section": "Três erros com nome",
+    "text": "Três erros com nome\nO artigo batiza os três modos de errar, e os nomes ajudam a lembrar:\n\n\n\n\n\n\n\n\nO que se erra\n\n\n\n\nTipo D\na detecção e a magnitude — achar interação onde a escala a criou, ou não achar onde a escala a escondeu\n\n\nTipo S\no sinal da modificação do efeito\n\n\nTipo A\no processo por trás — atribuir a um mecanismo biológico o que é artefato de escala\n\n\n\n\nEles mostram que meta-análise é especialmente vulnerável aos três, o que importa para quem for por esse caminho: razão de chances e diferença de médias padronizada vivem em escalas diferentes, e a mesma literatura pode dar respostas opostas sobre dependência de contexto conforme a métrica escolhida."
   },
   {
     "objectID": "slides/e03.html#fator-covariável-contínua",
@@ -3344,89 +3428,5 @@
     "title": "O teste de normalidade, ao vivo",
     "section": "O que levar disso",
     "text": "O que levar disso\nO shapiro.test() responde “tenho evidência de que estes dados não vieram de uma normal?”. Essa não é a pergunta que interessa. A que interessa é “o quanto este desvio ameaça a minha inferência?” — e essa depende do tamanho do desvio e do que o modelo faz com ele, não do n.\n\nShatz, I. 2024. Assumption-checking rather than (just) testing: the importance of visualization and effect size in statistical diagnostics. Behavior Research Methods 56:826–845. Acesso aberto; é o artigo que esta página ilustra.\nKozak, M. & Piepho, H.-P. 2018. What’s normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions. Journal of Agronomy and Crop Science 204:86–98.\n\n\nVolta para o Encontro 2."
-  },
-  {
-    "objectID": "slides/e01.html#os-quatro-dão-os-mesmos-números",
-    "href": "slides/e01.html#os-quatro-dão-os-mesmos-números",
-    "title": "EDA, reprodutibilidade e literacia em IA",
-    "section": "Os quatro dão os mesmos números",
-    "text": "Os quatro dão os mesmos números\nMédia de x, média de y, desvio-padrão, correlação (0,816) e reta de regressão (\\(y = 3 + 0{,}5x\\)): idênticos até a terceira casa decimal nos quatro conjuntos de Anscombe (1973).\n\nNenhuma estatística-resumo distingue os quatro. O gráfico distingue em um segundo. É por isso que o protocolo abaixo começa por olhar, e não por calcular.\n\n\nO pacote quartets reúne este e outros conjuntos com a mesma moral — inclusive um quarteto causal, em que as quatro estruturas causais produzem números idênticos. Voltamos a ele no Encontro 5."
-  },
-  {
-    "objectID": "slides/e02.html#o-que-essa-saída-diz-a-mais",
-    "href": "slides/e02.html#o-que-essa-saída-diz-a-mais",
-    "title": "O modelo linear como arcabouço unificador",
-    "section": "O que essa saída diz a mais",
-    "text": "O que essa saída diz a mais\nO car::vif() devolve só os valores. O vifcor() devolve, além deles, qual par é o mais correlacionado e quanto — que é a informação de que você precisa para decidir. Aqui o par mais apertado é comprimento de nadadeira com comprimento de bico, r = 0,65, e nenhum VIF passa de 2,6.\n\nA função também exclui variáveis sozinha, quando alguma passa do limiar. Use a saída, não a exclusão: baixar o th até alguma coisa cair é a versão com nome técnico de escolher preditora pelo resultado.\n\nRegras práticas: acima de 5 desconfie, acima de 10 preocupe-se. Mas a decisão é biológica, não mecânica:\n\nas duas preditoras medem coisas distintas na sua hipótese? → mantenha e relate a incerteza;\nsão proxies da mesma coisa? → escolha uma, pelo argumento, não pelo p."
-  },
-  {
-    "objectID": "slides/e08.html#três-palavras-antes-de-qualquer-código",
-    "href": "slides/e08.html#três-palavras-antes-de-qualquer-código",
-    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
-    "section": "Três palavras, antes de qualquer código",
-    "text": "Três palavras, antes de qualquer código\n\nPrior. O que você considera plausível para um parâmetro antes de olhar estes dados, escrito como distribuição. “A inclinação está entre −3 e 3” é uma prior.\n\n\nVerossimilhança. O que estes dados dizem sobre o parâmetro, dado o modelo. É a mesma função que o glmer() maximizou de manhã.\n\n\nPosterior. As duas combinadas — o que sobra de plausível depois de ver os dados. É a resposta: tudo que o brms imprime é resumo dela.\n\nCom dados informativos, a verossimilhança domina e a prior quase não importa. Com poucos dados, ela segura o modelo — que é exatamente o caso das nove praias."
-  },
-  {
-    "objectID": "slides/e08.html#por-que-isso-precisa-de-mcmc",
-    "href": "slides/e08.html#por-que-isso-precisa-de-mcmc",
-    "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
-    "section": "Por que isso precisa de MCMC",
-    "text": "Por que isso precisa de MCMC\nPara quase todo modelo interessante, a posterior não tem fórmula fechada: não dá para escrevê-la e resolver.\nO MCMC (Markov chain Monte Carlo) contorna isso por força bruta elegante: um algoritmo passeia pelo espaço dos parâmetros e visita cada região proporcionalmente à densidade da posterior. Você não obtém a equação da distribuição — obtém uma amostra dela.\n\nchains = 4, iter = 2000   # 4 passeios independentes, 2000 passos cada;\n                          # a 1a metade e aquecimento e se descarta\n\nSão 4 × 1000 = 4000 sorteios da posterior. Cada número do summary() é uma estatística desses 4000: a média deles, o desvio-padrão deles, os quantis 2,5 % e 97,5 % deles.\n\nDaí vêm os diagnósticos de que falaremos adiante. Rhat e ESS não dizem se o modelo é bom — dizem se o passeio funcionou. São duas perguntas diferentes, e é comum confundi-las."
-  },
-  {
-    "objectID": "slides/e03.html#primeiro-a-tabela-de-códigos",
-    "href": "slides/e03.html#primeiro-a-tabela-de-códigos",
-    "title": "ANOVA, ANCOVA e interações como modelos lineares",
-    "section": "Primeiro, a tabela de códigos",
-    "text": "Primeiro, a tabela de códigos\nNo Encontro 2 uma coluna 0/1 bastava, porque havia dois grupos. Com três, o R cria duas colunas:\n\n\n\nEspécie\nspeciesChinstrap\nspeciesGentoo\n\n\n\n\nAdelie (referência)\n0\n0\n\n\nChinstrap\n1\n0\n\n\nGentoo\n0\n1\n\n\n\n\nA referência não ganha coluna própria. Ela é a linha de zeros — o caso que sobra quando todas as outras colunas valem 0.\n\nRegra geral: \\(k\\) grupos, \\(k-1\\) colunas."
-  },
-  {
-    "objectID": "slides/e03.html#a-matriz-uma-linha-de-cada-espécie",
-    "href": "slides/e03.html#a-matriz-uma-linha-de-cada-espécie",
-    "title": "ANOVA, ANCOVA e interações como modelos lineares",
-    "section": "A matriz, uma linha de cada espécie",
-    "text": "A matriz, uma linha de cada espécie\n\nX &lt;- model.matrix(m)\nX[c(1, 266, 147), ]   # 1 é Adelie, 266 é Chinstrap, 147 é Gentoo\n\n    (Intercept) speciesChinstrap speciesGentoo\n1             1                0             0\n266           1                1             0\n147           1                0             1\n\n\nA primeira coluna é só de 1: é o intercepto. As outras duas são a tabela do slide anterior, repetida uma vez por pinguim."
-  },
-  {
-    "objectID": "slides/e03.html#substituindo-uma-espécie-de-cada-vez",
-    "href": "slides/e03.html#substituindo-uma-espécie-de-cada-vez",
-    "title": "ANOVA, ANCOVA e interações como modelos lineares",
-    "section": "Substituindo, uma espécie de cada vez",
-    "text": "Substituindo, uma espécie de cada vez\nO modelo é \\(\\hat{y} = \\beta_0 \\cdot 1 + \\beta_1 x_1 + \\beta_2 x_2\\). Basta pôr a linha de cada espécie no lugar de \\(x_1\\) e \\(x_2\\):\nAdelie — linha \\((1, 0, 0)\\): \\[\\hat{y} = \\beta_0 + \\beta_1 \\cdot 0 + \\beta_2 \\cdot 0 = \\beta_0\\]\nChinstrap — linha \\((1, 1, 0)\\): \\[\\hat{y} = \\beta_0 + \\beta_1\\]\nGentoo — linha \\((1, 0, 1)\\): \\[\\hat{y} = \\beta_0 + \\beta_2\\]\n\n\\(\\beta_0\\) é a média de Adelie. \\(\\beta_1\\) e \\(\\beta_2\\) são diferenças em relação a ela — nenhum dos dois é a média do próprio grupo."
-  },
-  {
-    "objectID": "slides/e03.html#conferindo-na-mão",
-    "href": "slides/e03.html#conferindo-na-mão",
-    "title": "ANOVA, ANCOVA e interações como modelos lineares",
-    "section": "Conferindo na mão",
-    "text": "Conferindo na mão\n\ncoef(m)\n\n     (Intercept) speciesChinstrap    speciesGentoo \n      3706.16438         26.92385       1386.27259 \n\npinguins |&gt;\n  group_by(species) |&gt;\n  summarise(media = mean(body_mass_g)) |&gt;\n  mutate(diferenca_para_Adelie = media - first(media))\n\n# A tibble: 3 × 3\n  species   media diferenca_para_Adelie\n  &lt;fct&gt;     &lt;dbl&gt;                 &lt;dbl&gt;\n1 Adelie    3706.                   0  \n2 Chinstrap 3733.                  26.9\n3 Gentoo    5092.                1386. \n\n\nO intercepto é 3706 g, que é a média de Adelie. O coeficiente de Gentoo é 1386 g, que é 5092 − 3706. Os mesmos números, nas duas tabelas."
-  },
-  {
-    "objectID": "slides/e03.html#por-que-k-1-e-não-k",
-    "href": "slides/e03.html#por-que-k-1-e-não-k",
-    "title": "ANOVA, ANCOVA e interações como modelos lineares",
-    "section": "Por que \\(k-1\\) e não \\(k\\)",
-    "text": "Por que \\(k-1\\) e não \\(k\\)\nE se déssemos uma coluna também para Adelie?\n\nX3 &lt;- cbind(X, speciesAdelie = as.numeric(pinguins$species == \"Adelie\"))\n\nc(colunas = ncol(X3), posto = qr(X3)$rank)\n\ncolunas   posto \n      4       3 \n\n\nQuatro colunas, posto 3: uma delas é redundante. E dá para ver qual — as três colunas de espécie somam exatamente a coluna do intercepto, já que todo pinguim é de uma espécie e só uma.\n\nNesse caso o R não erra: ele descarta uma e devolve NA no coeficiente correspondente. Mas a escolha de qual descartar passa a ser dele, e não sua — e é por isso que existe a ideia de nível de referência."
-  },
-  {
-    "objectID": "slides/e03.html#a-interação-depende-da-escala",
-    "href": "slides/e03.html#a-interação-depende-da-escala",
-    "title": "ANOVA, ANCOVA e interações como modelos lineares",
-    "section": "A interação depende da escala",
-    "text": "A interação depende da escala\nSpake et al. (2023) mostram que duas propriedades passam batidas quando se interpreta interação em ecologia. A segunda é a simetria do slide anterior. A primeira é mais incômoda: a escala de medida — nas palavras deles,\n\nwhether a response is analysed on an additive or multiplicative scale, such as a ratio or logarithmic scale.\n\n\nA mesma relação pode ter interação na escala aditiva e não ter na multiplicativa, ou o contrário. Não é erro de análise: são perguntas diferentes. “A diferença entre tratamentos é a mesma?” e “a razão entre tratamentos é a mesma?” não são a mesma pergunta.\n\nGuardem isto para o Encontro 4, quando a função de ligação entrar: um GLM com ligação log modela a escala multiplicativa por construção. A escolha da família decide, sem avisar, em que escala você está procurando interação."
-  },
-  {
-    "objectID": "slides/e03.html#três-erros-com-nome",
-    "href": "slides/e03.html#três-erros-com-nome",
-    "title": "ANOVA, ANCOVA e interações como modelos lineares",
-    "section": "Três erros com nome",
-    "text": "Três erros com nome\nO artigo batiza os três modos de errar, e os nomes ajudam a lembrar:\n\n\n\n\n\n\n\n\nO que se erra\n\n\n\n\nTipo D\na detecção e a magnitude — achar interação onde a escala a criou, ou não achar onde a escala a escondeu\n\n\nTipo S\no sinal da modificação do efeito\n\n\nTipo A\no processo por trás — atribuir a um mecanismo biológico o que é artefato de escala\n\n\n\n\nEles mostram que meta-análise é especialmente vulnerável aos três, o que importa para quem for por esse caminho: razão de chances e diferença de médias padronizada vivem em escalas diferentes, e a mesma literatura pode dar respostas opostas sobre dependência de contexto conforme a métrica escolhida."
-  },
-  {
-    "objectID": "slides/e03.html#vendo-acontecer",
-    "href": "slides/e03.html#vendo-acontecer",
-    "title": "ANOVA, ANCOVA e interações como modelos lineares",
-    "section": "Vendo acontecer",
-    "text": "Vendo acontecer\n\n\n\n\n\nEm B: riqueza de formigas contra cobertura de gramíneas exóticas, em dois níveis de uso da terra. À esquerda, escala aditiva — as linhas convergem, há interação. À direita, os mesmos dados em escala multiplicativa — ficam paralelas, não há.\n\nFigura 4 de Spake, R. et al. 2023, Biological Reviews 98:983–1002, doi:10.1111/brv.12939. Reproduzida sob CC BY 4.0, sem alterações."
   }
 ]

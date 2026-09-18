@@ -152,6 +152,14 @@ curso, com um *take-home* por item:
 - [`RoadKills.txt`](../../dados/RoadKills.txt) — anfíbios atropelados em
   52 sítios em Portugal (Zuur et al. 2009).
 - [`UV.csv`](../../dados/UV.csv) — resposta binomial, contagem de células.
+- [`camila_cauda_lagartos.txt`](../../dados/camila_cauda_lagartos.txt) — 223
+  lagartos *Coleodactylus meridionalis*: sexo, CRC, comprimento da cauda
+  intacta e da regenerada, e se o indivíduo já sofreu autotomia.
+  Aqui, `Tail_state` é a resposta binária do bloco 2.
+- [`Planilha_Pentastomida.txt`](../../dados/Planilha_Pentastomida.txt) —
+  contagens de *Raillietiella mottae* em 195 lagartos; muitos zeros. É o
+  conjunto do [capítulo 8 de *Análises Ecológicas no
+  R*](https://analises-ecologicas.com/cap8), e volta nos Encontros 5 e 6.
 
 ## Leituras
 

@@ -41,6 +41,12 @@ e sobre por que ela é mais perigosa do que parece.
 10. **Fecho** — Burnham & Anderson *versus* Gelman, Hill & Vehtari: não
     selecionar, mediar.
 
+## Dados
+
+- [`RoadKills.txt`](../../dados/RoadKills.txt) — anfíbios atropelados em 52
+  sítios em Portugal (Zuur et al. 2009). O mesmo conjunto do Encontro 1;
+  aqui ele vira o conjunto de modelos definidos *a priori*.
+
 ## Exercícios extras no `swirl`
 
 Opcional, em português, no console. A instalação está em
