@@ -52,7 +52,7 @@ pacotes <- c(
   "car", "emmeans", "MASS", "performance", "see", "sjPlot", "marginaleffects",
   "usdm", "parameters", "effectsize", "report",
   # versão bayesiana dos mesmos modelos
-  "loo", "bayesplot",
+  "loo", "bayesplot", "priorsense",
   # GLMM, zeros inflados e ordinais
   "lme4", "lmerTest", "pbkrtest", "glmmTMB", "DHARMa", "ordinal", "pscl",
   "lmtest",

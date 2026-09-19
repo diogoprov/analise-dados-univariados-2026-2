@@ -508,6 +508,53 @@ evidência os seus dados carregam.
 
 ---
 
+## O mesmo teste, sem reajustar {.smaller}
+
+O [`priorsense`](https://mc-stan.org/priorsense/) faz isso de uma vez só,
+e sem ajustar nada de novo: ele **reponderá os sorteios que você já tem**,
+por amostragem de importância, como se a prior tivesse sido um pouco mais
+forte ou um pouco mais fraca. É a *power-scaling*.
+
+```{r}
+#| eval: false
+library(priorsense)
+
+powerscale_sensitivity(m_bayes)
+```
+
+```
+ variable    prior likelihood                           diagnosis
+ b_Intercept 0.369      0.518 potential prior-likelihood conflict
+ sigma       0.282      0.506 potential prior-likelihood conflict
+```
+
+Duas colunas, uma pergunta cada: **quanto a posterior se mexe** quando se
+aperta a prior, e quanto ela se mexe quando se aperta a verossimilhança.
+O limiar padrão é 0,05.
+
+::: {.definicao}
+As duas colunas juntas é que dizem algo. **Prior alta e verossimilhança
+alta** — as duas puxam para lados diferentes: possível conflito, e o
+pacote sinaliza. **Prior alta e verossimilhança baixa** — quem está
+sustentando o resultado é a prior, não os dados. **As duas baixas** — a
+conclusão não depende de nenhuma das escolhas, que é o que você quer poder
+escrever.
+:::
+
+::: {.nota}
+O `brms` já vem preparado: *"brms has built-in support for priorsense,
+such that it can be used directly without any modifications to model
+code."* Dá para marcar priors com `tag = "..."` e testar uma de cada vez
+com `prior_selection =`. `powerscale_plot_dens()` mostra a posterior
+deslizando conforme a prior é escalada. Kallioinen, N.; Paananen, T.;
+Bürkner, P.-C. & Vehtari, A. 2023. [Detecting and diagnosing prior and
+likelihood sensitivity with
+power-scaling](https://doi.org/10.1007/s11222-023-10366-5). *Statistics
+and Computing* 34:57.
+:::
+
+---
+
 ## Diagnóstico de MCMC
 
 | Sinal | Significa | O que fazer |

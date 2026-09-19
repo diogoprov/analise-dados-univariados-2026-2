@@ -629,6 +629,25 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 </div>
 <p>Se mudar muito, <strong>diga isso no artigo</strong>. É informação sobre quanta evidência os seus dados carregam.</p>
 </section>
+<section id="o-mesmo-teste-sem-reajustar" class="slide level2 smaller">
+<h2>O mesmo teste, sem reajustar</h2>
+<p>O <a href="https://mc-stan.org/priorsense/"><code>priorsense</code></a> faz isso de uma vez só, e sem ajustar nada de novo: ele <strong>reponderá os sorteios que você já tem</strong>, por amostragem de importância, como se a prior tivesse sido um pouco mais forte ou um pouco mais fraca. É a <em>power-scaling</em>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">library</span>(priorsense)</span>
+<span id="cb28-2"><a></a></span>
+<span id="cb28-3"><a></a><span class="fu">powerscale_sensitivity</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<pre><code> variable    prior likelihood                           diagnosis
+ b_Intercept 0.369      0.518 potential prior-likelihood conflict
+ sigma       0.282      0.506 potential prior-likelihood conflict</code></pre>
+<p>Duas colunas, uma pergunta cada: <strong>quanto a posterior se mexe</strong> quando se aperta a prior, e quanto ela se mexe quando se aperta a verossimilhança. O limiar padrão é 0,05.</p>
+<div class="definicao">
+<p>As duas colunas juntas é que dizem algo. <strong>Prior alta e verossimilhança alta</strong> — as duas puxam para lados diferentes: possível conflito, e o pacote sinaliza. <strong>Prior alta e verossimilhança baixa</strong> — quem está sustentando o resultado é a prior, não os dados. <strong>As duas baixas</strong> — a conclusão não depende de nenhuma das escolhas, que é o que você quer poder escrever.</p>
+</div>
+<div class="nota">
+<p>O <code>brms</code> já vem preparado: <em>“brms has built-in support for priorsense, such that it can be used directly without any modifications to model code.”</em> Dá para marcar priors com <code>tag = "..."</code> e testar uma de cada vez com <code>prior_selection =</code>. <code>powerscale_plot_dens()</code> mostra a posterior deslizando conforme a prior é escalada. Kallioinen, N.; Paananen, T.; Bürkner, P.-C. &amp; Vehtari, A. 2023. <a href="https://doi.org/10.1007/s11222-023-10366-5">Detecting and diagnosing prior and likelihood sensitivity with power-scaling</a>. <em>Statistics and Computing</em> 34:57.</p>
+</div>
+</section>
 <section id="diagnóstico-de-mcmc" class="slide level2">
 <h2>Diagnóstico de MCMC</h2>
 <table class="caption-top">
@@ -671,11 +690,11 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 <section id="os-traços-das-cadeias" class="slide level2">
 <h2>Os traços das cadeias</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">plot</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">plot</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-18-1.png" width="672"></p>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-19-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -683,15 +702,15 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 </section>
 <section id="hatr-e-ess-em-um-relance" class="slide level2 smaller">
 <h2><span class="math inline">\(\hat{R}\)</span> e ESS em um relance</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"rhat"</span>)</span>
-<span id="cb29-2"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"neff"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"rhat"</span>)</span>
+<span id="cb31-2"><a></a><span class="fu">mcmc_plot</span>(m_bayes, <span class="at">type =</span> <span class="st">"neff"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-19-1.png" width="672"></p>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-20-1.png" width="672"></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-19-2.png" width="672"></p>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-20-2.png" width="672"></p>
 </div>
 </div>
 </div>
@@ -702,11 +721,11 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 <section id="checagem-preditiva-posterior" class="slide level2">
 <h2>Checagem preditiva posterior</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">ndraws =</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">ndraws =</span> <span class="dv">100</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-20-1.png" width="672"></p>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-21-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -714,15 +733,15 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 </section>
 <section id="checando-a-estatística-que-interessa" class="slide level2">
 <h2>Checando a estatística que interessa</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> <span class="st">"max"</span>)</span>
-<span id="cb31-2"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> \(y) <span class="fu">mean</span>(y <span class="sc">==</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> <span class="st">"max"</span>)</span>
+<span id="cb33-2"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">type =</span> <span class="st">"stat"</span>, <span class="at">stat =</span> \(y) <span class="fu">mean</span>(y <span class="sc">==</span> <span class="dv">0</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-21-1.png" width="672"></p>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-22-1.png" width="672"></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-21-2.png" width="672"></p>
+<p><img data-src="e08_files/figure-revealjs/unnamed-chunk-22-2.png" width="672"></p>
 </div>
 </div>
 </div>
