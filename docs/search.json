@@ -312,7 +312,7 @@
     "href": "slides/e08.html#por-que-isso-precisa-de-mcmc",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Por que isso precisa de MCMC",
-    "text": "Por que isso precisa de MCMC\nPara quase todo modelo interessante, a posterior não tem fórmula fechada: não dá para escrevê-la e resolver.\nO MCMC (Markov chain Monte Carlo) contorna isso por força bruta elegante: um algoritmo passeia pelo espaço dos parâmetros e visita cada região proporcionalmente à densidade da posterior. Você não obtém a equação da distribuição — obtém uma amostra dela.\n\nchains = 4, iter = 2000   # 4 passeios independentes, 2000 passos cada;\n                          # a 1a metade e aquecimento e se descarta\n\nSão 4 × 1000 = 4000 sorteios da posterior. Cada número do summary() é uma estatística desses 4000: a média deles, o desvio-padrão deles, os quantis 2,5 % e 97,5 % deles.\n\nDaí vêm os diagnósticos de que falaremos adiante. Rhat e ESS não dizem se o modelo é bom — dizem se o passeio funcionou. São duas perguntas diferentes, e é comum confundi-las."
+    "text": "Por que isso precisa de MCMC\nPara quase todo modelo interessante, a posterior não tem fórmula fechada: não dá para escrevê-la e resolver.\nO MCMC (Markov chain Monte Carlo) contorna isso por força bruta elegante: um algoritmo passeia pelo espaço dos parâmetros e visita cada região proporcionalmente à densidade da posterior. Você não obtém a equação da distribuição — obtém uma amostra dela.\n\nchains = 4,      # 4 passeios independentes\niter   = 2000,   # 2000 passos em cada passeio\nwarmup = 1000    # os 1000 primeiros são aquecimento e não entram na conta\n\nSão 4 × 1000 = 4000 sorteios da posterior. Cada número do summary() é uma estatística desses 4000: a média deles, o desvio-padrão deles, os quantis 2,5 % e 97,5 % deles.\n\nO warmup não é só burn-in. Nesses passos o Stan ainda está ajustando o próprio algoritmo — tamanho do passo e matriz de massa. Por isso esses sorteios não servem para inferência, mesmo que a cadeia já parecesse estável. O padrão do brm() é warmup = iter/2, e é o que usamos aqui.\n\n\nDaí vêm os diagnósticos de que falaremos adiante. Rhat e ESS não dizem se o modelo é bom — dizem se o passeio funcionou. São duas perguntas diferentes, e é comum confundi-las."
   },
   {
     "objectID": "slides/e08.html#a-mesma-fórmula",
@@ -354,7 +354,7 @@
     "href": "slides/e08.html#por-que-atravessar-a-ponte",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Por que atravessar a ponte",
-    "text": "Por que atravessar a ponte\n\nAmostra pequena e poucos níveis — a prior regulariza onde o máximo de verossimilhança colapsa em ajuste singular.\nIncerteza de quantidades derivadas — sem delta method.\nGraus de liberdade — o problema do encontro passado simplesmente não existe.\nModelos que o frequentista não ajusta — estruturas complexas, filogenia, medidas com erro."
+    "text": "Por que atravessar a ponte\n\nAmostra pequena e poucos níveis — a prior regulariza onde o máximo de verossimilhança colapsa em ajuste singular.\nIncerteza de quantidades derivadas — sem delta method.\nGraus de liberdade — o problema do encontro passado simplesmente não existe.\nModelos que empilham estrutura — vários efeitos aleatórios correlacionados, erro de medida na preditora, dados faltantes dentro do modelo: tudo isso se escreve como extensão do mesmo ajuste.\n\n\nCuidado com o item 4: filogenia não entra nessa lista. O glmmTMB ajusta modelo misto filogenético por máxima verossimilhança com a estrutura propto, que encaixa um efeito aleatório proporcional a uma matriz de covariância conhecida — a de Brownian da árvore, por exemplo: propto(0 + species | dummy, phylo_varcov). É exatamente o remédio para a pseudorréplica filogenética do Encontro 7. A vantagem bayesiana aqui é de grau, não de espécie: estimar a filogenia junto com o modelo, ou pôr prior sobre o sinal filogenético."
   },
   {
     "objectID": "slides/e08.html#priors",
@@ -1876,6 +1876,13 @@
     "text": "Leituras\nObrigatória\n\nGelman, A.; Hill, J. & Vehtari, A. 2020. Regression and Other Stories. Cambridge University Press. — código e exemplos no site.\n\nComplementar\n\nHarrison, X.A. et al. 2018. A brief introduction to mixed effects modelling and multi-model inference in ecology. PeerJ 6:e4794.\nKruschke, J.K. 2021. Bayesian Analysis Reporting Guidelines. Nature Human Behaviour.\nKurz, A.S. Statistical Rethinking recoded — o livro do McElreath em brms, ggplot2 e tidyverse.\nBrooks, M.E. et al. 2017. glmmTMB balances speed and flexibility among packages for zero-inflated generalized linear mixed modeling. The R Journal 9:378–400.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Caps. 5, 8, 11 e 12."
   },
   {
+    "objectID": "encontros/e08-glmm-ii-brms/index.html#recursos-externos",
+    "href": "encontros/e08-glmm-ii-brms/index.html#recursos-externos",
+    "title": "E8 — GLMM II: lme4, glmmTMB e a ponte bayesiana",
+    "section": "Recursos externos",
+    "text": "Recursos externos\n\nCovariance structures with glmmTMB — AR(1), Toeplitz, simetria composta, Matérn e espaciais. A estrutura propto ajusta modelo misto filogenético por máxima verossimilhança, com exemplo completo nos carnívoros do carni70.\nbrms — visão geral e a referência de brm(), onde estão as definições de iter, warmup e chains.\n\n\nVolta para o índice do curso."
+  },
+  {
     "objectID": "encontros/e10-clinica/index.html",
     "href": "encontros/e10-clinica/index.html",
     "title": "E10 — Clínica Estatística e apresentação de resultados",
@@ -2951,7 +2958,7 @@
     "href": "slides/e07.html#cinco-formas-comuns-em-ecologia",
     "title": "GLMM I: por que efeitos aleatórios",
     "section": "Cinco formas comuns em ecologia",
-    "text": "Cinco formas comuns em ecologia\n\nTemporal — o mesmo sítio medido em vários meses.\nEspacial — parcelas vizinhas dentro do mesmo fragmento.\nFilogenética — espécies não são réplicas independentes: estão ligadas por ancestralidade comum, e as mais próximas tendem a ser mais parecidas. É o sinal filogenético.\nIndivíduo — várias medidas do mesmo animal.\nAninhamento de delineamento — sub-amostras dentro de unidades tratadas.\n\n\nEm nenhum desses casos a solução é “tirar a média por grupo”. Isso joga fora variação real e desperdiça graus de liberdade. As três primeiras têm a mesma forma — pares mais próximos no espaço, no tempo ou na filogenia são mais parecidos — e é por isso que os remédios se parecem: uma estrutura de correlação que diz quem é vizinho de quem. Para a filogenética, isso é PGLS ou modelo misto filogenético."
+    "text": "Cinco formas comuns em ecologia\n\nTemporal — o mesmo sítio medido em vários meses.\nEspacial — parcelas vizinhas dentro do mesmo fragmento.\nFilogenética — espécies não são réplicas independentes: estão ligadas por ancestralidade comum, e as mais próximas tendem a ser mais parecidas. É o sinal filogenético.\nIndivíduo — várias medidas do mesmo animal.\nAninhamento de delineamento — sub-amostras dentro de unidades tratadas.\n\n\nEm nenhum desses casos a solução é “tirar a média por grupo”. Isso joga fora variação real e desperdiça graus de liberdade. As três primeiras têm a mesma forma — pares mais próximos no espaço, no tempo ou na filogenia são mais parecidos — e é por isso que os remédios se parecem: uma estrutura de correlação que diz quem é vizinho de quem. Para a filogenética, isso é PGLS ou modelo misto filogenético — no glmmTMB, a estrutura propto(), que veremos no Encontro 8."
   },
   {
     "objectID": "slides/e07.html#vendo-o-estrago",

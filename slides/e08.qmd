@@ -329,13 +329,21 @@ equação da distribuição — obtém uma **amostra** dela.
 
 ```{r}
 #| eval: false
-chains = 4, iter = 2000   # 4 passeios independentes, 2000 passos cada;
-                          # a 1a metade e aquecimento e se descarta
+chains = 4,      # 4 passeios independentes
+iter   = 2000,   # 2000 passos em cada passeio
+warmup = 1000    # os 1000 primeiros são aquecimento e não entram na conta
 ```
 
 São 4 × 1000 = **4000 sorteios** da posterior. Cada número do `summary()`
 é uma estatística desses 4000: a média deles, o desvio-padrão deles, os
 quantis 2,5 % e 97,5 % deles.
+
+::: {.definicao}
+O `warmup` não é só *burn-in*. Nesses passos o Stan ainda está **ajustando
+o próprio algoritmo** — tamanho do passo e matriz de massa. Por isso esses
+sorteios não servem para inferência, mesmo que a cadeia já parecesse
+estável. O padrão do `brm()` é `warmup = iter/2`, e é o que usamos aqui.
+:::
 
 ::: {.nota}
 Daí vêm os diagnósticos de que falaremos adiante. `Rhat` e `ESS` não dizem
@@ -446,8 +454,21 @@ técnico a contornar aumentando iterações.
 2. **Incerteza de quantidades derivadas** — sem *delta method*.
 3. **Graus de liberdade** — o problema do encontro passado simplesmente
    não existe.
-4. **Modelos que o frequentista não ajusta** — estruturas complexas,
-   filogenia, medidas com erro.
+4. **Modelos que empilham estrutura** — vários efeitos aleatórios
+   correlacionados, erro de medida na preditora, dados faltantes dentro do
+   modelo: tudo isso se escreve como extensão do mesmo ajuste.
+
+::: {.nota}
+Cuidado com o item 4: **filogenia não entra nessa lista**. O `glmmTMB`
+ajusta modelo misto filogenético por máxima verossimilhança com a
+estrutura [`propto`](https://cran.r-project.org/web/packages/glmmTMB/vignettes/covstruct.html#proportional),
+que encaixa um efeito aleatório proporcional a uma matriz de covariância
+conhecida — a de Brownian da árvore, por exemplo:
+`propto(0 + species | dummy, phylo_varcov)`. É exatamente o remédio para a
+pseudorréplica filogenética do Encontro 7. A vantagem bayesiana aqui é de
+grau, não de espécie: estimar a filogenia junto com o modelo, ou pôr prior
+sobre o sinal filogenético.
+:::
 
 ---
 

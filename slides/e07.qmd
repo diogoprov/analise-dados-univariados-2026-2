@@ -172,7 +172,8 @@ fora variação real e desperdiça graus de liberdade. As três primeiras têm
 a mesma forma — pares mais próximos no espaço, no tempo ou na filogenia
 são mais parecidos — e é por isso que os remédios se parecem: uma
 estrutura de correlação que diz quem é vizinho de quem. Para a
-filogenética, isso é PGLS ou modelo misto filogenético.
+filogenética, isso é PGLS ou modelo misto filogenético — no `glmmTMB`, a
+estrutura `propto()`, que veremos no Encontro 8.
 :::
 
 ---

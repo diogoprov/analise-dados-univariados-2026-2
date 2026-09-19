@@ -489,10 +489,14 @@ alternative hypothesis: two.sided</code></pre>
 <p>Para quase todo modelo interessante, a posterior <strong>não tem fórmula fechada</strong>: não dá para escrevê-la e resolver.</p>
 <p>O <strong>MCMC</strong> (<em>Markov chain Monte Carlo</em>) contorna isso por força bruta elegante: um algoritmo passeia pelo espaço dos parâmetros e visita cada região proporcionalmente à densidade da posterior. Você não obtém a equação da distribuição — obtém uma <strong>amostra</strong> dela.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>chains <span class="ot">=</span> <span class="dv">4</span>, iter <span class="ot">=</span> <span class="dv">2000</span>   <span class="co"># 4 passeios independentes, 2000 passos cada;</span></span>
-<span id="cb18-2"><a></a>                          <span class="co"># a 1a metade e aquecimento e se descarta</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a>chains <span class="ot">=</span> <span class="dv">4</span>,      <span class="co"># 4 passeios independentes</span></span>
+<span id="cb18-2"><a></a>iter   <span class="ot">=</span> <span class="dv">2000</span>,   <span class="co"># 2000 passos em cada passeio</span></span>
+<span id="cb18-3"><a></a>warmup <span class="ot">=</span> <span class="dv">1000</span>    <span class="co"># os 1000 primeiros são aquecimento e não entram na conta</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>São 4 × 1000 = <strong>4000 sorteios</strong> da posterior. Cada número do <code>summary()</code> é uma estatística desses 4000: a média deles, o desvio-padrão deles, os quantis 2,5 % e 97,5 % deles.</p>
+<div class="definicao">
+<p>O <code>warmup</code> não é só <em>burn-in</em>. Nesses passos o Stan ainda está <strong>ajustando o próprio algoritmo</strong> — tamanho do passo e matriz de massa. Por isso esses sorteios não servem para inferência, mesmo que a cadeia já parecesse estável. O padrão do <code>brm()</code> é <code>warmup = iter/2</code>, e é o que usamos aqui.</p>
+</div>
 <div class="nota">
 <p>Daí vêm os diagnósticos de que falaremos adiante. <code>Rhat</code> e <code>ESS</code> não dizem se o <strong>modelo</strong> é bom — dizem se o <strong>passeio</strong> funcionou. São duas perguntas diferentes, e é comum confundi-las.</p>
 </div>
@@ -580,8 +584,11 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 <li><strong>Amostra pequena e poucos níveis</strong> — a prior regulariza onde o máximo de verossimilhança colapsa em ajuste singular.</li>
 <li><strong>Incerteza de quantidades derivadas</strong> — sem <em>delta method</em>.</li>
 <li><strong>Graus de liberdade</strong> — o problema do encontro passado simplesmente não existe.</li>
-<li><strong>Modelos que o frequentista não ajusta</strong> — estruturas complexas, filogenia, medidas com erro.</li>
+<li><strong>Modelos que empilham estrutura</strong> — vários efeitos aleatórios correlacionados, erro de medida na preditora, dados faltantes dentro do modelo: tudo isso se escreve como extensão do mesmo ajuste.</li>
 </ol>
+<div class="nota">
+<p>Cuidado com o item 4: <strong>filogenia não entra nessa lista</strong>. O <code>glmmTMB</code> ajusta modelo misto filogenético por máxima verossimilhança com a estrutura <a href="https://cran.r-project.org/web/packages/glmmTMB/vignettes/covstruct.html#proportional"><code>propto</code></a>, que encaixa um efeito aleatório proporcional a uma matriz de covariância conhecida — a de Brownian da árvore, por exemplo: <code>propto(0 + species | dummy, phylo_varcov)</code>. É exatamente o remédio para a pseudorréplica filogenética do Encontro 7. A vantagem bayesiana aqui é de grau, não de espécie: estimar a filogenia junto com o modelo, ou pôr prior sobre o sinal filogenético.</p>
+</div>
 </section>
 <section id="priors" class="slide level2 smaller">
 <h2>Priors</h2>

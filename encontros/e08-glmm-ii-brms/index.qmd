@@ -76,3 +76,11 @@ curso, com um *take-home* por item:
 - Brooks, M.E. et al. 2017. [glmmTMB balances speed and flexibility among packages for zero-inflated generalized linear mixed modeling](https://doi.org/10.32614/RJ-2017-066). *The R Journal* 9:378–400.
 - Gelman, A. et al. 2026. [*Bayesian Workflow*](https://avehtari.github.io/Bayesian-Workflow/). Chapman & Hall/CRC. Caps. 5, 8, 11 e 12.
 
+## Recursos externos
+
+- [Covariance structures with `glmmTMB`](https://cran.r-project.org/web/packages/glmmTMB/vignettes/covstruct.html) — AR(1), Toeplitz, simetria composta, Matérn e espaciais. A estrutura [`propto`](https://cran.r-project.org/web/packages/glmmTMB/vignettes/covstruct.html#proportional) ajusta modelo misto **filogenético** por máxima verossimilhança, com exemplo completo nos carnívoros do `carni70`.
+- [`brms` — visão geral](https://paulbuerkner.com/brms/) e a referência de [`brm()`](https://paulbuerkner.com/brms/reference/brm.html), onde estão as definições de `iter`, `warmup` e `chains`.
+
+---
+
+*Volta para o [índice do curso](../../index.qmd).*
