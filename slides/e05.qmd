@@ -541,18 +541,38 @@ incluídas, introduzem viés onde não havia.
 
 ## Três papéis, três decisões
 
-```{mermaid}
-%%| echo: false
-%%| fig-height: 3.2
-flowchart LR
-  A[Área da poça] --> B[Riqueza de anuros]
-  C[Precipitação] --> A
-  C --> B
-  B --> D[Detecção do observador]
-  A --> D
+```{r}
+#| echo: false
+DiagrammeR::grViz('
+digraph dag {
+  graph [rankdir = LR, bgcolor = "transparent", nodesep = 0.55, ranksep = 1.25,
+         fontname = "Helvetica"]
+  node  [fontname = "Helvetica", fontsize = 17, style = "filled,rounded",
+         shape = box, penwidth = 2.0, margin = "0.20,0.12"]
+  edge  [penwidth = 2.4, arrowsize = 1.0, color = "#8a8172"]
+
+  C [label = "precipitação\n(confundidora)", fillcolor = "#efe7d2",
+     color = "#c08a3e", fontcolor = "#8a6329"]
+  A [label = "área da poça", fillcolor = "#1c6e8c", fontcolor = "white", penwidth = 0]
+  B [label = "riqueza de anuros", fillcolor = "#1c6e8c", fontcolor = "white", penwidth = 0]
+  D [label = "detecção do\nobservador\n(colisor)", fillcolor = "#f1e3d3",
+     color = "#b06a4a", fontcolor = "#8a4f34"]
+
+  A -> B [color = "#1c6e8c", penwidth = 3.6]
+  C -> A [color = "#c08a3e"]
+  C -> B [color = "#c08a3e"]
+  A -> D [color = "#b06a4a"]
+  B -> D [color = "#b06a4a"]
+
+  { rank = same; A; B }
+}
+', height = 230)
 ```
 
-- **Precipitação** é um *confounder*: causa as duas → **controlar**.
+A seta grossa, azul, é o efeito que você quer estimar. As outras cores
+dizem o que fazer com cada caminho:
+
+- **Precipitação** é uma confundidora: causa as duas pontas → **controlar**.
 - **Detecção** é um colisor: é causada pelas duas → **não controlar**.
 
 ---

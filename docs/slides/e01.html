@@ -187,9 +187,10 @@
       margin-right: 0; 
     }
   </style>
-  <script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
-  <script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
-  <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+  <script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+  <script src="../site_libs/viz-1.8.2/viz.js"></script>
+  <link href="../site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+  <script src="../site_libs/grViz-binding-1.0.12/grViz.js"></script>
 <meta property="og:title" content="EDA, reprodutibilidade e literacia em IA – Análise de Dados Univariados">
 <meta property="og:description" content="Encontro 1 · Análise de Dados Univariados · PPGBA/UFMS">
 <meta property="og:site_name" content="Análise de Dados Univariados">
@@ -416,19 +417,10 @@ Diogo B. Provete
 </section>
 <section id="por-que-um-ciclo-e-não-uma-lista" class="slide level2">
 <h2>Por que um ciclo e não uma lista</h2>
-<div class="cell" data-reveal="true" data-fig-height="2.6" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-  P1[Problema] --&gt; P2[Plano] --&gt; D[Dados] --&gt; A[Análise] --&gt; C[Conclusão]
-  C -.-&gt; P1
-  A -.-&gt; D
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
+<div id="htmlwidget-1771daf0515a91bc71b0" style="width:672px;height:150px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1771daf0515a91bc71b0">{"x":{"diagram":"\ndigraph ppdac {\n  graph [rankdir = LR, bgcolor = \"transparent\", nodesep = 0.40, ranksep = 0.85,\n         fontname = \"Helvetica\"]\n  node  [fontname = \"Helvetica\", fontsize = 18, style = \"filled,rounded\",\n         shape = box, penwidth = 0, margin = \"0.24,0.14\", fontcolor = \"white\"]\n  edge  [penwidth = 3.0, arrowsize = 1.1, color = \"#8a8172\"]\n\n  P1 [label = \"Problema\",  fillcolor = \"#144f64\"]\n  P2 [label = \"Plano\",     fillcolor = \"#1c6e8c\"]\n  D  [label = \"Dados\",     fillcolor = \"#6b8f4e\"]\n  A  [label = \"Análise\",   fillcolor = \"#c08a3e\"]\n  C  [label = \"Conclusão\", fillcolor = \"#b06a4a\"]\n\n  P1 -> P2 -> D -> A -> C\n\n  A -> D  [style = dashed, penwidth = 2.4, color = \"#6b8f4e\",\n           constraint = false, arrowsize = 1.0]\n  C -> P1 [style = dashed, penwidth = 2.4, color = \"#b06a4a\",\n           constraint = false, arrowsize = 1.0]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>As setas pontilhadas são o ponto: a análise revela problemas nos dados, e a conclusão quase sempre reformula o problema. <strong>Isso é legítimo</strong> — o que não é legítimo é apagar o percurso e apresentar a última volta do ciclo como se tivesse sido a primeira.</p>

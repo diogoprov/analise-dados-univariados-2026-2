@@ -2062,7 +2062,7 @@
     "href": "slides/e01.html#por-que-um-ciclo-e-não-uma-lista",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Por que um ciclo e não uma lista",
-    "text": "Por que um ciclo e não uma lista\n\n\n\n\n\nflowchart LR\n  P1[Problema] --&gt; P2[Plano] --&gt; D[Dados] --&gt; A[Análise] --&gt; C[Conclusão]\n  C -.-&gt; P1\n  A -.-&gt; D\n\n\n\n\n\n\nAs setas pontilhadas são o ponto: a análise revela problemas nos dados, e a conclusão quase sempre reformula o problema. Isso é legítimo — o que não é legítimo é apagar o percurso e apresentar a última volta do ciclo como se tivesse sido a primeira."
+    "text": "Por que um ciclo e não uma lista\n\n\n\n\n\n\nAs setas pontilhadas são o ponto: a análise revela problemas nos dados, e a conclusão quase sempre reformula o problema. Isso é legítimo — o que não é legítimo é apagar o percurso e apresentar a última volta do ciclo como se tivesse sido a primeira."
   },
   {
     "objectID": "slides/e01.html#onde-a-maioria-dos-trabalhos-quebra",
@@ -2867,7 +2867,7 @@
     "href": "slides/e05.html#três-papéis-três-decisões",
     "title": "GLM I: verossimilhança, binomial e Poisson",
     "section": "Três papéis, três decisões",
-    "text": "Três papéis, três decisões\n\n\n\n\n\nflowchart LR\n  A[Área da poça] --&gt; B[Riqueza de anuros]\n  C[Precipitação] --&gt; A\n  C --&gt; B\n  B --&gt; D[Detecção do observador]\n  A --&gt; D\n\n\n\n\n\n\n\nPrecipitação é um confounder: causa as duas → controlar.\nDetecção é um colisor: é causada pelas duas → não controlar."
+    "text": "Três papéis, três decisões\n\n\n\n\n\n\nA seta grossa, azul, é o efeito que você quer estimar. As outras cores dizem o que fazer com cada caminho:\n\nPrecipitação é uma confundidora: causa as duas pontas → controlar.\nDetecção é um colisor: é causada pelas duas → não controlar."
   },
   {
     "objectID": "slides/e05.html#colisor-o-viés-que-você-cria",

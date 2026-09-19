@@ -203,13 +203,30 @@ Wild, C.J. & Pfannkuch, M. 1999. *International Statistical Review*.
 
 ## Por que um ciclo e não uma lista
 
-```{mermaid}
-%%| echo: false
-%%| fig-height: 2.6
-flowchart LR
-  P1[Problema] --> P2[Plano] --> D[Dados] --> A[Análise] --> C[Conclusão]
-  C -.-> P1
-  A -.-> D
+```{r}
+#| echo: false
+DiagrammeR::grViz('
+digraph ppdac {
+  graph [rankdir = LR, bgcolor = "transparent", nodesep = 0.40, ranksep = 0.85,
+         fontname = "Helvetica"]
+  node  [fontname = "Helvetica", fontsize = 18, style = "filled,rounded",
+         shape = box, penwidth = 0, margin = "0.24,0.14", fontcolor = "white"]
+  edge  [penwidth = 3.0, arrowsize = 1.1, color = "#8a8172"]
+
+  P1 [label = "Problema",  fillcolor = "#144f64"]
+  P2 [label = "Plano",     fillcolor = "#1c6e8c"]
+  D  [label = "Dados",     fillcolor = "#6b8f4e"]
+  A  [label = "Análise",   fillcolor = "#c08a3e"]
+  C  [label = "Conclusão", fillcolor = "#b06a4a"]
+
+  P1 -> P2 -> D -> A -> C
+
+  A -> D  [style = dashed, penwidth = 2.4, color = "#6b8f4e",
+           constraint = false, arrowsize = 1.0]
+  C -> P1 [style = dashed, penwidth = 2.4, color = "#b06a4a",
+           constraint = false, arrowsize = 1.0]
+}
+', height = 150)
 ```
 
 As setas pontilhadas são o ponto: a análise revela problemas nos dados, e
