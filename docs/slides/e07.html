@@ -578,13 +578,9 @@ NAP         -2.568400  0.4947246 -5.191574</code></pre>
 </div>
 <p>Sem coluna de valor de <em>p</em>. Isso é deliberado: <strong>não há um número exato de graus de liberdade</strong> para o denominador num modelo misto desbalanceado.</p>
 </section>
-<section id="as-saídas" class="slide level2">
+<section id="as-saídas" class="slide level2 smaller">
 <h2>As saídas</h2>
 <table class="caption-top">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Abordagem</th>
@@ -609,11 +605,29 @@ NAP         -2.568400  0.4947246 -5.191574</code></pre>
 <td><code>confint(m, method = "profile")</code></td>
 </tr>
 <tr class="odd">
+<td>Teste por termo</td>
+<td><code>car::Anova(m, type = "II")</code> — qui-quadrado de Wald</td>
+</tr>
+<tr class="even">
+<td>Tabela pronta</td>
+<td><a href="https://easystats.github.io/parameters/reference/model_parameters.glmmTMB.html"><code>parameters::model_parameters()</code></a> — estimativa, IC e <em>p</em> numa tabela só, com <code>ci_method</code> à sua escolha</td>
+</tr>
+<tr class="odd">
 <td>Bayesiano</td>
 <td>intervalo de credibilidade, sem o problema</td>
 </tr>
 </tbody>
 </table>
+</section>
+<section id="e-o-glmmtmb" class="slide level2 smaller">
+<h2>E o <code>glmmTMB</code>?</h2>
+<p>Ele <strong>imprime</strong> valor de <em>p</em> no <code>summary()</code>, e o <code>lmer</code> não. Isso não é porque o problema foi resolvido: o <code>glmmTMB</code> usa o grau de liberdade do denominador como <strong>infinito</strong> — a estatística é um <em>z</em> de Wald assintótico. O <code>lmer</code> se recusa a fazer essa aproximação em silêncio.</p>
+<div class="definicao">
+<p>Com muitos níveis e amostra grande, a aproximação assintótica é inofensiva. Com poucos níveis ou amostra pequena, ela é <strong>anticonservadora</strong>: o <em>p</em> sai menor do que deveria.</p>
+</div>
+<div class="nota">
+<p>Para testar um termo inteiro — um fator com vários níveis, uma interação — use <a href="https://cran.r-project.org/web/packages/glmmTMB/refman/glmmTMB.html#Anova.glmmTMB"><code>car::Anova()</code></a> sobre o ajuste do <code>glmmTMB</code>; o único teste disponível ali é o qui-quadrado de Wald. E o <code>parameters::model_parameters()</code> monta a tabela de saída dos dois mundos, aceitando <code>ci_method = "satterthwaite"</code> ou <code>"kenward"</code> quando o modelo permite.</p>
+</div>
 </section>
 <section id="a-recomendação-prática" class="slide level2">
 <h2>A recomendação prática</h2>

@@ -50,11 +50,12 @@ pacotes <- c(
   "plotly",
   # modelos lineares e GLM
   "car", "emmeans", "MASS", "performance", "see", "sjPlot", "marginaleffects",
-  "usdm",
+  "usdm", "parameters",
   # versão bayesiana dos mesmos modelos
   "loo", "bayesplot",
   # GLMM, zeros inflados e ordinais
-  "lme4", "glmmTMB", "DHARMa", "ordinal", "pscl", "lmtest",
+  "lme4", "lmerTest", "pbkrtest", "glmmTMB", "DHARMa", "ordinal", "pscl",
+  "lmtest",
   # seleção de modelos
   "MuMIn", "AICcmodavg",
   # raciocínio causal

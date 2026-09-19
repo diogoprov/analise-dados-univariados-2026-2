@@ -464,7 +464,7 @@ de graus de liberdade** para o denominador num modelo misto desbalanceado.
 
 ---
 
-## As saídas
+## As saídas {.smaller}
 
 | Abordagem | Como |
 |---|---|
@@ -472,7 +472,33 @@ de graus de liberdade** para o denominador num modelo misto desbalanceado.
 | Kenward–Roger | `pbkrtest` — mais conservador, melhor em amostra pequena |
 | Razão de verossimilhanças | `anova(m0, m1)` — cuidado com `REML` |
 | Intervalo de confiança | `confint(m, method = "profile")` |
+| Teste por termo | `car::Anova(m, type = "II")` — qui-quadrado de Wald |
+| Tabela pronta | [`parameters::model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.glmmTMB.html) — estimativa, IC e *p* numa tabela só, com `ci_method` à sua escolha |
 | Bayesiano | intervalo de credibilidade, sem o problema |
+
+---
+
+## E o `glmmTMB`? {.smaller}
+
+Ele **imprime** valor de *p* no `summary()`, e o `lmer` não. Isso não é
+porque o problema foi resolvido: o `glmmTMB` usa o grau de liberdade do
+denominador como **infinito** — a estatística é um *z* de Wald
+assintótico. O `lmer` se recusa a fazer essa aproximação em silêncio.
+
+::: {.definicao}
+Com muitos níveis e amostra grande, a aproximação assintótica é
+inofensiva. Com poucos níveis ou amostra pequena, ela é
+**anticonservadora**: o *p* sai menor do que deveria.
+:::
+
+::: {.nota}
+Para testar um termo inteiro — um fator com vários níveis, uma interação
+— use [`car::Anova()`](https://cran.r-project.org/web/packages/glmmTMB/refman/glmmTMB.html#Anova.glmmTMB)
+sobre o ajuste do `glmmTMB`; o único teste disponível ali é o
+qui-quadrado de Wald. E o `parameters::model_parameters()` monta a tabela
+de saída dos dois mundos, aceitando `ci_method = "satterthwaite"` ou
+`"kenward"` quando o modelo permite.
+:::
 
 ---
 

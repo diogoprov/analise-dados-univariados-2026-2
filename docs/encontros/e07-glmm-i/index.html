@@ -146,6 +146,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#prática" id="toc-prática" class="nav-link" data-scroll-target="#prática">Prática</a></li>
   <li><a href="#dados" id="toc-dados" class="nav-link" data-scroll-target="#dados">Dados</a></li>
   <li><a href="#leituras" id="toc-leituras" class="nav-link" data-scroll-target="#leituras">Leituras</a></li>
+  <li><a href="#recursos-externos" id="toc-recursos-externos" class="nav-link" data-scroll-target="#recursos-externos">Recursos externos</a></li>
   </ul>
 </nav>
     </div>
@@ -214,15 +215,25 @@ ul.task-list li input[type="checkbox"] {
 <p><strong>Obrigatória</strong></p>
 <ul>
 <li>Bolker, B.M. et al.&nbsp;2009. <a href="https://doi.org/10.1016/j.tree.2008.10.008">Generalized linear mixed models: a practical guide for ecology and evolution</a>. <em>Trends in Ecology &amp; Evolution</em> 24:127–135.</li>
-<li>Gomes, D.G.E. 2022. <a href="https://doi.org/10.7717/peerj.12794">Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model?</a>. <em>PeerJ</em> 10:e12794. — a regra dos cinco níveis posta à prova por simulação.</li>
-<li>Bolker, B.M. e colaboradores. <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html"><em>GLMM FAQ</em></a> — a referência viva sobre modelos mistos em R. Veja em especial <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#should-i-treat-factor-xxx-as-fixed-or-random">“Should I treat factor xxx as fixed or random?”</a>.</li>
 </ul>
 <p><strong>Complementar</strong></p>
 <ul>
+<li>Gomes, D.G.E. 2022. <a href="https://doi.org/10.7717/peerj.12794">Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model?</a>. <em>PeerJ</em> 10:e12794. — a regra dos cinco níveis posta à prova por simulação.</li>
+<li>Bolker, B.M. e colaboradores. <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html"><em>GLMM FAQ</em></a> — a referência viva sobre modelos mistos em R. Veja em especial <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#should-i-treat-factor-xxx-as-fixed-or-random">“Should I treat factor xxx as fixed or random?”</a>.</li>
 <li>Harrison, X.A. et al.&nbsp;2018. <a href="https://doi.org/10.7717/peerj.4794">A brief introduction to mixed effects modelling and multi-model inference in ecology</a>. <em>PeerJ</em> 6:e4794.</li>
 <li>Hurlbert, S.H. 1984. <a href="https://doi.org/10.2307/1942661">Pseudoreplication and the design of ecological field experiments</a>. <em>Ecological Monographs</em> 54:187–211.</li>
 <li>Zuur, A.F. et al.&nbsp;2009. <a href="https://doi.org/10.1007/978-0-387-87458-6"><em>Mixed Effects Models and Extensions in Ecology with R</em></a>. Springer.</li>
 </ul>
+</section>
+<section id="recursos-externos" class="level2">
+<h2 class="anchored" data-anchor-id="recursos-externos">Recursos externos</h2>
+<ul>
+<li><a href="https://cran.r-project.org/web/packages/glmmTMB/refman/glmmTMB.html#Anova.glmmTMB"><code>car::Anova()</code> para <code>glmmTMB</code></a> — teste por termo, qui-quadrado de Wald, tipos II e III.</li>
+<li><a href="https://easystats.github.io/parameters/reference/model_parameters.glmmTMB.html"><code>parameters::model_parameters()</code></a> — tabela de saída com estimativa, intervalo e <em>p</em>, com <code>ci_method</code> à escolha (Wald, Satterthwaite, Kenward-Roger, perfil, <em>bootstrap</em>).</li>
+<li><a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#model-specification"><em>GLMM FAQ</em> — Model specification</a> — a tabela de sintaxe de efeitos aleatórios, com as equações ao lado.</li>
+</ul>
+<hr>
+<p><em>Volta para o <a href="../../index.html">índice do curso</a>.</em></p>
 
 
 </section>

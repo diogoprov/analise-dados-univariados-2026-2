@@ -52,12 +52,21 @@ curso, com um *take-home* por item:
 **Obrigatória**
 
 - Bolker, B.M. et al. 2009. [Generalized linear mixed models: a practical guide for ecology and evolution](https://doi.org/10.1016/j.tree.2008.10.008). *Trends in Ecology & Evolution* 24:127–135.
-- Gomes, D.G.E. 2022. [Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model?](https://doi.org/10.7717/peerj.12794). *PeerJ* 10:e12794. — a regra dos cinco níveis posta à prova por simulação.
-- Bolker, B.M. e colaboradores. [*GLMM FAQ*](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html) — a referência viva sobre modelos mistos em R. Veja em especial ["Should I treat factor xxx as fixed or random?"](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#should-i-treat-factor-xxx-as-fixed-or-random).
 
 **Complementar**
 
+- Gomes, D.G.E. 2022. [Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model?](https://doi.org/10.7717/peerj.12794). *PeerJ* 10:e12794. — a regra dos cinco níveis posta à prova por simulação.
+- Bolker, B.M. e colaboradores. [*GLMM FAQ*](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html) — a referência viva sobre modelos mistos em R. Veja em especial ["Should I treat factor xxx as fixed or random?"](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#should-i-treat-factor-xxx-as-fixed-or-random).
 - Harrison, X.A. et al. 2018. [A brief introduction to mixed effects modelling and multi-model inference in ecology](https://doi.org/10.7717/peerj.4794). *PeerJ* 6:e4794.
 - Hurlbert, S.H. 1984. [Pseudoreplication and the design of ecological field experiments](https://doi.org/10.2307/1942661). *Ecological Monographs* 54:187–211.
 - Zuur, A.F. et al. 2009. [*Mixed Effects Models and Extensions in Ecology with R*](https://doi.org/10.1007/978-0-387-87458-6). Springer.
 
+## Recursos externos
+
+- [`car::Anova()` para `glmmTMB`](https://cran.r-project.org/web/packages/glmmTMB/refman/glmmTMB.html#Anova.glmmTMB) — teste por termo, qui-quadrado de Wald, tipos II e III.
+- [`parameters::model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.glmmTMB.html) — tabela de saída com estimativa, intervalo e *p*, com `ci_method` à escolha (Wald, Satterthwaite, Kenward-Roger, perfil, *bootstrap*).
+- [*GLMM FAQ* — Model specification](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#model-specification) — a tabela de sintaxe de efeitos aleatórios, com as equações ao lado.
+
+---
+
+*Volta para o [índice do curso](../../index.qmd).*
