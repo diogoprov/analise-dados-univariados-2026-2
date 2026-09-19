@@ -35,7 +35,7 @@ execute:
 #| echo: false
 library(tidyverse)
 library(palmerpenguins)
-theme_set(theme_minimal(base_size = 14))
+theme_set(theme_minimal(base_size = 15))
 pinguins <- penguins |> drop_na(bill_length_mm, body_mass_g, species, sex)
 ```
 
@@ -228,7 +228,7 @@ inclinacoes <- purrr::map_dbl(1:500, simula_uma)
 
 ggplot(tibble(inclinacoes), aes(inclinacoes)) +
   geom_histogram(bins = 30, fill = "#1c6e8c", colour = "white") +
-  geom_vline(xintercept = 0.45, colour = "#c08a3e", linewidth = 1) +
+  geom_vline(xintercept = 0.45, colour = "#96661f", linewidth = 1) +
   labs(x = "Inclinação estimada", y = NULL)
 ```
 
@@ -267,7 +267,7 @@ adelie <- pinguins |> filter(species == "Adelie")
 
 ggplot(adelie, aes(sex, bill_length_mm, fill = sex)) +
   geom_boxplot(alpha = .7, show.legend = FALSE) +
-  scale_fill_manual(values = c("#1c6e8c", "#c08a3e")) +
+  scale_fill_manual(values = c("#1c6e8c", "#96661f")) +
   labs(x = NULL, y = "Comprimento do bico (mm)")
 ```
 
@@ -474,7 +474,7 @@ modelo simples — porque bico e nadadeira medem, em parte, a mesma coisa.
 ggplot(pinguins, aes(bill_length_mm, body_mass_g, colour = species)) +
   geom_point(alpha = .6) +
   geom_smooth(method = "lm", se = FALSE) +
-  scale_colour_manual(values = c("#1c6e8c", "#c08a3e", "#6b8f71")) +
+  scale_colour_manual(values = c("#1c6e8c", "#96661f", "#4f7057")) +
   labs(x = "Comprimento do bico (mm)", y = "Massa (g)", colour = NULL)
 ```
 
@@ -508,7 +508,7 @@ ggplot(pinguins, aes(bill_depth_mm, body_mass_g)) +
   geom_point(aes(colour = species), alpha = .6) +
   geom_smooth(method = "lm", se = FALSE, colour = "grey30", linetype = 2) +
   geom_smooth(aes(colour = species), method = "lm", se = FALSE) +
-  scale_colour_manual(values = c("#1c6e8c", "#c08a3e", "#6b8f71")) +
+  scale_colour_manual(values = c("#1c6e8c", "#96661f", "#4f7057")) +
   labs(x = "Profundidade do bico (mm)", y = "Massa (g)", colour = NULL)
 ```
 
@@ -825,7 +825,7 @@ bind_rows(
 ) |>
   ggplot(aes(x, r)) +
   geom_point(alpha = .4, colour = "#1c6e8c") +
-  geom_hline(yintercept = 0, colour = "#c08a3e") +
+  geom_hline(yintercept = 0, colour = "#96661f") +
   facet_wrap(~tipo, scales = "free_x") +
   labs(x = NULL, y = "Resíduo")
 ```

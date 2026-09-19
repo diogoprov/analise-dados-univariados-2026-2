@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-3b7cbe771201207b6a18613a17a44f89.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-3c544c867f8d04a2a4476225e630fb02.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -352,7 +352,7 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,
 <span id="cb3-8"><a></a></span>
 <span id="cb3-9"><a></a><span class="fu">ggplot</span>(<span class="fu">tibble</span>(inclinacoes), <span class="fu">aes</span>(inclinacoes)) <span class="sc">+</span></span>
 <span id="cb3-10"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>, <span class="at">fill =</span> <span class="st">"#1c6e8c"</span>, <span class="at">colour =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb3-11"><a></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.45</span>, <span class="at">colour =</span> <span class="st">"#c08a3e"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-11"><a></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.45</span>, <span class="at">colour =</span> <span class="st">"#96661f"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb3-12"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Inclinação estimada"</span>, <span class="at">y =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
@@ -391,7 +391,7 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,
 <span id="cb4-2"><a></a></span>
 <span id="cb4-3"><a></a><span class="fu">ggplot</span>(adelie, <span class="fu">aes</span>(sex, bill_length_mm, <span class="at">fill =</span> sex)) <span class="sc">+</span></span>
 <span id="cb4-4"><a></a>  <span class="fu">geom_boxplot</span>(<span class="at">alpha =</span> .<span class="dv">7</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb4-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>)) <span class="sc">+</span></span>
+<span id="cb4-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#96661f"</span>)) <span class="sc">+</span></span>
 <span id="cb4-6"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Comprimento do bico (mm)"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
@@ -681,7 +681,7 @@ sexmale      3.132877  0.3569599   8.77655  4.440460e-15</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">ggplot</span>(pinguins, <span class="fu">aes</span>(bill_length_mm, body_mass_g, <span class="at">colour =</span> species)) <span class="sc">+</span></span>
 <span id="cb31-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> .<span class="dv">6</span>) <span class="sc">+</span></span>
 <span id="cb31-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb31-4"><a></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>, <span class="st">"#6b8f71"</span>)) <span class="sc">+</span></span>
+<span id="cb31-4"><a></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#96661f"</span>, <span class="st">"#4f7057"</span>)) <span class="sc">+</span></span>
 <span id="cb31-5"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Comprimento do bico (mm)"</span>, <span class="at">y =</span> <span class="st">"Massa (g)"</span>, <span class="at">colour =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>

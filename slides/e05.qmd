@@ -35,7 +35,7 @@ execute:
 #| echo: false
 library(tidyverse)
 library(plotly)
-theme_set(theme_minimal(base_size = 14))
+theme_set(theme_minimal(base_size = 15))
 lagartos <- read_tsv("../dados/camila_cauda_lagartos.txt", show_col_types = FALSE) |>
   drop_na(SVL, Tail_state) |>
   # no arquivo original, Tail_state == 1 é a cauda INTACTA; a pergunta é
@@ -122,7 +122,7 @@ vale decidir isso antes de ajustar.
 #| echo: false
 ggplot(lagartos, aes(SVL, cauda_perdida)) +
   geom_jitter(height = .03, alpha = .4, colour = "#1c6e8c") +
-  geom_smooth(method = "lm", se = FALSE, colour = "#c08a3e") +
+  geom_smooth(method = "lm", se = FALSE, colour = "#96661f") +
   labs(x = "SVL (mm)", y = "Cauda perdida (0/1)")
 ```
 
@@ -189,7 +189,7 @@ plot_ly(height = 430) |>
               contours = list(z = list(show = TRUE, usecolormap = TRUE,
                                        project = list(z = TRUE)))) |>
   add_markers(x = mle[1], y = mle[2], z = log_vero(mle[1], mle[2]),
-              name = "EMV", marker = list(size = 7, color = "#c08a3e")) |>
+              name = "EMV", marker = list(size = 7, color = "#96661f")) |>
   layout(showlegend = FALSE, margin = list(l = 0, r = 0, b = 0, t = 0),
          scene = list(xaxis = list(title = "b0 (intercepto)"),
                       yaxis = list(title = "b1 (inclinacao)"),
@@ -333,7 +333,7 @@ novo <- novo |> mutate(p = plogis(pred$fit),
 ggplot(lagartos, aes(SVL, cauda_perdida)) +
   geom_jitter(height = .03, alpha = .3, colour = "#1c6e8c") +
   geom_ribbon(data = novo, aes(y = p, ymin = lo, ymax = hi), alpha = .2) +
-  geom_line(data = novo, aes(y = p), colour = "#c08a3e", linewidth = 1) +
+  geom_line(data = novo, aes(y = p), colour = "#96661f", linewidth = 1) +
   labs(x = "SVL (mm)", y = "P(cauda perdida)")
 ```
 
@@ -495,7 +495,7 @@ nv <- nv |> mutate(mu = exp(pr$fit),
 ggplot(RK, aes(D.PARK, TOT.N)) +
   geom_point(colour = "#1c6e8c", alpha = .7) +
   geom_ribbon(data = nv, aes(y = mu, ymin = lo, ymax = hi), alpha = .2) +
-  geom_line(data = nv, aes(y = mu), colour = "#c08a3e", linewidth = 1) +
+  geom_line(data = nv, aes(y = mu), colour = "#96661f", linewidth = 1) +
   labs(x = "Distância ao parque (m)", y = "Anfíbios mortos")
 ```
 
@@ -552,17 +552,17 @@ digraph dag {
   edge  [penwidth = 2.4, arrowsize = 1.0, color = "#8a8172"]
 
   C [label = "precipitação\n(confundidora)", fillcolor = "#efe7d2",
-     color = "#c08a3e", fontcolor = "#8a6329"]
+     color = "#96661f", fontcolor = "#8a6329"]
   A [label = "área da poça", fillcolor = "#1c6e8c", fontcolor = "white", penwidth = 0]
   B [label = "riqueza de anuros", fillcolor = "#1c6e8c", fontcolor = "white", penwidth = 0]
   D [label = "detecção do\nobservador\n(colisor)", fillcolor = "#f1e3d3",
-     color = "#b06a4a", fontcolor = "#8a4f34"]
+     color = "#a15e3f", fontcolor = "#8a4f34"]
 
   A -> B [color = "#1c6e8c", penwidth = 3.6]
-  C -> A [color = "#c08a3e"]
-  C -> B [color = "#c08a3e"]
-  A -> D [color = "#b06a4a"]
-  B -> D [color = "#b06a4a"]
+  C -> A [color = "#96661f"]
+  C -> B [color = "#96661f"]
+  A -> D [color = "#a15e3f"]
+  B -> D [color = "#a15e3f"]
 
   { rank = same; A; B }
 }
@@ -590,7 +590,7 @@ d <- tibble(area, riqueza, sel = colisor > quantile(colisor, .66))
 ggplot(d, aes(area, riqueza)) +
   geom_point(alpha = .25, colour = "grey60") +
   geom_point(data = filter(d, sel), colour = "#1c6e8c") +
-  geom_smooth(data = filter(d, sel), method = "lm", se = FALSE, colour = "#c08a3e") +
+  geom_smooth(data = filter(d, sel), method = "lm", se = FALSE, colour = "#96661f") +
   labs(x = "Área", y = "Riqueza",
        subtitle = "Cinza: todos os dados (sem associação). Azul: só os detectados.")
 ```

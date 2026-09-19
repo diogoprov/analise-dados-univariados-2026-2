@@ -16,7 +16,8 @@ $font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
 $presentation-font-size-root: 32px;
 $presentation-heading-color: $accent-dark;
 $presentation-heading-font-weight: 600;
-$code-block-font-size: 0.62em;
+// 0.62em dava ~20px projetados; num curso de R o codigo e o conteudo.
+$code-block-font-size: 0.70em;
 
 /*-- scss:rules --*/
 .reveal .slide-background { background-color: $body-bg; }
@@ -36,7 +37,7 @@ $code-block-font-size: 0.62em;
   max-height: 520px;
 }
 
-.reveal .slide-number { background-color: transparent; color: #9aa5b1; }
+.reveal .slide-number { background-color: transparent; color: #6b7580; }
 
 // Slide de seção
 .reveal section.secao h2 {
@@ -57,10 +58,12 @@ $code-block-font-size: 0.62em;
 // sobre o creme do fundo; este da 7,03:1, e o corpo subiu de .72 para .76em.
 .reveal .nota { font-size: .76em; color: #4a5568; }
 
-// Referência no rodapé do slide
-.reveal .ref { font-size: .55em; color: #6c757d; font-style: italic; }
+// Referencia no rodape do slide. Era .55em (ilegivel projetado) em #6c757d
+// (4,38:1); passa a .68em em #4a5568, que da 7,03:1.
+.reveal .ref { font-size: .68em; color: #4a5568; font-style: italic; }
 
-.reveal table { font-size: .72em; }
+// Tabelas: .72em ficava pequeno demais projetado.
+.reveal table { font-size: .80em; }
 
 // Citação de relato (blockquote). O tema do reveal pinta o texto quase
 // na cor do fundo creme; aqui fixamos contraste e damos ao bloco o mesmo

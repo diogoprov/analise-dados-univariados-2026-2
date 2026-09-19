@@ -35,7 +35,7 @@ execute:
 #| echo: false
 library(tidyverse)
 library(palmerpenguins)
-theme_set(theme_minimal(base_size = 14))
+theme_set(theme_minimal(base_size = 15))
 pinguins <- penguins |> drop_na(body_mass_g, species, sex, flipper_length_mm)
 lagartos <- read_tsv("../dados/camila_cauda_lagartos.txt", show_col_types = FALSE) |>
   drop_na(SVL, Autotomized_tail_length, Sex)
@@ -117,7 +117,7 @@ Em grupos, 10 minutos:
 #| echo: false
 ggplot(pinguins, aes(species, body_mass_g, fill = species)) +
   geom_boxplot(alpha = .7, show.legend = FALSE) +
-  scale_fill_manual(values = c("#1c6e8c", "#c08a3e", "#6b8f71")) +
+  scale_fill_manual(values = c("#1c6e8c", "#96661f", "#4f7057")) +
   labs(x = NULL, y = "Massa (g)")
 ```
 
@@ -311,7 +311,7 @@ pinguins |>
   summarise(massa = mean(body_mass_g), .groups = "drop") |>
   ggplot(aes(species, massa, colour = sex, group = sex)) +
   geom_point(size = 3) + geom_line(linewidth = 1) +
-  scale_colour_manual(values = c("#1c6e8c", "#c08a3e")) +
+  scale_colour_manual(values = c("#1c6e8c", "#96661f")) +
   labs(x = NULL, y = "Massa média (g)", colour = NULL)
 ```
 
@@ -467,7 +467,7 @@ o sexo?
 ggplot(lagartos, aes(SVL, Autotomized_tail_length, colour = Sex)) +
   geom_point(alpha = .6) +
   geom_smooth(method = "lm", se = FALSE) +
-  scale_colour_manual(values = c("#1c6e8c", "#c08a3e")) +
+  scale_colour_manual(values = c("#1c6e8c", "#96661f")) +
   labs(x = "SVL (mm)", y = "Cauda autotomizada (mm)", colour = NULL)
 ```
 

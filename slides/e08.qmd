@@ -37,7 +37,7 @@ library(tidyverse)
 library(lme4)
 library(glmmTMB)
 library(bbmle)
-theme_set(theme_minimal(base_size = 14))
+theme_set(theme_minimal(base_size = 15))
 rikz <- read.table("../dados/RIKZ.txt", header = TRUE, row.names = 1) |>
   mutate(Beach = factor(Beach))
 ```

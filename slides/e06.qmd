@@ -35,7 +35,7 @@ execute:
 #| echo: false
 library(tidyverse)
 library(bbmle)
-theme_set(theme_minimal(base_size = 14))
+theme_set(theme_minimal(base_size = 15))
 RK <- read.delim("../dados/RoadKills.txt")
 parasitas <- read_tsv("../dados/Planilha_Pentastomida.txt", show_col_types = FALSE) |>
   rename(id = 1) |>
@@ -122,7 +122,7 @@ significam a mesma coisa?
 tibble(fit = fitted(m_rk), res = resid(m_rk, type = "deviance")) |>
   ggplot(aes(fit, res)) +
   geom_point(colour = "#1c6e8c") +
-  geom_hline(yintercept = 0, colour = "#c08a3e") +
+  geom_hline(yintercept = 0, colour = "#96661f") +
   labs(x = "Valor predito", y = "Resíduo de deviance")
 ```
 
@@ -324,8 +324,8 @@ bind_rows(
   geom_point(data = RK, aes(D.PARK, TOT.N), colour = "grey50", alpha = .6) +
   geom_ribbon(aes(ymin = lo, ymax = hi, fill = modelo), alpha = .25) +
   geom_line(aes(colour = modelo), linewidth = 1) +
-  scale_colour_manual(values = c("#1c6e8c", "#c08a3e")) +
-  scale_fill_manual(values = c("#1c6e8c", "#c08a3e")) +
+  scale_colour_manual(values = c("#1c6e8c", "#96661f")) +
+  scale_fill_manual(values = c("#1c6e8c", "#96661f")) +
   labs(x = "Distância ao parque (m)", y = "Anfíbios mortos", colour = NULL, fill = NULL)
 ```
 
@@ -570,7 +570,7 @@ distâncias entre categorias não são comparáveis.
 mela |> count(Treatment, Black) |>
   ggplot(aes(factor(Black), n, fill = Treatment)) +
   geom_col(position = "dodge") +
-  scale_fill_manual(values = c("#1c6e8c", "#c08a3e")) +
+  scale_fill_manual(values = c("#1c6e8c", "#96661f")) +
   labs(x = "Índice melanofórico", y = NULL, fill = NULL)
 ```
 

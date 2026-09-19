@@ -35,7 +35,7 @@ execute:
 #| echo: false
 library(tidyverse)
 library(lme4)
-theme_set(theme_minimal(base_size = 14))
+theme_set(theme_minimal(base_size = 15))
 rikz <- read.table("../dados/RIKZ.txt", header = TRUE, row.names = 1) |>
   mutate(Beach = factor(Beach))
 ```
@@ -426,7 +426,7 @@ tibble(Beach = sep$Beach, n = sep$n, separado = sep$intercepto, misto = misto) |
   pivot_longer(c(separado, misto)) |>
   ggplot(aes(value, fct_reorder(Beach, value), colour = name)) +
   geom_point(size = 3) +
-  scale_colour_manual(values = c("#c08a3e", "#1c6e8c"),
+  scale_colour_manual(values = c("#96661f", "#1c6e8c"),
                       labels = c("modelo misto", "regressão separada")) +
   labs(x = "Intercepto estimado", y = "Praia", colour = NULL)
 ```

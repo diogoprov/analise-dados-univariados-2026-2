@@ -179,13 +179,13 @@ digraph arvore {
      fontcolor = "white", fontsize = 19, penwidth = 0]
 
   B [label = "contínua e simétrica", fillcolor = "#dce8ee", color = "#1c6e8c", fontcolor = "#144f64"]
-  C [label = "contagem",             fillcolor = "#f1e3d3", color = "#b06a4a", fontcolor = "#8a4f34"]
-  D [label = "binária ou proporção", fillcolor = "#efe7d2", color = "#c08a3e", fontcolor = "#8a6329"]
-  E [label = "ordinal",              fillcolor = "#e3ecd9", color = "#6b8f4e", fontcolor = "#4d6b36"]
+  C [label = "contagem",             fillcolor = "#f1e3d3", color = "#a15e3f", fontcolor = "#8a4f34"]
+  D [label = "binária ou proporção", fillcolor = "#efe7d2", color = "#96661f", fontcolor = "#8a6329"]
+  E [label = "ordinal",              fillcolor = "#e3ecd9", color = "#527238", fontcolor = "#4d6b36"]
 
-  C1 [label = "sobredisperso?", shape = diamond, fillcolor = "#b06a4a",
+  C1 [label = "sobredisperso?", shape = diamond, fillcolor = "#a15e3f",
       fontcolor = "white", penwidth = 0, fontsize = 15]
-  C3 [label = "zeros a mais\ndepois da NB?", shape = diamond, fillcolor = "#b06a4a",
+  C3 [label = "zeros a mais\ndepois da NB?", shape = diamond, fillcolor = "#a15e3f",
       fontcolor = "white", penwidth = 0, fontsize = 15]
 
   node [fontname = "Courier-Bold", fillcolor = "white", color = "#d8d0bf",
@@ -198,18 +198,18 @@ digraph arvore {
   E1 [label = "clm()   clmm()"]
 
   A -> B [color = "#1c6e8c"]
-  A -> C [color = "#b06a4a"]
-  A -> D [color = "#c08a3e"]
-  A -> E [color = "#6b8f4e"]
+  A -> C [color = "#a15e3f"]
+  A -> D [color = "#96661f"]
+  A -> E [color = "#527238"]
 
   B  -> B1 [color = "#1c6e8c"]
-  C  -> C1 [color = "#b06a4a"]
-  C1 -> C2 [label = "  não", color = "#b06a4a"]
-  C1 -> C3 [label = "  sim", color = "#b06a4a"]
-  C3 -> C4 [label = "  não", color = "#b06a4a"]
-  C3 -> C5 [label = "  sim", color = "#b06a4a"]
-  D  -> D1 [color = "#c08a3e"]
-  E  -> E1 [color = "#6b8f4e"]
+  C  -> C1 [color = "#a15e3f"]
+  C1 -> C2 [label = "  não", color = "#a15e3f"]
+  C1 -> C3 [label = "  sim", color = "#a15e3f"]
+  C3 -> C4 [label = "  não", color = "#a15e3f"]
+  C3 -> C5 [label = "  sim", color = "#a15e3f"]
+  D  -> D1 [color = "#96661f"]
+  E  -> E1 [color = "#527238"]
 }
 ', height = 470)
 ```

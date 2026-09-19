@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-3b7cbe771201207b6a18613a17a44f89.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-3c544c867f8d04a2a4476225e630fb02.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -358,7 +358,7 @@ Diogo B. Provete
 <span id="cb1-4"><a></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>x) <span class="sc">|&gt;</span></span>
 <span id="cb1-5"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, value, <span class="at">colour =</span> name)) <span class="sc">+</span></span>
 <span id="cb1-6"><a></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb1-7"><a></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>, <span class="st">"#6b8f71"</span>)) <span class="sc">+</span></span>
+<span id="cb1-7"><a></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#96661f"</span>, <span class="st">"#4f7057"</span>)) <span class="sc">+</span></span>
 <span id="cb1-8"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Densidade"</span>, <span class="at">colour =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
@@ -377,7 +377,7 @@ Diogo B. Provete
 <span id="cb2-2"><a></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">dpois</span>(k, lambda), <span class="at">lambda =</span> <span class="fu">factor</span>(lambda)) <span class="sc">|&gt;</span></span>
 <span id="cb2-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(k, p, <span class="at">fill =</span> lambda)) <span class="sc">+</span></span>
 <span id="cb2-4"><a></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb2-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>, <span class="st">"#6b8f71"</span>)) <span class="sc">+</span></span>
+<span id="cb2-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#96661f"</span>, <span class="st">"#4f7057"</span>)) <span class="sc">+</span></span>
 <span id="cb2-6"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Contagem"</span>, <span class="at">y =</span> <span class="st">"P(Y = k)"</span>, <span class="at">fill =</span> <span class="st">"λ"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
@@ -398,7 +398,7 @@ Diogo B. Provete
 <span id="cb3-2"><a></a>  <span class="fu">mutate</span>(<span class="at">prob =</span> <span class="fu">dbinom</span>(k, <span class="dv">20</span>, p), <span class="at">p =</span> <span class="fu">factor</span>(p)) <span class="sc">|&gt;</span></span>
 <span id="cb3-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(k, prob, <span class="at">fill =</span> p)) <span class="sc">+</span></span>
 <span id="cb3-4"><a></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb3-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>, <span class="st">"#6b8f71"</span>)) <span class="sc">+</span></span>
+<span id="cb3-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#96661f"</span>, <span class="st">"#4f7057"</span>)) <span class="sc">+</span></span>
 <span id="cb3-6"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Sucessos em 20 tentativas"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="st">"p"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
@@ -417,7 +417,7 @@ Diogo B. Provete
 <span id="cb4-2"><a></a>  <span class="fu">mutate</span>(<span class="at">p =</span> <span class="fu">dnbinom</span>(k, <span class="at">size =</span> theta, <span class="at">mu =</span> <span class="dv">5</span>), <span class="at">theta =</span> <span class="fu">factor</span>(theta)) <span class="sc">|&gt;</span></span>
 <span id="cb4-3"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(k, p, <span class="at">fill =</span> theta)) <span class="sc">+</span></span>
 <span id="cb4-4"><a></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">"dodge"</span>) <span class="sc">+</span></span>
-<span id="cb4-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>, <span class="st">"#6b8f71"</span>)) <span class="sc">+</span></span>
+<span id="cb4-5"><a></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#96661f"</span>, <span class="st">"#4f7057"</span>)) <span class="sc">+</span></span>
 <span id="cb4-6"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Contagem"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">fill =</span> <span class="st">"θ"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
@@ -438,7 +438,7 @@ Diogo B. Provete
 <span id="cb5-4"><a></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>x) <span class="sc">|&gt;</span></span>
 <span id="cb5-5"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, value, <span class="at">colour =</span> name)) <span class="sc">+</span></span>
 <span id="cb5-6"><a></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb5-7"><a></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#c08a3e"</span>, <span class="st">"#6b8f71"</span>)) <span class="sc">+</span></span>
+<span id="cb5-7"><a></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#1c6e8c"</span>, <span class="st">"#96661f"</span>, <span class="st">"#4f7057"</span>)) <span class="sc">+</span></span>
 <span id="cb5-8"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Densidade"</span>, <span class="at">colour =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
@@ -504,7 +504,7 @@ Diogo B. Provete
 <span id="cb6-5"><a></a>            <span class="at">variancia =</span> <span class="fu">var</span>(Raillietiella_mottae), <span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
 <span id="cb6-6"><a></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(media, variancia)) <span class="sc">+</span></span>
 <span id="cb6-7"><a></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">colour =</span> <span class="st">"#1c6e8c"</span>) <span class="sc">+</span></span>
-<span id="cb6-8"><a></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#c08a3e"</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="dv">1</span>, <span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"#96661f"</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb6-9"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Média da classe"</span>, <span class="at">y =</span> <span class="st">"Variância da classe"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>

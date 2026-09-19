@@ -177,7 +177,7 @@ longa à direita.
 #| echo: false
 #| fig-width: 6.4
 #| fig-height: 5.1
-#| out-width: "46%"
+#| out-width: "64%"
 #| fig-align: center
 source("../R/ppdac.R")
 ppdac_plot()
@@ -215,15 +215,15 @@ digraph ppdac {
 
   P1 [label = "Problema",  fillcolor = "#144f64"]
   P2 [label = "Plano",     fillcolor = "#1c6e8c"]
-  D  [label = "Dados",     fillcolor = "#6b8f4e"]
-  A  [label = "Análise",   fillcolor = "#c08a3e"]
-  C  [label = "Conclusão", fillcolor = "#b06a4a"]
+  D  [label = "Dados",     fillcolor = "#527238"]
+  A  [label = "Análise",   fillcolor = "#96661f"]
+  C  [label = "Conclusão", fillcolor = "#a15e3f"]
 
   P1 -> P2 -> D -> A -> C
 
-  A -> D  [style = dashed, penwidth = 2.4, color = "#6b8f4e",
+  A -> D  [style = dashed, penwidth = 2.4, color = "#527238",
            constraint = false, arrowsize = 1.0]
-  C -> P1 [style = dashed, penwidth = 2.4, color = "#b06a4a",
+  C -> P1 [style = dashed, penwidth = 2.4, color = "#a15e3f",
            constraint = false, arrowsize = 1.0]
 }
 ', height = 150)
@@ -490,10 +490,10 @@ quarteto <- data.frame(
 )
 
 ggplot(quarteto, aes(x, y)) +
-  geom_smooth(method = "lm", se = FALSE, colour = "#c08a3e", linewidth = .8) +
+  geom_smooth(method = "lm", se = FALSE, colour = "#96661f", linewidth = .8) +
   geom_point(size = 2, colour = "#1c6e8c") +
   facet_wrap(~ conjunto, nrow = 1) +
-  theme_minimal(base_size = 13)
+  theme_minimal(base_size = 15)
 ```
 
 ---
@@ -533,9 +533,9 @@ dados |>
   mutate(ordem = row_number()) |>
   ggplot(aes(x = Pontuacao, y = ordem, colour = Grupo)) +
   geom_point() +
-  scale_colour_manual(values = c("#1c6e8c", "#c08a3e")) +
+  scale_colour_manual(values = c("#1c6e8c", "#96661f")) +
   labs(x = "Valor observado", y = "Ordem no arquivo") +
-  theme_minimal(base_size = 14)
+  theme_minimal(base_size = 15)
 ```
 
 ---
@@ -567,7 +567,7 @@ rikz <- read.table("../dados/RIKZ.txt", header = TRUE, row.names = 1) |>
 ggplot(rikz, aes(Beach, Richness)) +
   geom_boxplot(fill = "#1c6e8c", alpha = .45, outlier.shape = NA) +
   geom_jitter(width = .12, colour = "#144f64", size = 1.7) +
-  theme_minimal(base_size = 14) +
+  theme_minimal(base_size = 15) +
   labs(x = "Praia", y = "Riqueza de espécies")
 ```
 
@@ -601,7 +601,7 @@ delineamento, e é o Encontro 7.
 #| fig-height: 2.7
 ggplot(RK, aes(TOT.N)) +
   geom_histogram(bins = 20, fill = "#1c6e8c", colour = "white", alpha = .85) +
-  theme_minimal(base_size = 14) +
+  theme_minimal(base_size = 15) +
   labs(x = "Anfíbios mortos por sítio", y = "Frequência")
 ```
 
@@ -625,7 +625,7 @@ mal-entendidos mais caros da estatística aplicada.
 ggplot(RK, aes(TOT.N)) +
   geom_bar(fill = "#1c6e8c") +
   labs(x = "Anfíbios mortos", y = "Nº de sítios") +
-  theme_minimal(base_size = 14)
+  theme_minimal(base_size = 15)
 ```
 
 Quantos zeros são "demais" depende da distribuição assumida — é uma
@@ -657,7 +657,7 @@ ggplot(RK, aes(D.PARK, TOT.N)) +
   geom_point(colour = "#1c6e8c") +
   geom_smooth(method = "loess", se = FALSE, colour = "#144f64") +
   labs(x = "Distância ao parque (m)", y = "Anfíbios mortos") +
-  theme_minimal(base_size = 14)
+  theme_minimal(base_size = 15)
 ```
 
 Decrescente e claramente não linear. Uma reta ajustada aqui erraria de

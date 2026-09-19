@@ -8,13 +8,13 @@ library(dplyr)
 #' @param destaque vetor com as etapas a destacar; NULL destaca todas
 #' @param perguntas mostrar a pergunta-guia dentro de cada nó
 #' @param base tamanho base do texto
-ppdac_plot <- function(destaque = NULL, perguntas = TRUE, base = 4.6) {
+ppdac_plot <- function(destaque = NULL, perguntas = TRUE, base = 6.2) {
 
   accent      <- "#1c6e8c"
   accent_dark <- "#144f64"
   neutro      <- "#e6e0d3"
-  neutro_bord <- "#d3ccbc"
-  neutro_txt  <- "#8a8578"
+  neutro_bord <- "#b9b1a0"
+  neutro_txt  <- "#5f5a4e"
   papel       <- "#faf7f0"
 
   etapas <- tibble::tibble(
@@ -55,7 +55,7 @@ ppdac_plot <- function(destaque = NULL, perguntas = TRUE, base = 4.6) {
   ggplot() +
     geom_curve(data = setas, aes(x = xa, y = ya, xend = xb, yend = yb),
                curvature = -0.22, linewidth = 0.9, colour = accent_dark,
-               alpha = .55, lineend = "round",
+               alpha = .85, lineend = "round",
                arrow = arrow(length = unit(0.22, "cm"), type = "closed")) +
     geom_polygon(data = circulos, aes(cx, cy, group = id),
                  fill = circulos$cor_fill, colour = circulos$cor_bord,
@@ -64,7 +64,7 @@ ppdac_plot <- function(destaque = NULL, perguntas = TRUE, base = 4.6) {
               colour = etapas$cor_txt, fontface = "bold", size = base * 0.80) +
     {if (perguntas)
       geom_text(data = etapas, aes(x, y - 0.13, label = pergunta),
-                colour = etapas$cor_txt, size = base * 0.52, lineheight = 0.95)
+                colour = etapas$cor_txt, size = base * 0.55, lineheight = 0.95)
      else NULL} +
     coord_equal(clip = "off") +
     theme_void() +
