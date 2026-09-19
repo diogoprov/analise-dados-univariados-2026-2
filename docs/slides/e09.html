@@ -468,7 +468,91 @@ poisson 634.5 240.9 2  &lt;0.001</code></pre>
 <span id="cb5-6"><a></a>  <span class="at">parque_agua =</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> L.WAT.C, <span class="at">data =</span> RK)</span>
 <span id="cb5-7"><a></a>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>Cada modelo é uma <strong>hipótese biológica</strong>: a mortalidade é explicada pela proximidade à área-fonte, pela composição do habitat, pela presença de água, ou por uma combinação.</p>
+<p>O nome de cada modelo é a <strong>hipótese</strong>, não a lista de variáveis:</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 76%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>A frase que ele afirma</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>nulo</code></td>
+<td>a mortalidade não varia com nada que eu medi</td>
+</tr>
+<tr class="even">
+<td><code>parque</code></td>
+<td>o que importa é a distância à área-fonte de animais</td>
+</tr>
+<tr class="odd">
+<td><code>habitat</code></td>
+<td>o que importa é a composição da paisagem ao redor</td>
+</tr>
+<tr class="even">
+<td><code>agua</code></td>
+<td>o que importa é o acesso a corpos d’água</td>
+</tr>
+<tr class="odd">
+<td><code>parque_agua</code></td>
+<td>fonte e água agem juntas, e nenhuma das duas sozinha</td>
+</tr>
+</tbody>
+</table>
+<div class="nota">
+<p>Se você não consegue escrever a coluna da direita antes de ajustar, o conjunto não foi definido <em>a priori</em> — foi definido pelos dados, e os pesos deixam de significar o que dizem.</p>
+</div>
+</section>
+<section id="como-isso-se-faz-de-verdade" class="slide level2 smaller">
+<h2>Como isso se faz de verdade</h2>
+<p>Van Buskirk (2005) mediu 83 lagoas na Suíça ao longo de sete anos e montou <strong>16 modelos</strong> para a ocorrência e a densidade de oito espécies de anfíbios. Ele os divide em dois grupos.</p>
+<p><strong>Treze modelos-núcleo</strong>, cruzando três categorias de covariáveis — abióticas locais, bióticas locais e de paisagem — cada uma sozinha e em todas as combinações, com versões lineares e quadráticas onde a teoria previa ótimo intermediário.</p>
+<p><strong>Três modelos batizados com o nome da ideia</strong>, cada um vindo de um programa de pesquisa diferente:</p>
+<table class="caption-top" style="width:99%;">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 28%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Modelo</th>
+<th>Covariáveis</th>
+<th>O que afirma</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>hydroperiod model</em></td>
+<td>ano, permanência, competidores</td>
+<td>persistência da lagoa e competição governam a distribuição</td>
+</tr>
+<tr class="even">
+<td><em>Wellborn model</em></td>
+<td>ano, permanência, predação, peixes</td>
+<td>o que governa são as transições de predador ao longo do gradiente</td>
+</tr>
+<tr class="odd">
+<td><em>competition model</em></td>
+<td>ano, competidores</td>
+<td>só a competição importa</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="o-que-esse-conjunto-ensina" class="slide level2 smaller">
+<h2>O que esse conjunto ensina</h2>
+<div class="definicao">
+<p>Os modelos têm <strong>nome de hipótese</strong>, não de variável. “<em>Wellborn model</em>” é uma citação a um artigo de 1996 traduzida em preditoras — quem lê sabe o que está sendo testado antes de ver qualquer número.</p>
+</div>
+<p>O resultado, no resumo do próprio artigo: os dados apoiam fortemente os modelos que incluem covariáveis <strong>locais e de paisagem ao mesmo tempo</strong> — ou seja, nenhum dos programas de pesquisa isolados venceu.</p>
+<div class="nota">
+<p>Três detalhes de ofício que valem copiar: ele usa <strong>AICc</strong>, troca para QAICc quando o <span class="math inline">\(\hat{c}\)</span> do modelo global passa de 1, e declara um modelo sem apoio quando a razão de evidência fica abaixo de 0,1 — um décimo do peso do melhor. E justifica por que não usou <em>stepwise</em> citando Anderson et al.&nbsp;(2000): valores de <em>p</em> são <em>“a poor criterion for selecting among alternative models”</em>. Van Buskirk, J. 2005. <a href="https://doi.org/10.1890/04-1237">Local and landscape influence on amphibian occurrence and abundance</a>. <em>Ecology</em> 86:1936–1947.</p>
+</div>
 </section>
 <section id="calculando-à-mão" class="slide level2">
 <h2>Calculando à mão</h2>
@@ -1083,6 +1167,7 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 <li>Anderson, D.R.; Burnham, K.P. &amp; Thompson, W.L. 2000. <a href="https://doi.org/10.2307/3803199">Null hypothesis testing: problems, prevalence, and an alternative</a>. <em>The Journal of Wildlife Management</em> 64:912–923.</li>
 <li>Anderson, D.R. &amp; Burnham, K.P. 2002. <a href="https://doi.org/10.2307/3803155">Avoiding pitfalls when using information-theoretic methods</a>. <em>The Journal of Wildlife Management</em> 66:912–918.</li>
 <li>Whittingham, M.J.; Stephens, P.A.; Bradbury, R.B. &amp; Freckleton, R.P. 2006. <a href="https://doi.org/10.1111/j.1365-2656.2006.01141.x">Why do we still use stepwise modelling in ecology and behaviour?</a> <em>Journal of Animal Ecology</em> 75:1182–1189.</li>
+<li>Van Buskirk, J. 2005. <a href="https://doi.org/10.1890/04-1237">Local and landscape influence on amphibian occurrence and abundance</a>. <em>Ecology</em> 86:1936–1947.</li>
 <li>Galipaud, M.; Gillingham, M.A.F.; David, M. &amp; Dechaume-Moncharmont, F.-X. 2014. <a href="https://doi.org/10.1111/2041-210X.12251">Ecologists overestimate the importance of predictor variables in model averaging: a plea for cautious interpretations</a>. <em>Methods in Ecology and Evolution</em> 5:983–991.</li>
 <li>Blanchet, F.G.; Legendre, P. &amp; Borcard, D. 2008. <a href="https://doi.org/10.1890/07-0986.1">Forward selection of explanatory variables</a>. <em>Ecology</em> 89:2623–2632.</li>
 <li>Mundry, R. &amp; Nunn, C.L. 2009. <a href="https://doi.org/10.1086/593303">Stepwise model fitting and statistical inference: turning noise into signal pollution</a>. <em>The American Naturalist</em> 173:119–123.</li>

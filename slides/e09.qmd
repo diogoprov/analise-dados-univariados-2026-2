@@ -341,9 +341,80 @@ modelos <- list(
 )
 ```
 
-Cada modelo é uma **hipótese biológica**: a mortalidade é explicada pela
-proximidade à área-fonte, pela composição do habitat, pela presença de
-água, ou por uma combinação.
+O nome de cada modelo é a **hipótese**, não a lista de variáveis:
+
++-----------------+--------------------------------------------------------+
+| Modelo          | A frase que ele afirma                                 |
++=================+========================================================+
+| `nulo`          | a mortalidade não varia com nada que eu medi           |
++-----------------+--------------------------------------------------------+
+| `parque`        | o que importa é a distância à área-fonte de animais    |
++-----------------+--------------------------------------------------------+
+| `habitat`       | o que importa é a composição da paisagem ao redor      |
++-----------------+--------------------------------------------------------+
+| `agua`          | o que importa é o acesso a corpos d'água               |
++-----------------+--------------------------------------------------------+
+| `parque_agua`   | fonte e água agem juntas, e nenhuma das duas sozinha   |
++-----------------+--------------------------------------------------------+
+
+::: {.nota}
+Se você não consegue escrever a coluna da direita antes de ajustar, o
+conjunto não foi definido *a priori* — foi definido pelos dados, e os
+pesos deixam de significar o que dizem.
+:::
+
+---
+
+## Como isso se faz de verdade {.smaller}
+
+Van Buskirk (2005) mediu 83 lagoas na Suíça ao longo de sete anos e montou
+**16 modelos** para a ocorrência e a densidade de oito espécies de
+anfíbios. Ele os divide em dois grupos.
+
+**Treze modelos-núcleo**, cruzando três categorias de covariáveis —
+abióticas locais, bióticas locais e de paisagem — cada uma sozinha e em
+todas as combinações, com versões lineares e quadráticas onde a teoria
+previa ótimo intermediário.
+
+**Três modelos batizados com o nome da ideia**, cada um vindo de um
+programa de pesquisa diferente:
+
++-----------------------+--------------------------+-------------------------------------------+
+| Modelo                | Covariáveis              | O que afirma                              |
++=======================+==========================+===========================================+
+| *hydroperiod model*   | ano, permanência,        | persistência da lagoa e competição        |
+|                       | competidores             | governam a distribuição                   |
++-----------------------+--------------------------+-------------------------------------------+
+| *Wellborn model*      | ano, permanência,        | o que governa são as transições de        |
+|                       | predação, peixes         | predador ao longo do gradiente            |
++-----------------------+--------------------------+-------------------------------------------+
+| *competition model*   | ano, competidores        | só a competição importa                   |
++-----------------------+--------------------------+-------------------------------------------+
+
+---
+
+## O que esse conjunto ensina {.smaller}
+
+::: {.definicao}
+Os modelos têm **nome de hipótese**, não de variável. "*Wellborn model*"
+é uma citação a um artigo de 1996 traduzida em preditoras — quem lê sabe
+o que está sendo testado antes de ver qualquer número.
+:::
+
+O resultado, no resumo do próprio artigo: os dados apoiam fortemente os
+modelos que incluem covariáveis **locais e de paisagem ao mesmo tempo** —
+ou seja, nenhum dos programas de pesquisa isolados venceu.
+
+::: {.nota}
+Três detalhes de ofício que valem copiar: ele usa **AICc**, troca para
+QAICc quando o $\hat{c}$ do modelo global passa de 1, e declara um modelo
+sem apoio quando a razão de evidência fica abaixo de 0,1 — um décimo do
+peso do melhor. E justifica por que não usou *stepwise* citando Anderson
+et al. (2000): valores de *p* são *"a poor criterion for selecting among
+alternative models"*. Van Buskirk, J. 2005. [Local and landscape influence
+on amphibian occurrence and
+abundance](https://doi.org/10.1890/04-1237). *Ecology* 86:1936–1947.
+:::
 
 ---
 
@@ -987,6 +1058,7 @@ Depois, cinco minutos de apresentação por pessoa.
 - Anderson, D.R.; Burnham, K.P. & Thompson, W.L. 2000. [Null hypothesis testing: problems, prevalence, and an alternative](https://doi.org/10.2307/3803199). *The Journal of Wildlife Management* 64:912–923.
 - Anderson, D.R. & Burnham, K.P. 2002. [Avoiding pitfalls when using information-theoretic methods](https://doi.org/10.2307/3803155). *The Journal of Wildlife Management* 66:912–918.
 - Whittingham, M.J.; Stephens, P.A.; Bradbury, R.B. & Freckleton, R.P. 2006. [Why do we still use stepwise modelling in ecology and behaviour?](https://doi.org/10.1111/j.1365-2656.2006.01141.x) *Journal of Animal Ecology* 75:1182–1189.
+- Van Buskirk, J. 2005. [Local and landscape influence on amphibian occurrence and abundance](https://doi.org/10.1890/04-1237). *Ecology* 86:1936–1947.
 - Galipaud, M.; Gillingham, M.A.F.; David, M. & Dechaume-Moncharmont, F.-X. 2014. [Ecologists overestimate the importance of predictor variables in model averaging: a plea for cautious interpretations](https://doi.org/10.1111/2041-210X.12251). *Methods in Ecology and Evolution* 5:983–991.
 - Blanchet, F.G.; Legendre, P. & Borcard, D. 2008. [Forward selection of explanatory variables](https://doi.org/10.1890/07-0986.1). *Ecology* 89:2623–2632.
 - Mundry, R. & Nunn, C.L. 2009. [Stepwise model fitting and statistical inference: turning noise into signal pollution](https://doi.org/10.1086/593303). *The American Naturalist* 173:119–123.
