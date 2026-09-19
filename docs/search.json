@@ -3441,7 +3441,7 @@
     "href": "slides/e09.html#onde-a-aproximação-falha",
     "title": "Teoria da informação e seleção de modelos",
     "section": "Onde a aproximação falha",
-    "text": "Onde a aproximação falha\n\nplot(loo_a)\n\n\n\n\n\n\n\n\nNenhum critério de informação frequentista faz isso. Você descobre não só que o modelo é pior, mas quais observações ele não consegue predizer."
+    "text": "Onde a aproximação falha\n\n\n\n\n\n\n\n\n\nCada ponto é uma observação, e o tamanho é quantos atropelamentos ela registrou. Nenhum critério de informação frequentista faz isso: você descobre não só que o modelo é pior, mas quais observações ele não consegue predizer — e aqui elas são as de contagem extrema.\n\nplot(loo_a) devolve essa mesma informação em um gráfico pronto, sem cores. Para saber quem são: which(loo_a$diagnostics$pareto_k &gt; 0.7). Acima de 0,7 a aproximação do PSIS não vale para aquela observação, e a saída de loo() sugere o reloo, que reajusta o modelo sem ela."
   },
   {
     "objectID": "slides/e09.html#não-selecionar-mediar",

@@ -969,7 +969,6 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 <section id="onde-a-aproximação-falha" class="slide level2 smaller">
 <h2>Onde a aproximação falha</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">plot</span>(loo_a)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -978,7 +977,10 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 </div>
 </div>
 </div>
-<p>Nenhum critério de informação frequentista faz isso. Você descobre não só que o modelo é pior, mas <strong>quais observações</strong> ele não consegue predizer.</p>
+<p>Cada ponto é <strong>uma observação</strong>, e o tamanho é quantos atropelamentos ela registrou. Nenhum critério de informação frequentista faz isso: você descobre não só que o modelo é pior, mas <strong>quais</strong> observações ele não consegue predizer — e aqui elas são as de contagem extrema.</p>
+<div class="nota">
+<p><code>plot(loo_a)</code> devolve essa mesma informação em um gráfico pronto, sem cores. Para saber quem são: <code>which(loo_a$diagnostics$pareto_k &gt; 0.7)</code>. Acima de 0,7 a aproximação do PSIS não vale para aquela observação, e a saída de <code>loo()</code> sugere o <code>reloo</code>, que reajusta o modelo sem ela.</p>
+</div>
 </section>
 <section id="não-selecionar-mediar" class="slide level2">
 <h2>Não selecionar, mediar</h2>

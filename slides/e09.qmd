@@ -863,12 +863,38 @@ print(loo_a)        # valores de k-hat; > 0,7 é problema
 ## Onde a aproximação falha {.smaller}
 
 ```{r}
-#| fig-height: 3.4
-plot(loo_a)
+#| fig-height: 3.5
+#| echo: false
+tibble(obs    = seq_len(nrow(RK)),
+       k      = loo_a$diagnostics$pareto_k,
+       mortes = RK$TOT.N) |>
+  mutate(classe = case_when(k > 0.7 ~ "acima de 0,7: muito influente",
+                            k > 0.5 ~ "entre 0,5 e 0,7: moderada",
+                            TRUE    ~ "abaixo de 0,5: tudo bem"),
+         classe = factor(classe, levels = c("abaixo de 0,5: tudo bem",
+                                            "entre 0,5 e 0,7: moderada",
+                                            "acima de 0,7: muito influente"))) |>
+  ggplot(aes(obs, k)) +
+  geom_hline(yintercept = 0.5, linetype = "dashed", colour = "#c08a3e") +
+  geom_hline(yintercept = 0.7, colour = "#b06a4a") +
+  geom_point(aes(colour = classe, size = mortes), alpha = .85) +
+  scale_colour_manual(values = c("#1c6e8c", "#c08a3e", "#b06a4a"), drop = FALSE) +
+  scale_size_continuous(range = c(1.2, 5)) +
+  labs(x = "observação", y = expression(hat(k)~de~Pareto),
+       colour = NULL, size = "mortes\nobservadas")
 ```
 
-Nenhum critério de informação frequentista faz isso. Você descobre não só
-que o modelo é pior, mas **quais observações** ele não consegue predizer.
+Cada ponto é **uma observação**, e o tamanho é quantos atropelamentos ela
+registrou. Nenhum critério de informação frequentista faz isso: você
+descobre não só que o modelo é pior, mas **quais** observações ele não
+consegue predizer — e aqui elas são as de contagem extrema.
+
+::: {.nota}
+`plot(loo_a)` devolve essa mesma informação em um gráfico pronto, sem
+cores. Para saber quem são: `which(loo_a$diagnostics$pareto_k > 0.7)`.
+Acima de 0,7 a aproximação do PSIS não vale para aquela observação, e a
+saída de `loo()` sugere o `reloo`, que reajusta o modelo sem ela.
+:::
 
 ---
 
