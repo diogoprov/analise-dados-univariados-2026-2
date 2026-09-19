@@ -350,16 +350,15 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a></a>m1 <span class="ot">&lt;-</span> <span class="fu">glm</span>(TOT.N <span class="sc">~</span> D.PARK_km, <span class="at">family =</span> poisson, <span class="at">data =</span> RK)</span>
 <span id="cb1-2"><a></a>m2 <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK_km, <span class="at">data =</span> RK)</span>
-<span id="cb1-3"><a></a><span class="fu">c</span>(<span class="at">logLik_pois =</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(<span class="fu">logLik</span>(m1)), <span class="dv">1</span>), <span class="at">K_pois =</span> <span class="fu">attr</span>(<span class="fu">logLik</span>(m1), <span class="st">"df"</span>),</span>
-<span id="cb1-4"><a></a>  <span class="at">AIC_pois =</span> <span class="fu">round</span>(<span class="fu">AIC</span>(m1)),</span>
-<span id="cb1-5"><a></a>  <span class="at">logLik_nb =</span> <span class="fu">round</span>(<span class="fu">as.numeric</span>(<span class="fu">logLik</span>(m2)), <span class="dv">1</span>), <span class="at">K_nb =</span> <span class="fu">attr</span>(<span class="fu">logLik</span>(m2), <span class="st">"df"</span>),</span>
-<span id="cb1-6"><a></a>  <span class="at">AIC_nb =</span> <span class="fu">round</span>(<span class="fu">AIC</span>(m2)))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-3"><a></a><span class="fu">ICtab</span>(<span class="fu">list</span>(<span class="at">poisson =</span> m1, <span class="at">nb =</span> m2), <span class="at">type =</span> <span class="st">"AICc"</span>, <span class="at">weights =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb1-4"><a></a>      <span class="at">delta =</span> <span class="cn">TRUE</span>, <span class="at">base =</span> <span class="cn">TRUE</span>, <span class="at">mnames =</span> <span class="fu">c</span>(<span class="st">"poisson"</span>, <span class="st">"nb"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>logLik_pois      K_pois    AIC_pois   logLik_nb        K_nb      AIC_nb 
-     -315.1         2.0       634.0      -193.5         3.0       393.0 </code></pre>
+<pre><code>        AICc  dAICc df weight
+nb      393.6   0.0 3  1     
+poisson 634.5 240.9 2  &lt;0.001</code></pre>
 </div>
 </div>
-<p>A NB gasta <strong>um</strong> parâmetro a mais e ganha centenas de unidades de AIC.</p>
+<p>A NB gasta <strong>um</strong> parâmetro a mais — é a coluna <code>df</code> — e ganha 241 unidades de AICc. O peso de Akaike da Poisson não chega a 0,001.</p>
 </section>
 <section id="o-que-o-aic-não-é" class="slide level2">
 <h2>O que o AIC não é</h2>
@@ -499,6 +498,25 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 </div>
 </div>
 </section>
+<section id="a-mesma-tabela-com-uma-função" class="slide level2 smaller">
+<h2>A mesma tabela, com uma função</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">ICtab</span>(modelos, <span class="at">type =</span> <span class="st">"AICc"</span>, <span class="at">weights =</span> <span class="cn">TRUE</span>, <span class="at">delta =</span> <span class="cn">TRUE</span>, <span class="at">base =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb8-2"><a></a>      <span class="at">mnames =</span> <span class="fu">names</span>(modelos))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            AICc  dAICc df weight
+parque_agua 393.5   0.0 4  0.51  
+parque      393.6   0.0 3  0.49  
+agua        446.3  52.8 4  &lt;0.001
+habitat     446.7  53.2 4  &lt;0.001
+nulo        447.9  54.4 2  &lt;0.001</code></pre>
+</div>
+</div>
+<p>Os mesmos números, na mesma ordem. O <code>ICtab()</code> do <code>bbmle</code> ordena, calcula <span class="math inline">\(\Delta_i\)</span> e devolve o peso de Akaike; <code>base = TRUE</code> mantém o AICc bruto na tabela, e <code>type = "AICc"</code> é o que você quer por padrão.</p>
+<div class="nota">
+<p>Fizemos à mão primeiro porque a fórmula é de três linhas e vale ver de onde saem o <span class="math inline">\(\Delta\)</span> e o peso. Daqui em diante, use a função. Um detalhe: passe <code>mnames</code> — sem ele o <code>ICtab()</code> monta os nomes deparsando os argumentos, e uma lista de modelos vira uma linha ilegível.</p>
+</div>
+</section>
 <section id="como-se-leem" class="slide level2">
 <h2>Como se leem</h2>
 <ul>
@@ -507,7 +525,7 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <li><strong>Razão de evidência</strong> <span class="math inline">\(w_i / w_j\)</span> — quantas vezes um modelo é mais plausível que o outro.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">round</span>(tab<span class="sc">$</span>peso[<span class="dv">1</span>] <span class="sc">/</span> tab<span class="sc">$</span>peso[<span class="dv">2</span>], <span class="dv">1</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">round</span>(tab<span class="sc">$</span>peso[<span class="dv">1</span>] <span class="sc">/</span> tab<span class="sc">$</span>peso[<span class="dv">2</span>], <span class="dv">1</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>parque_agua 
           1 </code></pre>
@@ -552,9 +570,9 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <h2><em>Model averaging</em></h2>
 <p>Quando vários modelos têm suporte parecido, escolher um e ignorar os outros descarta incerteza real.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">library</span>(MuMIn)</span>
-<span id="cb10-2"><a></a></span>
-<span id="cb10-3"><a></a>med <span class="ot">&lt;-</span> <span class="fu">model.avg</span>(modelos, <span class="at">fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">library</span>(MuMIn)</span>
+<span id="cb12-2"><a></a></span>
+<span id="cb12-3"><a></a>med <span class="ot">&lt;-</span> <span class="fu">model.avg</span>(modelos, <span class="at">fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="nota">
 <p>Duas formas de média: <strong>condicional</strong> (só sobre os modelos em que o termo aparece) e <strong>completa</strong> (contando zero onde ele não aparece). Diga qual usou — elas dão respostas diferentes.</p>
@@ -563,12 +581,12 @@ D_{KL}(f \parallel g) = \int f(x)\,\log\frac{f(x)}{g(x)}\,dx
 <section id="os-coeficientes-médios" class="slide level2 smaller">
 <h2>Os coeficientes médios</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(med), <span class="dv">3</span>)       <span class="co"># médias condicionais</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(med), <span class="dv">3</span>)       <span class="co"># médias condicionais</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)   D.PARK_km     L.WAT.C   D.WAT.RES      OPEN.L      MONT.S 
       4.332      -0.118       0.130      -0.001      -0.015       0.011 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">confint</span>(med)              <span class="co"># intervalos, propagando a incerteza entre modelos</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">confint</span>(med)              <span class="co"># intervalos, propagando a incerteza entre modelos</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   2.5 %        97.5 %
 (Intercept)  3.962566290  4.7008441736
@@ -626,13 +644,13 @@ MONT.S      -0.111084050  0.1332850330</code></pre>
 <section id="o-garimpo" class="slide level2 smaller">
 <h2>O garimpo</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a>global <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> OPEN.L <span class="sc">+</span> MONT.S <span class="sc">+</span> L.WAT.C <span class="sc">+</span></span>
-<span id="cb15-2"><a></a>                         D.WAT.RES <span class="sc">+</span> URBAN <span class="sc">+</span> N.PATCH <span class="sc">+</span> P.EDGE, <span class="at">data =</span> RK)</span>
-<span id="cb15-3"><a></a></span>
-<span id="cb15-4"><a></a>antigo  <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">na.action =</span> <span class="st">"na.fail"</span>)   <span class="co"># o dredge() exige; desfazemos abaixo</span></span>
-<span id="cb15-5"><a></a>garimpo <span class="ot">&lt;-</span> MuMIn<span class="sc">::</span><span class="fu">dredge</span>(global)           <span class="co"># 256 modelos</span></span>
-<span id="cb15-6"><a></a><span class="fu">options</span>(antigo)</span>
-<span id="cb15-7"><a></a><span class="fu">head</span>(garimpo, <span class="dv">5</span>)                           <span class="co"># as cinco melhores</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>global <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> OPEN.L <span class="sc">+</span> MONT.S <span class="sc">+</span> L.WAT.C <span class="sc">+</span></span>
+<span id="cb17-2"><a></a>                         D.WAT.RES <span class="sc">+</span> URBAN <span class="sc">+</span> N.PATCH <span class="sc">+</span> P.EDGE, <span class="at">data =</span> RK)</span>
+<span id="cb17-3"><a></a></span>
+<span id="cb17-4"><a></a>antigo  <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">na.action =</span> <span class="st">"na.fail"</span>)   <span class="co"># o dredge() exige; desfazemos abaixo</span></span>
+<span id="cb17-5"><a></a>garimpo <span class="ot">&lt;-</span> MuMIn<span class="sc">::</span><span class="fu">dredge</span>(global)           <span class="co"># 256 modelos</span></span>
+<span id="cb17-6"><a></a><span class="fu">options</span>(antigo)</span>
+<span id="cb17-7"><a></a><span class="fu">head</span>(garimpo, <span class="dv">5</span>)                           <span class="co"># as cinco melhores</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Global model call: MASS::glm.nb(formula = TOT.N ~ D.PARK_km + OPEN.L + MONT.S + 
     L.WAT.C + D.WAT.RES + URBAN + N.PATCH + P.EDGE, data = RK, 
@@ -796,15 +814,15 @@ Chain 1:   Gradient evaluated at the initial value is not finite.</code></pre>
 <section id="na-prática-1" class="slide level2">
 <h2>Na prática</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">library</span>(brms)</span>
-<span id="cb18-2"><a></a><span class="fu">library</span>(loo)</span>
-<span id="cb18-3"><a></a></span>
-<span id="cb18-4"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
-<span id="cb18-5"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_a"</span>)</span>
-<span id="cb18-6"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> L.WAT.C, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
-<span id="cb18-7"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_b"</span>)</span>
-<span id="cb18-8"><a></a></span>
-<span id="cb18-9"><a></a><span class="fu">loo_compare</span>(<span class="fu">loo</span>(m_a), <span class="fu">loo</span>(m_b))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">library</span>(brms)</span>
+<span id="cb20-2"><a></a><span class="fu">library</span>(loo)</span>
+<span id="cb20-3"><a></a></span>
+<span id="cb20-4"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
+<span id="cb20-5"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_a"</span>)</span>
+<span id="cb20-6"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> L.WAT.C, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
+<span id="cb20-7"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_b"</span>)</span>
+<span id="cb20-8"><a></a></span>
+<span id="cb20-9"><a></a><span class="fu">loo_compare</span>(<span class="fu">loo</span>(m_a), <span class="fu">loo</span>(m_b))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> model elpd_diff se_diff p_worse diag_diff diag_elpd
    m_b       0.0     0.0      NA                    
@@ -868,8 +886,8 @@ Chain 1:   Gradient evaluated at the initial value is not finite.</code></pre>
 <h2>A vantagem do <span class="math inline">\(\hat{k}\)</span></h2>
 <p>O PSIS-LOO avisa quando a aproximação falha, observação por observação.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a>loo_a <span class="ot">&lt;-</span> <span class="fu">loo</span>(m_a)</span>
-<span id="cb20-2"><a></a><span class="fu">print</span>(loo_a)        <span class="co"># valores de k-hat; &gt; 0,7 é problema</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>loo_a <span class="ot">&lt;-</span> <span class="fu">loo</span>(m_a)</span>
+<span id="cb22-2"><a></a><span class="fu">print</span>(loo_a)        <span class="co"># valores de k-hat; &gt; 0,7 é problema</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Computed from 4000 by 52 log-likelihood matrix.
@@ -890,11 +908,11 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 <section id="onde-a-aproximação-falha" class="slide level2 smaller">
 <h2>Onde a aproximação falha</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a><span class="fu">plot</span>(loo_a)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">plot</span>(loo_a)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e09_files/figure-revealjs/unnamed-chunk-15-1.png" width="672"></p>
+<p><img data-src="e09_files/figure-revealjs/unnamed-chunk-16-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -970,7 +988,7 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 <ol type="1">
 <li>Escreva de 3 a 5 hipóteses biológicas para os <strong>seus</strong> dados, em palavras.</li>
 <li>Traduza cada uma em um modelo. Inclua o nulo.</li>
-<li>Monte a tabela de AICc, <span class="math inline">\(\Delta_i\)</span> e pesos — pode ser à mão, como fizemos.</li>
+<li>Monte a tabela de AICc, <span class="math inline">\(\Delta_i\)</span> e pesos com <code>ICtab(..., type = "AICc", weights = TRUE, base = TRUE)</code>.</li>
 <li>Escreva o parágrafo de resultados a partir da tabela.</li>
 <li>Diagnostique o modelo mais bem apoiado.</li>
 </ol>

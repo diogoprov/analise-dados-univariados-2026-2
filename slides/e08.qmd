@@ -36,6 +36,7 @@ execute:
 library(tidyverse)
 library(lme4)
 library(glmmTMB)
+library(bbmle)
 theme_set(theme_minimal(base_size = 14))
 rikz <- read.table("../dados/RIKZ.txt", header = TRUE, row.names = 1) |>
   mutate(Beach = factor(Beach))
@@ -121,17 +122,25 @@ m_olre <- glmer(Richness ~ NAP + (1 | Beach) + (1 | obs),
                 family = poisson, data = rikz)
 m_nb   <- glmmTMB(Richness ~ NAP + (1 | Beach), family = nbinom2, data = rikz)
 
-AIC(m_pois, m_olre, m_nb)
+ICtab(list(poisson = m_pois, olre = m_olre, nb = m_nb),
+      type = "AICc", weights = TRUE, delta = TRUE, base = TRUE,
+      mnames = c("poisson", "olre", "nb"))
 ```
+
+::: {.nota}
+`bbmle::ICtab()` já ordena, já calcula o $\Delta$ e já devolve o peso de
+Akaike. `base = TRUE` mantém o AICc bruto na tabela; sem ele você vê só
+os deltas.
+:::
 
 ---
 
 ## E o que essa tabela diz
 
 ::: {.definicao}
-Os três modelos ficam a menos de 2 unidades de AIC um do outro, e a razão
-de *deviance* do Poisson era 1,15. **Não havia sobredispersão a corrigir.**
-O remédio não era necessário.
+Os três modelos ficam dentro de 1,5 unidade de AICc, nenhum leva mais de
+43% do peso de Akaike, e a razão de *deviance* do Poisson era 1,15.
+**Não havia sobredispersão a corrigir.** O remédio não era necessário.
 :::
 
 Isso é um resultado, não um fracasso do procedimento. O Poisson com

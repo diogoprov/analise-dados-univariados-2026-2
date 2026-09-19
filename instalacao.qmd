@@ -57,7 +57,7 @@ pacotes <- c(
   "lme4", "lmerTest", "pbkrtest", "glmmTMB", "DHARMa", "ordinal", "pscl",
   "lmtest",
   # seleção de modelos
-  "MuMIn", "AICcmodavg",
+  "MuMIn", "AICcmodavg", "bbmle",
   # raciocínio causal
   "dagitty", "ggdag"
 )

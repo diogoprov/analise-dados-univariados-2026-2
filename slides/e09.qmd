@@ -34,6 +34,7 @@ execute:
 ```{r}
 #| echo: false
 library(tidyverse)
+library(bbmle)
 theme_set(theme_minimal(base_size = 14))
 RK <- read.delim("../dados/RoadKills.txt")
 # distância ao parque em km em vez de metros: o coeficiente fica legível e o
@@ -238,13 +239,12 @@ O polinômio de grau 10 ajusta **melhor** estes 15 pontos e prediz
 ```{r}
 m1 <- glm(TOT.N ~ D.PARK_km, family = poisson, data = RK)
 m2 <- MASS::glm.nb(TOT.N ~ D.PARK_km, data = RK)
-c(logLik_pois = round(as.numeric(logLik(m1)), 1), K_pois = attr(logLik(m1), "df"),
-  AIC_pois = round(AIC(m1)),
-  logLik_nb = round(as.numeric(logLik(m2)), 1), K_nb = attr(logLik(m2), "df"),
-  AIC_nb = round(AIC(m2)))
+ICtab(list(poisson = m1, nb = m2), type = "AICc", weights = TRUE,
+      delta = TRUE, base = TRUE, mnames = c("poisson", "nb"))
 ```
 
-A NB gasta **um** parâmetro a mais e ganha centenas de unidades de AIC.
+A NB gasta **um** parâmetro a mais — é a coluna `df` — e ganha 241
+unidades de AICc. O peso de Akaike da Poisson não chega a 0,001.
 
 ---
 
@@ -364,6 +364,26 @@ tab |> mutate(across(c(AICc, delta), \(x) round(x, 1)),
               peso = round(peso, 3)) |>
   dplyr::select(modelo, K, AICc, delta, peso)
 ```
+
+---
+
+## A mesma tabela, com uma função {.smaller}
+
+```{r}
+ICtab(modelos, type = "AICc", weights = TRUE, delta = TRUE, base = TRUE,
+      mnames = names(modelos))
+```
+
+Os mesmos números, na mesma ordem. O `ICtab()` do `bbmle` ordena, calcula
+$\Delta_i$ e devolve o peso de Akaike; `base = TRUE` mantém o AICc bruto
+na tabela, e `type = "AICc"` é o que você quer por padrão.
+
+::: {.nota}
+Fizemos à mão primeiro porque a fórmula é de três linhas e vale ver de
+onde saem o $\Delta$ e o peso. Daqui em diante, use a função. Um detalhe:
+passe `mnames` — sem ele o `ICtab()` monta os nomes deparsando os
+argumentos, e uma lista de modelos vira uma linha ilegível.
+:::
 
 ---
 
@@ -818,8 +838,8 @@ duas, e não misturar o vocabulário das duas na mesma seção de métodos.
 1. Escreva de 3 a 5 hipóteses biológicas para os **seus** dados, em
    palavras.
 2. Traduza cada uma em um modelo. Inclua o nulo.
-3. Monte a tabela de AICc, $\Delta_i$ e pesos — pode ser à mão, como
-   fizemos.
+3. Monte a tabela de AICc, $\Delta_i$ e pesos com
+   `ICtab(..., type = "AICc", weights = TRUE, base = TRUE)`.
 4. Escreva o parágrafo de resultados a partir da tabela.
 5. Diagnostique o modelo mais bem apoiado.
 

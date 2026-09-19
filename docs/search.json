@@ -235,14 +235,14 @@
     "href": "slides/e08.html#comparando",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Comparando",
-    "text": "Comparando\n\nrikz$obs &lt;- factor(seq_len(nrow(rikz)))\nm_olre &lt;- glmer(Richness ~ NAP + (1 | Beach) + (1 | obs),\n                family = poisson, data = rikz)\nm_nb   &lt;- glmmTMB(Richness ~ NAP + (1 | Beach), family = nbinom2, data = rikz)\n\nAIC(m_pois, m_olre, m_nb)\n\n       df      AIC\nm_pois  3 220.7843\nm_olre  4 219.0835\nm_nb    4 219.4731"
+    "text": "Comparando\n\nrikz$obs &lt;- factor(seq_len(nrow(rikz)))\nm_olre &lt;- glmer(Richness ~ NAP + (1 | Beach) + (1 | obs),\n                family = poisson, data = rikz)\nm_nb   &lt;- glmmTMB(Richness ~ NAP + (1 | Beach), family = nbinom2, data = rikz)\n\nICtab(list(poisson = m_pois, olre = m_olre, nb = m_nb),\n      type = \"AICc\", weights = TRUE, delta = TRUE, base = TRUE,\n      mnames = c(\"poisson\", \"olre\", \"nb\"))\n\n        AICc  dAICc df weight\nolre    220.1   0.0 4  0.43  \nnb      220.5   0.4 4  0.35  \npoisson 221.4   1.3 3  0.22  \n\n\n\nbbmle::ICtab() já ordena, já calcula o \\(\\Delta\\) e já devolve o peso de Akaike. base = TRUE mantém o AICc bruto na tabela; sem ele você vê só os deltas."
   },
   {
     "objectID": "slides/e08.html#e-o-que-essa-tabela-diz",
     "href": "slides/e08.html#e-o-que-essa-tabela-diz",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "E o que essa tabela diz",
-    "text": "E o que essa tabela diz\n\nOs três modelos ficam a menos de 2 unidades de AIC um do outro, e a razão de deviance do Poisson era 1,15. Não havia sobredispersão a corrigir. O remédio não era necessário.\n\nIsso é um resultado, não um fracasso do procedimento. O Poisson com intercepto aleatório já dá conta: a variação que parecia excesso estava na estrutura de praias, e o efeito aleatório a absorveu.\nGuardem esta conclusão. Vamos reencontrá-la à tarde, de um jeito bem mais dramático."
+    "text": "E o que essa tabela diz\n\nOs três modelos ficam dentro de 1,5 unidade de AICc, nenhum leva mais de 43% do peso de Akaike, e a razão de deviance do Poisson era 1,15. Não havia sobredispersão a corrigir. O remédio não era necessário.\n\nIsso é um resultado, não um fracasso do procedimento. O Poisson com intercepto aleatório já dá conta: a variação que parecia excesso estava na estrutura de praias, e o efeito aleatório a absorveu.\nGuardem esta conclusão. Vamos reencontrá-la à tarde, de um jeito bem mais dramático."
   },
   {
     "objectID": "slides/e08.html#lme4-ou-glmmtmb",
@@ -557,7 +557,7 @@
     "href": "slides/e06.html#remédio-2-binomial-negativa",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Remédio 2: binomial negativa",
-    "text": "Remédio 2: binomial negativa\n\nlibrary(MASS)   # atenção: MASS::select mascara dplyr::select\nm_nb &lt;- glm.nb(TOT.N ~ D.PARK, data = RK)\nc(theta = round(m_nb$theta, 2),\n  razao_deviance = round(deviance(m_nb)/df.residual(m_nb), 2),\n  AIC_poisson = round(AIC(m_rk)), AIC_nb = round(AIC(m_nb)))\n\n         theta razao_deviance    AIC_poisson         AIC_nb \n          3.68           1.09         634.00         393.00 \n\n\n\n\\(\\theta\\) controla o excesso de variância: \\(\\mathrm{Var} = \\mu +\n\\mu^2/\\theta\\). A razão de deviance volta para perto de 1, e o AIC cai mais de mil unidades."
+    "text": "Remédio 2: binomial negativa\n\nlibrary(MASS)   # atenção: MASS::select mascara dplyr::select\nm_nb &lt;- glm.nb(TOT.N ~ D.PARK, data = RK)\nc(theta = round(m_nb$theta, 2),\n  razao_deviance = round(deviance(m_nb)/df.residual(m_nb), 2))\n\n         theta razao_deviance \n          3.68           1.09 \n\nICtab(list(poisson = m_rk, nb = m_nb), type = \"AICc\", weights = TRUE,\n      delta = TRUE, base = TRUE, mnames = c(\"poisson\", \"nb\"))\n\n        AICc  dAICc df weight\nnb      393.6   0.0 3  1     \npoisson 634.5 240.9 2  &lt;0.001\n\n\n\n\\(\\theta\\) controla o excesso de variância: \\(\\mathrm{Var} = \\mu +\n\\mu^2/\\theta\\). A razão de deviance cai de 7,8 para 1,1, e a binomial negativa fica 241 unidades de AICc abaixo da Poisson — todo o peso de Akaike."
   },
   {
     "objectID": "slides/e06.html#o-efeito-prático-nos-erros-padrão",
@@ -627,7 +627,7 @@
     "href": "slides/e06.html#comparando",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Comparando",
-    "text": "Comparando\n\nAIC(pois_plain, ziP, ziNB, hurNB)\n\n           df      AIC\npois_plain  5 319.8933\nziP        10 274.4603\nziNB       11 275.8312\nhurNB      11 277.8095"
+    "text": "Comparando\n\nICtab(list(poisson = pois_plain, ZIP = ziP, ZINB = ziNB, hurdleNB = hurNB),\n      type = \"AICc\", weights = TRUE, delta = TRUE, base = TRUE,\n      mnames = c(\"poisson\", \"ZIP\", \"ZINB\", \"hurdleNB\"))\n\n         AICc  dAICc df weight\nZIP      275.7   0.0 10 0.62  \nZINB     277.3   1.6 11 0.28  \nhurdleNB 279.3   3.6 11 0.10  \npoisson  320.2  44.6 5  &lt;0.001\n\n\nO ZIP leva 62% do peso, a ZINB 28% e o hurdle 10%. A Poisson simples fica 45 unidades atrás: o excesso de zeros era real. Mas entre os três candidatos nenhum manda sozinho — e a escolha entre ZIP e ZINB volta a ser biológica, não aritmética."
   },
   {
     "objectID": "slides/e06.html#confira-se-os-zeros-foram-mesmo-resolvidos",
@@ -1936,7 +1936,7 @@
     "href": "instalacao.html#pacotes",
     "title": "Preparação do ambiente",
     "section": "2. Pacotes",
-    "text": "2. Pacotes\nRode o bloco abaixo no console do R. Ele instala apenas o que estiver faltando.\n\npacotes &lt;- c(\n  # manipulação e visualização\n  \"tidyverse\", \"here\", \"janitor\", \"palmerpenguins\", \"patchwork\",\n  \"GGally\", \"ggeffects\", \"broom\", \"broom.mixed\", \"knitr\", \"rmarkdown\",\n  \"plotly\",\n  # modelos lineares e GLM\n  \"car\", \"emmeans\", \"MASS\", \"performance\", \"see\", \"sjPlot\", \"marginaleffects\",\n  \"usdm\", \"parameters\", \"effectsize\", \"report\",\n  # versão bayesiana dos mesmos modelos\n  \"loo\", \"bayesplot\",\n  # GLMM, zeros inflados e ordinais\n  \"lme4\", \"lmerTest\", \"pbkrtest\", \"glmmTMB\", \"DHARMa\", \"ordinal\", \"pscl\",\n  \"lmtest\",\n  # seleção de modelos\n  \"MuMIn\", \"AICcmodavg\",\n  # raciocínio causal\n  \"dagitty\", \"ggdag\"\n)\n\nfaltando &lt;- setdiff(pacotes, rownames(installed.packages()))\nif (length(faltando)) install.packages(faltando)\n\n\nbrms e Stan — o passo demorado\nUsamos o brms do Encontro 2 em diante, sempre ao lado do modelo frequentista equivalente. A razão de ser ele, e não outro pacote bayesiano, é que a sintaxe é idêntica à do lme4 e do glmmTMB: y ~ x + (1 | grupo) significa a mesma coisa nos três. Você aprende uma notação só.\nO preço é que o brms compila um programa Stan para cada modelo novo. Por isso ele precisa de compilador C++ e de paciência na primeira execução.\n\ninstall.packages(\"brms\")   # puxa rstan e StanHeaders\n\nTeste a compilação com um modelo mínimo. A primeira execução demora; as seguintes, não.\n\nlibrary(brms)\n\nteste &lt;- brm(mpg ~ wt, data = mtcars, chains = 2, iter = 1000, refresh = 0)\nsummary(teste)\n\nSe summary() imprimir uma tabela com Rhat igual a 1.00, está pronto.\n\n\n\n\n\n\nDicaAlternativa mais rápida: cmdstanr\n\n\n\nSe a instalação do rstan der problema — o que acontece com alguma frequência no Windows —, o caminho alternativo é o cmdstanr, que baixa um Stan pré-compilado. As instruções oficiais estão em https://mc-stan.org/cmdstanr/. Depois, use backend = \"cmdstanr\" nas chamadas a brm().\n\n\n\n\nOpcional — conteúdo de JSDM\nNão precisa instalar antes do curso. O bloco de multivariados baseados em modelos e JSDM é opcional nesta oferta: ele aparece como panorama no encerramento da sexta-feira, sem prática em sala. Estes pacotes ficam indicados para quem quiser seguir o assunto depois.\n\ninstall.packages(c(\"Hmsc\", \"mvabund\", \"gllvm\"))"
+    "text": "2. Pacotes\nRode o bloco abaixo no console do R. Ele instala apenas o que estiver faltando.\n\npacotes &lt;- c(\n  # manipulação e visualização\n  \"tidyverse\", \"here\", \"janitor\", \"palmerpenguins\", \"patchwork\",\n  \"GGally\", \"ggeffects\", \"broom\", \"broom.mixed\", \"knitr\", \"rmarkdown\",\n  \"plotly\",\n  # modelos lineares e GLM\n  \"car\", \"emmeans\", \"MASS\", \"performance\", \"see\", \"sjPlot\", \"marginaleffects\",\n  \"usdm\", \"parameters\", \"effectsize\", \"report\",\n  # versão bayesiana dos mesmos modelos\n  \"loo\", \"bayesplot\",\n  # GLMM, zeros inflados e ordinais\n  \"lme4\", \"lmerTest\", \"pbkrtest\", \"glmmTMB\", \"DHARMa\", \"ordinal\", \"pscl\",\n  \"lmtest\",\n  # seleção de modelos\n  \"MuMIn\", \"AICcmodavg\", \"bbmle\",\n  # raciocínio causal\n  \"dagitty\", \"ggdag\"\n)\n\nfaltando &lt;- setdiff(pacotes, rownames(installed.packages()))\nif (length(faltando)) install.packages(faltando)\n\n\nbrms e Stan — o passo demorado\nUsamos o brms do Encontro 2 em diante, sempre ao lado do modelo frequentista equivalente. A razão de ser ele, e não outro pacote bayesiano, é que a sintaxe é idêntica à do lme4 e do glmmTMB: y ~ x + (1 | grupo) significa a mesma coisa nos três. Você aprende uma notação só.\nO preço é que o brms compila um programa Stan para cada modelo novo. Por isso ele precisa de compilador C++ e de paciência na primeira execução.\n\ninstall.packages(\"brms\")   # puxa rstan e StanHeaders\n\nTeste a compilação com um modelo mínimo. A primeira execução demora; as seguintes, não.\n\nlibrary(brms)\n\nteste &lt;- brm(mpg ~ wt, data = mtcars, chains = 2, iter = 1000, refresh = 0)\nsummary(teste)\n\nSe summary() imprimir uma tabela com Rhat igual a 1.00, está pronto.\n\n\n\n\n\n\nDicaAlternativa mais rápida: cmdstanr\n\n\n\nSe a instalação do rstan der problema — o que acontece com alguma frequência no Windows —, o caminho alternativo é o cmdstanr, que baixa um Stan pré-compilado. As instruções oficiais estão em https://mc-stan.org/cmdstanr/. Depois, use backend = \"cmdstanr\" nas chamadas a brm().\n\n\n\n\nOpcional — conteúdo de JSDM\nNão precisa instalar antes do curso. O bloco de multivariados baseados em modelos e JSDM é opcional nesta oferta: ele aparece como panorama no encerramento da sexta-feira, sem prática em sala. Estes pacotes ficam indicados para quem quiser seguir o assunto depois.\n\ninstall.packages(c(\"Hmsc\", \"mvabund\", \"gllvm\"))"
   },
   {
     "objectID": "instalacao.html#verificação",
@@ -3203,7 +3203,7 @@
     "href": "slides/e09.html#na-prática",
     "title": "Teoria da informação e seleção de modelos",
     "section": "Na prática",
-    "text": "Na prática\n\nm1 &lt;- glm(TOT.N ~ D.PARK_km, family = poisson, data = RK)\nm2 &lt;- MASS::glm.nb(TOT.N ~ D.PARK_km, data = RK)\nc(logLik_pois = round(as.numeric(logLik(m1)), 1), K_pois = attr(logLik(m1), \"df\"),\n  AIC_pois = round(AIC(m1)),\n  logLik_nb = round(as.numeric(logLik(m2)), 1), K_nb = attr(logLik(m2), \"df\"),\n  AIC_nb = round(AIC(m2)))\n\nlogLik_pois      K_pois    AIC_pois   logLik_nb        K_nb      AIC_nb \n     -315.1         2.0       634.0      -193.5         3.0       393.0 \n\n\nA NB gasta um parâmetro a mais e ganha centenas de unidades de AIC."
+    "text": "Na prática\n\nm1 &lt;- glm(TOT.N ~ D.PARK_km, family = poisson, data = RK)\nm2 &lt;- MASS::glm.nb(TOT.N ~ D.PARK_km, data = RK)\nICtab(list(poisson = m1, nb = m2), type = \"AICc\", weights = TRUE,\n      delta = TRUE, base = TRUE, mnames = c(\"poisson\", \"nb\"))\n\n        AICc  dAICc df weight\nnb      393.6   0.0 3  1     \npoisson 634.5 240.9 2  &lt;0.001\n\n\nA NB gasta um parâmetro a mais — é a coluna df — e ganha 241 unidades de AICc. O peso de Akaike da Poisson não chega a 0,001."
   },
   {
     "objectID": "slides/e09.html#o-que-o-aic-não-é",
@@ -3239,6 +3239,13 @@
     "title": "Teoria da informação e seleção de modelos",
     "section": "Calculando à mão",
     "text": "Calculando à mão\n\ntab &lt;- tibble(\n  modelo = names(modelos),\n  K      = map_dbl(modelos, \\(m) attr(logLik(m), \"df\")),\n  AICc   = map_dbl(modelos, aicc)\n) |&gt;\n  arrange(AICc) |&gt;\n  mutate(delta = AICc - min(AICc),\n         vero_rel = exp(-0.5 * delta),\n         peso = vero_rel / sum(vero_rel))\n\ntab |&gt; mutate(across(c(AICc, delta), \\(x) round(x, 1)),\n              peso = round(peso, 3)) |&gt;\n  dplyr::select(modelo, K, AICc, delta, peso)\n\n# A tibble: 5 × 5\n  modelo          K  AICc delta  peso\n  &lt;chr&gt;       &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;\n1 parque_agua     4  394.   0   0.506\n2 parque          3  394.   0   0.494\n3 agua            4  446.  52.8 0    \n4 habitat         4  447.  53.2 0    \n5 nulo            2  448.  54.4 0"
+  },
+  {
+    "objectID": "slides/e09.html#a-mesma-tabela-com-uma-função",
+    "href": "slides/e09.html#a-mesma-tabela-com-uma-função",
+    "title": "Teoria da informação e seleção de modelos",
+    "section": "A mesma tabela, com uma função",
+    "text": "A mesma tabela, com uma função\n\nICtab(modelos, type = \"AICc\", weights = TRUE, delta = TRUE, base = TRUE,\n      mnames = names(modelos))\n\n            AICc  dAICc df weight\nparque_agua 393.5   0.0 4  0.51  \nparque      393.6   0.0 3  0.49  \nagua        446.3  52.8 4  &lt;0.001\nhabitat     446.7  53.2 4  &lt;0.001\nnulo        447.9  54.4 2  &lt;0.001\n\n\nOs mesmos números, na mesma ordem. O ICtab() do bbmle ordena, calcula \\(\\Delta_i\\) e devolve o peso de Akaike; base = TRUE mantém o AICc bruto na tabela, e type = \"AICc\" é o que você quer por padrão.\n\nFizemos à mão primeiro porque a fórmula é de três linhas e vale ver de onde saem o \\(\\Delta\\) e o peso. Daqui em diante, use a função. Um detalhe: passe mnames — sem ele o ICtab() monta os nomes deparsando os argumentos, e uma lista de modelos vira uma linha ilegível."
   },
   {
     "objectID": "slides/e09.html#como-se-leem",
@@ -3420,7 +3427,7 @@
     "href": "slides/e09.html#prática-o-resto-do-bloco",
     "title": "Teoria da informação e seleção de modelos",
     "section": "Prática (o resto do bloco)",
-    "text": "Prática (o resto do bloco)\n\nEscreva de 3 a 5 hipóteses biológicas para os seus dados, em palavras.\nTraduza cada uma em um modelo. Inclua o nulo.\nMonte a tabela de AICc, \\(\\Delta_i\\) e pesos — pode ser à mão, como fizemos.\nEscreva o parágrafo de resultados a partir da tabela.\nDiagnostique o modelo mais bem apoiado."
+    "text": "Prática (o resto do bloco)\n\nEscreva de 3 a 5 hipóteses biológicas para os seus dados, em palavras.\nTraduza cada uma em um modelo. Inclua o nulo.\nMonte a tabela de AICc, \\(\\Delta_i\\) e pesos com ICtab(..., type = \"AICc\", weights = TRUE, base = TRUE).\nEscreva o parágrafo de resultados a partir da tabela.\nDiagnostique o modelo mais bem apoiado."
   },
   {
     "objectID": "slides/e09.html#à-tarde",

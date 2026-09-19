@@ -34,6 +34,7 @@ execute:
 ```{r}
 #| echo: false
 library(tidyverse)
+library(bbmle)
 theme_set(theme_minimal(base_size = 14))
 RK <- read.delim("../dados/RoadKills.txt")
 parasitas <- read_tsv("../dados/Planilha_Pentastomida.txt", show_col_types = FALSE) |>
@@ -274,14 +275,17 @@ isso **não tem verossimilhança nem AIC**, o que atrapalha no Encontro 9.
 library(MASS)   # atenção: MASS::select mascara dplyr::select
 m_nb <- glm.nb(TOT.N ~ D.PARK, data = RK)
 c(theta = round(m_nb$theta, 2),
-  razao_deviance = round(deviance(m_nb)/df.residual(m_nb), 2),
-  AIC_poisson = round(AIC(m_rk)), AIC_nb = round(AIC(m_nb)))
+  razao_deviance = round(deviance(m_nb)/df.residual(m_nb), 2))
+
+ICtab(list(poisson = m_rk, nb = m_nb), type = "AICc", weights = TRUE,
+      delta = TRUE, base = TRUE, mnames = c("poisson", "nb"))
 ```
 
 ::: {.definicao}
 $\theta$ controla o excesso de variância: $\mathrm{Var} = \mu +
-\mu^2/\theta$. A razão de *deviance* volta para perto de 1, e o AIC cai
-mais de mil unidades.
+\mu^2/\theta$. A razão de *deviance* cai de 7,8 para 1,1, e a binomial
+negativa fica 241 unidades de AICc abaixo da Poisson — todo o peso de
+Akaike.
 :::
 
 ---
@@ -450,8 +454,15 @@ O `~ .` é um ponto de partida cômodo, não uma escolha automática.
 ## Comparando
 
 ```{r}
-AIC(pois_plain, ziP, ziNB, hurNB)
+ICtab(list(poisson = pois_plain, ZIP = ziP, ZINB = ziNB, hurdleNB = hurNB),
+      type = "AICc", weights = TRUE, delta = TRUE, base = TRUE,
+      mnames = c("poisson", "ZIP", "ZINB", "hurdleNB"))
 ```
+
+O ZIP leva 62% do peso, a ZINB 28% e o *hurdle* 10%. A Poisson simples
+fica 45 unidades atrás: o excesso de zeros era real. Mas entre os três
+candidatos nenhum manda sozinho — e a escolha entre ZIP e ZINB volta a
+ser biológica, não aritmética.
 
 ---
 
