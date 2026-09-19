@@ -263,6 +263,13 @@ Relate os dois.
 
 **Sempre diga o que o efeito aleatório representa no delineamento.**
 
+::: {.nota}
+O [`report`](https://easystats.github.io/report/) (Encontro 5) monta o
+esqueleto desse parágrafo a partir do ajuste. O que ele não escreve é
+justamente a frase acima — o que o efeito aleatório significa no
+delineamento — e é a que o revisor procura.
+:::
+
 ---
 
 # Intervalo {.secao}

@@ -50,7 +50,7 @@ pacotes <- c(
   "plotly",
   # modelos lineares e GLM
   "car", "emmeans", "MASS", "performance", "see", "sjPlot", "marginaleffects",
-  "usdm", "parameters",
+  "usdm", "parameters", "effectsize", "report",
   # versão bayesiana dos mesmos modelos
   "loo", "bayesplot",
   # GLMM, zeros inflados e ordinais

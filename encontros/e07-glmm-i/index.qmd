@@ -55,6 +55,8 @@ curso, com um *take-home* por item:
 
 **Complementar**
 
+- Wasserstein, R.L. & Lazar, N.A. 2016. [The ASA Statement on *p*-Values: Context, Process, and Purpose](https://doi.org/10.1080/00031305.2016.1154108). *The American Statistician* 70:129–133.
+- Ben-Shachar, M.S.; Lüdecke, D. & Makowski, D. 2020. [effectsize: Estimation of Effect Size Indices and Standardized Parameters](https://doi.org/10.21105/joss.02815). *Journal of Open Source Software* 5(56):2815.
 - Gomes, D.G.E. 2022. [Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model?](https://doi.org/10.7717/peerj.12794). *PeerJ* 10:e12794. — a regra dos cinco níveis posta à prova por simulação.
 - Bolker, B.M. e colaboradores. [*GLMM FAQ*](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html) — a referência viva sobre modelos mistos em R. Veja em especial ["Should I treat factor xxx as fixed or random?"](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#should-i-treat-factor-xxx-as-fixed-or-random).
 - Harrison, X.A. et al. 2018. [A brief introduction to mixed effects modelling and multi-model inference in ecology](https://doi.org/10.7717/peerj.4794). *PeerJ* 6:e4794.
@@ -65,6 +67,8 @@ curso, com um *take-home* por item:
 
 - [`car::Anova()` para `glmmTMB`](https://cran.r-project.org/web/packages/glmmTMB/refman/glmmTMB.html#Anova.glmmTMB) — teste por termo, qui-quadrado de Wald, tipos II e III.
 - [`parameters::model_parameters()`](https://easystats.github.io/parameters/reference/model_parameters.glmmTMB.html) — tabela de saída com estimativa, intervalo e *p*, com `ci_method` à escolha (Wald, Satterthwaite, Kenward-Roger, perfil, *bootstrap*).
+- [`effectsize`](https://easystats.github.io/effectsize/) — índices de tamanho de efeito e parâmetros padronizados.
+- [`report`](https://easystats.github.io/report/) — rascunho automático do parágrafo de resultados a partir do ajuste.
 - [*GLMM FAQ* — Model specification](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#model-specification) — a tabela de sintaxe de efeitos aleatórios, com as equações ao lado.
 
 ---

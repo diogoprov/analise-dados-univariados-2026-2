@@ -356,15 +356,11 @@ estatístico que a substitua.
 
 ## Quatro origens para o mesmo zero
 
-![](../assets/origens-do-zero.svg){fig-align="center" width="97%"}
+![](../assets/origens-do-zero.svg){fig-align="center" width="90%"}
 
 ::: {.nota}
-Esquema desenhado para esta aula a partir da classificação de Blasco-Moreno, A.;
-Pérez-Casany, M.; Puig, P.; Morante, M. & Castells, E. 2019. [What does a zero
-mean? Understanding false, random and structural zeros in
-ecology](https://doi.org/10.1111/2041-210X.13185). *Methods in Ecology and
-Evolution* 10(7):949–959. Silhueta de *Coleodactylus meridionalis* por Jose
-Carlos Arenas-Monroy, no [PhyloPic](https://www.phylopic.org), sob CC0 1.0.
+Esquema próprio, a partir da classificação de [Blasco-Moreno et
+al. 2019](https://doi.org/10.1111/2041-210X.13185). Silhuetas: PhyloPic, CC0.
 :::
 
 ---

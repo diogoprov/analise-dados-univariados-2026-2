@@ -445,6 +445,9 @@ alternative hypothesis: two.sided</code></pre>
 <p>“Ajustamos um GLMM de Poisson com ligação log (<code>lme4</code> 1.1.x), com NAP como efeito fixo e intercepto aleatório por praia (9 praias, 45 amostras). A estrutura aleatória reflete que as amostras foram coletadas em transectos dentro de praias. A razão entre <em>deviance</em> residual e graus de liberdade foi 1,15 e a comparação por AIC com alternativas binomial negativa e com efeito aleatório em nível de observação não indicou sobredispersão relevante (ΔAIC &lt; 2). Diagnóstico com resíduos quantílicos simulados (<code>DHARMa</code>, 1000 simulações). <span class="math inline">\(R^2\)</span> marginal = …, condicional = ….”</p>
 </blockquote>
 <p><strong>Sempre diga o que o efeito aleatório representa no delineamento.</strong></p>
+<div class="nota">
+<p>O <a href="https://easystats.github.io/report/"><code>report</code></a> (Encontro 5) monta o esqueleto desse parágrafo a partir do ajuste. O que ele não escreve é justamente a frase acima — o que o efeito aleatório significa no delineamento — e é a que o revisor procura.</p>
+</div>
 </section>
 <section class="slide level2">
 

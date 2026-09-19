@@ -516,6 +516,58 @@ discussão sobre graus de liberdade.
 
 ---
 
+## O que o *p* não diz {.smaller}
+
+A declaração da ASA sobre valores de *p* tem seis princípios. Três deles
+caem exatamente aqui:
+
+- **3.** Nenhuma conclusão científica deve depender só de o *p* cruzar um
+  limiar.
+- **4.** Inferência honesta exige relato completo e transparência.
+- **5.** O valor de *p*, ou a significância estatística, **não mede o
+  tamanho de um efeito** nem a importância de um resultado.
+
+::: {.definicao}
+O intervalo do slide anterior responde "de quanto é, nas unidades em que
+eu medi". O **tamanho de efeito** responde "de quanto é, numa unidade
+comparável entre estudos".
+:::
+
+::: {.nota}
+Wasserstein, R.L. & Lazar, N.A. 2016. [The ASA Statement on *p*-Values:
+Context, Process, and
+Purpose](https://doi.org/10.1080/00031305.2016.1154108). *The American
+Statistician* 70:129–133.
+:::
+
+---
+
+## Tamanho de efeito no R {.smaller}
+
+```{r}
+library(effectsize)
+
+standardize_parameters(m_mix)
+```
+
+O `NAP` vale **−0,51 desvio-padrão de riqueza** por desvio-padrão de
+altura — um número que atravessa estudos com outras réguas.
+
+::: {.nota}
+O [`effectsize`](https://easystats.github.io/effectsize/) cobre as
+famílias todas: `cohens_d()` e `hedges_g()` para diferenças padronizadas,
+`eta_squared()` e `omega_squared()` para variância explicada,
+`cramers_v()` para tabelas de contingência, e conversões entre elas
+(`d_to_r()`, `oddsratio_to_riskratio()`). A família `interpret_*()`
+traduz o número em "pequeno/médio/grande" segundo regras que você escolhe
+— `cohen1988`, `gignac2016`, `funder2019`. Escolher a régua já é uma
+decisão sua: elas são convenções, não medidas. Ben-Shachar, M.S.;
+Lüdecke, D. & Makowski, D. 2020. [effectsize](https://doi.org/10.21105/joss.02815).
+*Journal of Open Source Software* 5(56):2815.
+:::
+
+---
+
 ## REML ou ML?
 
 - **REML** (padrão do `lmer`) — estima as variâncias sem viés. Use para
@@ -576,6 +628,8 @@ modelo em bayesiano.
 
 ::: {.nota}
 - Bolker, B.M. et al. 2009. [Generalized linear mixed models: a practical guide for ecology and evolution](https://doi.org/10.1016/j.tree.2008.10.008). *Trends in Ecology & Evolution* 24:127–135.
+- Wasserstein, R.L. & Lazar, N.A. 2016. [The ASA Statement on *p*-Values: Context, Process, and Purpose](https://doi.org/10.1080/00031305.2016.1154108). *The American Statistician* 70:129–133.
+- Ben-Shachar, M.S.; Lüdecke, D. & Makowski, D. 2020. [effectsize: Estimation of Effect Size Indices and Standardized Parameters](https://doi.org/10.21105/joss.02815). *Journal of Open Source Software* 5(56):2815.
 - Gomes, D.G.E. 2022. [Should I use fixed effects or random effects when I have fewer than five levels of a grouping factor in a mixed-effects model?](https://doi.org/10.7717/peerj.12794). *PeerJ* 10:e12794.
 - Bolker, B.M. e colaboradores. [*GLMM FAQ*](https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html) — a referência viva sobre modelos mistos em R: o que é efeito aleatório, quantos níveis bastam, convergência, teste de hipótese.
 - Harrison, X.A. et al. 2018. [A brief introduction to mixed effects modelling and multi-model inference in ecology](https://doi.org/10.7717/peerj.4794). *PeerJ* 6:e4794.

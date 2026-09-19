@@ -513,6 +513,14 @@ concreta**, na escala da resposta, com intervalo.
 
 Um revisor consegue julgar essa frase. `β = −0,0001` ele não consegue.
 
+::: {.nota}
+O pacote [`report`](https://easystats.github.io/report/) escreve um
+primeiro rascunho desse parágrafo a partir do próprio ajuste:
+`report(m_bin)` devolve modelo, ajuste e cada parâmetro com intervalo, em
+prosa. É ponto de partida, não produto: sai em inglês, no formato da APA,
+e não sabe qual comparação é a biologicamente interessante. Você edita.
+:::
+
 ---
 
 # 5. Que covariáveis entram {.secao}
