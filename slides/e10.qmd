@@ -164,28 +164,59 @@ Se a frase não sair, o problema não é o R.
 
 ## A árvore de decisão do curso
 
-```{mermaid}
-%%| echo: false
-%%| fig-height: 4.2
-flowchart TD
-  A[Que tipo de resposta?] --> B[Contínua e simétrica]
-  A --> C[Contagem]
-  A --> D[Binária ou proporção]
-  A --> E[Ordinal]
-  B --> B1["lm() / lmer()"]
-  C --> C1{Sobredisperso?}
-  C1 -- não --> C2["glm(poisson)"]
-  C1 -- sim --> C3{Excesso de zeros<br/>depois da NB?}
-  C3 -- não --> C4["glm.nb() / glmmTMB(nbinom2)"]
-  C3 -- sim --> C5["glmmTMB(ziformula=)"]
-  D --> D1["glm(binomial)"]
-  E --> E1["ordinal::clm() / clmm()"]
-  B1 --> F{Observações<br/>agrupadas?}
-  C2 --> F
-  C4 --> F
-  D1 --> F
-  F -- sim --> G["acrescente (1 | grupo)"]
+```{r}
+#| echo: false
+DiagrammeR::grViz('
+digraph arvore {
+  graph [rankdir = TB, bgcolor = "transparent", nodesep = 0.30, ranksep = 0.50,
+         fontname = "Helvetica"]
+  node  [fontname = "Helvetica", fontsize = 16, style = "filled,rounded",
+         shape = box, penwidth = 1.8, margin = "0.18,0.10"]
+  edge  [penwidth = 2.4, arrowsize = 1.0, fontname = "Helvetica",
+         fontsize = 14, fontcolor = "#4a5568"]
+
+  A [label = "que tipo de resposta?", shape = oval, fillcolor = "#1c6e8c",
+     fontcolor = "white", fontsize = 19, penwidth = 0]
+
+  B [label = "contínua e simétrica", fillcolor = "#dce8ee", color = "#1c6e8c", fontcolor = "#144f64"]
+  C [label = "contagem",             fillcolor = "#f1e3d3", color = "#b06a4a", fontcolor = "#8a4f34"]
+  D [label = "binária ou proporção", fillcolor = "#efe7d2", color = "#c08a3e", fontcolor = "#8a6329"]
+  E [label = "ordinal",              fillcolor = "#e3ecd9", color = "#6b8f4e", fontcolor = "#4d6b36"]
+
+  C1 [label = "sobredisperso?", shape = diamond, fillcolor = "#b06a4a",
+      fontcolor = "white", penwidth = 0, fontsize = 15]
+  C3 [label = "zeros a mais\ndepois da NB?", shape = diamond, fillcolor = "#b06a4a",
+      fontcolor = "white", penwidth = 0, fontsize = 15]
+
+  node [fontname = "Courier-Bold", fillcolor = "white", color = "#d8d0bf",
+        fontcolor = "#2d3748", fontsize = 15]
+  B1 [label = "lm()   lmer()"]
+  C2 [label = "glm(poisson)"]
+  C4 [label = "glm.nb()\nglmmTMB(nbinom2)"]
+  C5 [label = "glmmTMB(ziformula=)"]
+  D1 [label = "glm(binomial)"]
+  E1 [label = "clm()   clmm()"]
+
+  A -> B [color = "#1c6e8c"]
+  A -> C [color = "#b06a4a"]
+  A -> D [color = "#c08a3e"]
+  A -> E [color = "#6b8f4e"]
+
+  B  -> B1 [color = "#1c6e8c"]
+  C  -> C1 [color = "#b06a4a"]
+  C1 -> C2 [label = "  não", color = "#b06a4a"]
+  C1 -> C3 [label = "  sim", color = "#b06a4a"]
+  C3 -> C4 [label = "  não", color = "#b06a4a"]
+  C3 -> C5 [label = "  sim", color = "#b06a4a"]
+  D  -> D1 [color = "#c08a3e"]
+  E  -> E1 [color = "#6b8f4e"]
+}
+', height = 470)
 ```
+
+E em **qualquer** ramo: se as observações vêm em grupos, acrescente
+`(1 | grupo)`. A pergunta do agrupamento é do delineamento, não da
+distribuição — ela não é o último passo, é um passo paralelo.
 
 ---
 
@@ -258,7 +289,11 @@ que descrevem associação entre espécies.
 - **Dependência espacial e temporal** — `nlme` com estruturas de
   correlação; INLA; modelos autorregressivos.
 - **Comparativos filogenéticos** — `phylolm`, `MCMCglmm`, `brms` com
-  matriz de covariância filogenética.
+  matriz de covariância filogenética, e o `glmmTMB` com a estrutura
+  [`propto()`](https://cran.r-project.org/web/packages/glmmTMB/vignettes/covstruct.html#proportional),
+  que ajusta o modelo misto filogenético por máxima verossimilhança — o
+  remédio para a pseudorréplica filogenética do Encontro 7, na sintaxe que
+  vocês já conhecem.
 - **Ocupação e detecção imperfeita** — `unmarked`, `spOccupancy`.
 - **Inferência causal** — DAGs além do critério *backdoor*; Arif &
   MacNeil (2023).
@@ -272,7 +307,8 @@ que descrevem associação entre espécies.
 Estrutura, critérios e esqueleto em
 [provetelab.org/analise-dados-univariados-2026-2/trabalho-final](https://provetelab.org/analise-dados-univariados-2026-2/trabalho-final.html).
 
-Combinemos agora o prazo.
+**O prazo é de uma semana**: entrega até **2 de outubro**, por e-mail,
+seguindo a lista de conferência da página.
 
 ::: {.nota}
 Lembrete: declarar o uso de modelos de linguagem — modelo, versão, que

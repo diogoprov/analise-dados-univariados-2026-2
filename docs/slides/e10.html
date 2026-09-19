@@ -121,9 +121,10 @@
       margin-right: 0; 
     }
   </style>
-  <script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
-  <script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
-  <link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+  <script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+  <script src="../site_libs/viz-1.8.2/viz.js"></script>
+  <link href="../site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
+  <script src="../site_libs/grViz-binding-1.0.12/grViz.js"></script>
 <meta property="og:title" content="Clínica Estatística e encerramento – Análise de Dados Univariados">
 <meta property="og:description" content="Encontro 10 · Análise de Dados Univariados · PPGBA/UFMS">
 <meta property="og:site_name" content="Análise de Dados Univariados">
@@ -260,35 +261,13 @@ Diogo B. Provete
 </section>
 <section id="a-árvore-de-decisão-do-curso" class="slide level2">
 <h2>A árvore de decisão do curso</h2>
-<div class="cell" data-reveal="true" data-fig-height="4.2" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div>
-<p></p><figure class=""><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-  A[Que tipo de resposta?] --&gt; B[Contínua e simétrica]
-  A --&gt; C[Contagem]
-  A --&gt; D[Binária ou proporção]
-  A --&gt; E[Ordinal]
-  B --&gt; B1["lm() / lmer()"]
-  C --&gt; C1{Sobredisperso?}
-  C1 -- não --&gt; C2["glm(poisson)"]
-  C1 -- sim --&gt; C3{Excesso de zeros&lt;br/&gt;depois da NB?}
-  C3 -- não --&gt; C4["glm.nb() / glmmTMB(nbinom2)"]
-  C3 -- sim --&gt; C5["glmmTMB(ziformula=)"]
-  D --&gt; D1["glm(binomial)"]
-  E --&gt; E1["ordinal::clm() / clmm()"]
-  B1 --&gt; F{Observações&lt;br/&gt;agrupadas?}
-  C2 --&gt; F
-  C4 --&gt; F
-  D1 --&gt; F
-  F -- sim --&gt; G["acrescente (1 | grupo)"]
-</pre>
-</div>
-<p></p></figure><p></p>
+<div id="htmlwidget-b9937afad57da6ed9235" style="width:960px;height:470px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b9937afad57da6ed9235">{"x":{"diagram":"\ndigraph arvore {\n  graph [rankdir = TB, bgcolor = \"transparent\", nodesep = 0.30, ranksep = 0.50,\n         fontname = \"Helvetica\"]\n  node  [fontname = \"Helvetica\", fontsize = 16, style = \"filled,rounded\",\n         shape = box, penwidth = 1.8, margin = \"0.18,0.10\"]\n  edge  [penwidth = 2.4, arrowsize = 1.0, fontname = \"Helvetica\",\n         fontsize = 14, fontcolor = \"#4a5568\"]\n\n  A [label = \"que tipo de resposta?\", shape = oval, fillcolor = \"#1c6e8c\",\n     fontcolor = \"white\", fontsize = 19, penwidth = 0]\n\n  B [label = \"contínua e simétrica\", fillcolor = \"#dce8ee\", color = \"#1c6e8c\", fontcolor = \"#144f64\"]\n  C [label = \"contagem\",             fillcolor = \"#f1e3d3\", color = \"#b06a4a\", fontcolor = \"#8a4f34\"]\n  D [label = \"binária ou proporção\", fillcolor = \"#efe7d2\", color = \"#c08a3e\", fontcolor = \"#8a6329\"]\n  E [label = \"ordinal\",              fillcolor = \"#e3ecd9\", color = \"#6b8f4e\", fontcolor = \"#4d6b36\"]\n\n  C1 [label = \"sobredisperso?\", shape = diamond, fillcolor = \"#b06a4a\",\n      fontcolor = \"white\", penwidth = 0, fontsize = 15]\n  C3 [label = \"zeros a mais\ndepois da NB?\", shape = diamond, fillcolor = \"#b06a4a\",\n      fontcolor = \"white\", penwidth = 0, fontsize = 15]\n\n  node [fontname = \"Courier-Bold\", fillcolor = \"white\", color = \"#d8d0bf\",\n        fontcolor = \"#2d3748\", fontsize = 15]\n  B1 [label = \"lm()   lmer()\"]\n  C2 [label = \"glm(poisson)\"]\n  C4 [label = \"glm.nb()\nglmmTMB(nbinom2)\"]\n  C5 [label = \"glmmTMB(ziformula=)\"]\n  D1 [label = \"glm(binomial)\"]\n  E1 [label = \"clm()   clmm()\"]\n\n  A -> B [color = \"#1c6e8c\"]\n  A -> C [color = \"#b06a4a\"]\n  A -> D [color = \"#c08a3e\"]\n  A -> E [color = \"#6b8f4e\"]\n\n  B  -> B1 [color = \"#1c6e8c\"]\n  C  -> C1 [color = \"#b06a4a\"]\n  C1 -> C2 [label = \"  não\", color = \"#b06a4a\"]\n  C1 -> C3 [label = \"  sim\", color = \"#b06a4a\"]\n  C3 -> C4 [label = \"  não\", color = \"#b06a4a\"]\n  C3 -> C5 [label = \"  sim\", color = \"#b06a4a\"]\n  D  -> D1 [color = \"#c08a3e\"]\n  E  -> E1 [color = \"#6b8f4e\"]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-</div>
+<p>E em <strong>qualquer</strong> ramo: se as observações vêm em grupos, acrescente <code>(1 | grupo)</code>. A pergunta do agrupamento é do delineamento, não da distribuição — ela não é o último passo, é um passo paralelo.</p>
 </section>
 <section id="apresentação-5-minutos" class="slide level2">
 <h2>Apresentação: 5 minutos</h2>
@@ -381,7 +360,7 @@ Diogo B. Provete
 <h2>Outros caminhos</h2>
 <ul>
 <li><strong>Dependência espacial e temporal</strong> — <code>nlme</code> com estruturas de correlação; INLA; modelos autorregressivos.</li>
-<li><strong>Comparativos filogenéticos</strong> — <code>phylolm</code>, <code>MCMCglmm</code>, <code>brms</code> com matriz de covariância filogenética.</li>
+<li><strong>Comparativos filogenéticos</strong> — <code>phylolm</code>, <code>MCMCglmm</code>, <code>brms</code> com matriz de covariância filogenética, e o <code>glmmTMB</code> com a estrutura <a href="https://cran.r-project.org/web/packages/glmmTMB/vignettes/covstruct.html#proportional"><code>propto()</code></a>, que ajusta o modelo misto filogenético por máxima verossimilhança — o remédio para a pseudorréplica filogenética do Encontro 7, na sintaxe que vocês já conhecem.</li>
 <li><strong>Ocupação e detecção imperfeita</strong> — <code>unmarked</code>, <code>spOccupancy</code>.</li>
 <li><strong>Inferência causal</strong> — DAGs além do critério <em>backdoor</em>; Arif &amp; MacNeil (2023).</li>
 <li><strong>Bayesiano a sério</strong> — McElreath, <em>Statistical Rethinking</em>, e o recodificado do Kurz em <code>brms</code>.</li>
@@ -390,7 +369,7 @@ Diogo B. Provete
 <section id="o-trabalho-final" class="slide level2">
 <h2>O trabalho final</h2>
 <p>Estrutura, critérios e esqueleto em <a href="https://provetelab.org/analise-dados-univariados-2026-2/trabalho-final.html">provetelab.org/analise-dados-univariados-2026-2/trabalho-final</a>.</p>
-<p>Combinemos agora o prazo.</p>
+<p><strong>O prazo é de uma semana</strong>: entrega até <strong>2 de outubro</strong>, por e-mail, seguindo a lista de conferência da página.</p>
 <div class="nota">
 <p>Lembrete: declarar o uso de modelos de linguagem — modelo, versão, que parte do código, e os <em>prompts</em> críticos. A responsabilidade pelo código é de quem assina.</p>
 </div>
