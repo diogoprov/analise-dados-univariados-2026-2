@@ -3273,7 +3273,14 @@
     "href": "slides/e09.html#as-três-ressalvas-que-ninguém-copia",
     "title": "Teoria da informação e seleção de modelos",
     "section": "As três ressalvas que ninguém copia",
-    "text": "As três ressalvas que ninguém copia\nJunto com a tabela de limiares, Burnham & Anderson listam três condições. A terceira é a que mais importa nesta disciplina:\n\n“These guidelines seem useful if \\(R\\) is small (even as many as 100), but may break down in exploratory cases where there may be thousands of models. The guideline values may be somewhat larger for nonnested models. If observations are not independent, but are assumed to be independent, then these simple guidelines cannot be expected to hold.”\n\n\nA terceira condena boa parte do que se lê em ecologia: os \\(\\Delta\\) são reportados com a mesma régua em delineamentos agrupados, onde a premissa de independência é justamente a que não vale. É o assunto dos Encontros 7 e 8 — e a razão de o agrupamento vir antes da seleção de modelos.\nA primeira é o argumento contra o dredge em uma frase dos próprios autores do método.\n\n\nBurnham & Anderson (2002), §2.6, p. 70–71."
+    "text": "As três ressalvas que ninguém copia\nJunto com a tabela de limiares, Burnham & Anderson listam três condições. A terceira é a que mais importa nesta disciplina:\n\n“These guidelines seem useful if \\(R\\) is small (even as many as 100), but may break down in exploratory cases where there may be thousands of models. The guideline values may be somewhat larger for nonnested models. If observations are not independent, but are assumed to be independent, then these simple guidelines cannot be expected to hold.”\n\n\nBurnham & Anderson (2002), §2.6, p. 70–71."
+  },
+  {
+    "objectID": "slides/e09.html#o-que-essas-duas-frases-condenam",
+    "href": "slides/e09.html#o-que-essas-duas-frases-condenam",
+    "title": "Teoria da informação e seleção de modelos",
+    "section": "O que essas duas frases condenam",
+    "text": "O que essas duas frases condenam\n\nA terceira. Os \\(\\Delta\\) são reportados com a mesma régua em delineamentos agrupados — onde a premissa de independência é justamente a que não vale. É o assunto dos Encontros 7 e 8, e a razão de o agrupamento vir antes da seleção de modelos.\n\nA primeira é o argumento contra o dredge escrito pelos próprios autores do método: as regras valem para conjuntos pequenos, e param de valer quando há milhares de modelos."
   },
   {
     "objectID": "slides/e09.html#but-is-the-best-model-any-good",
@@ -3281,6 +3288,13 @@
     "title": "Teoria da informação e seleção de modelos",
     "section": "“But is the ‘best’ model any good?”",
     "text": "“But is the ‘best’ model any good?”\nMac Nally et al. (2018) fazem a pergunta que o procedimento não faz sozinho: depois de eleger o modelo mais bem apoiado, ele é bom?\n\nAIC, \\(\\Delta_i\\) e pesos são medidas relativas. Elas ordenam os candidatos entre si e não dizem nada sobre o quanto qualquer um deles descreve os dados.\n\nDuas coisas a relatar junto com a tabela:\n\najuste absoluto — \\(R^2\\), ou o diagnóstico de resíduos do modelo escolhido;\ndesempenho preditivo — validação cruzada, ou pelo menos uma comparação com o modelo nulo.\n\nUm modelo com \\(w = 0{,}98\\) e \\(R^2 = 0{,}04\\) é o melhor de um conjunto ruim. Isso precisa aparecer no texto."
+  },
+  {
+    "objectID": "slides/e09.html#ajuste-absoluto-na-prática",
+    "href": "slides/e09.html#ajuste-absoluto-na-prática",
+    "title": "Teoria da informação e seleção de modelos",
+    "section": "Ajuste absoluto, na prática",
+    "text": "Ajuste absoluto, na prática\n\nlibrary(performance)\n\ncompare_performance(modelos, metrics = \"common\", rank = TRUE)\n\n# Comparison of Model Performance Indices\n\nName        |  Model | Nagelkerke's R2 |   RMSE | AIC weights | BIC weights | Performance-Score\n-----------------------------------------------------------------------------------------------\nparque      | negbin |           0.901 | 17.383 |       0.451 |       0.685 |            92.92%\nparque_agua | negbin |           0.915 | 16.734 |       0.549 |       0.315 |            86.48%\nagua        | negbin |           0.167 | 23.028 |    1.91e-12 |    1.10e-12 |             8.04%\nhabitat     | negbin |           0.156 | 24.042 |    1.55e-12 |    8.90e-13 |             4.27%\nnulo        | negbin |       2.322e-15 | 24.041 |    6.37e-13 |    2.57e-12 |         4.06e-03%\n\n\nAo lado dos pesos vêm \\(R^2\\) e RMSE: as medidas que dizem se algum dos candidatos descreve os dados. Aqui o modelo do parque tem \\(R^2\\) de Nagelkerke perto de 0,9 — é bom de fato, e não só melhor que os outros.\n\nCuidado com a coluna Performance-Score. Ela vai de 0 a 100, mas sai de reescalar os índices dentro do conjunto comparado e tirar a média. É mais uma medida relativa. Quem responde “isto é bom?” é o \\(R^2\\) ao lado dela, e o diagnóstico de resíduos."
   },
   {
     "objectID": "slides/e09.html#a-ressalva-que-quase-nunca-aparece",
@@ -3304,6 +3318,13 @@
     "text": "Os coeficientes médios\n\nround(coef(med), 3)       # médias condicionais\n\n(Intercept)   D.PARK_km     L.WAT.C   D.WAT.RES      OPEN.L      MONT.S \n      4.332      -0.118       0.130      -0.001      -0.015       0.011 \n\nconfint(med)              # intervalos, propagando a incerteza entre modelos\n\n                   2.5 %        97.5 %\n(Intercept)  3.962566290  4.7008441736\nD.PARK_km   -0.141374075 -0.0949463300\nL.WAT.C     -0.036890677  0.2968332596\nD.WAT.RES   -0.001472483 -0.0002413064\nOPEN.L      -0.024687381 -0.0051434794\nMONT.S      -0.111084050  0.1332850330\n\n\n\nsummary(med) traz o relatório completo, com as duas formas de média e o peso de cada modelo. Aqui ficam só os números que entram no texto."
   },
   {
+    "objectID": "slides/e09.html#importância-de-variáveis-com-ressalva",
+    "href": "slides/e09.html#importância-de-variáveis-com-ressalva",
+    "title": "Teoria da informação e seleção de modelos",
+    "section": "Importância de variáveis, com ressalva",
+    "text": "Importância de variáveis, com ressalva\n\nsw(med)   # soma dos pesos dos modelos em que cada variável aparece\n\n                     D.PARK_km L.WAT.C D.WAT.RES MONT.S OPEN.L\nSum of weights:          1      0.51   &lt;0.01     &lt;0.01  &lt;0.01 \nN containing models:     2         2       1         1      1 \n\n\nA própria documentação do MuMIn chama o resultado de “so called relative importance values” — e a aspa é dela, não minha.\n\nO número é a soma de pesos, não um tamanho de efeito. Ele depende de em quantos modelos do seu conjunto a variável aparece: mude a composição do conjunto e ele muda, sem que nada tenha mudado na biologia.\n\n\nGalipaud et al. (2014) simularam dados com preditoras fortemente e fracamente correlacionadas com a resposta, e uma sem relação nenhuma, para ver o quanto a soma de pesos informa sobre importância relativa. O título do artigo resume o achado: “Ecologists overestimate the importance of predictor variables in model averaging”. Relate a soma de pesos, se quiser, mas ao lado do coeficiente médio e do seu intervalo — nunca no lugar deles."
+  },
+  {
     "objectID": "slides/e09.html#quando-mediar-faz-sentido",
     "href": "slides/e09.html#quando-mediar-faz-sentido",
     "title": "Teoria da informação e seleção de modelos",
@@ -3323,6 +3344,13 @@
     "title": "Teoria da informação e seleção de modelos",
     "section": "O caso mais bem documentado: stepwise",
     "text": "O caso mais bem documentado: stepwise\nWhittingham et al. (2006) examinaram os artigos de 2004 em três periódicos de ecologia e comportamento: de 65 que usaram regressão múltipla, 57 % usaram um procedimento stepwise.\nOs quatro defeitos que eles listam:\n\nviés na estimativa dos parâmetros;\ninconsistência entre algoritmos de seleção — forward, backward e stepwise chegam a modelos diferentes nos mesmos dados;\num problema de testes múltiplos que quase ninguém contabiliza;\nfoco indevido num único “melhor” modelo."
+  },
+  {
+    "objectID": "slides/e09.html#um-forward-que-se-defende",
+    "href": "slides/e09.html#um-forward-que-se-defende",
+    "title": "Teoria da informação e seleção de modelos",
+    "section": "Um forward que se defende",
+    "text": "Um forward que se defende\nNem toda seleção sequencial é igual. Blanchet, Legendre & Borcard (2008) diagnosticam dois defeitos do forward clássico — erro tipo I inflado e superestimação da variância explicada — e propõem o conserto:\n\n\nUm teste global com todas as preditoras primeiro. Só se ele for significativo é que a seleção começa.\nDois critérios de parada: o \\(\\alpha\\) de sempre e o \\(R^2\\) ajustado calculado com todas as preditoras. A variável que levar qualquer um dos dois acima do limiar é rejeitada, e o procedimento para ali.\n\n\n\nadespatial::forward.sel(Y, X, adjR2thresh = R2a_global, alpha = 0.05,\n                        nperm = 999)\n\n\nNão é uma licença para garimpar: continua sendo seleção guiada pelos dados, e nada disso devolve os graus de liberdade gastos. Mas resolve os dois defeitos que o Whittingham documenta, e por isso virou o padrão em análise de gradientes e em partição de variância. Blanchet, F.G.; Legendre, P. & Borcard, D. 2008. Forward selection of explanatory variables. Ecology 89:2623–2632."
   },
   {
     "objectID": "slides/e09.html#a-demonstração-deles",
@@ -3462,7 +3490,7 @@
     "href": "slides/e09.html#referências-1",
     "title": "Teoria da informação e seleção de modelos",
     "section": "Referências",
-    "text": "Referências\n\nO que não fazer\n\nAnderson, D.R.; Burnham, K.P. & Thompson, W.L. 2000. Null hypothesis testing: problems, prevalence, and an alternative. The Journal of Wildlife Management 64:912–923.\nAnderson, D.R. & Burnham, K.P. 2002. Avoiding pitfalls when using information-theoretic methods. The Journal of Wildlife Management 66:912–918.\nWhittingham, M.J.; Stephens, P.A.; Bradbury, R.B. & Freckleton, R.P. 2006. Why do we still use stepwise modelling in ecology and behaviour? Journal of Animal Ecology 75:1182–1189.\nMundry, R. & Nunn, C.L. 2009. Stepwise model fitting and statistical inference: turning noise into signal pollution. The American Naturalist 173:119–123.\nFreckleton, R.P. 2009. The seven deadly sins of comparative analysis. Journal of Evolutionary Biology 22:1367–1375.\n\nBase metodológica\n\nAkaike, H. 1974. A new look at the statistical model identification. IEEE Transactions on Automatic Control 19:716–723.\nBurnham, K.P. & Anderson, D.R. 2002. Model Selection and Multimodel Inference. 2ª ed. Springer.\nAho, K.; Derryberry, D. & Peterson, T. 2014. Model selection for ecologists: the worldviews of AIC and BIC. Ecology 95:631–636.\nMac Nally, R.; Duncan, R.P.; Thomson, J.R. & Yen, J.D.L. 2018. Model selection using information criteria, but is the ‘best’ model any good? Journal of Applied Ecology 55:1441–1444.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Cap. 9, “Comparing and improving models”.\nGerstner, K. et al. 2017. Will your paper be used in a meta-analysis? Methods in Ecology and Evolution 8:777–784.\nGelman, A.; Hill, J. & Vehtari, A. 2020. Regression and Other Stories, cap. 11."
+    "text": "Referências\n\nO que não fazer\n\nAnderson, D.R.; Burnham, K.P. & Thompson, W.L. 2000. Null hypothesis testing: problems, prevalence, and an alternative. The Journal of Wildlife Management 64:912–923.\nAnderson, D.R. & Burnham, K.P. 2002. Avoiding pitfalls when using information-theoretic methods. The Journal of Wildlife Management 66:912–918.\nWhittingham, M.J.; Stephens, P.A.; Bradbury, R.B. & Freckleton, R.P. 2006. Why do we still use stepwise modelling in ecology and behaviour? Journal of Animal Ecology 75:1182–1189.\nGalipaud, M.; Gillingham, M.A.F.; David, M. & Dechaume-Moncharmont, F.-X. 2014. Ecologists overestimate the importance of predictor variables in model averaging: a plea for cautious interpretations. Methods in Ecology and Evolution 5:983–991.\nBlanchet, F.G.; Legendre, P. & Borcard, D. 2008. Forward selection of explanatory variables. Ecology 89:2623–2632.\nMundry, R. & Nunn, C.L. 2009. Stepwise model fitting and statistical inference: turning noise into signal pollution. The American Naturalist 173:119–123.\nFreckleton, R.P. 2009. The seven deadly sins of comparative analysis. Journal of Evolutionary Biology 22:1367–1375.\n\nBase metodológica\n\nAkaike, H. 1974. A new look at the statistical model identification. IEEE Transactions on Automatic Control 19:716–723.\nBurnham, K.P. & Anderson, D.R. 2002. Model Selection and Multimodel Inference. 2ª ed. Springer.\nAho, K.; Derryberry, D. & Peterson, T. 2014. Model selection for ecologists: the worldviews of AIC and BIC. Ecology 95:631–636.\nMac Nally, R.; Duncan, R.P.; Thomson, J.R. & Yen, J.D.L. 2018. Model selection using information criteria, but is the ‘best’ model any good? Journal of Applied Ecology 55:1441–1444.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Cap. 9, “Comparing and improving models”.\nGerstner, K. et al. 2017. Will your paper be used in a meta-analysis? Methods in Ecology and Evolution 8:777–784.\nGelman, A.; Hill, J. & Vehtari, A. 2020. Regression and Other Stories, cap. 11."
   },
   {
     "objectID": "teste-de-normalidade.html",

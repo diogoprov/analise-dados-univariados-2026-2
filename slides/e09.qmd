@@ -415,19 +415,24 @@ A terceira é a que mais importa nesta disciplina:
 > models. **If observations are not independent, but are assumed to be
 > independent, then these simple guidelines cannot be expected to hold.**"
 
-::: {.nota}
-A terceira condena boa parte do que se lê em ecologia: os $\Delta$ são
-reportados com a mesma régua em delineamentos agrupados, onde a premissa
-de independência é justamente a que não vale. É o assunto dos Encontros 7
-e 8 — e a razão de o agrupamento vir **antes** da seleção de modelos.
-
-A primeira é o argumento contra o `dredge` em uma frase dos próprios
-autores do método.
-:::
-
 ::: {.ref}
 Burnham & Anderson (2002), §2.6, p. 70–71.
 :::
+
+---
+
+## O que essas duas frases condenam
+
+::: {.definicao}
+**A terceira.** Os $\Delta$ são reportados com a mesma régua em
+delineamentos agrupados — onde a premissa de independência é justamente a
+que não vale. É o assunto dos Encontros 7 e 8, e a razão de o agrupamento
+vir **antes** da seleção de modelos.
+:::
+
+**A primeira** é o argumento contra o `dredge` escrito pelos próprios
+autores do método: as regras valem para conjuntos pequenos, e param de
+valer quando há milhares de modelos.
 
 ---
 
@@ -451,6 +456,27 @@ Duas coisas a relatar junto com a tabela:
 
 Um modelo com $w = 0{,}98$ e $R^2 = 0{,}04$ é o melhor de um conjunto
 ruim. Isso precisa aparecer no texto.
+
+---
+
+## Ajuste absoluto, na prática {.smaller}
+
+```{r}
+library(performance)
+
+compare_performance(modelos, metrics = "common", rank = TRUE)
+```
+
+Ao lado dos pesos vêm $R^2$ e RMSE: as medidas que dizem se **algum** dos
+candidatos descreve os dados. Aqui o modelo do parque tem $R^2$ de
+Nagelkerke perto de 0,9 — é bom de fato, e não só melhor que os outros.
+
+::: {.definicao}
+Cuidado com a coluna `Performance-Score`. Ela vai de 0 a 100, mas sai de
+reescalar os índices **dentro do conjunto comparado** e tirar a média. É
+mais uma medida relativa. Quem responde "isto é bom?" é o $R^2$ ao lado
+dela, e o diagnóstico de resíduos.
+:::
 
 ---
 
@@ -478,7 +504,7 @@ library(MuMIn)
 med <- model.avg(modelos, fit = TRUE)
 ```
 
-::: {.nota}
+::: {.definicao}
 Duas formas de média: **condicional** (só sobre os modelos em que o termo
 aparece) e **completa** (contando zero onde ele não aparece). Diga qual
 usou — elas dão respostas diferentes.
@@ -496,6 +522,33 @@ confint(med)              # intervalos, propagando a incerteza entre modelos
 ::: {.nota}
 `summary(med)` traz o relatório completo, com as duas formas de média e o
 peso de cada modelo. Aqui ficam só os números que entram no texto.
+:::
+
+---
+
+## Importância de variáveis, com ressalva {.smaller}
+
+```{r}
+sw(med)   # soma dos pesos dos modelos em que cada variável aparece
+```
+
+A própria documentação do `MuMIn` chama o resultado de *"so called
+relative importance values"* — e a aspa é dela, não minha.
+
+::: {.definicao}
+O número é a **soma de pesos**, não um tamanho de efeito. Ele depende de
+em quantos modelos do seu conjunto a variável aparece: mude a composição
+do conjunto e ele muda, sem que nada tenha mudado na biologia.
+:::
+
+::: {.nota}
+Galipaud et al. (2014) simularam dados com preditoras fortemente e
+fracamente correlacionadas com a resposta, e uma sem relação nenhuma, para
+ver o quanto a soma de pesos informa sobre importância relativa. O título
+do artigo resume o achado: *"Ecologists overestimate the importance of
+predictor variables in model averaging"*. Relate a soma de pesos, se
+quiser, mas ao lado do coeficiente médio e do seu intervalo — nunca no
+lugar deles.
 :::
 
 ---
@@ -553,6 +606,38 @@ Os quatro defeitos que eles listam:
    e *stepwise* chegam a modelos diferentes nos mesmos dados;
 3. um problema de **testes múltiplos** que quase ninguém contabiliza;
 4. **foco indevido num único "melhor" modelo**.
+
+---
+
+## Um *forward* que se defende {.smaller}
+
+Nem toda seleção sequencial é igual. Blanchet, Legendre & Borcard (2008)
+diagnosticam dois defeitos do *forward* clássico — **erro tipo I inflado**
+e **superestimação da variância explicada** — e propõem o conserto:
+
+::: {.definicao}
+1. Um **teste global** com todas as preditoras primeiro. Só se ele for
+   significativo é que a seleção começa.
+2. **Dois critérios de parada**: o $\alpha$ de sempre **e** o $R^2$
+   ajustado calculado com todas as preditoras. A variável que levar
+   qualquer um dos dois acima do limiar é rejeitada, e o procedimento para
+   ali.
+:::
+
+```{r}
+#| eval: false
+adespatial::forward.sel(Y, X, adjR2thresh = R2a_global, alpha = 0.05,
+                        nperm = 999)
+```
+
+::: {.nota}
+Não é uma licença para garimpar: continua sendo seleção guiada pelos
+dados, e nada disso devolve os graus de liberdade gastos. Mas resolve os
+dois defeitos que o Whittingham documenta, e por isso virou o padrão em
+análise de gradientes e em partição de variância. Blanchet, F.G.;
+Legendre, P. & Borcard, D. 2008. [Forward selection of explanatory
+variables](https://doi.org/10.1890/07-0986.1). *Ecology* 89:2623–2632.
+:::
 
 ---
 
@@ -876,6 +961,8 @@ Depois, cinco minutos de apresentação por pessoa.
 - Anderson, D.R.; Burnham, K.P. & Thompson, W.L. 2000. [Null hypothesis testing: problems, prevalence, and an alternative](https://doi.org/10.2307/3803199). *The Journal of Wildlife Management* 64:912–923.
 - Anderson, D.R. & Burnham, K.P. 2002. [Avoiding pitfalls when using information-theoretic methods](https://doi.org/10.2307/3803155). *The Journal of Wildlife Management* 66:912–918.
 - Whittingham, M.J.; Stephens, P.A.; Bradbury, R.B. & Freckleton, R.P. 2006. [Why do we still use stepwise modelling in ecology and behaviour?](https://doi.org/10.1111/j.1365-2656.2006.01141.x) *Journal of Animal Ecology* 75:1182–1189.
+- Galipaud, M.; Gillingham, M.A.F.; David, M. & Dechaume-Moncharmont, F.-X. 2014. [Ecologists overestimate the importance of predictor variables in model averaging: a plea for cautious interpretations](https://doi.org/10.1111/2041-210X.12251). *Methods in Ecology and Evolution* 5:983–991.
+- Blanchet, F.G.; Legendre, P. & Borcard, D. 2008. [Forward selection of explanatory variables](https://doi.org/10.1890/07-0986.1). *Ecology* 89:2623–2632.
 - Mundry, R. & Nunn, C.L. 2009. [Stepwise model fitting and statistical inference: turning noise into signal pollution](https://doi.org/10.1086/593303). *The American Naturalist* 173:119–123.
 - Freckleton, R.P. 2009. [The seven deadly sins of comparative analysis](https://doi.org/10.1111/j.1420-9101.2009.01757.x). *Journal of Evolutionary Biology* 22:1367–1375.
 

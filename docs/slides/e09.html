@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-f1b322be379289ffee6699166c851a11.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-3b7cbe771201207b6a18613a17a44f89.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -538,13 +538,16 @@ nulo        447.9  54.4 2  &lt;0.001</code></pre>
 <blockquote>
 <p>“These guidelines seem useful if <span class="math inline">\(R\)</span> is small (even as many as 100), but may break down in exploratory cases where there may be thousands of models. The guideline values may be somewhat larger for nonnested models. <strong>If observations are not independent, but are assumed to be independent, then these simple guidelines cannot be expected to hold.</strong>”</p>
 </blockquote>
-<div class="nota">
-<p>A terceira condena boa parte do que se lê em ecologia: os <span class="math inline">\(\Delta\)</span> são reportados com a mesma régua em delineamentos agrupados, onde a premissa de independência é justamente a que não vale. É o assunto dos Encontros 7 e 8 — e a razão de o agrupamento vir <strong>antes</strong> da seleção de modelos.</p>
-<p>A primeira é o argumento contra o <code>dredge</code> em uma frase dos próprios autores do método.</p>
-</div>
 <div class="ref">
 <p>Burnham &amp; Anderson (2002), §2.6, p.&nbsp;70–71.</p>
 </div>
+</section>
+<section id="o-que-essas-duas-frases-condenam" class="slide level2">
+<h2>O que essas duas frases condenam</h2>
+<div class="definicao">
+<p><strong>A terceira.</strong> Os <span class="math inline">\(\Delta\)</span> são reportados com a mesma régua em delineamentos agrupados — onde a premissa de independência é justamente a que não vale. É o assunto dos Encontros 7 e 8, e a razão de o agrupamento vir <strong>antes</strong> da seleção de modelos.</p>
+</div>
+<p><strong>A primeira</strong> é o argumento contra o <code>dredge</code> escrito pelos próprios autores do método: as regras valem para conjuntos pequenos, e param de valer quando há milhares de modelos.</p>
 </section>
 <section id="but-is-the-best-model-any-good" class="slide level2">
 <h2>“But is the ‘best’ model any good?”</h2>
@@ -559,6 +562,29 @@ nulo        447.9  54.4 2  &lt;0.001</code></pre>
 </ul>
 <p>Um modelo com <span class="math inline">\(w = 0{,}98\)</span> e <span class="math inline">\(R^2 = 0{,}04\)</span> é o melhor de um conjunto ruim. Isso precisa aparecer no texto.</p>
 </section>
+<section id="ajuste-absoluto-na-prática" class="slide level2 smaller">
+<h2>Ajuste absoluto, na prática</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">library</span>(performance)</span>
+<span id="cb12-2"><a></a></span>
+<span id="cb12-3"><a></a><span class="fu">compare_performance</span>(modelos, <span class="at">metrics =</span> <span class="st">"common"</span>, <span class="at">rank =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># Comparison of Model Performance Indices
+
+Name        |  Model | Nagelkerke's R2 |   RMSE | AIC weights | BIC weights | Performance-Score
+-----------------------------------------------------------------------------------------------
+parque      | negbin |           0.901 | 17.383 |       0.451 |       0.685 |            92.92%
+parque_agua | negbin |           0.915 | 16.734 |       0.549 |       0.315 |            86.48%
+agua        | negbin |           0.167 | 23.028 |    1.91e-12 |    1.10e-12 |             8.04%
+habitat     | negbin |           0.156 | 24.042 |    1.55e-12 |    8.90e-13 |             4.27%
+nulo        | negbin |       2.322e-15 | 24.041 |    6.37e-13 |    2.57e-12 |         4.06e-03%</code></pre>
+</div>
+</div>
+<p>Ao lado dos pesos vêm <span class="math inline">\(R^2\)</span> e RMSE: as medidas que dizem se <strong>algum</strong> dos candidatos descreve os dados. Aqui o modelo do parque tem <span class="math inline">\(R^2\)</span> de Nagelkerke perto de 0,9 — é bom de fato, e não só melhor que os outros.</p>
+<div class="definicao">
+<p>Cuidado com a coluna <code>Performance-Score</code>. Ela vai de 0 a 100, mas sai de reescalar os índices <strong>dentro do conjunto comparado</strong> e tirar a média. É mais uma medida relativa. Quem responde “isto é bom?” é o <span class="math inline">\(R^2\)</span> ao lado dela, e o diagnóstico de resíduos.</p>
+</div>
+</section>
 <section id="a-ressalva-que-quase-nunca-aparece" class="slide level2">
 <h2>A ressalva que quase nunca aparece</h2>
 <div class="definicao">
@@ -570,23 +596,23 @@ nulo        447.9  54.4 2  &lt;0.001</code></pre>
 <h2><em>Model averaging</em></h2>
 <p>Quando vários modelos têm suporte parecido, escolher um e ignorar os outros descarta incerteza real.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">library</span>(MuMIn)</span>
-<span id="cb12-2"><a></a></span>
-<span id="cb12-3"><a></a>med <span class="ot">&lt;-</span> <span class="fu">model.avg</span>(modelos, <span class="at">fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">library</span>(MuMIn)</span>
+<span id="cb14-2"><a></a></span>
+<span id="cb14-3"><a></a>med <span class="ot">&lt;-</span> <span class="fu">model.avg</span>(modelos, <span class="at">fit =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="nota">
+<div class="definicao">
 <p>Duas formas de média: <strong>condicional</strong> (só sobre os modelos em que o termo aparece) e <strong>completa</strong> (contando zero onde ele não aparece). Diga qual usou — elas dão respostas diferentes.</p>
 </div>
 </section>
 <section id="os-coeficientes-médios" class="slide level2 smaller">
 <h2>Os coeficientes médios</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(med), <span class="dv">3</span>)       <span class="co"># médias condicionais</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(med), <span class="dv">3</span>)       <span class="co"># médias condicionais</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)   D.PARK_km     L.WAT.C   D.WAT.RES      OPEN.L      MONT.S 
       4.332      -0.118       0.130      -0.001      -0.015       0.011 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">confint</span>(med)              <span class="co"># intervalos, propagando a incerteza entre modelos</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a><span class="fu">confint</span>(med)              <span class="co"># intervalos, propagando a incerteza entre modelos</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   2.5 %        97.5 %
 (Intercept)  3.962566290  4.7008441736
@@ -599,6 +625,24 @@ MONT.S      -0.111084050  0.1332850330</code></pre>
 </div>
 <div class="nota">
 <p><code>summary(med)</code> traz o relatório completo, com as duas formas de média e o peso de cada modelo. Aqui ficam só os números que entram no texto.</p>
+</div>
+</section>
+<section id="importância-de-variáveis-com-ressalva" class="slide level2 smaller">
+<h2>Importância de variáveis, com ressalva</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">sw</span>(med)   <span class="co"># soma dos pesos dos modelos em que cada variável aparece</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                     D.PARK_km L.WAT.C D.WAT.RES MONT.S OPEN.L
+Sum of weights:          1      0.51   &lt;0.01     &lt;0.01  &lt;0.01 
+N containing models:     2         2       1         1      1 </code></pre>
+</div>
+</div>
+<p>A própria documentação do <code>MuMIn</code> chama o resultado de <em>“so called relative importance values”</em> — e a aspa é dela, não minha.</p>
+<div class="definicao">
+<p>O número é a <strong>soma de pesos</strong>, não um tamanho de efeito. Ele depende de em quantos modelos do seu conjunto a variável aparece: mude a composição do conjunto e ele muda, sem que nada tenha mudado na biologia.</p>
+</div>
+<div class="nota">
+<p>Galipaud et al.&nbsp;(2014) simularam dados com preditoras fortemente e fracamente correlacionadas com a resposta, e uma sem relação nenhuma, para ver o quanto a soma de pesos informa sobre importância relativa. O título do artigo resume o achado: <em>“Ecologists overestimate the importance of predictor variables in model averaging”</em>. Relate a soma de pesos, se quiser, mas ao lado do coeficiente médio e do seu intervalo — nunca no lugar deles.</p>
 </div>
 </section>
 <section id="quando-mediar-faz-sentido" class="slide level2">
@@ -644,13 +688,13 @@ MONT.S      -0.111084050  0.1332850330</code></pre>
 <section id="o-garimpo" class="slide level2 smaller">
 <h2>O garimpo</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>global <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> OPEN.L <span class="sc">+</span> MONT.S <span class="sc">+</span> L.WAT.C <span class="sc">+</span></span>
-<span id="cb17-2"><a></a>                         D.WAT.RES <span class="sc">+</span> URBAN <span class="sc">+</span> N.PATCH <span class="sc">+</span> P.EDGE, <span class="at">data =</span> RK)</span>
-<span id="cb17-3"><a></a></span>
-<span id="cb17-4"><a></a>antigo  <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">na.action =</span> <span class="st">"na.fail"</span>)   <span class="co"># o dredge() exige; desfazemos abaixo</span></span>
-<span id="cb17-5"><a></a>garimpo <span class="ot">&lt;-</span> MuMIn<span class="sc">::</span><span class="fu">dredge</span>(global)           <span class="co"># 256 modelos</span></span>
-<span id="cb17-6"><a></a><span class="fu">options</span>(antigo)</span>
-<span id="cb17-7"><a></a><span class="fu">head</span>(garimpo, <span class="dv">5</span>)                           <span class="co"># as cinco melhores</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>global <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> OPEN.L <span class="sc">+</span> MONT.S <span class="sc">+</span> L.WAT.C <span class="sc">+</span></span>
+<span id="cb21-2"><a></a>                         D.WAT.RES <span class="sc">+</span> URBAN <span class="sc">+</span> N.PATCH <span class="sc">+</span> P.EDGE, <span class="at">data =</span> RK)</span>
+<span id="cb21-3"><a></a></span>
+<span id="cb21-4"><a></a>antigo  <span class="ot">&lt;-</span> <span class="fu">options</span>(<span class="at">na.action =</span> <span class="st">"na.fail"</span>)   <span class="co"># o dredge() exige; desfazemos abaixo</span></span>
+<span id="cb21-5"><a></a>garimpo <span class="ot">&lt;-</span> MuMIn<span class="sc">::</span><span class="fu">dredge</span>(global)           <span class="co"># 256 modelos</span></span>
+<span id="cb21-6"><a></a><span class="fu">options</span>(antigo)</span>
+<span id="cb21-7"><a></a><span class="fu">head</span>(garimpo, <span class="dv">5</span>)                           <span class="co"># as cinco melhores</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Global model call: MASS::glm.nb(formula = TOT.N ~ D.PARK_km + OPEN.L + MONT.S + 
     L.WAT.C + D.WAT.RES + URBAN + N.PATCH + P.EDGE, data = RK, 
@@ -686,6 +730,23 @@ Models ranked by AICc(x) </code></pre>
 <li>um problema de <strong>testes múltiplos</strong> que quase ninguém contabiliza;</li>
 <li><strong>foco indevido num único “melhor” modelo</strong>.</li>
 </ol>
+</section>
+<section id="um-forward-que-se-defende" class="slide level2 smaller">
+<h2>Um <em>forward</em> que se defende</h2>
+<p>Nem toda seleção sequencial é igual. Blanchet, Legendre &amp; Borcard (2008) diagnosticam dois defeitos do <em>forward</em> clássico — <strong>erro tipo I inflado</strong> e <strong>superestimação da variância explicada</strong> — e propõem o conserto:</p>
+<div class="definicao">
+<ol type="1">
+<li>Um <strong>teste global</strong> com todas as preditoras primeiro. Só se ele for significativo é que a seleção começa.</li>
+<li><strong>Dois critérios de parada</strong>: o <span class="math inline">\(\alpha\)</span> de sempre <strong>e</strong> o <span class="math inline">\(R^2\)</span> ajustado calculado com todas as preditoras. A variável que levar qualquer um dos dois acima do limiar é rejeitada, e o procedimento para ali.</li>
+</ol>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>adespatial<span class="sc">::</span><span class="fu">forward.sel</span>(Y, X, <span class="at">adjR2thresh =</span> R2a_global, <span class="at">alpha =</span> <span class="fl">0.05</span>,</span>
+<span id="cb23-2"><a></a>                        <span class="at">nperm =</span> <span class="dv">999</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="nota">
+<p>Não é uma licença para garimpar: continua sendo seleção guiada pelos dados, e nada disso devolve os graus de liberdade gastos. Mas resolve os dois defeitos que o Whittingham documenta, e por isso virou o padrão em análise de gradientes e em partição de variância. Blanchet, F.G.; Legendre, P. &amp; Borcard, D. 2008. <a href="https://doi.org/10.1890/07-0986.1">Forward selection of explanatory variables</a>. <em>Ecology</em> 89:2623–2632.</p>
+</div>
 </section>
 <section id="a-demonstração-deles" class="slide level2">
 <h2>A demonstração deles</h2>
@@ -814,15 +875,15 @@ Chain 1:   Gradient evaluated at the initial value is not finite.</code></pre>
 <section id="na-prática-1" class="slide level2">
 <h2>Na prática</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">library</span>(brms)</span>
-<span id="cb20-2"><a></a><span class="fu">library</span>(loo)</span>
-<span id="cb20-3"><a></a></span>
-<span id="cb20-4"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
-<span id="cb20-5"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_a"</span>)</span>
-<span id="cb20-6"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> L.WAT.C, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
-<span id="cb20-7"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_b"</span>)</span>
-<span id="cb20-8"><a></a></span>
-<span id="cb20-9"><a></a><span class="fu">loo_compare</span>(<span class="fu">loo</span>(m_a), <span class="fu">loo</span>(m_b))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">library</span>(brms)</span>
+<span id="cb25-2"><a></a><span class="fu">library</span>(loo)</span>
+<span id="cb25-3"><a></a></span>
+<span id="cb25-4"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
+<span id="cb25-5"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_a"</span>)</span>
+<span id="cb25-6"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> L.WAT.C, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
+<span id="cb25-7"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_b"</span>)</span>
+<span id="cb25-8"><a></a></span>
+<span id="cb25-9"><a></a><span class="fu">loo_compare</span>(<span class="fu">loo</span>(m_a), <span class="fu">loo</span>(m_b))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> model elpd_diff se_diff p_worse diag_diff diag_elpd
    m_b       0.0     0.0      NA                    
@@ -886,8 +947,8 @@ Chain 1:   Gradient evaluated at the initial value is not finite.</code></pre>
 <h2>A vantagem do <span class="math inline">\(\hat{k}\)</span></h2>
 <p>O PSIS-LOO avisa quando a aproximação falha, observação por observação.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>loo_a <span class="ot">&lt;-</span> <span class="fu">loo</span>(m_a)</span>
-<span id="cb22-2"><a></a><span class="fu">print</span>(loo_a)        <span class="co"># valores de k-hat; &gt; 0,7 é problema</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>loo_a <span class="ot">&lt;-</span> <span class="fu">loo</span>(m_a)</span>
+<span id="cb27-2"><a></a><span class="fu">print</span>(loo_a)        <span class="co"># valores de k-hat; &gt; 0,7 é problema</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Computed from 4000 by 52 log-likelihood matrix.
@@ -908,11 +969,11 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 <section id="onde-a-aproximação-falha" class="slide level2 smaller">
 <h2>Onde a aproximação falha</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">plot</span>(loo_a)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">plot</span>(loo_a)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e09_files/figure-revealjs/unnamed-chunk-16-1.png" width="672"></p>
+<p><img data-src="e09_files/figure-revealjs/unnamed-chunk-19-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1020,6 +1081,8 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 <li>Anderson, D.R.; Burnham, K.P. &amp; Thompson, W.L. 2000. <a href="https://doi.org/10.2307/3803199">Null hypothesis testing: problems, prevalence, and an alternative</a>. <em>The Journal of Wildlife Management</em> 64:912–923.</li>
 <li>Anderson, D.R. &amp; Burnham, K.P. 2002. <a href="https://doi.org/10.2307/3803155">Avoiding pitfalls when using information-theoretic methods</a>. <em>The Journal of Wildlife Management</em> 66:912–918.</li>
 <li>Whittingham, M.J.; Stephens, P.A.; Bradbury, R.B. &amp; Freckleton, R.P. 2006. <a href="https://doi.org/10.1111/j.1365-2656.2006.01141.x">Why do we still use stepwise modelling in ecology and behaviour?</a> <em>Journal of Animal Ecology</em> 75:1182–1189.</li>
+<li>Galipaud, M.; Gillingham, M.A.F.; David, M. &amp; Dechaume-Moncharmont, F.-X. 2014. <a href="https://doi.org/10.1111/2041-210X.12251">Ecologists overestimate the importance of predictor variables in model averaging: a plea for cautious interpretations</a>. <em>Methods in Ecology and Evolution</em> 5:983–991.</li>
+<li>Blanchet, F.G.; Legendre, P. &amp; Borcard, D. 2008. <a href="https://doi.org/10.1890/07-0986.1">Forward selection of explanatory variables</a>. <em>Ecology</em> 89:2623–2632.</li>
 <li>Mundry, R. &amp; Nunn, C.L. 2009. <a href="https://doi.org/10.1086/593303">Stepwise model fitting and statistical inference: turning noise into signal pollution</a>. <em>The American Naturalist</em> 173:119–123.</li>
 <li>Freckleton, R.P. 2009. <a href="https://doi.org/10.1111/j.1420-9101.2009.01757.x">The seven deadly sins of comparative analysis</a>. <em>Journal of Evolutionary Biology</em> 22:1367–1375.</li>
 </ul>

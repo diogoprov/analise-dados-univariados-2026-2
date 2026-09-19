@@ -53,8 +53,9 @@ $code-block-font-size: 0.62em;
   border-radius: 0 4px 4px 0;
 }
 
-// Texto menor para notas laterais
-.reveal .nota { font-size: .72em; color: #6c757d; }
+// Texto menor para notas laterais. O cinza anterior (#6c757d) dava 4,38:1
+// sobre o creme do fundo; este da 7,03:1, e o corpo subiu de .72 para .76em.
+.reveal .nota { font-size: .76em; color: #4a5568; }
 
 // Referência no rodapé do slide
 .reveal .ref { font-size: .55em; color: #6c757d; font-style: italic; }
