@@ -184,6 +184,31 @@ as distribuições *t* e *F*.
 
 ---
 
+## E as duas que vêm antes das quatro {.smaller}
+
+O ROS lista **seis**, em ordem decrescente de importância, e as duas
+primeiras não são sobre resíduo nenhum:
+
+1. **Validade** — os dados que você tem respondem à pergunta que você
+   fez?
+2. **Representatividade** — a amostra representa a população sobre a
+   qual você quer falar?
+
+Da 3 à 6 são as quatro do slide anterior, na mesma ordem: aditividade e
+linearidade, independência dos erros, variância igual, normalidade.
+
+::: {.definicao}
+Nenhum gráfico de resíduo detecta (1) e (2). Elas se decidem na pergunta
+e no delineamento --- é o Encontro 1 --- e são as únicas da lista que
+análise nenhuma conserta depois.
+:::
+
+::: {.ref}
+Gelman, Hill & Vehtari (2020), *Regression and Other Stories*, seção 11.1.
+:::
+
+---
+
 ## As mesmas premissas, em duas línguas {.tabela-grande}
 
 +--------------------------------------------------+-----------------------------------------------------------+
