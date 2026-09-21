@@ -1600,7 +1600,7 @@
     "href": "encontros/e05-glm-i/index.html#dados",
     "title": "E5 — GLM I: verossimilhança, binomial e Poisson",
     "section": "Dados",
-    "text": "Dados\n\nRoadKills.txt — anfíbios atropelados em 52 sítios em Portugal (Zuur et al. 2009).\nUV.csv — resposta binomial, contagem de células.\ncamila_cauda_lagartos.txt — 223 lagartos Coleodactylus meridionalis: sexo, CRC, comprimento da cauda intacta e da regenerada, e se o indivíduo já sofreu autotomia. Aqui, Tail_state é a resposta binária do bloco 2 — atenção: vale 1 quando a cauda está intacta, e nos slides ela é recodificada para cauda_perdida = 1 - Tail_state.\nPlanilha_Pentastomida.txt — contagens de Raillietiella mottae em 195 lagartos; muitos zeros. É o conjunto do capítulo 8 de Análises Ecológicas no R, e volta nos Encontros 5 e 6."
+    "text": "Dados\n\nRoadKills.txt — anfíbios atropelados em 52 segmentos da IP2, sul de Portugal (Zuur et al. 2009, cap. 16, doi:10.1007/978-0-387-87458-6_16); o Encontro 1 descreve a coleta.\nUV.csv — resposta binomial, contagem de células.\ncamila_cauda_lagartos.txt — 223 lagartos Coleodactylus meridionalis: sexo, CRC, comprimento da cauda intacta e da regenerada, e se o indivíduo já sofreu autotomia. Aqui, Tail_state é a resposta binária do bloco 2 — atenção: vale 1 quando a cauda está intacta, e nos slides ela é recodificada para cauda_perdida = 1 - Tail_state.\nPlanilha_Pentastomida.txt — contagens de Raillietiella mottae em 195 lagartos; muitos zeros. É o conjunto do capítulo 8 de Análises Ecológicas no R, e volta nos Encontros 5 e 6."
   },
   {
     "objectID": "encontros/e05-glm-i/index.html#leituras",
@@ -1698,7 +1698,7 @@
     "href": "encontros/e01-eda-reprodutibilidade/index.html#dados",
     "title": "E1 — EDA, reprodutibilidade e literacia em IA",
     "section": "Dados",
-    "text": "Dados\n\nRoadKills.txt — anfíbios atropelados em 52 segmentos de 500 m de uma mesma estrada, ao longo de 25,5 km, em Portugal (Zuur et al. 2009). As colunas X e Y dão a posição de cada segmento e D.PARK a distância ao parque, que vai de 250 m a 24,9 km. É o conjunto do productive failure que abre a aula, e volta nos Encontros 5, 6 e 9.\ndados_com_outliers_e_faltantes.csv — passo 1, o gráfico de Cleveland.\nRIKZ.txt — riqueza de macrofauna em 9 praias holandesas (Zuur et al. 2009); passo 2, heterogeneidade entre grupos. Volta nos Encontros 7 e 8."
+    "text": "Dados\n\nRoadKills.txt — anfíbios atropelados em 52 segmentos de 500 m da estrada IP2, entre Portalegre e Monforte, no sul de Portugal. A estrada foi percorrida de carro a 10–20 km/h, a cada duas semanas, de março de 1995 a março de 1997, e cada carcaça foi retirada da pista para não ser contada duas vezes. As colunas X e Y dão a posição de cada segmento e D.PARK a distância, ao longo da estrada, ao parque natural da Serra de São Mamede, de 250 m a 24,9 km — uma serra mais úmida que a planície em volta, e portanto um proxy de umidade. Fonte: Zuur, Mira, Carvalho, Ieno, Saveliev, Smith & Walker (2009), cap. 16 de Mixed Effects Models and Extensions in Ecology with R, p. 383–397 (doi:10.1007/978-0-387-87458-6_16). É o conjunto do productive failure que abre a aula, e volta nos Encontros 5, 6 e 9.\ndados_com_outliers_e_faltantes.csv — passo 1, o gráfico de Cleveland.\nRIKZ.txt — riqueza de macrofauna em 9 praias holandesas (Zuur et al. 2009); passo 2, heterogeneidade entre grupos. Volta nos Encontros 7 e 8."
   },
   {
     "objectID": "encontros/e01-eda-reprodutibilidade/index.html#preparação-prévia-sala-de-aula-invertida",
@@ -2055,28 +2055,35 @@
     "href": "slides/e01.html#os-dados",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Os dados",
-    "text": "Os dados\n\nRK &lt;- read.delim(\"../dados/RoadKills.txt\")\ndim(RK)\n\n[1] 52 23\n\nRK[1:4, c(\"TOT.N\", \"D.PARK\", \"OPEN.L\", \"L.WAT.C\")]\n\n  TOT.N   D.PARK OPEN.L L.WAT.C\n1    22  250.214 22.684   0.583\n2    14  741.179 24.657   1.419\n3    65 1240.080 30.121   2.005\n4    55 1739.885 50.277   1.924\n\n\n\nDados de Zuur, Ieno & Smith, usados em Mixed Effects Models and Extensions in Ecology with R (2009). Eles nos acompanham a semana inteira."
+    "text": "Os dados\n\nRK &lt;- read.delim(\"../dados/RoadKills.txt\")\ndim(RK)\n\n[1] 52 23\n\nRK[1:4, c(\"TOT.N\", \"D.PARK\", \"OPEN.L\", \"L.WAT.C\")]\n\n  TOT.N   D.PARK OPEN.L L.WAT.C\n1    22  250.214 22.684   0.583\n2    14  741.179 24.657   1.419\n3    65 1240.080 30.121   2.005\n4    55 1739.885 50.277   1.924\n\n\n\nAnfíbios atropelados na estrada IP2, sul de Portugal, no cap. 16 de Zuur, Mira, Carvalho, Ieno, Saveliev, Smith & Walker (2009), Mixed Effects Models and Extensions in Ecology with R, p. 383–397 (doi:10.1007/978-0-387-87458-6_16). Eles nos acompanham a semana inteira."
   },
   {
     "objectID": "slides/e01.html#de-onde-vêm-esses-números",
     "href": "slides/e01.html#de-onde-vêm-esses-números",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "De onde vêm esses números",
-    "text": "De onde vêm esses números\n\n\n\n\n\n\n\n\n\nCada ponto é um segmento de 500 m de uma mesma estrada, 52 deles ao longo de 25,5 km. A cor e o tamanho são a contagem de anfíbios mortos."
+    "text": "De onde vêm esses números\n\n\n\n\n\n\n\n\n\nCada ponto é o meio de um segmento de 500 m da IP2, entre Portalegre e Monforte: 52 segmentos cobrindo 25,5 km. A cor e o tamanho são a contagem de anfíbios mortos."
+  },
+  {
+    "objectID": "slides/e01.html#como-esses-números-foram-feitos",
+    "href": "slides/e01.html#como-esses-números-foram-feitos",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Como esses números foram feitos",
+    "text": "Como esses números foram feitos\n\nUm trecho de 27 km da IP2, no sul de Portugal: duas faixas, menos de 10 000 veículos por dia, cortando montado de sobreiro (Quercus suber) e azinheira (Q. rotundifolia) e campo aberto.\nPercorrido de carro, a 10–20 km/h, pelo acostamento, a cada duas semanas, de março de 1995 a março de 1997.\nCada carcaça identificada até espécie quando possível e retirada da estrada, para não ser contada de novo na quinzena seguinte.\nA estrada dividida em segmentos de 500 m, e cada animal atribuído ao ponto médio do seu segmento.\n\n\nDois anos de campo, quinzena após quinzena, condensados em 52 linhas e uma coluna chamada TOT.N. Vale lembrar disso na hora de reclamar do tamanho da amostra."
   },
   {
     "objectID": "slides/e01.html#duas-coisas-que-o-mapa-já-entrega",
     "href": "slides/e01.html#duas-coisas-que-o-mapa-já-entrega",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Duas coisas que o mapa já entrega",
-    "text": "Duas coisas que o mapa já entrega\n\nUm gradiente. A mortalidade cai com a distância ao parque (\\(r = -0{,}75\\)). Essa é a pergunta do Encontro 5, e o mapa mostra que ela é geográfica antes de ser estatística.\nUm problema. Segmentos vizinhos distam 500 m: eles não são réplicas independentes. É o assunto do Encontro 7, e está embutido no desenho da coleta — nenhuma análise conserta isso depois.\n\n\nAs coordenadas do arquivo estão em metros, num sistema projetado que a fonte não documenta. Por isso o mapa é desenhado no sistema do próprio conjunto, com escala 1:1: a geometria é fiel e nenhuma afirmação é feita sobre onde isso fica no globo."
+    "text": "Duas coisas que o mapa já entrega\n\nUm gradiente. A mortalidade cai com a distância ao parque natural da Serra de São Mamede (\\(r = -0{,}75\\)) — uma serra mais úmida e chuvosa que a planície em volta, ou seja, a variável é um proxy de umidade. Essa é a pergunta do Encontro 5, e o mapa mostra que ela é geográfica antes de ser estatística.\nUm problema. Segmentos vizinhos distam 500 m: eles não são réplicas independentes. É o assunto do Encontro 7, e está embutido no desenho da coleta — nenhuma análise conserta isso depois.\n\n\nO eixo leste–oeste do mapa está exagerado de propósito: o trecho tem 2 km de largura para 25 de comprimento e, em escala 1:1, vira uma linha reta. Zuur et al. distorcem o mesmo eixo, pela mesma razão, na Fig. 16.6 do capítulo."
   },
   {
     "objectID": "slides/e01.html#uma-coisa-que-vocês-já-viram",
     "href": "slides/e01.html#uma-coisa-que-vocês-já-viram",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Uma coisa que vocês já viram",
-    "text": "Uma coisa que vocês já viram\n\n\n\n\n\n\n\n\n\nContagem. Só inteiros não negativos. Variância cresce com a média. Cauda longa à direita.\nUma regressão linear comum é apropriada aqui? Guardem a resposta."
+    "text": "Uma coisa que vocês já viram\n\n\n\n\n\n\n\n\n\nContagem. Só inteiros não negativos. Cauda longa à direita. E a variância cresce com a média: aqui a média é 25,9 e a variância é 589,3, quase 23 vezes maior. Guardem essa desproporção para o Encontro 6 — parte dela some quando as covariáveis entram no modelo, mas não toda.\nUma regressão linear comum é apropriada aqui? Guardem a resposta."
   },
   {
     "objectID": "slides/e01.html#o-mapa-da-disciplina-inteira",
