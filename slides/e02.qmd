@@ -189,10 +189,11 @@ as distribuições *t* e *F*.
 O ROS lista **seis**, em ordem decrescente de importância, e as duas
 primeiras não são sobre resíduo nenhum:
 
-1. **Validade** — os dados que você tem respondem à pergunta que você
-   fez?
-2. **Representatividade** — a amostra representa a população sobre a
-   qual você quer falar?
+1. **Validade** — a variável resposta mede mesmo o fenômeno de
+   interesse, o modelo inclui as preditoras relevantes, e ele generaliza
+   para os casos em que vai ser aplicado.
+2. **Representatividade** — a amostra representa a distribuição de $y$
+   **dadas as preditoras que estão no modelo**.
 
 Da 3 à 6 são as quatro do slide anterior, na mesma ordem: aditividade e
 linearidade, independência dos erros, variância igual, normalidade.
@@ -201,6 +202,59 @@ linearidade, independência dos erros, variância igual, normalidade.
 Nenhum gráfico de resíduo detecta (1) e (2). Elas se decidem na pergunta
 e no delineamento --- é o Encontro 1 --- e são as únicas da lista que
 análise nenhuma conserta depois.
+:::
+
+::: {.ref}
+Gelman, Hill & Vehtari (2020), *Regression and Other Stories*, seção 11.1.
+:::
+
+---
+
+## Selecionar em $x$ ou selecionar em $y$ {.smaller}
+
+A regra que o ROS tira da premissa 2, e que decide muita coisa:
+
+::: {.definicao}
+Selecionar em $x$ **não** atrapalha a inferência do modelo. Selecionar em
+$y$, sim.
+:::
+
+O exemplo deles é uma regressão de renda contra altura e sexo: ter
+mulheres e pessoas altas em excesso na amostra é tolerável; ter ricos em
+excesso, não.
+
+**Traduzindo.** Amostrar de propósito mais sítios de mata do que de campo
+não quebra nada --- desde que "mata × campo" esteja no modelo. Agora,
+jogar fora os sítios em que você não encontrou nenhum anfíbio é seleção
+em $y$, e isso quebra.
+
+::: {.nota}
+É também um argumento a favor de **incluir mais preditoras**: quanto mais
+do processo de seleção estiver em $X$, mais defensável fica a
+representatividade condicional. E o descarte de zeros volta no Encontro
+6, do outro lado --- como origem de inflação de zeros.
+:::
+
+---
+
+## O que o ROS diz sobre testar normalidade {.smaller}
+
+Sobre a premissa 6, eles vão além do que dissemos no bloco anterior:
+
+> "we do not recommend diagnostics of the normality of regression
+> residuals"
+
+Não é que o gráfico Q-Q esteja errado --- ele é relevante quando o
+objetivo é **prever observações individuais**. É que, para estimar a
+reta, a normalidade quase não pesa, e a atenção está mal alocada.
+
+::: {.nota}
+Compare com o Kozak & Piepho (2018) e o Shatz (2024), nas leituras: eles
+argumentam que a premissa se checa no **resíduo** e por **gráfico**, não
+por teste. O ROS assina embaixo e acrescenta que, para esta premissa
+específica, nem o gráfico merece muito do seu tempo. As três posições
+concordam no que importa: o valor de *p* de um teste de normalidade não
+decide nada.
 :::
 
 ::: {.ref}

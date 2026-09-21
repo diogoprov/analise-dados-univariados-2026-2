@@ -60,6 +60,7 @@ curso, com um *take-home* por item:
 **Complementar**
 
 - da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
+- Crawley, M.J. 2022. [Probability Distributions in R](https://doi.org/10.1002/9781119634461.ch8). Cap. 8 de [*The R Book*](https://doi.org/10.1002/9781119634461), 3ª ed. Wiley. p. 373–404. — o mesmo assunto deste encontro, pelo lado do R.
 - Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
 
 ## Recursos externos
