@@ -63,6 +63,7 @@ curso, com um *take-home* por item:
 - Hurlbert, S.H. 1984. [Pseudoreplication and the design of ecological field experiments](https://doi.org/10.2307/1942661). *Ecological Monographs* 54:187–211.
 - Zuur, A.F. et al. 2009. [*Mixed Effects Models and Extensions in Ecology with R*](https://doi.org/10.1007/978-0-387-87458-6). Springer.
 - Quinn, G.P. & Keough, M.J. 2023. [Random Factors in Factorial and Nested Designs](https://doi.org/10.1017/9781139568173.011). Cap. 10 de *Experimental Design and Data Analysis for Biologists*, 2ª ed., p. 194–227. Cambridge University Press. — a seção 10.1 trata exatamente da pergunta "fixo ou aleatório?", e a 10.2 põe lado a lado a abordagem OLS tradicional de ANOVA e a de modelos mistos, que é a passagem que fazemos hoje.
+- Crawley, M.J. 2022. [Mixed-Effect Models](https://doi.org/10.1002/9781119634461.ch13). Cap. 13 de [*The R Book*](https://doi.org/10.1002/9781119634461), 3ª ed., p. 601–626. Wiley. — a referência de bancada, que vai direto ao código e à leitura da saída no R. Atenção ao número: na 2ª edição este capítulo era o 19 (p. 681–714).
 
 ## Recursos externos
 

@@ -73,7 +73,10 @@ Se isso for verdade, três coisas mudam:
 
 ## De onde vem este curso
 
-Duas fontes sustentam os Encontros 2 e 3:
+Três fontes sustentam os Encontros 2 e 3:
+
+**Quinn & Keough (2023), cap. 4** — o arcabouço: as "técnicas" de nome
+próprio como variantes de um mesmo modelo.
 
 **Gelman, Hill & Vehtari (2020), *Regression and Other Stories*** — a
 postura: regressão é uma ferramenta de **comparação e predição**, não uma
@@ -508,6 +511,14 @@ A cada **1 mm** a mais de bico, a massa esperada aumenta
 
 Repare que a interpretação só existe **com unidade**. Coeficiente sem
 unidade é número solto.
+
+::: {.nota}
+O que o `lm()` está fazendo por baixo é o assunto do cap. 8 do ROS,
+*Fitting regression models*: a seção 8.1 põe mínimos quadrados, máxima
+verossimilhança e inferência bayesiana como três respostas à mesma
+pergunta, a 8.2 mostra quanto cada ponto puxa a reta, e a 8.4 ajusta o
+mesmo modelo com `lm()` e com `stan_glm()` lado a lado.
+:::
 
 ---
 
