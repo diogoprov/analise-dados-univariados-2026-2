@@ -1150,7 +1150,7 @@ Depois, cinco minutos de apresentação por pessoa.
 
 ---
 
-## Referências
+## Referências {.smaller}
 
 ::: {.nota}
 **Base metodológica**

@@ -275,7 +275,7 @@ some quando as covariáveis entram no modelo, mas não toda.
 #| echo: false
 #| fig-width: 6.4
 #| fig-height: 5.1
-#| out-width: "55%"
+#| out-width: "53%"
 #| fig-align: center
 source("../R/ppdac.R")
 ppdac_plot()

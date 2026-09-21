@@ -101,8 +101,8 @@ instalar nada.
 **Por que trabalhar com modelos**
 
 - Chamberlin, T.C. 1890. [The method of multiple working hypotheses](https://doi.org/10.1126/science.ns-15.366.92). *Science* ns-15:92–96. Reimpresso em 1897 no [*Journal of Geology* 5:837–848](https://doi.org/10.1086/607980).
-- Platt, J.R. 1964.- Van Buskirk, J. 2005. [Local and landscape influence on amphibian occurrence and abundance](https://doi.org/10.1890/04-1237). *Ecology* 86:1936–1947. — o conjunto de modelos *a priori* que usamos como exemplo, cada um encarnando uma hipótese diferente.
- [Strong inference](https://doi.org/10.1126/science.146.3642.347). *Science* 146:347–353.
+- Platt, J.R. 1964. [Strong inference](https://doi.org/10.1126/science.146.3642.347). *Science* 146:347–353. — a *strong inference*: formular as alternativas, desenhar o teste que exclui pelo menos uma, repetir.
+- Van Buskirk, J. 2005. [Local and landscape influence on amphibian occurrence and abundance](https://doi.org/10.1890/04-1237). *Ecology* 86:1936–1947. — o conjunto de modelos *a priori* que usamos como exemplo, cada um encarnando uma hipótese diferente.
 - Hilborn, R. & Mangel, M. 1997. [*The Ecological Detective: Confronting Models with Data*](https://www.jstor.org/stable/j.ctt24hqnx). Princeton University Press.
 - Johnson, J.B. & Omland, K.S. 2004. [Model selection in ecology and evolution](https://doi.org/10.1016/j.tree.2003.10.013). *Trends in Ecology & Evolution* 19:101–108.
 - Hobbs, N.T. & Hilborn, R. 2006. [Alternatives to statistical hypothesis testing in ecology: a guide to self teaching](https://doi.org/10.1890/04-0645). *Ecological Applications* 16:5–19.
