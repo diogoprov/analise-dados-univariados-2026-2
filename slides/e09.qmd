@@ -1129,5 +1129,5 @@ Depois, cinco minutos de apresentação por pessoa.
 - Mac Nally, R.; Duncan, R.P.; Thomson, J.R. & Yen, J.D.L. 2018. [Model selection using information criteria, but is the 'best' model any good?](https://doi.org/10.1111/1365-2664.13060) *Journal of Applied Ecology* 55:1441–1444.
 - Gelman, A. et al. 2026. [*Bayesian Workflow*](https://avehtari.github.io/Bayesian-Workflow/). Chapman & Hall/CRC. Cap. 9, "Comparing and improving models".
 - Gerstner, K. et al. 2017. [Will your paper be used in a meta-analysis?](https://doi.org/10.1111/2041-210X.12758) *Methods in Ecology and Evolution* 8:777–784.
-- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/), cap. 11.
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/), seções 11.8 (validação cruzada) e 12.6 (construir e comparar modelos para predição).
 :::

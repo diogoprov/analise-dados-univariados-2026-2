@@ -119,6 +119,7 @@ instalar nada.
 
 **Boas práticas**
 
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — a seção **11.8** é validação cruzada, a **12.6** é construir e comparar modelos para predição, e o item **B.6** dos dez conselhos do apêndice é, literalmente, "Fit many models". É o contraponto amigável ao Burnham & Anderson: mesma recusa do modelo único, outro caminho.
 - Popovic, G. et al. 2024. [Four principles for improved statistical ecology](https://doi.org/10.1111/2041-210X.14270). *Methods in Ecology and Evolution* 15:266–281.
 - Gerstner, K. et al. 2017. [Will your paper be used in a meta-analysis?](https://doi.org/10.1111/2041-210X.12758) *Methods in Ecology and Evolution* 8:777–784.
 
