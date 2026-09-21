@@ -261,7 +261,7 @@ Diogo B. Provete
 <h1>1. De testar a comparar</h1>
 
 </section>
-<section id="o-ritual-e-de-onde-ele-veio" class="slide level2 smaller">
+<section id="o-ritual-e-de-onde-ele-veio" class="slide level2">
 <h2>O ritual, e de onde ele veio</h2>
 <p>O procedimento padrão do século XX: hipótese nula, valor de <em>p</em>, limiar de 0,05, rejeita ou não rejeita. Só que ele não nasceu inteiro — nasceu de <strong>duas escolas que brigavam entre si</strong>.</p>
 <p><strong>Fisher (1925)</strong>, em <em>Statistical Methods for Research Workers</em>, monta a primeira metade: uma hipótese só, o <em>p</em> como medida contínua de discrepância, e a origem do 0,05, que ele apresenta como conveniência — “it is convenient to take this point as a limit” — e não como regra.</p>
@@ -285,7 +285,7 @@ Diogo B. Provete
 </div>
 <p>Não é uma correção técnica ao valor de <em>p</em>. É outra pergunta.</p>
 <div class="nota">
-<p>Chamberlin propôs isso em 1890, sob o nome de “múltiplas hipóteses de trabalho”. Akaike deu a ela uma métrica em 1974.</p>
+<p>A ideia tem três tempos. <strong>Chamberlin (1890)</strong> a propôs como postura, sob o nome de “múltiplas hipóteses de trabalho”: manter várias explicações vivas ao mesmo tempo, para não se apaixonar por uma. <strong>Platt (1964)</strong> a transformou em método, a <em>strong inference</em> — formular as alternativas, desenhar o teste que <strong>exclui</strong> pelo menos uma, repetir — e argumentou que os campos que avançam rápido são os que fazem isso. <strong>Akaike (1974)</strong> deu a ela uma métrica, que é o que veremos hoje.</p>
 </div>
 </section>
 <section class="slide level2">
@@ -551,7 +551,7 @@ poisson 634.5 240.9 2  &lt;0.001</code></pre>
 </tbody>
 </table>
 </section>
-<section id="o-que-esse-conjunto-ensina" class="slide level2 smaller">
+<section id="o-que-esse-conjunto-ensina" class="slide level2">
 <h2>O que esse conjunto ensina</h2>
 <div class="definicao">
 <p>Os modelos têm <strong>nome de hipótese</strong>, não de variável. “<em>Wellborn model</em>” é uma citação a um artigo de 1996 traduzida em preditoras — quem lê sabe o que está sendo testado antes de ver qualquer número.</p>
@@ -589,7 +589,7 @@ poisson 634.5 240.9 2  &lt;0.001</code></pre>
 </div>
 </div>
 </section>
-<section id="a-mesma-tabela-com-uma-função" class="slide level2 smaller">
+<section id="a-mesma-tabela-com-uma-função" class="slide level2">
 <h2>A mesma tabela, com uma função</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">ICtab</span>(modelos, <span class="at">type =</span> <span class="st">"AICc"</span>, <span class="at">weights =</span> <span class="cn">TRUE</span>, <span class="at">delta =</span> <span class="cn">TRUE</span>, <span class="at">base =</span> <span class="cn">TRUE</span>,</span>
@@ -623,7 +623,7 @@ nulo        447.9  54.4 2  &lt;0.001</code></pre>
 </div>
 </div>
 </section>
-<section id="as-três-ressalvas-que-ninguém-copia" class="slide level2 smaller">
+<section id="as-três-ressalvas-que-ninguém-copia" class="slide level2">
 <h2>As três ressalvas que ninguém copia</h2>
 <p>Junto com a tabela de limiares, Burnham &amp; Anderson listam três condições. A terceira é a que mais importa nesta disciplina:</p>
 <blockquote>
@@ -695,7 +695,7 @@ nulo        | negbin |       2.322e-15 | 24.041 |    6.37e-13 |    2.57e-12 |   
 <p>Duas formas de média: <strong>condicional</strong> (só sobre os modelos em que o termo aparece) e <strong>completa</strong> (contando zero onde ele não aparece). Diga qual usou — elas dão respostas diferentes.</p>
 </div>
 </section>
-<section id="os-coeficientes-médios" class="slide level2 smaller">
+<section id="os-coeficientes-médios" class="slide level2">
 <h2>Os coeficientes médios</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(med), <span class="dv">3</span>)       <span class="co"># médias condicionais</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
@@ -718,7 +718,7 @@ MONT.S      -0.111084050  0.1332850330</code></pre>
 <p><code>summary(med)</code> traz o relatório completo, com as duas formas de média e o peso de cada modelo. Aqui ficam só os números que entram no texto.</p>
 </div>
 </section>
-<section id="importância-de-variáveis-com-ressalva" class="slide level2 smaller">
+<section id="importância-de-variáveis-com-ressalva" class="slide level2">
 <h2>Importância de variáveis, com ressalva</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">sw</span>(med)   <span class="co"># soma dos pesos dos modelos em que cada variável aparece</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
@@ -811,7 +811,7 @@ Models ranked by AICc(x) </code></pre>
 <p>Com 8 preditoras são 256 modelos; com 20, mais de um milhão. Alguns vão ter AICc ótimo <strong>por acaso</strong>.</p>
 </div>
 </section>
-<section id="antes-do-stepwise-o-vif-iterativo" class="slide level2 smaller">
+<section id="antes-do-stepwise-o-vif-iterativo" class="slide level2">
 <h2>Antes do <em>stepwise</em>, o VIF iterativo</h2>
 <p>O RoadKills tem <strong>17 preditoras de paisagem</strong> para 52 sítios. Os piores VIF, antes de mexer em nada:</p>
 <div class="cell">
@@ -836,7 +836,7 @@ Models ranked by AICc(x) </code></pre>
 <p>Isso reproduz a Tabela 16.2 de Zuur et al.&nbsp;(2009): as mesmas cinco caem, e sobram 12 preditoras com VIF máximo de 2,4. No Encontro 2 eu disse para usar a saída do <code>usdm</code>, não a exclusão automática; aqui ela é de propósito, para ver até onde o procedimento mecânico feito “direito” leva.</p>
 </div>
 </section>
-<section id="duas-coisas-que-o-vif-não-vê" class="slide level2 smaller">
+<section id="duas-coisas-que-o-vif-não-vê" class="slide level2">
 <h2>Duas coisas que o VIF não vê</h2>
 <div class="definicao">
 <p><strong>A forma da relação.</strong> O próprio capítulo avisa que “non-linear relationships are not picked up by the VIF”. Depois do corte, eles ainda descartam OLIVE, D.WAT.RES e L.D.ROAD <strong>no olho</strong>, porque cada uma desenha uma curva contra D.PARK — redundância que nenhum VIF detecta.</p>
@@ -1186,7 +1186,7 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 <h2>À tarde</h2>
 <p><strong>Clínica Estatística.</strong> Tragam os dados carregados e a pergunta escrita. Depois, cinco minutos de apresentação por pessoa.</p>
 </section>
-<section id="referências" class="slide level2 smaller">
+<section id="referências" class="slide level2">
 <h2>Referências</h2>
 <div class="nota">
 <p><strong>Por que trabalhar com modelos</strong></p>
@@ -1215,6 +1215,11 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 <li>Mundry, R. &amp; Nunn, C.L. 2009. <a href="https://doi.org/10.1086/593303">Stepwise model fitting and statistical inference: turning noise into signal pollution</a>. <em>The American Naturalist</em> 173:119–123.</li>
 <li>Freckleton, R.P. 2009. <a href="https://doi.org/10.1111/j.1420-9101.2009.01757.x">The seven deadly sins of comparative analysis</a>. <em>Journal of Evolutionary Biology</em> 22:1367–1375.</li>
 </ul>
+</div>
+</section>
+<section id="referências-2" class="slide level2">
+<h2>Referências</h2>
+<div class="nota">
 <p><strong>Base metodológica</strong></p>
 <ul>
 <li>Akaike, H. 1974. <a href="https://doi.org/10.1109/TAC.1974.1100705">A new look at the statistical model identification</a>. <em>IEEE Transactions on Automatic Control</em> 19:716–723.</li>
@@ -1224,6 +1229,9 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 <li>Gelman, A. et al.&nbsp;2026. <a href="https://avehtari.github.io/Bayesian-Workflow/"><em>Bayesian Workflow</em></a>. Chapman &amp; Hall/CRC. Cap. 9, “Comparing and improving models”.</li>
 <li>Gerstner, K. et al.&nbsp;2017. <a href="https://doi.org/10.1111/2041-210X.12758">Will your paper be used in a meta-analysis?</a> <em>Methods in Ecology and Evolution</em> 8:777–784.</li>
 <li>Gelman, A.; Hill, J. &amp; Vehtari, A. 2020. <a href="https://avehtari.github.io/ROS-Examples/"><em>Regression and Other Stories</em></a>, seções 11.8 (validação cruzada) e 12.6 (construir e comparar modelos para predição).</li>
+</ul>
+<p><strong>De onde vem o ritual</strong></p>
+<ul>
 <li>Fisher, R.A. 1925. <a href="https://psychclassics.yorku.ca/Fisher/Methods/"><em>Statistical Methods for Research Workers</em></a>. Oliver &amp; Boyd, Edimburgo.</li>
 <li>Neyman, J. &amp; Pearson, E.S. 1928. <a href="https://doi.org/10.2307/2331945">On the use and interpretation of certain test criteria for purposes of statistical inference: Part I</a>. <em>Biometrika</em> 20A:175–240.</li>
 <li>Neyman, J. &amp; Pearson, E.S. 1933. <a href="https://doi.org/10.1098/rsta.1933.0009">On the problem of the most efficient tests of statistical hypotheses</a>. <em>Philosophical Transactions of the Royal Society A</em> 231:289–337.</li>

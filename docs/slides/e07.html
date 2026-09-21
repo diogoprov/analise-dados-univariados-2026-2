@@ -279,7 +279,7 @@ Diogo B. Provete
 <p>Silhuetas do <a href="https://www.phylopic.org">PhyloPic</a>, todas sob CC0 1.0: <em>Rattus norvegicus</em> por Arcadia Science, <em>Solenopsis invicta</em> por Richard J. Harris e a folha de <em>Quercus petraea</em> por Pablo Castro Sánchez-Bermejo.</p>
 </div>
 </section>
-<section id="os-três-são-o-mesmo-erro" class="slide level2 smaller">
+<section id="os-três-são-o-mesmo-erro" class="slide level2">
 <h2>Os três são o mesmo erro</h2>
 <p>Em todos, o que se replicou foi a <strong>medida</strong>, não a unidade que recebe o tratamento. O rato é um, o formigueiro é um, a árvore é uma. Trinta pesagens do mesmo rato dizem muito sobre aquele rato e quase nada sobre a dieta.</p>
 <p>E repare que nenhum deles é erro de conta: os trinta pesos existem, foram medidos com cuidado e estão corretos. O que não existe é a informação que o <em>n</em> = 30 promete.</p>
@@ -294,7 +294,7 @@ Diogo B. Provete
 </div>
 <p>O efeito prático é sempre o mesmo: o modelo acha que tem mais informação do que tem, os erros-padrão encolhem, e o valor de <em>p</em> fica otimista.</p>
 </section>
-<section id="cinco-formas-comuns-em-ecologia" class="slide level2 smaller">
+<section id="cinco-formas-comuns-em-ecologia" class="slide level2">
 <h2>Cinco formas comuns em ecologia</h2>
 <ol type="1">
 <li><strong>Temporal</strong> — o mesmo sítio medido em vários meses.</li>
@@ -432,7 +432,7 @@ b_j \sim \mathcal{N}(0, \sigma^2_{\text{praia}}),
 <p>A tabela acima é uma regra de bolso, não uma definição. A seção <a href="https://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#should-i-treat-factor-xxx-as-fixed-or-random">“Should I treat factor xxx as fixed or random?”</a> do <em>GLMM FAQ</em>, de Ben Bolker e colaboradores, reúne cinco definições diferentes de “efeito aleatório” catalogadas por Gelman (2005) — e elas não coincidem. Vale ler antes de discutir com um revisor.</p>
 </div>
 </section>
-<section id="poucos-níveis" class="slide level2 smaller">
+<section id="poucos-níveis" class="slide level2">
 <h2>Poucos níveis</h2>
 <p>Com 3 ou 4 níveis, a variância do efeito aleatório é estimada com péssima precisão — frequentemente colapsa para zero.</p>
 <div class="nota">
@@ -619,7 +619,7 @@ NAP         -2.568400  0.4947246 -5.191574</code></pre>
 </tbody>
 </table>
 </section>
-<section id="e-o-glmmtmb" class="slide level2 smaller">
+<section id="e-o-glmmtmb" class="slide level2">
 <h2>E o <code>glmmTMB</code>?</h2>
 <p>Ele <strong>imprime</strong> valor de <em>p</em> no <code>summary()</code>, e o <code>lmer</code> não. Isso não é porque o problema foi resolvido: o <code>glmmTMB</code> usa o grau de liberdade do denominador como <strong>infinito</strong> — a estatística é um <em>z</em> de Wald assintótico. O <code>lmer</code> se recusa a fazer essa aproximação em silêncio.</p>
 <div class="definicao">
@@ -642,7 +642,7 @@ NAP -3.538 -1.599</code></pre>
 <p>Relate <strong>estimativa e intervalo</strong>, não o valor de <em>p</em>. O intervalo responde à pergunta biológica (“de quanto é o efeito?”) e contorna a discussão sobre graus de liberdade.</p>
 </div>
 </section>
-<section id="o-que-o-p-não-diz" class="slide level2 smaller">
+<section id="o-que-o-p-não-diz" class="slide level2">
 <h2>O que o <em>p</em> não diz</h2>
 <p>A declaração da ASA sobre valores de <em>p</em> tem seis princípios. Três deles caem exatamente aqui:</p>
 <ul>
@@ -657,7 +657,7 @@ NAP -3.538 -1.599</code></pre>
 <p>Wasserstein, R.L. &amp; Lazar, N.A. 2016. <a href="https://doi.org/10.1080/00031305.2016.1154108">The ASA Statement on <em>p</em>-Values: Context, Process, and Purpose</a>. <em>The American Statistician</em> 70:129–133.</p>
 </div>
 </section>
-<section id="tamanho-de-efeito-no-r" class="slide level2 smaller">
+<section id="tamanho-de-efeito-no-r" class="slide level2">
 <h2>Tamanho de efeito no R</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">library</span>(effectsize)</span>

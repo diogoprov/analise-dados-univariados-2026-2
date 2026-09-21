@@ -340,7 +340,7 @@ Diogo B. Provete
 </div>
 <p>Deveria ser plano. O acúmulo nas pontas é a assinatura da sobredispersão: o modelo prevê variação de menos.</p>
 </section>
-<section id="com-o-dharma" class="slide level2 smaller">
+<section id="com-o-dharma" class="slide level2">
 <h2>Com o <code>DHARMa</code></h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a></a><span class="fu">library</span>(DHARMa)</span>
@@ -462,7 +462,7 @@ outlier frequency (expected: 0.00365384615384615 )
 <p>Sobredispersão é quase sempre <strong>sintoma</strong>, não doença. Trocar a distribuição sem investigar a causa esconde o problema em vez de resolvê-lo.</p>
 </div>
 </section>
-<section id="o-tamanho-da-razão-já-diz-qual-causa" class="slide level2 smaller">
+<section id="o-tamanho-da-razão-já-diz-qual-causa" class="slide level2">
 <h2>O tamanho da razão já diz qual causa</h2>
 <p>A razão de <em>deviance</em> do nosso Poisson foi <strong>7,8</strong>. Burnham &amp; Anderson tratam esse número como diagnóstico, não como mero fator de correção:</p>
 <blockquote>
@@ -698,7 +698,7 @@ poisson  320.2  44.6 5  &lt;0.001</code></pre>
 </div>
 <p>Lição geral, que vale além deste caso: <strong>saiba o que a função está contando</strong> antes de aceitar o veredito.</p>
 </section>
-<section id="a-rota-robusta" class="slide level2 smaller">
+<section id="a-rota-robusta" class="slide level2">
 <h2>A rota robusta</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">library</span>(DHARMa)</span>
@@ -829,7 +829,7 @@ Time3h            -3.356      0.780  -4.301    0.000</code></pre>
 <p>Cada animal foi medido em vários tempos: as observações não são independentes. O <code>(1 | Animal)</code> é o assunto de amanhã de manhã — e o <code>clmm</code> é a forma padrão de fazer GLMM ordinal, porque nem <code>lme4</code> nem <code>glmmTMB</code> cobrem bem <em>odds</em> proporcionais.</p>
 </div>
 </section>
-<section id="o-que-o-clmm-devolve" class="slide level2 smaller">
+<section id="o-que-o-clmm-devolve" class="slide level2">
 <h2>O que o <code>clmm</code> devolve</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="fu">summary</span>(m_ordm)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
@@ -867,7 +867,7 @@ Threshold coefficients:
 </div>
 </div>
 </section>
-<section id="verificando-a-premissa" class="slide level2 smaller">
+<section id="verificando-a-premissa" class="slide level2">
 <h2>Verificando a premissa</h2>
 <p>A premissa de <em>odds</em> proporcionais é que o efeito da preditora é o mesmo em todos os limiares. Se não for, o <code>ordinal</code> permite relaxá-la:</p>
 <div class="cell">

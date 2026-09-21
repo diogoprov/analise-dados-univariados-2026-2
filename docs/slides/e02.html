@@ -323,7 +323,7 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,
 <p>Gelman, Hill &amp; Vehtari (2020), <em>Regression and Other Stories</em>, seção 11.1.</p>
 </div>
 </section>
-<section id="selecionar-em-x-ou-selecionar-em-y" class="slide level2 smaller">
+<section id="selecionar-em-x-ou-selecionar-em-y" class="slide level2">
 <h2>Selecionar em <span class="math inline">\(x\)</span> ou selecionar em <span class="math inline">\(y\)</span></h2>
 <p>A regra que o ROS tira da premissa 2, e que decide muita coisa:</p>
 <div class="definicao">
@@ -335,7 +335,7 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,
 <p>É também um argumento a favor de <strong>incluir mais preditoras</strong>: quanto mais do processo de seleção estiver em <span class="math inline">\(X\)</span>, mais defensável fica a representatividade condicional. E o descarte de zeros volta no Encontro 6, do outro lado — como origem de inflação de zeros.</p>
 </div>
 </section>
-<section id="o-que-o-ros-diz-sobre-testar-normalidade" class="slide level2 smaller">
+<section id="o-que-o-ros-diz-sobre-testar-normalidade" class="slide level2">
 <h2>O que o ROS diz sobre testar normalidade</h2>
 <p>Sobre a premissa 6, eles vão além do que dissemos no bloco anterior:</p>
 <blockquote>
@@ -383,7 +383,7 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,
 </table>
 <p>A terceira linha é a que faz o trabalho pesado, e é a única que quase nunca é escrita por extenso. Vale abrir.</p>
 </section>
-<section id="a-linha-que-ninguém-desenha" class="slide level2 smaller">
+<section id="a-linha-que-ninguém-desenha" class="slide level2">
 <h2>A linha que ninguém desenha</h2>
 <p>A premissa de independência e homocedasticidade são <strong>duas afirmações sobre a mesma matriz</strong>:</p>
 <p><span class="math display">\[
@@ -941,7 +941,7 @@ sexmale      3.132877  0.3569599   8.77655  4.440460e-15</code></pre>
 <p>Hoje é só isso: <strong>a fórmula é a mesma</strong>. O que são prior, posterior, MCMC, <code>Rhat</code> e <code>ESS</code> fica para o Encontro 8, que abre o bloco bayesiano com dois slides de definição. Se a saída aqui parecer críptica, é porque ainda é — olhe a coluna <code>Estimate</code> e compare com o <code>lm()</code>.</p>
 </div>
 </section>
-<section id="o-que-o-brm-devolve" class="slide level2 smaller">
+<section id="o-que-o-brm-devolve" class="slide level2">
 <h2>O que o <code>brm()</code> devolve</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">summary</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1090,7 +1090,7 @@ body_mass_g                 0.59         -0.47              0.87        1.00</co
 <p>Colinearidade <strong>não viola premissa nenhuma</strong>. Ela torna os coeficientes individualmente mal identificados: o modelo prediz bem e interpreta mal.</p>
 </div>
 </section>
-<section id="vif" class="slide level2 smaller">
+<section id="vif" class="slide level2">
 <h2>VIF</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="co"># o usdm quer um data frame de preditoras, nao um modelo — e nao aceita</span></span>
@@ -1115,7 +1115,7 @@ max correlation ( flipper_length_mm ~ bill_length_mm ):  0.6530956
 </div>
 </div>
 </section>
-<section id="o-que-essa-saída-diz-a-mais" class="slide level2 smaller">
+<section id="o-que-essa-saída-diz-a-mais" class="slide level2">
 <h2>O que essa saída diz a mais</h2>
 <p>O <code>car::vif()</code> devolve só os valores. O <code>vifcor()</code> devolve, além deles, <strong>qual par é o mais correlacionado e quanto</strong> — que é a informação de que você precisa para decidir. Aqui o par mais apertado é comprimento de nadadeira com comprimento de bico, <em>r</em> = 0,65, e nenhum VIF passa de 2,6.</p>
 <div class="nota">

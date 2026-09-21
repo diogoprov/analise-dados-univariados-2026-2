@@ -370,7 +370,7 @@ poisson 221.4   1.3 3  0.22  </code></pre>
 </div>
 <p>Forçar a convergência de um modelo singular produz números que não significam nada.</p>
 </section>
-<section id="diagnóstico" class="slide level2 smaller">
+<section id="diagnóstico" class="slide level2">
 <h2>Diagnóstico</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">library</span>(DHARMa)</span>
@@ -387,7 +387,7 @@ poisson 221.4   1.3 3  0.22  </code></pre>
 </div>
 </div>
 </section>
-<section id="dispersão-e-zeros" class="slide level2 smaller">
+<section id="dispersão-e-zeros" class="slide level2">
 <h2>Dispersão e zeros</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">testDispersion</span>(res, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
@@ -412,7 +412,7 @@ alternative hypothesis: two.sided</code></pre>
 </div>
 </div>
 </section>
-<section id="resíduos-praia-a-praia" class="slide level2 smaller">
+<section id="resíduos-praia-a-praia" class="slide level2">
 <h2>Resíduos praia a praia</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="fu">plotResiduals</span>(res, <span class="at">form =</span> rikz<span class="sc">$</span>Beach)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
@@ -471,7 +471,7 @@ alternative hypothesis: two.sided</code></pre>
 <h1>Bloco 2 — A ponte bayesiana</h1>
 
 </section>
-<section id="três-palavras-antes-de-qualquer-código" class="slide level2 smaller">
+<section id="três-palavras-antes-de-qualquer-código" class="slide level2">
 <h2>Três palavras, antes de qualquer código</h2>
 <div class="definicao">
 <p><strong>Prior.</strong> O que você considera plausível para um parâmetro <strong>antes</strong> de olhar estes dados, escrito como distribuição. “A inclinação está entre −3 e 3” é uma prior.</p>
@@ -522,7 +522,7 @@ alternative hypothesis: two.sided</code></pre>
 <p>A fórmula é <strong>idêntica</strong>. O custo de transferência é a família e três argumentos de MCMC.</p>
 </div>
 </section>
-<section id="e-o-que-ele-devolve" class="slide level2 smaller">
+<section id="e-o-que-ele-devolve" class="slide level2">
 <h2>E o que ele devolve</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">summary</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>

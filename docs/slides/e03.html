@@ -312,7 +312,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><code>aov()</code> é literalmente uma casca em volta de <code>lm()</code>. Mesmo <em>F</em>, mesmos graus de liberdade, mesmo <em>p</em>.</p>
 </div>
 </section>
-<section id="primeiro-a-tabela-de-códigos" class="slide level2 smaller tabela-grande">
+<section id="primeiro-a-tabela-de-códigos" class="slide level2 tabela-grande">
 <h2>Primeiro, a tabela de códigos</h2>
 <p>No Encontro 2 uma coluna 0/1 bastava, porque havia dois grupos. Com três, o R cria <strong>duas</strong> colunas:</p>
 <table class="caption-top">
@@ -346,7 +346,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>Regra geral: <span class="math inline">\(k\)</span> grupos, <span class="math inline">\(k-1\)</span> colunas.</p>
 </section>
-<section id="a-matriz-uma-linha-de-cada-espécie" class="slide level2 smaller">
+<section id="a-matriz-uma-linha-de-cada-espécie" class="slide level2">
 <h2>A matriz, uma linha de cada espécie</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(m)</span>
@@ -370,7 +370,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><span class="math inline">\(\beta_0\)</span> é a <strong>média de Adelie</strong>. <span class="math inline">\(\beta_1\)</span> e <span class="math inline">\(\beta_2\)</span> são <strong>diferenças</strong> em relação a ela — nenhum dos dois é a média do próprio grupo.</p>
 </div>
 </section>
-<section id="conferindo-na-mão" class="slide level2 smaller">
+<section id="conferindo-na-mão" class="slide level2">
 <h2>Conferindo na mão</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a></a><span class="fu">coef</span>(m)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
@@ -393,7 +393,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p>O intercepto é 3706 g, que é a média de <code>Adelie</code>. O coeficiente de <code>Gentoo</code> é 1386 g, que é 5092 − 3706. <strong>Os mesmos números, nas duas tabelas.</strong></p>
 </section>
-<section id="por-que-k-1-e-não-k" class="slide level2 smaller">
+<section id="por-que-k-1-e-não-k" class="slide level2">
 <h2>Por que <span class="math inline">\(k-1\)</span> e não <span class="math inline">\(k\)</span></h2>
 <p>E se déssemos uma coluna também para <code>Adelie</code>?</p>
 <div class="cell">
@@ -582,7 +582,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>Figura 4 de Spake, R. et al.&nbsp;2023, <em>Biological Reviews</em> 98:983–1002, <a href="https://doi.org/10.1111/brv.12939">doi:10.1111/brv.12939</a>. Reproduzida sob <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>, sem alterações.</p>
 </div>
 </section>
-<section id="três-erros-com-nome" class="slide level2 smaller tabela-grande">
+<section id="três-erros-com-nome" class="slide level2 tabela-grande">
 <h2>Três erros com nome</h2>
 <p>O artigo batiza os três modos de errar, e os nomes ajudam a lembrar:</p>
 <table class="caption-top">
@@ -975,7 +975,7 @@ P value adjustment: tukey method for comparing a family of 3 estimates </code></
 <h2>Referências</h2>
 <div class="nota">
 <ul>
-<li>Quinn, G.P. &amp; Keough, M.J. 2023. <a href="https://doi.org/10.1017/9781139568173"><em>Experimental Design and Data Analysis for Biologists</em></a>. 2ª ed.&nbsp;Cambridge University Press.</li>
+<li>Quinn, G.P. &amp; Keough, M.J. 2023. <a href="https://doi.org/10.1017/9781139568173.008">Linear Models for Crossed (Factorial) Designs</a>, cap. 7, e a seção 8.2 (ANCOVA) de <a href="https://doi.org/10.1017/9781139568173.009">Multiple Regression Models</a>, cap. 8. Em <em>Experimental Design and Data Analysis for Biologists</em>, 2ª ed.&nbsp;Cambridge University Press.</li>
 <li>Gelman, A.; Hill, J. &amp; Vehtari, A. 2020. <a href="https://avehtari.github.io/ROS-Examples/"><em>Regression and Other Stories</em></a>. Cambridge University Press. — código e exemplos no site.</li>
 <li>Agresti, A. 2015. <a href="https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034"><em>Foundations of Linear and Generalized Linear Models</em></a>. Wiley.</li>
 <li>Spake, R.; Bowler, D.E.; Callaghan, C.T.; Blowes, S.A.; Doncaster, C.P.; Antão, L.H.; Nakagawa, S.; McElreath, R. &amp; Chase, J.M. 2023. <a href="https://doi.org/10.1111/brv.12939">Understanding ‘it depends’ in ecology: a guide to hypothesising, visualising and interpreting statistical interactions</a>. <em>Biological Reviews</em> 98:983–1002. Acesso aberto.</li>
