@@ -465,7 +465,7 @@ de graus de liberdade** para o denominador num modelo misto desbalanceado.
 
 ---
 
-## As saídas {.smaller}
+## As saídas {.smaller .tabela-grande}
 
 | Abordagem | Como |
 |---|---|

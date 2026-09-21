@@ -296,7 +296,7 @@ misture os dois critérios na mesma análise.
 
 ---
 
-## BIC responde outra pergunta {.smaller}
+## BIC responde outra pergunta {.smaller .tabela-grande}
 
 $$
 \mathrm{BIC} = -2\log \hat{L} + K\log n
@@ -365,7 +365,7 @@ pesos deixam de significar o que dizem.
 
 ---
 
-## Como isso se faz de verdade {.smaller}
+## Como isso se faz de verdade {.smaller .tabela-grande}
 
 Van Buskirk (2005) mediu 83 lagoas na Suíça ao longo de sete anos e montou
 **16 modelos** para a ocorrência e a densidade de oito espécies de

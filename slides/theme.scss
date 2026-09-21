@@ -72,6 +72,11 @@ $code-block-font-size: 0.70em;
 .reveal .tabela-grande table th,
 .reveal .tabela-grande table td { padding: .28em .5em; }
 
+// Slides em que a saida de codigo e longa e estoura os 750 px do palco por
+// poucos pixels. Um aperto de 8% na fonte do bloco resolve sem mexer no
+// conteudo. Usar so onde a medicao mostrou estouro.
+.reveal .codigo-compacto pre code { font-size: .92em; }
+
 // Citação de relato (blockquote). O tema do reveal pinta o texto quase
 // na cor do fundo creme; aqui fixamos contraste e damos ao bloco o mesmo
 // visual das caixas .definicao.

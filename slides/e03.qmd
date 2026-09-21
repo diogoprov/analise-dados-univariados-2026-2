@@ -141,7 +141,7 @@ graus de liberdade, mesmo *p*.
 
 ---
 
-## Primeiro, a tabela de códigos {.smaller}
+## Primeiro, a tabela de códigos {.smaller .tabela-grande}
 
 No Encontro 2 uma coluna 0/1 bastava, porque havia dois grupos. Com três,
 o R cria **duas** colunas:
@@ -424,7 +424,7 @@ alterações.
 
 ---
 
-## Três erros com nome {.smaller}
+## Três erros com nome {.smaller .tabela-grande}
 
 O artigo batiza os três modos de errar, e os nomes ajudam a lembrar:
 

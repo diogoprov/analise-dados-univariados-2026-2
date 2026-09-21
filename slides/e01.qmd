@@ -275,7 +275,7 @@ some quando as covariáveis entram no modelo, mas não toda.
 #| echo: false
 #| fig-width: 6.4
 #| fig-height: 5.1
-#| out-width: "64%"
+#| out-width: "55%"
 #| fig-align: center
 source("../R/ppdac.R")
 ppdac_plot()
@@ -1039,7 +1039,7 @@ Vale igual no trabalho final desta disciplina.
 
 ---
 
-## As três normas que valem para vocês {.smaller}
+## As três normas que valem para vocês {.smaller .tabela-grande}
 
 | Norma | O que exige |
 |---|---|

@@ -130,7 +130,7 @@ Hilborn & Mangel (1997), cap. 3, p. 59–61.
 
 ---
 
-## Três maneiras de o caderno mentir {.smaller}
+## Três maneiras de o caderno mentir {.smaller .tabela-grande}
 
 | No livro | Na sua tese |
 |---|---|

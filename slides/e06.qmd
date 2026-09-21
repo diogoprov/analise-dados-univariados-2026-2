@@ -185,7 +185,7 @@ e 8), e devolve testes com valor de *p* em vez de "parece um padrão?".
 
 ---
 
-## Os mesmos diagnósticos, com valor de *p* {.smaller}
+## Os mesmos diagnósticos, com valor de *p* {.smaller .codigo-compacto}
 
 ```{r}
 testDispersion(res, plot = FALSE)       # sobredispersão
