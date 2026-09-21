@@ -407,7 +407,7 @@ Diogo B. Provete
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center" style="width:55.0%"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center" style="width:53.0%"></p>
 </figure>
 </div>
 </div>
@@ -464,8 +464,8 @@ Diogo B. Provete
 <h2>Por que um ciclo e não uma lista</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-e4719ebd51bf0dbe8cb6" style="width:672px;height:150px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e4719ebd51bf0dbe8cb6">{"x":{"diagram":"\ndigraph ppdac {\n  graph [rankdir = LR, bgcolor = \"transparent\", nodesep = 0.40, ranksep = 0.85,\n         fontname = \"Helvetica\"]\n  node  [fontname = \"Helvetica\", fontsize = 18, style = \"filled,rounded\",\n         shape = box, penwidth = 0, margin = \"0.24,0.14\", fontcolor = \"white\"]\n  edge  [penwidth = 3.0, arrowsize = 1.1, color = \"#8a8172\"]\n\n  P1 [label = \"Problema\",  fillcolor = \"#144f64\"]\n  P2 [label = \"Plano\",     fillcolor = \"#1c6e8c\"]\n  D  [label = \"Dados\",     fillcolor = \"#527238\"]\n  A  [label = \"Análise\",   fillcolor = \"#96661f\"]\n  C  [label = \"Conclusão\", fillcolor = \"#a15e3f\"]\n\n  P1 -> P2 -> D -> A -> C\n\n  A -> D  [style = dashed, penwidth = 2.4, color = \"#527238\",\n           constraint = false, arrowsize = 1.0]\n  C -> P1 [style = dashed, penwidth = 2.4, color = \"#a15e3f\",\n           constraint = false, arrowsize = 1.0]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-428dcb25cc2946365924" style="width:672px;height:150px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-428dcb25cc2946365924">{"x":{"diagram":"\ndigraph ppdac {\n  graph [rankdir = LR, bgcolor = \"transparent\", nodesep = 0.40, ranksep = 0.85,\n         fontname = \"Helvetica\"]\n  node  [fontname = \"Helvetica\", fontsize = 18, style = \"filled,rounded\",\n         shape = box, penwidth = 0, margin = \"0.24,0.14\", fontcolor = \"white\"]\n  edge  [penwidth = 3.0, arrowsize = 1.1, color = \"#8a8172\"]\n\n  P1 [label = \"Problema\",  fillcolor = \"#144f64\"]\n  P2 [label = \"Plano\",     fillcolor = \"#1c6e8c\"]\n  D  [label = \"Dados\",     fillcolor = \"#527238\"]\n  A  [label = \"Análise\",   fillcolor = \"#96661f\"]\n  C  [label = \"Conclusão\", fillcolor = \"#a15e3f\"]\n\n  P1 -> P2 -> D -> A -> C\n\n  A -> D  [style = dashed, penwidth = 2.4, color = \"#527238\",\n           constraint = false, arrowsize = 1.0]\n  C -> P1 [style = dashed, penwidth = 2.4, color = \"#a15e3f\",\n           constraint = false, arrowsize = 1.0]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>As setas pontilhadas são o ponto: a análise revela problemas nos dados, e a conclusão quase sempre reformula o problema. <strong>Isso é legítimo</strong> — o que não é legítimo é apagar o percurso e apresentar a última volta do ciclo como se tivesse sido a primeira.</p>
