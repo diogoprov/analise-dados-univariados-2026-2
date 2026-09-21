@@ -95,7 +95,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-3c544c867f8d04a2a4476225e630fb02.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-88dd1b2681489070f5a94c6e1b58dfd2.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -804,6 +804,41 @@ Models ranked by AICc(x) </code></pre>
 <p>Com 8 preditoras são 256 modelos; com 20, mais de um milhão. Alguns vão ter AICc ótimo <strong>por acaso</strong>.</p>
 </div>
 </section>
+<section id="antes-do-stepwise-o-vif-iterativo" class="slide level2 smaller">
+<h2>Antes do <em>stepwise</em>, o VIF iterativo</h2>
+<p>O RoadKills tem <strong>17 preditoras de paisagem</strong> para 52 sítios. Os piores VIF, antes de mexer em nada:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>usdm<span class="sc">::</span><span class="fu">vif</span>(preditoras) <span class="sc">|&gt;</span> <span class="fu">slice_max</span>(VIF, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Variables       VIF
+1      MONT 213.63515
+2    OPEN.L 161.01194
+3  SQ.OLIVE  34.44944
+4   N.PATCH  24.30710
+5    P.EDGE  19.36471</code></pre>
+</div>
+</div>
+<p>Corte em 3, remove a pior, recalcula, repete — em uma linha:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>usdm<span class="sc">::</span><span class="fu">vifstep</span>(preditoras, <span class="at">th =</span> <span class="dv">3</span>)<span class="sc">@</span>excluded</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "MONT"     "P.EDGE"   "N.PATCH"  "L.SDI"    "SQ.URBAN"</code></pre>
+</div>
+</div>
+<div class="nota">
+<p>Isso reproduz a Tabela 16.2 de Zuur et al.&nbsp;(2009): as mesmas cinco caem, e sobram 12 preditoras com VIF máximo de 2,4. No Encontro 2 eu disse para usar a saída do <code>usdm</code>, não a exclusão automática; aqui ela é de propósito, para ver até onde o procedimento mecânico feito “direito” leva.</p>
+</div>
+</section>
+<section id="duas-coisas-que-o-vif-não-vê" class="slide level2 smaller">
+<h2>Duas coisas que o VIF não vê</h2>
+<div class="definicao">
+<p><strong>A forma da relação.</strong> O próprio capítulo avisa que “non-linear relationships are not picked up by the VIF”. Depois do corte, eles ainda descartam OLIVE, D.WAT.RES e L.D.ROAD <strong>no olho</strong>, porque cada uma desenha uma curva contra D.PARK — redundância que nenhum VIF detecta.</p>
+</div>
+<div class="definicao">
+<p><strong>O que sobra depois.</strong> Mesmo com 12 preditoras e todos os VIF abaixo de 3, eles relatam que, de uma rodada do modelo para outra, umas preditoras apareciam altamente significativas e outras não — e concluem que ainda havia colinearidade ali dentro.</p>
+</div>
+<p>Esse é o chão sobre o qual o <em>stepwise</em> pisa: a próxima variável que ele escolhe depende de qual ele escolheu antes.</p>
+</section>
 <section id="o-caso-mais-bem-documentado-stepwise" class="slide level2">
 <h2>O caso mais bem documentado: <em>stepwise</em></h2>
 <p>Whittingham et al.&nbsp;(2006) examinaram os artigos de 2004 em três periódicos de ecologia e comportamento: de 65 que usaram regressão múltipla, <strong>57 % usaram um procedimento <em>stepwise</em></strong>.</p>
@@ -825,8 +860,8 @@ Models ranked by AICc(x) </code></pre>
 </ol>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>adespatial<span class="sc">::</span><span class="fu">forward.sel</span>(Y, X, <span class="at">adjR2thresh =</span> R2a_global, <span class="at">alpha =</span> <span class="fl">0.05</span>,</span>
-<span id="cb23-2"><a></a>                        <span class="at">nperm =</span> <span class="dv">999</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>adespatial<span class="sc">::</span><span class="fu">forward.sel</span>(Y, X, <span class="at">adjR2thresh =</span> R2a_global, <span class="at">alpha =</span> <span class="fl">0.05</span>,</span>
+<span id="cb27-2"><a></a>                        <span class="at">nperm =</span> <span class="dv">999</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="nota">
 <p>Não é uma licença para garimpar: continua sendo seleção guiada pelos dados, e nada disso devolve os graus de liberdade gastos. Mas resolve os dois defeitos que o Whittingham documenta, e por isso virou o padrão em análise de gradientes e em partição de variância. Blanchet, F.G.; Legendre, P. &amp; Borcard, D. 2008. <a href="https://doi.org/10.1890/07-0986.1">Forward selection of explanatory variables</a>. <em>Ecology</em> 89:2623–2632.</p>
@@ -959,15 +994,15 @@ Chain 1:   Gradient evaluated at the initial value is not finite.</code></pre>
 <section id="na-prática-1" class="slide level2">
 <h2>Na prática</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">library</span>(brms)</span>
-<span id="cb25-2"><a></a><span class="fu">library</span>(loo)</span>
-<span id="cb25-3"><a></a></span>
-<span id="cb25-4"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
-<span id="cb25-5"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_a"</span>)</span>
-<span id="cb25-6"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> L.WAT.C, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
-<span id="cb25-7"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_b"</span>)</span>
-<span id="cb25-8"><a></a></span>
-<span id="cb25-9"><a></a><span class="fu">loo_compare</span>(<span class="fu">loo</span>(m_a), <span class="fu">loo</span>(m_b))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">library</span>(brms)</span>
+<span id="cb29-2"><a></a><span class="fu">library</span>(loo)</span>
+<span id="cb29-3"><a></a></span>
+<span id="cb29-4"><a></a>m_a <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
+<span id="cb29-5"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_a"</span>)</span>
+<span id="cb29-6"><a></a>m_b <span class="ot">&lt;-</span> <span class="fu">brm</span>(TOT.N <span class="sc">~</span> D.PARK_km <span class="sc">+</span> L.WAT.C, <span class="at">family =</span> <span class="fu">negbinomial</span>(), <span class="at">data =</span> RK,</span>
+<span id="cb29-7"><a></a>           <span class="at">file =</span> <span class="st">"../cache/e09_b"</span>)</span>
+<span id="cb29-8"><a></a></span>
+<span id="cb29-9"><a></a><span class="fu">loo_compare</span>(<span class="fu">loo</span>(m_a), <span class="fu">loo</span>(m_b))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> model elpd_diff se_diff p_worse diag_diff diag_elpd
    m_b       0.0     0.0      NA                    
@@ -1031,8 +1066,8 @@ Chain 1:   Gradient evaluated at the initial value is not finite.</code></pre>
 <h2>A vantagem do <span class="math inline">\(\hat{k}\)</span></h2>
 <p>O PSIS-LOO avisa quando a aproximação falha, observação por observação.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a>loo_a <span class="ot">&lt;-</span> <span class="fu">loo</span>(m_a)</span>
-<span id="cb27-2"><a></a><span class="fu">print</span>(loo_a)        <span class="co"># valores de k-hat; &gt; 0,7 é problema</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a>loo_a <span class="ot">&lt;-</span> <span class="fu">loo</span>(m_a)</span>
+<span id="cb31-2"><a></a><span class="fu">print</span>(loo_a)        <span class="co"># valores de k-hat; &gt; 0,7 é problema</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Computed from 4000 by 52 log-likelihood matrix.
@@ -1056,7 +1091,7 @@ See help('pareto-k-diagnostic') for details.</code></pre>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e09_files/figure-revealjs/unnamed-chunk-19-1.png" width="672"></p>
+<p><img data-src="e09_files/figure-revealjs/unnamed-chunk-22-1.png" width="672"></p>
 </figure>
 </div>
 </div>
