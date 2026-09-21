@@ -62,6 +62,7 @@ curso, com um *take-home* por item:
 - Harrison, X.A. et al. 2018. [A brief introduction to mixed effects modelling and multi-model inference in ecology](https://doi.org/10.7717/peerj.4794). *PeerJ* 6:e4794.
 - Hurlbert, S.H. 1984. [Pseudoreplication and the design of ecological field experiments](https://doi.org/10.2307/1942661). *Ecological Monographs* 54:187–211.
 - Zuur, A.F. et al. 2009. [*Mixed Effects Models and Extensions in Ecology with R*](https://doi.org/10.1007/978-0-387-87458-6). Springer.
+- Quinn, G.P. & Keough, M.J. 2023. [Random Factors in Factorial and Nested Designs](https://doi.org/10.1017/9781139568173.011). Cap. 10 de *Experimental Design and Data Analysis for Biologists*, 2ª ed., p. 194–227. Cambridge University Press. — a seção 10.1 trata exatamente da pergunta "fixo ou aleatório?", e a 10.2 põe lado a lado a abordagem OLS tradicional de ANOVA e a de modelos mistos, que é a passagem que fazemos hoje.
 
 ## Recursos externos
 

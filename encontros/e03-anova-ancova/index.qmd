@@ -79,7 +79,7 @@ E duas de aquecimento, se o Encontro 2 tiver ficado apertado:
 
 **Obrigatória**
 
-- Quinn, G.P. & Keough, M.J. 2023. [*Experimental Design and Data Analysis for Biologists*](https://doi.org/10.1017/9781139568173). 2ª ed. Cambridge University Press.
+- Quinn, G.P. & Keough, M.J. 2023. [Linear Models for Crossed (Factorial) Designs](https://doi.org/10.1017/9781139568173.008), cap. 7, p. 115–136, e a seção 8.2 (*Analysis of Covariance*) de [Multiple Regression Models](https://doi.org/10.1017/9781139568173.009), cap. 8, p. 158–173. Em *Experimental Design and Data Analysis for Biologists*, 2ª ed. Cambridge University Press. — é este encontro, na ordem em que o damos: o modelo fatorial e as interações em 7.1, as somas de quadrados I, II e III em 7.1.7.2, e a ANCOVA com homogeneidade de inclinações em 8.2.3–8.2.4.
 
 **Complementar**
 

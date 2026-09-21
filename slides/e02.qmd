@@ -950,7 +950,9 @@ relatado.
 
 ## Para amanhã
 
-**Leitura:** Quinn & Keough (2023), caps. 8 e 9.
+**Leitura:** Quinn & Keough (2023), cap. 7 --- delineamentos cruzados,
+interações e as somas de quadrados I, II e III --- e a seção 8.2, sobre
+ANCOVA.
 
 **Amanhã de manhã:** mais colunas na matriz de delineamento — ANOVA,
 ANCOVA e interações. Nenhum conceito novo de inferência.
