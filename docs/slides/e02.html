@@ -236,7 +236,8 @@ Diogo B. Provete
 </section>
 <section id="de-onde-vem-este-curso" class="slide level2">
 <h2>De onde vem este curso</h2>
-<p>Duas fontes sustentam os Encontros 2 e 3:</p>
+<p>Três fontes sustentam os Encontros 2 e 3:</p>
+<p><strong>Quinn &amp; Keough (2023), cap. 4</strong> — o arcabouço: as “técnicas” de nome próprio como variantes de um mesmo modelo.</p>
 <p><strong>Gelman, Hill &amp; Vehtari (2020), <em>Regression and Other Stories</em></strong> — a postura: regressão é uma ferramenta de <strong>comparação e predição</strong>, não uma máquina de produzir valores de <em>p</em>. Simular, ajustar, prever, checar.</p>
 <p><strong>Lindeløv, <em>Common statistical tests are linear models</em></strong> — a demonstração: a tabela que mostra cada teste clássico como um <code>lm()</code> com uma matriz de delineamento específica.</p>
 <div class="nota">
@@ -718,6 +719,9 @@ sexmale      3.132877  0.3569599   8.77655  4.440460e-15</code></pre>
 <p>A cada <strong>1 mm</strong> a mais de bico, a massa esperada aumenta 86.8 <strong>g</strong>.</p>
 </div>
 <p>Repare que a interpretação só existe <strong>com unidade</strong>. Coeficiente sem unidade é número solto.</p>
+<div class="nota">
+<p>O que o <code>lm()</code> está fazendo por baixo é o assunto do cap. 8 do ROS, <em>Fitting regression models</em>: a seção 8.1 põe mínimos quadrados, máxima verossimilhança e inferência bayesiana como três respostas à mesma pergunta, a 8.2 mostra quanto cada ponto puxa a reta, e a 8.4 ajusta o mesmo modelo com <code>lm()</code> e com <code>stan_glm()</code> lado a lado.</p>
+</div>
 </section>
 <section id="e-o-intercepto" class="slide level2">
 <h2>E o intercepto?</h2>
