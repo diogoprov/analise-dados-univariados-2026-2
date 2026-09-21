@@ -142,8 +142,11 @@ RK[1:4, c("TOT.N", "D.PARK", "OPEN.L", "L.WAT.C")]
 ```
 
 ::: {.nota}
-Dados de Zuur, Ieno & Smith, usados em *Mixed Effects Models and
-Extensions in Ecology with R* (2009). Eles nos acompanham a semana inteira.
+Anfíbios atropelados na estrada IP2, sul de Portugal, no cap. 16 de Zuur,
+Mira, Carvalho, Ieno, Saveliev, Smith & Walker (2009), *Mixed Effects
+Models and Extensions in Ecology with R*, p. 383--397
+([doi:10.1007/978-0-387-87458-6_16](https://doi.org/10.1007/978-0-387-87458-6_16)).
+Eles nos acompanham a semana inteira.
 :::
 
 ---
@@ -158,17 +161,40 @@ source("../R/roadkills_mapa.R")
 mapa_roadkills(RK)
 ```
 
-Cada ponto é um segmento de **500 m** de uma mesma estrada, 52 deles ao
-longo de 25,5 km. A cor e o tamanho são a contagem de anfíbios mortos.
+Cada ponto é o meio de um segmento de **500 m** da IP2, entre Portalegre e
+Monforte: 52 segmentos cobrindo 25,5 km. A cor e o tamanho são a contagem
+de anfíbios mortos.
+
+---
+
+## Como esses números foram feitos {.smaller}
+
+- Um trecho de **27 km** da IP2, no sul de Portugal: duas faixas, menos de
+  10 000 veículos por dia, cortando *montado* de sobreiro
+  (*Quercus suber*) e azinheira (*Q. rotundifolia*) e campo aberto.
+- Percorrido **de carro, a 10--20 km/h**, pelo acostamento, **a cada duas
+  semanas, de março de 1995 a março de 1997**.
+- Cada carcaça identificada até espécie quando possível e **retirada da
+  estrada**, para não ser contada de novo na quinzena seguinte.
+- A estrada dividida em segmentos de 500 m, e cada animal atribuído ao
+  **ponto médio** do seu segmento.
+
+::: {.nota}
+Dois anos de campo, quinzena após quinzena, condensados em 52 linhas e uma
+coluna chamada `TOT.N`. Vale lembrar disso na hora de reclamar do tamanho
+da amostra.
+:::
 
 ---
 
 ## Duas coisas que o mapa já entrega {.smaller}
 
 ::: {.definicao}
-**Um gradiente.** A mortalidade cai com a distância ao parque
-($r = -0{,}75$). Essa é a pergunta do Encontro 5, e o mapa mostra que ela
-é geográfica antes de ser estatística.
+**Um gradiente.** A mortalidade cai com a distância ao parque natural da
+Serra de São Mamede ($r = -0{,}75$) --- uma serra mais úmida e chuvosa que a
+planície em volta, ou seja, a variável é um **proxy** de umidade. Essa é a
+pergunta do Encontro 5, e o mapa mostra que ela é geográfica antes de ser
+estatística.
 
 **Um problema.** Segmentos vizinhos distam 500 m: eles não são réplicas
 independentes. É o assunto do Encontro 7, e está embutido no desenho da
@@ -176,10 +202,10 @@ coleta — nenhuma análise conserta isso depois.
 :::
 
 ::: {.nota}
-As coordenadas do arquivo estão em metros, num sistema projetado que a
-fonte não documenta. Por isso o mapa é desenhado no sistema do próprio
-conjunto, com escala 1:1: a geometria é fiel e nenhuma afirmação é feita
-sobre onde isso fica no globo.
+O eixo leste--oeste do mapa está exagerado de propósito: o trecho tem 2 km
+de largura para 25 de comprimento e, em escala 1:1, vira uma linha reta.
+Zuur et al. distorcem o mesmo eixo, pela mesma razão, na Fig. 16.6 do
+capítulo.
 :::
 
 ---
@@ -196,8 +222,10 @@ ggplot(RK, aes(TOT.N)) +
   theme_minimal(base_size = 15)
 ```
 
-Contagem. Só inteiros não negativos. Variância cresce com a média. Cauda
-longa à direita.
+Contagem. Só inteiros não negativos. Cauda longa à direita. E a variância
+cresce com a média: aqui a média é **25,9** e a variância é **589,3**, quase
+23 vezes maior. Guardem essa desproporção para o Encontro 6 --- parte dela
+some quando as covariáveis entram no modelo, mas não toda.
 
 **Uma regressão linear comum é apropriada aqui?** Guardem a resposta.
 
