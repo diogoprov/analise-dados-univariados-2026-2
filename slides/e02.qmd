@@ -210,7 +210,7 @@ Gelman, Hill & Vehtari (2020), *Regression and Other Stories*, seção 11.1.
 
 ---
 
-## Selecionar em $x$ ou selecionar em $y$ {.smaller}
+## Selecionar em $x$ ou selecionar em $y$
 
 A regra que o ROS tira da premissa 2, e que decide muita coisa:
 
@@ -237,7 +237,7 @@ representatividade condicional. E o descarte de zeros volta no Encontro
 
 ---
 
-## O que o ROS diz sobre testar normalidade {.smaller}
+## O que o ROS diz sobre testar normalidade
 
 Sobre a premissa 6, eles vão além do que dissemos no bloco anterior:
 
@@ -282,7 +282,7 @@ nunca é escrita por extenso. Vale abrir.
 
 ---
 
-## A linha que ninguém desenha {.smaller}
+## A linha que ninguém desenha
 
 A premissa de independência e homocedasticidade são **duas afirmações
 sobre a mesma matriz**:
@@ -780,7 +780,7 @@ coluna `Estimate` e compare com o `lm()`.
 
 ---
 
-## O que o `brm()` devolve {.smaller}
+## O que o `brm()` devolve
 
 ```{r}
 summary(m_bayes)
@@ -881,7 +881,7 @@ individualmente mal identificados: o modelo prediz bem e interpreta mal.
 
 ---
 
-## VIF {.smaller}
+## VIF
 
 ```{r}
 # o usdm quer um data frame de preditoras, nao um modelo — e nao aceita
@@ -895,7 +895,7 @@ usdm::vifcor(preditoras, th = 0.7)
 
 ---
 
-## O que essa saída diz a mais {.smaller}
+## O que essa saída diz a mais
 
 O `car::vif()` devolve só os valores. O `vifcor()` devolve, além deles,
 **qual par é o mais correlacionado e quanto** — que é a informação de que

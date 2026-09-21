@@ -153,7 +153,7 @@ Eles nos acompanham a semana inteira.
 
 ---
 
-## De onde vêm esses números {.smaller}
+## De onde vêm esses números
 
 ```{r}
 #| echo: false
@@ -170,7 +170,7 @@ anfíbios mortos.
 
 ---
 
-## Como esses números foram feitos {.smaller}
+## Como esses números foram feitos
 
 - Um trecho de **26 km** da IP2, distrito de Portalegre, sul de Portugal:
   tráfego moderado, cerca de **5 000 veículos por dia**, cortando *montado*
@@ -192,7 +192,7 @@ da amostra.
 
 ---
 
-## O que a coluna `TOT.N` não conta {.smaller}
+## O que a coluna `TOT.N` não conta
 
 Os próprios autores avisam que a contagem é enviesada para baixo: carcaças
 são comidas por outros animais, o clima e as características da pista
@@ -216,7 +216,7 @@ preciosismo.
 
 ---
 
-## Duas coisas que o mapa já entrega {.smaller}
+## Duas coisas que o mapa já entrega
 
 ::: {.definicao}
 **Um gradiente.** A mortalidade cai com a distância ao parque natural da
@@ -497,7 +497,7 @@ há o que testar; há só uma correlação para comentar depois.
 
 ---
 
-## Atividade (10 min) {.smaller}
+## Atividade (10 min)
 
 Uma pergunta de projeto de verdade:
 
@@ -596,7 +596,7 @@ ggplot(quarteto, aes(x, y)) +
 
 ---
 
-## Os quatro dão os mesmos números {.smaller}
+## Os quatro dão os mesmos números
 
 Média de *x*, média de *y*, desvio-padrão, correlação (0,816) e reta de
 regressão ($y = 3 + 0{,}5x$): **idênticos até a terceira casa decimal**
@@ -811,7 +811,7 @@ Reprodutibilidade é, antes de tudo, um favor que você faz a si mesmo.
 
 ---
 
-## O mesmo problema, em 2016 {.smaller}
+## O mesmo problema, em 2016
 
 > Dear past-Hadley: PLEASE COMMENT YOUR CODE BETTER. Love present-Hadley.
 >

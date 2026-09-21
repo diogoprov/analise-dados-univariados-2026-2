@@ -166,7 +166,7 @@ o modelo prevê variação de menos.
 
 ---
 
-## Com o `DHARMa` {.smaller}
+## Com o `DHARMa`
 
 ```{r}
 #| fig-height: 3.2
@@ -229,7 +229,7 @@ resolvê-lo.
 
 ---
 
-## O tamanho da razão já diz qual causa {.smaller}
+## O tamanho da razão já diz qual causa
 
 A razão de *deviance* do nosso Poisson foi **7,8**. Burnham & Anderson
 tratam esse número como diagnóstico, não como mero fator de correção:
@@ -499,7 +499,7 @@ contando** antes de aceitar o veredito.
 
 ---
 
-## A rota robusta {.smaller}
+## A rota robusta
 
 ```{r}
 library(DHARMa)
@@ -620,7 +620,7 @@ independentes. O `(1 | Animal)` é o assunto de amanhã de manhã — e o
 
 ---
 
-## O que o `clmm` devolve {.smaller}
+## O que o `clmm` devolve
 
 ```{r}
 summary(m_ordm)
@@ -628,7 +628,7 @@ summary(m_ordm)
 
 ---
 
-## Verificando a premissa {.smaller}
+## Verificando a premissa
 
 A premissa de *odds* proporcionais é que o efeito da preditora é o mesmo
 em todos os limiares. Se não for, o `ordinal` permite relaxá-la:

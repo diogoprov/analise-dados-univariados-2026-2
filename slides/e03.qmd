@@ -141,7 +141,7 @@ graus de liberdade, mesmo *p*.
 
 ---
 
-## Primeiro, a tabela de códigos {.smaller .tabela-grande}
+## Primeiro, a tabela de códigos {.tabela-grande}
 
 No Encontro 2 uma coluna 0/1 bastava, porque havia dois grupos. Com três,
 o R cria **duas** colunas:
@@ -161,7 +161,7 @@ Regra geral: $k$ grupos, $k-1$ colunas.
 
 ---
 
-## A matriz, uma linha de cada espécie {.smaller}
+## A matriz, uma linha de cada espécie
 
 ```{r}
 X <- model.matrix(m)
@@ -195,7 +195,7 @@ grupo.
 
 ---
 
-## Conferindo na mão {.smaller}
+## Conferindo na mão
 
 ```{r}
 coef(m)
@@ -212,7 +212,7 @@ tabelas.**
 
 ---
 
-## Por que $k-1$ e não $k$ {.smaller}
+## Por que $k-1$ e não $k$
 
 E se déssemos uma coluna também para `Adelie`?
 
@@ -424,7 +424,7 @@ alterações.
 
 ---
 
-## Três erros com nome {.smaller .tabela-grande}
+## Três erros com nome {.tabela-grande}
 
 O artigo batiza os três modos de errar, e os nomes ajudam a lembrar:
 
@@ -722,7 +722,7 @@ confint(pairs(emmeans(m_int, ~ sex | species)))[, c(1, 2, 3, 6, 7)]
 ## Referências
 
 ::: {.nota}
-- Quinn, G.P. & Keough, M.J. 2023. [*Experimental Design and Data Analysis for Biologists*](https://doi.org/10.1017/9781139568173). 2ª ed. Cambridge University Press.
+- Quinn, G.P. & Keough, M.J. 2023. [Linear Models for Crossed (Factorial) Designs](https://doi.org/10.1017/9781139568173.008), cap. 7, e a seção 8.2 (ANCOVA) de [Multiple Regression Models](https://doi.org/10.1017/9781139568173.009), cap. 8. Em *Experimental Design and Data Analysis for Biologists*, 2ª ed. Cambridge University Press.
 - Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
 - Agresti, A. 2015. [*Foundations of Linear and Generalized Linear Models*](https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034). Wiley.
 - Spake, R.; Bowler, D.E.; Callaghan, C.T.; Blowes, S.A.; Doncaster, C.P.; Antão, L.H.; Nakagawa, S.; McElreath, R. & Chase, J.M. 2023. [Understanding ‘it depends’ in ecology: a guide to hypothesising, visualising and interpreting statistical interactions](https://doi.org/10.1111/brv.12939). *Biological Reviews* 98:983–1002. Acesso aberto.

@@ -73,9 +73,13 @@ outra pessoa — inclusive você daqui a dois anos — consiga refazer.
 **Obrigatória**
 
 - Popovic, G. et al. 2024. [Four principles for improved statistical ecology](https://doi.org/10.1111/2041-210X.14270). *Methods in Ecology and Evolution* 15:266–281.
+- Zuur, A.F.; Ieno, E.N. & Elphick, C.S. 2010. [A protocol for data exploration to avoid common statistical problems](https://doi.org/10.1111/j.2041-210X.2009.00001.x). *Methods in Ecology and Evolution* 1:3–14. — o protocolo de oito passos que estrutura a tarde de hoje.
+- Zuur, A.F. & Ieno, E.N. 2016. [A protocol for conducting and presenting results of regression-type analyses](https://doi.org/10.1111/2041-210X.12577). *Methods in Ecology and Evolution* 7:636–645. — a continuação, do outro lado da análise: como conduzir e como relatar.
 
 **Complementar**
 
+- Anscombe, F.J. 1973. [Graphs in statistical analysis](https://doi.org/10.1080/00031305.1973.10478966). *The American Statistician* 27:17–21. — o quarteto que abre a aula.
+- Drobniak, S.M. et al. 2026. [AIdIT: AI disclosure for Improved Transparency](https://doi.org/10.1186/s41073-026-00230-1). *Research Integrity and Peer Review*. — a declaração de uso de IA que adotamos no trabalho final.
 - Cooper, N. et al. 2024. [Harnessing large language models for coding, teaching and inclusion to empower research in ecology and evolution](https://doi.org/10.1111/2041-210X.14325). *Methods in Ecology and Evolution* 15:1757–1763.
 - Kay, M. et al. 2026. [A century of inertia in quantitative ecology education](https://doi.org/10.1111/2041-210X.70405). *Methods in Ecology and Evolution*.
 - Wild, C.J. & Pfannkuch, M. 1999. [Statistical thinking in empirical enquiry](https://doi.org/10.1111/j.1751-5823.1999.tb00442.x). *International Statistical Review* 67:223–248. — origem do ciclo PPDAC.

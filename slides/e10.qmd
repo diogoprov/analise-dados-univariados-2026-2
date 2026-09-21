@@ -89,7 +89,7 @@ Responda antes de chegar — as respostas determinam o modelo.
 
 ---
 
-## Antes do modelo: de onde vieram esses números? {.smaller}
+## Antes do modelo: de onde vieram esses números?
 
 Hilborn & Mangel abrem o livro com o que um colega respondeu quando lhe
 perguntaram o que ele fazia da vida:
@@ -113,7 +113,7 @@ Schnute (1987), citado em Hilborn & Mangel (1997), p. xi.
 
 ---
 
-## Há um processo de observação no meio do caminho {.smaller}
+## Há um processo de observação no meio do caminho
 
 > "There is always an observation process interposed between the
 > ecological system and our notebooks. Every effort should be made to
@@ -130,7 +130,7 @@ Hilborn & Mangel (1997), cap. 3, p. 59–61.
 
 ---
 
-## Três maneiras de o caderno mentir {.smaller .tabela-grande}
+## Três maneiras de o caderno mentir {.tabela-grande}
 
 | No livro | Na sua tese |
 |---|---|

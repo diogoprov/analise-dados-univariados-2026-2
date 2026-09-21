@@ -75,6 +75,7 @@ Mais duas, para o fim da aula:
 
 - Quinn, G.P. & Keough, M.J. 2023. [Simple Linear Models with One Predictor](https://doi.org/10.1017/9781139568173.007). Cap. 6 de *Experimental Design and Data Analysis for Biologists*, 2ª ed., p. 76–114. Cambridge University Press. — a continuação natural do cap. 4, e a parte prática deste encontro: a seção 6.2 mostra que um preditor categórico é o mesmo modelo, a 6.4 lista as premissas uma a uma e a 6.5 é o diagnóstico completo (resíduos, alavancagem, medidas de influência, os gráficos).
 - Agresti, A. 2015. [*Foundations of Linear and Generalized Linear Models*](https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034). Wiley.
+- Horst, A.M.; Hill, A.P. & Gorman, K.B. 2020. [`palmerpenguins`: Palmer Archipelago (Antarctica) penguin data](https://doi.org/10.5281/zenodo.3960218). — o conjunto usado nos exemplos do encontro.
 - Lindeløv, J.K. [*Common statistical tests are linear models*](https://lindeloev.github.io/tests-as-linear/).
 - Gelman, A. et al. 2026. [*Bayesian Workflow*](https://avehtari.github.io/Bayesian-Workflow/). Chapman & Hall/CRC. Cap. 6, "Using simulations to capture uncertainty".
 

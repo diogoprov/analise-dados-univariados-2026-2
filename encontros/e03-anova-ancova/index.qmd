@@ -84,6 +84,8 @@ E duas de aquecimento, se o Encontro 2 tiver ficado apertado:
 **Complementar**
 
 - Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — **cap. 10**, *Linear regression with multiple predictors* (p. 131): a 10.3 são as interações, a 10.4 são as variáveis indicadoras (a matriz de delineamento de hoje) e a 10.5 mostra delineamentos pareados e em blocos escritos como regressão.
+- Agresti, A. 2015. [*Foundations of Linear and Generalized Linear Models*](https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034). Wiley.
+- Spake, R. et al. 2023. [Understanding 'it depends' in ecology: a guide to hypothesising, visualising and interpreting statistical interactions](https://doi.org/10.1111/brv.12939). *Biological Reviews* 98:983–1002. — sobre interações, que é metade do encontro.
 - Davis, S. & Kay, M. 2023. [Statistical reporting checklist](https://doi.org/10.1002/ecs2.4539). *Ecosphere*.
 
 ## Recursos externos

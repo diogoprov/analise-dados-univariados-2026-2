@@ -61,6 +61,8 @@ curso, com um *take-home* por item:
 
 - da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
 - Jones, E.; Harden, S. & Crawley, M.J. 2022. [Probability Distributions in R](https://doi.org/10.1002/9781119634461.ch8). Cap. 8 de [*The R Book*](https://doi.org/10.1002/9781119634461), 3ª ed. Wiley. p. 373–404. — um catálogo: **18 quadros, um por distribuição**, das contínuas (Normal, Uniforme, qui-quadrado, F, t, Gama, Exponencial, Beta, log-Normal, Logística, Weibull) às discretas (Bernoulli, Binomial, Geométrica, Hipergeométrica, Multinomial, Poisson, Binomial Negativa), e fecha com o teorema central do limite na 8.5. É a referência de consulta para o parentesco que desenhamos hoje.
+- Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — a seção 3.5 é o panorama de distribuições de probabilidade; a 15.1 dá a notação dos GLMs.
+- Zuur, A.F. et al. 2009. [*Mixed Effects Models and Extensions in Ecology with R*](https://doi.org/10.1007/978-0-387-87458-6). Springer.
 - Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
 
 ## Recursos externos

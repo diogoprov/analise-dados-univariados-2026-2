@@ -346,7 +346,7 @@ mesmo `glm()`, com um argumento `family` diferente.
 
 ---
 
-## Duas ferramentas para brincar com isso {.smaller}
+## Duas ferramentas para brincar com isso
 
 O parentesco entre as distribuições é mais fácil de ver mexendo do que
 lendo. Duas que valem a hora:
@@ -468,7 +468,7 @@ melhor.
 
 ---
 
-## De volta a Pearson e Spearman {.smaller}
+## De volta a Pearson e Spearman
 
 No Encontro 2 as duas apareceram sobre os pinguins. Nos lagartos:
 

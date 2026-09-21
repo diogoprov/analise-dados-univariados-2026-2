@@ -105,7 +105,7 @@ Guardem o que escreveram. Vamos voltar a ele no fim da manhã.
 
 ---
 
-## O ritual, e de onde ele veio {.smaller}
+## O ritual, e de onde ele veio
 
 O procedimento padrão do século XX: hipótese nula, valor de *p*, limiar
 de 0,05, rejeita ou não rejeita. Só que ele não nasceu inteiro --- nasceu
@@ -152,8 +152,13 @@ medida de quanto melhor.
 Não é uma correção técnica ao valor de *p*. É outra pergunta.
 
 ::: {.nota}
-Chamberlin propôs isso em 1890, sob o nome de "múltiplas hipóteses de
-trabalho". Akaike deu a ela uma métrica em 1974.
+A ideia tem três tempos. **Chamberlin (1890)** a propôs como postura, sob
+o nome de "múltiplas hipóteses de trabalho": manter várias explicações
+vivas ao mesmo tempo, para não se apaixonar por uma. **Platt (1964)** a
+transformou em método, a *strong inference* --- formular as alternativas,
+desenhar o teste que **exclui** pelo menos uma, repetir --- e argumentou
+que os campos que avançam rápido são os que fazem isso. **Akaike (1974)**
+deu a ela uma métrica, que é o que veremos hoje.
 :::
 
 ---
@@ -413,7 +418,7 @@ programa de pesquisa diferente:
 
 ---
 
-## O que esse conjunto ensina {.smaller}
+## O que esse conjunto ensina
 
 ::: {.definicao}
 Os modelos têm **nome de hipótese**, não de variável. "*Wellborn model*"
@@ -458,7 +463,7 @@ tab |> mutate(across(c(AICc, delta), \(x) round(x, 1)),
 
 ---
 
-## A mesma tabela, com uma função {.smaller}
+## A mesma tabela, com uma função
 
 ```{r}
 ICtab(modelos, type = "AICc", weights = TRUE, delta = TRUE, base = TRUE,
@@ -495,7 +500,7 @@ round(tab$peso[1] / tab$peso[2], 1)
 
 ---
 
-## As três ressalvas que ninguém copia {.smaller}
+## As três ressalvas que ninguém copia
 
 Junto com a tabela de limiares, Burnham & Anderson listam três condições.
 A terceira é a que mais importa nesta disciplina:
@@ -603,7 +608,7 @@ usou — elas dão respostas diferentes.
 
 ---
 
-## Os coeficientes médios {.smaller}
+## Os coeficientes médios
 
 ```{r}
 round(coef(med), 3)       # médias condicionais
@@ -617,7 +622,7 @@ peso de cada modelo. Aqui ficam só os números que entram no texto.
 
 ---
 
-## Importância de variáveis, com ressalva {.smaller}
+## Importância de variáveis, com ressalva
 
 ```{r}
 sw(med)   # soma dos pesos dos modelos em que cada variável aparece
@@ -684,7 +689,7 @@ ter AICc ótimo **por acaso**.
 
 ---
 
-## Antes do *stepwise*, o VIF iterativo {.smaller}
+## Antes do *stepwise*, o VIF iterativo
 
 ```{r}
 #| echo: false
@@ -720,7 +725,7 @@ para ver até onde o procedimento mecânico feito "direito" leva.
 
 ---
 
-## Duas coisas que o VIF não vê {.smaller}
+## Duas coisas que o VIF não vê
 
 ::: {.definicao}
 **A forma da relação.** O próprio capítulo avisa que "non-linear
@@ -1111,7 +1116,7 @@ Depois, cinco minutos de apresentação por pessoa.
 
 ---
 
-## Referências {.smaller}
+## Referências
 
 ::: {.nota}
 **Por que trabalhar com modelos**
@@ -1141,6 +1146,13 @@ Depois, cinco minutos de apresentação por pessoa.
 - Mundry, R. & Nunn, C.L. 2009. [Stepwise model fitting and statistical inference: turning noise into signal pollution](https://doi.org/10.1086/593303). *The American Naturalist* 173:119–123.
 - Freckleton, R.P. 2009. [The seven deadly sins of comparative analysis](https://doi.org/10.1111/j.1420-9101.2009.01757.x). *Journal of Evolutionary Biology* 22:1367–1375.
 
+:::
+
+---
+
+## Referências
+
+::: {.nota}
 **Base metodológica**
 
 - Akaike, H. 1974. [A new look at the statistical model identification](https://doi.org/10.1109/TAC.1974.1100705). *IEEE Transactions on Automatic Control* 19:716–723.
@@ -1150,6 +1162,9 @@ Depois, cinco minutos de apresentação por pessoa.
 - Gelman, A. et al. 2026. [*Bayesian Workflow*](https://avehtari.github.io/Bayesian-Workflow/). Chapman & Hall/CRC. Cap. 9, "Comparing and improving models".
 - Gerstner, K. et al. 2017. [Will your paper be used in a meta-analysis?](https://doi.org/10.1111/2041-210X.12758) *Methods in Ecology and Evolution* 8:777–784.
 - Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/), seções 11.8 (validação cruzada) e 12.6 (construir e comparar modelos para predição).
+
+**De onde vem o ritual**
+
 - Fisher, R.A. 1925. [*Statistical Methods for Research Workers*](https://psychclassics.yorku.ca/Fisher/Methods/). Oliver & Boyd, Edimburgo.
 - Neyman, J. & Pearson, E.S. 1928. [On the use and interpretation of certain test criteria for purposes of statistical inference: Part I](https://doi.org/10.2307/2331945). *Biometrika* 20A:175–240.
 - Neyman, J. & Pearson, E.S. 1933. [On the problem of the most efficient tests of statistical hypotheses](https://doi.org/10.1098/rsta.1933.0009). *Philosophical Transactions of the Royal Society A* 231:289–337.

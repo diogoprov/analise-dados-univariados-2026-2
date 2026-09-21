@@ -205,7 +205,7 @@ significam nada.
 
 ---
 
-## Diagnóstico {.smaller}
+## Diagnóstico
 
 ```{r}
 #| fig-height: 3.2
@@ -218,7 +218,7 @@ plot(res)
 
 ---
 
-## Dispersão e zeros {.smaller}
+## Dispersão e zeros
 
 ```{r}
 testDispersion(res, plot = FALSE)
@@ -227,7 +227,7 @@ testZeroInflation(res, plot = FALSE)
 
 ---
 
-## Resíduos praia a praia {.smaller}
+## Resíduos praia a praia
 
 ```{r}
 #| fig-height: 3.0
@@ -293,7 +293,7 @@ Na volta: a ponte bayesiana — o mesmo modelo em `brms`.
 
 ---
 
-## Três palavras, antes de qualquer código {.smaller}
+## Três palavras, antes de qualquer código
 
 ::: {.definicao}
 **Prior.** O que você considera plausível para um parâmetro **antes** de
@@ -384,7 +384,7 @@ argumentos de MCMC.
 
 ---
 
-## E o que ele devolve {.smaller}
+## E o que ele devolve
 
 ```{r}
 summary(m_bayes)

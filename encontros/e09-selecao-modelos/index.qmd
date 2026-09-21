@@ -94,13 +94,15 @@ instalar nada.
 **Obrigatória**
 
 - Burnham, K.P. & Anderson, D.R. 2002. [*Model Selection and Multimodel Inference*](https://doi.org/10.1007/b97636). 2ª ed. Springer. Caps. 2–4.
+- Akaike, H. 1974. [A new look at the statistical model identification](https://doi.org/10.1109/TAC.1974.1100705). *IEEE Transactions on Automatic Control* 19:716–723. — o artigo original.
 - Aho, K.; Derryberry, D. & Peterson, T. 2014. [Model selection for ecologists: the worldviews of AIC and BIC](https://doi.org/10.1890/13-1452.1). *Ecology* 95:631–636.
 - Quinn, G.P. & Keough, M.J. 2023. [Predictor Importance and Model Selection in Multiple Regression Models](https://doi.org/10.1017/9781139568173.010). Cap. 9 de *Experimental Design and Data Analysis for Biologists*, 2ª ed., p. 174–193. Cambridge University Press. — cobre este encontro quase slide a slide: a seção 9.1 é a importância relativa de preditoras, com coeficientes padronizados, LMG e partição hierárquica, e as recomendações em 9.1.3; a 9.2 traz os critérios, o *stepwise* tradicional (9.2.2), todos os subconjuntos (9.2.3), *model averaging* (9.2.4) e validação (9.2.5). O exemplo trabalhado é o conjunto de aves de Loyn, que já está em `dados/Loyn.txt`.
 
 **Por que trabalhar com modelos**
 
 - Chamberlin, T.C. 1890. [The method of multiple working hypotheses](https://doi.org/10.1126/science.ns-15.366.92). *Science* ns-15:92–96. Reimpresso em 1897 no [*Journal of Geology* 5:837–848](https://doi.org/10.1086/607980).
-- Platt, J.R. 1964. [Strong inference](https://doi.org/10.1126/science.146.3642.347). *Science* 146:347–353.
+- Platt, J.R. 1964.- Van Buskirk, J. 2005. [Local and landscape influence on amphibian occurrence and abundance](https://doi.org/10.1890/04-1237). *Ecology* 86:1936–1947. — o conjunto de modelos *a priori* que usamos como exemplo, cada um encarnando uma hipótese diferente.
+ [Strong inference](https://doi.org/10.1126/science.146.3642.347). *Science* 146:347–353.
 - Hilborn, R. & Mangel, M. 1997. [*The Ecological Detective: Confronting Models with Data*](https://www.jstor.org/stable/j.ctt24hqnx). Princeton University Press.
 - Johnson, J.B. & Omland, K.S. 2004. [Model selection in ecology and evolution](https://doi.org/10.1016/j.tree.2003.10.013). *Trends in Ecology & Evolution* 19:101–108.
 - Hobbs, N.T. & Hilborn, R. 2006. [Alternatives to statistical hypothesis testing in ecology: a guide to self teaching](https://doi.org/10.1890/04-0645). *Ecological Applications* 16:5–19.
@@ -119,6 +121,8 @@ instalar nada.
 - Anderson, D.R.; Burnham, K.P. & Thompson, W.L. 2000. [Null hypothesis testing: problems, prevalence, and an alternative](https://doi.org/10.2307/3803199). *The Journal of Wildlife Management* 64:912–923.
 - Anderson, D.R. & Burnham, K.P. 2002. [Avoiding pitfalls when using information-theoretic methods](https://doi.org/10.2307/3803155). *The Journal of Wildlife Management* 66:912–918.
 - Whittingham, M.J.; Stephens, P.A.; Bradbury, R.B. & Freckleton, R.P. 2006. [Why do we still use stepwise modelling in ecology and behaviour?](https://doi.org/10.1111/j.1365-2656.2006.01141.x) *Journal of Animal Ecology* 75:1182–1189.
+- Galipaud, M.; Gillingham, M.A.F.; David, M. & Dechaume-Moncharmont, F.-X. 2014. [Ecologists overestimate the importance of predictor variables in model averaging: a plea for cautious interpretations](https://doi.org/10.1111/2041-210X.12251). *Methods in Ecology and Evolution* 5:983–991.
+- Blanchet, F.G.; Legendre, P. & Borcard, D. 2008. [Forward selection of explanatory variables](https://doi.org/10.1890/07-0986.1). *Ecology* 89:2623–2632. — o *forward* que se defende, com teste global e duplo critério de parada.
 - Mundry, R. & Nunn, C.L. 2009. [Stepwise model fitting and statistical inference: turning noise into signal pollution](https://doi.org/10.1086/593303). *The American Naturalist* 173:119–123.
 - Freckleton, R.P. 2009. [The seven deadly sins of comparative analysis](https://doi.org/10.1111/j.1420-9101.2009.01757.x). *Journal of Evolutionary Biology* 22:1367–1375.
 - Mac Nally, R.; Duncan, R.P.; Thomson, J.R. & Yen, J.D.L. 2018. [Model selection using information criteria, but is the 'best' model any good?](https://doi.org/10.1111/1365-2664.13060) *Journal of Applied Ecology* 55:1441–1444.

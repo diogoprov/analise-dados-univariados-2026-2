@@ -67,9 +67,13 @@ curso, com um *take-home* por item:
 **Obrigatória**
 
 - Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — **cap. 9**, *Prediction and Bayesian inference* (p. 113): a 9.1 é a propagação de incerteza por simulações da posterior, e a 9.5 percorre prioris uniformes, fracamente informativas e informativas em regressão, que é a discussão de hoje. O **cap. 22** fecha com modelos multiníveis na 22.5.
+- Bürkner, P.-C. 2017. [brms: an R package for Bayesian multilevel models using Stan](https://doi.org/10.18637/jss.v080.i01). *Journal of Statistical Software* 80(1). — o pacote do encontro inteiro.
 
 **Complementar**
 
+- Bolker, B.M. et al. 2009. [Generalized linear mixed models: a practical guide for ecology and evolution](https://doi.org/10.1016/j.tree.2008.10.008). *Trends in Ecology & Evolution* 24:127–135.
+- Nakagawa, S. & Schielzeth, H. 2013. [A general and simple method for obtaining R² from generalized linear mixed-effects models](https://doi.org/10.1111/j.2041-210x.2012.00261.x). *Methods in Ecology and Evolution* 4:133–142.
+- BIOS2. [*Hierarchical models in ecology*](https://bios2.github.io/hiermod/) (curso, 2023). — o Dia 4 separa *hierarchy on the intercept* de *hierarchy on the slope*, em Stan.
 - Harrison, X.A. et al. 2018. [A brief introduction to mixed effects modelling and multi-model inference in ecology](https://doi.org/10.7717/peerj.4794). *PeerJ* 6:e4794.
 - Kruschke, J.K. 2021. [Bayesian Analysis Reporting Guidelines](https://doi.org/10.1038/s41562-021-01177-7). *Nature Human Behaviour*.
 - Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.

@@ -151,7 +151,7 @@ soma dos quadrados **é** maximizar a verossimilhança.
 
 ---
 
-## Uma grade de candidatos {.smaller}
+## Uma grade de candidatos
 
 ```{r}
 y <- lagartos$cauda_perdida
@@ -175,7 +175,7 @@ verdadeiro.
 
 ---
 
-## Vendo a superfície {.smaller}
+## Vendo a superfície
 
 ```{r}
 #| echo: false
@@ -219,7 +219,7 @@ esforço.
 
 ---
 
-## Por que a SVL centrada {.smaller}
+## Por que a SVL centrada
 
 Com a SVL crua, $\beta_0$ é a log-chance em SVL $= 0$ — um lagarto de
 comprimento zero, muito fora dos dados. Intercepto e inclinação ficam
