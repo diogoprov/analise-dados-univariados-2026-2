@@ -331,7 +331,7 @@ Diogo B. Provete
 </div>
 </div>
 <div class="nota">
-<p>Anfíbios atropelados na estrada IP2, sul de Portugal, no cap. 16 de Zuur, Mira, Carvalho, Ieno, Saveliev, Smith &amp; Walker (2009), <em>Mixed Effects Models and Extensions in Ecology with R</em>, p.&nbsp;383–397 (<a href="https://doi.org/10.1007/978-0-387-87458-6_16">doi:10.1007/978-0-387-87458-6_16</a>). Eles nos acompanham a semana inteira.</p>
+<p>Anfíbios atropelados na estrada IP2, sul de Portugal. Fonte primária: <a href="https://escholarship.org/uc/item/8r07z6nf">Ascensão &amp; Mira (2005)</a>, <em>ICOET 2005 — On the Road to Stewardship</em>, p.&nbsp;641. A reanálise que ficou conhecida está no cap. 16 de Zuur, Mira, Carvalho, Ieno, Saveliev, Smith &amp; Walker (2009) (<a href="https://doi.org/10.1007/978-0-387-87458-6_16">doi:10.1007/978-0-387-87458-6_16</a>). Eles nos acompanham a semana inteira.</p>
 </div>
 </section>
 <section id="de-onde-vêm-esses-números" class="slide level2 smaller">
@@ -345,18 +345,28 @@ Diogo B. Provete
 </div>
 </div>
 </div>
-<p>Cada ponto é o meio de um segmento de <strong>500 m</strong> da IP2, entre Portalegre e Monforte: 52 segmentos cobrindo 25,5 km. A cor e o tamanho são a contagem de anfíbios mortos.</p>
+<p>Cada ponto é o meio de um segmento de <strong>500 m</strong> da IP2, entre Portalegre e Monforte: 52 segmentos, 26 km de estrada. A cor e o tamanho são a contagem de anfíbios mortos.</p>
 </section>
 <section id="como-esses-números-foram-feitos" class="slide level2 smaller">
 <h2>Como esses números foram feitos</h2>
 <ul>
-<li>Um trecho de <strong>27 km</strong> da IP2, no sul de Portugal: duas faixas, menos de 10 000 veículos por dia, cortando <em>montado</em> de sobreiro (<em>Quercus suber</em>) e azinheira (<em>Q. rotundifolia</em>) e campo aberto.</li>
-<li>Percorrido <strong>de carro, a 10–20 km/h</strong>, pelo acostamento, <strong>a cada duas semanas, de março de 1995 a março de 1997</strong>.</li>
-<li>Cada carcaça identificada até espécie quando possível e <strong>retirada da estrada</strong>, para não ser contada de novo na quinzena seguinte.</li>
-<li>A estrada dividida em segmentos de 500 m, e cada animal atribuído ao <strong>ponto médio</strong> do seu segmento.</li>
+<li>Um trecho de <strong>26 km</strong> da IP2, distrito de Portalegre, sul de Portugal: tráfego moderado, cerca de <strong>5 000 veículos por dia</strong>, cortando <em>montado</em> de sobreiro (<em>Quercus suber</em>) e azinheira (<em>Q. rotundifolia</em>), campo aberto e olivais.</li>
+<li>Percorrido <strong>de carro, a cerca de 20 km/h</strong>, <strong>a cada duas semanas por dois anos</strong> — 54 percursos, entre 1995 e 1997.</li>
+<li><strong>2 421 carcaças de 80 espécies</strong> não domésticas. Os anfíbios são a maior fatia: <strong>1 362</strong>. Cada carcaça foi identificada e retirada da pista, para não ser contada de novo na quinzena seguinte.</li>
+<li>A estrada dividida em segmentos de 500 m, e cada animal atribuído ao <strong>ponto médio</strong> do seu segmento. São os 52 segmentos do arquivo.</li>
 </ul>
 <div class="nota">
 <p>Dois anos de campo, quinzena após quinzena, condensados em 52 linhas e uma coluna chamada <code>TOT.N</code>. Vale lembrar disso na hora de reclamar do tamanho da amostra.</p>
+</div>
+</section>
+<section id="o-que-a-coluna-tot.n-não-conta" class="slide level2 smaller">
+<h2>O que a coluna <code>TOT.N</code> não conta</h2>
+<p>Os próprios autores avisam que a contagem é enviesada para baixo: carcaças são comidas por outros animais, o clima e as características da pista atrapalham a detecção, e — textualmente — “non-daily surveys prevent the detection of all small-bodied animals like amphibians”, cujos corpos duram de um a três dias na faixa de rolamento.</p>
+<div class="definicao">
+<p>A resposta não é “quantos anfíbios morreram”, é “quantos anfíbios mortos foram <strong>encontrados</strong> numa visita a cada 15 dias”. Toda a interpretação do modelo vive dentro dessa frase.</p>
+</div>
+<div class="nota">
+<p>Há ainda uma lição de procedência. As duas fontes publicadas que descrevem este mesmo conjunto discordam: Ascensão &amp; Mira (2005) dizem 26 km e ~5 000 veículos/dia; Zuur et al.&nbsp;(2009) dizem 27 km e &lt; 10 000 veículos/dia. Os 52 segmentos de 500 m dão exatamente 26 km. Conferir a fonte primária não é preciosismo.</p>
 </div>
 </section>
 <section id="duas-coisas-que-o-mapa-já-entrega" class="slide level2 smaller">
@@ -454,8 +464,8 @@ Diogo B. Provete
 <h2>Por que um ciclo e não uma lista</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-6f6d6620c2871b580441" style="width:672px;height:150px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-6f6d6620c2871b580441">{"x":{"diagram":"\ndigraph ppdac {\n  graph [rankdir = LR, bgcolor = \"transparent\", nodesep = 0.40, ranksep = 0.85,\n         fontname = \"Helvetica\"]\n  node  [fontname = \"Helvetica\", fontsize = 18, style = \"filled,rounded\",\n         shape = box, penwidth = 0, margin = \"0.24,0.14\", fontcolor = \"white\"]\n  edge  [penwidth = 3.0, arrowsize = 1.1, color = \"#8a8172\"]\n\n  P1 [label = \"Problema\",  fillcolor = \"#144f64\"]\n  P2 [label = \"Plano\",     fillcolor = \"#1c6e8c\"]\n  D  [label = \"Dados\",     fillcolor = \"#527238\"]\n  A  [label = \"Análise\",   fillcolor = \"#96661f\"]\n  C  [label = \"Conclusão\", fillcolor = \"#a15e3f\"]\n\n  P1 -> P2 -> D -> A -> C\n\n  A -> D  [style = dashed, penwidth = 2.4, color = \"#527238\",\n           constraint = false, arrowsize = 1.0]\n  C -> P1 [style = dashed, penwidth = 2.4, color = \"#a15e3f\",\n           constraint = false, arrowsize = 1.0]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4dafcb1c70bce7400da7" style="width:672px;height:150px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4dafcb1c70bce7400da7">{"x":{"diagram":"\ndigraph ppdac {\n  graph [rankdir = LR, bgcolor = \"transparent\", nodesep = 0.40, ranksep = 0.85,\n         fontname = \"Helvetica\"]\n  node  [fontname = \"Helvetica\", fontsize = 18, style = \"filled,rounded\",\n         shape = box, penwidth = 0, margin = \"0.24,0.14\", fontcolor = \"white\"]\n  edge  [penwidth = 3.0, arrowsize = 1.1, color = \"#8a8172\"]\n\n  P1 [label = \"Problema\",  fillcolor = \"#144f64\"]\n  P2 [label = \"Plano\",     fillcolor = \"#1c6e8c\"]\n  D  [label = \"Dados\",     fillcolor = \"#527238\"]\n  A  [label = \"Análise\",   fillcolor = \"#96661f\"]\n  C  [label = \"Conclusão\", fillcolor = \"#a15e3f\"]\n\n  P1 -> P2 -> D -> A -> C\n\n  A -> D  [style = dashed, penwidth = 2.4, color = \"#527238\",\n           constraint = false, arrowsize = 1.0]\n  C -> P1 [style = dashed, penwidth = 2.4, color = \"#a15e3f\",\n           constraint = false, arrowsize = 1.0]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>As setas pontilhadas são o ponto: a análise revela problemas nos dados, e a conclusão quase sempre reformula o problema. <strong>Isso é legítimo</strong> — o que não é legítimo é apagar o percurso e apresentar a última volta do ciclo como se tivesse sido a primeira.</p>
