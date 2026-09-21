@@ -960,6 +960,7 @@ ANCOVA e interações. Nenhum conceito novo de inferência.
 ## Referências
 
 ::: {.nota}
+- Quinn, G.P. & Keough, M.J. 2023. [Introduction to Linear Models](https://doi.org/10.1017/9781139568173.005). Cap. 4 de [*Experimental Design and Data Analysis for Biologists*](https://doi.org/10.1017/9781139568173), 2ª ed., p. 45–61. Cambridge University Press. — este encontro inteiro, em 17 páginas.
 - Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/). Cambridge University Press. — código e exemplos no site.
 - Lindeløv, J.K. [*Common statistical tests are linear models*](https://lindeloev.github.io/tests-as-linear/).
 - Gelman, A. et al. 2026. [*Bayesian Workflow*](https://avehtari.github.io/Bayesian-Workflow/). Chapman & Hall/CRC. Cap. 6, "Using simulations to capture uncertainty".
