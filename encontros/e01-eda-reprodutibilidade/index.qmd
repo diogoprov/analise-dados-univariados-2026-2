@@ -37,8 +37,10 @@ outra pessoa — inclusive você daqui a dois anos — consiga refazer.
 ## Dados
 
 - [`RoadKills.txt`](../../dados/RoadKills.txt) — anfíbios atropelados em 52
-  sítios em Portugal (Zuur et al. 2009). É o conjunto do *productive
-  failure* que abre a aula, e volta nos Encontros 5, 6 e 9.
+  segmentos de 500 m de uma mesma estrada, ao longo de 25,5 km, em Portugal
+  (Zuur et al. 2009). As colunas `X` e `Y` dão a posição de cada segmento e
+  `D.PARK` a distância ao parque, que vai de 250 m a 24,9 km. É o conjunto
+  do *productive failure* que abre a aula, e volta nos Encontros 5, 6 e 9.
 - [`dados_com_outliers_e_faltantes.csv`](../../dados/dados_com_outliers_e_faltantes.csv)
   — passo 1, o gráfico de Cleveland.
 - [`RIKZ.txt`](../../dados/RIKZ.txt) — riqueza de macrofauna em 9 praias

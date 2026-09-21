@@ -143,7 +143,43 @@ RK[1:4, c("TOT.N", "D.PARK", "OPEN.L", "L.WAT.C")]
 
 ::: {.nota}
 Dados de Zuur, Ieno & Smith, usados em *Mixed Effects Models and
-Extensions in Ecology with R* (2009). Voltaremos a eles no Encontro 5.
+Extensions in Ecology with R* (2009). Eles nos acompanham a semana inteira.
+:::
+
+---
+
+## De onde vêm esses números {.smaller}
+
+```{r}
+#| echo: false
+#| fig-width: 9
+#| fig-height: 4.1
+source("../R/roadkills_mapa.R")
+mapa_roadkills(RK)
+```
+
+Cada ponto é um segmento de **500 m** de uma mesma estrada, 52 deles ao
+longo de 25,5 km. A cor e o tamanho são a contagem de anfíbios mortos.
+
+---
+
+## Duas coisas que o mapa já entrega {.smaller}
+
+::: {.definicao}
+**Um gradiente.** A mortalidade cai com a distância ao parque
+($r = -0{,}75$). Essa é a pergunta do Encontro 5, e o mapa mostra que ela
+é geográfica antes de ser estatística.
+
+**Um problema.** Segmentos vizinhos distam 500 m: eles não são réplicas
+independentes. É o assunto do Encontro 7, e está embutido no desenho da
+coleta — nenhuma análise conserta isso depois.
+:::
+
+::: {.nota}
+As coordenadas do arquivo estão em metros, num sistema projetado que a
+fonte não documenta. Por isso o mapa é desenhado no sistema do próprio
+conjunto, com escala 1:1: a geometria é fiel e nenhuma afirmação é feita
+sobre onde isso fica no globo.
 :::
 
 ---
