@@ -44,8 +44,11 @@ e sobre por que ela é mais perigosa do que parece.
 ## Dados
 
 - [`RoadKills.txt`](../../dados/RoadKills.txt) — anfíbios atropelados em 52
-  sítios em Portugal (Zuur et al. 2009). O mesmo conjunto do Encontro 1;
-  aqui ele vira o conjunto de modelos definidos *a priori*.
+  segmentos da IP2, sul de Portugal
+  ([Ascensão & Mira 2005](https://escholarship.org/uc/item/8r07z6nf)).
+  O mesmo conjunto do Encontro 1; aqui ele vira o conjunto de modelos
+  definidos *a priori*, e também a demonstração do VIF iterativo nas 17
+  preditoras de paisagem.
 
 ## Exercícios extras no `swirl`
 
@@ -111,6 +114,7 @@ instalar nada.
 - Mundry, R. & Nunn, C.L. 2009. [Stepwise model fitting and statistical inference: turning noise into signal pollution](https://doi.org/10.1086/593303). *The American Naturalist* 173:119–123.
 - Freckleton, R.P. 2009. [The seven deadly sins of comparative analysis](https://doi.org/10.1111/j.1420-9101.2009.01757.x). *Journal of Evolutionary Biology* 22:1367–1375.
 - Mac Nally, R.; Duncan, R.P.; Thomson, J.R. & Yen, J.D.L. 2018. [Model selection using information criteria, but is the 'best' model any good?](https://doi.org/10.1111/1365-2664.13060) *Journal of Applied Ecology* 55:1441–1444.
+- Zuur, A.F.; Mira, A.; Carvalho, F.; Ieno, E.N.; Saveliev, A.A.; Smith, G.M. & Walker, N.J. 2009. [Negative Binomial GAM and GAMM to Analyse Amphibian Roadkills](https://doi.org/10.1007/978-0-387-87458-6_16). Em: *Mixed Effects Models and Extensions in Ecology with R*, p. 383–397. Springer. — a reanálise do nosso conjunto. Vale pelo percurso: VIF iterativo com corte em 3, descarte adicional de três preditoras por colinearidade **não linear** (que o VIF não detecta), e a admissão, no fim, de que ainda sobrava colinearidade no modelo.
 
 **Boas práticas**
 

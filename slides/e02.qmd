@@ -181,7 +181,7 @@ as distribuições *t* e *F*.
 
 ---
 
-## As mesmas premissas, em duas línguas {.smaller}
+## As mesmas premissas, em duas línguas {.tabela-grande}
 
 +--------------------------------------------------+-----------------------------------------------------------+
 | Matemática                                       | Tradução para língua humana                               |

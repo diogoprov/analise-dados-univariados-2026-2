@@ -664,6 +664,63 @@ ter AICc ótimo **por acaso**.
 
 ---
 
+## Antes do *stepwise*, o VIF iterativo {.smaller}
+
+```{r}
+#| echo: false
+preditoras <- RK |>
+  transmute(OPEN.L, MONT.S, MONT, L.WAT.C, L.D.ROAD, D.WAT.RES, D.PARK,
+            N.PATCH, P.EDGE, L.SDI,
+            SQ.POLIC    = sqrt(POLIC),     SQ.WATRES = sqrt(WAT.RES),
+            SQ.URBAN    = sqrt(URBAN),     SQ.OLIVE  = sqrt(OLIVE),
+            SQ.LPROAD   = sqrt(L.P.ROAD),  SQ.SHRUB  = sqrt(SHRUB),
+            SQ.DWATCOUR = sqrt(D.WAT.COUR)) |>
+  as.data.frame()   # o usdm nao aceita tibble
+```
+
+O RoadKills tem **17 preditoras de paisagem** para 52 sítios. Os piores VIF,
+antes de mexer em nada:
+
+```{r}
+usdm::vif(preditoras) |> slice_max(VIF, n = 5)
+```
+
+Corte em 3, remove a pior, recalcula, repete --- em uma linha:
+
+```{r}
+usdm::vifstep(preditoras, th = 3)@excluded
+```
+
+::: {.nota}
+Isso reproduz a Tabela 16.2 de Zuur et al. (2009): as mesmas cinco caem, e
+sobram 12 preditoras com VIF máximo de 2,4. No Encontro 2 eu disse para
+usar a saída do `usdm`, não a exclusão automática; aqui ela é de propósito,
+para ver até onde o procedimento mecânico feito "direito" leva.
+:::
+
+---
+
+## Duas coisas que o VIF não vê {.smaller}
+
+::: {.definicao}
+**A forma da relação.** O próprio capítulo avisa que "non-linear
+relationships are not picked up by the VIF". Depois do corte, eles ainda
+descartam OLIVE, D.WAT.RES e L.D.ROAD **no olho**, porque cada uma desenha
+uma curva contra D.PARK --- redundância que nenhum VIF detecta.
+:::
+
+::: {.definicao}
+**O que sobra depois.** Mesmo com 12 preditoras e todos os VIF abaixo de
+3, eles relatam que, de uma rodada do modelo para outra, umas preditoras
+apareciam altamente significativas e outras não --- e concluem que ainda
+havia colinearidade ali dentro.
+:::
+
+Esse é o chão sobre o qual o *stepwise* pisa: a próxima variável que ele
+escolhe depende de qual ele escolheu antes.
+
+---
+
 ## O caso mais bem documentado: *stepwise*
 
 Whittingham et al. (2006) examinaram os artigos de 2004 em três

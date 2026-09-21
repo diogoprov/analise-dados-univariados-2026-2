@@ -164,8 +164,9 @@ mapa_roadkills(RK)
 ```
 
 Cada ponto é o meio de um segmento de **500 m** da IP2, entre Portalegre e
-Monforte: 52 segmentos, 26 km de estrada. A cor e o tamanho são a contagem
-de anfíbios mortos.
+Monforte: 52 segmentos, 26 km de estrada, descendo pelo limite sudoeste do
+Parque Natural da Serra de São Mamede. A cor e o tamanho são a contagem de
+anfíbios mortos.
 
 ---
 
@@ -230,10 +231,15 @@ coleta — nenhuma análise conserta isso depois.
 :::
 
 ::: {.nota}
-O eixo leste--oeste do mapa está exagerado de propósito: o trecho tem 2 km
-de largura para 25 de comprimento e, em escala 1:1, vira uma linha reta.
-Zuur et al. distorcem o mesmo eixo, pela mesma razão, na Fig. 16.6 do
-capítulo.
+Este mapa quase não existiu. O arquivo traz duas colunas `X` e `Y` em
+metros; o capítulo as chama de "UTM coordinates" e **não diz o sistema**, e
+os valores não batem com o fuso UTM de Portugal. São coordenadas do Datum
+Lisboa / Hayford-Gauss Militar, `EPSG:20790` --- descoberto por tentativa e
+conferido de três jeitos: o segmento 1 cai a 1,8 km de Portalegre, o 52 a
+0,6 km de Monforte, e a distância de cada segmento ao limite do parque
+correlaciona **0,988** com a coluna `D.PARK` do próprio arquivo. Uma linha
+de metadado que ninguém escreveu custou isso tudo. É o Encontro 1 inteiro
+numa anedota.
 :::
 
 ---
