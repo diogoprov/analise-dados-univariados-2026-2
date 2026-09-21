@@ -1001,6 +1001,27 @@
     "text": "As quatro premissas, na ordem que importa\n\nLinearidade — a relação é aditiva na escala em que foi escrita.\nIndependência — os resíduos não carregam informação uns dos outros. Vem do delineamento, não do gráfico.\nHomocedasticidade — a variância do resíduo não depende do predito.\nNormalidade do resíduo — a menos importante das quatro, e a única que quase todo mundo testa.\n\n\nEm amostras razoáveis, violar (4) modestamente é quase inofensivo. Violar (2) invalida tudo.\nE a ordem não é opinião. As premissas 2 e 3 são as condições do teorema de Gauss–Markov — que pede até menos, só resíduos não correlacionados —, e delas vem a garantia de que os mínimos quadrados têm a menor variância entre os estimadores lineares não enviesados. A normalidade não está entre elas: não serve para estimar, e sim para a inferência, porque dela saem as distribuições t e F."
   },
   {
+    "objectID": "slides/e02.html#as-mesmas-premissas-em-duas-línguas",
+    "href": "slides/e02.html#as-mesmas-premissas-em-duas-línguas",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "As mesmas premissas, em duas línguas",
+    "text": "As mesmas premissas, em duas línguas\n\n\n\n\n\n\n\nMatemática\nTradução para língua humana\n\n\n\n\n\\(y = X\\beta + \\varepsilon\\)\na relação entre \\(y\\) e \\(X\\) é linear\n\n\n\\(X\\) é \\(n \\times k\\) e tem posto completo\nnenhuma coluna de \\(X\\) é combinação das outras\n\n\n\\(E(\\varepsilon\\varepsilon' \\mid X) = \\sigma^2 I\\)\nvariância igual e sem autocorrelação\n\n\n\\(\\varepsilon \\mid X \\sim N(0, \\sigma^2 I)\\)\nresíduo normal, média zero — isto é para a inferência\n\n\n\nA terceira linha é a que faz o trabalho pesado, e é a única que quase nunca é escrita por extenso. Vale abrir."
+  },
+  {
+    "objectID": "slides/e02.html#a-linha-que-ninguém-desenha",
+    "href": "slides/e02.html#a-linha-que-ninguém-desenha",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "A linha que ninguém desenha",
+    "text": "A linha que ninguém desenha\nA premissa de independência e homocedasticidade são duas afirmações sobre a mesma matriz:\n\\[\n\\operatorname{var}[\\varepsilon_i \\mid X] = \\sigma^2 \\quad \\text{para todo } i\n\\qquad\\qquad\n\\operatorname{cov}[\\varepsilon_i, \\varepsilon_j \\mid X] = 0 \\quad \\text{para } i \\neq j\n\\]\nEmpilhando as duas, a matriz de variância-covariância dos resíduos fica:\n\\[\nE(\\varepsilon\\varepsilon' \\mid X) =\n\\begin{bmatrix}\n\\sigma^2 & 0 & \\cdots & 0 \\\\\n0 & \\sigma^2 & \\cdots & 0 \\\\\n\\vdots & \\vdots & \\ddots & \\vdots \\\\\n0 & 0 & \\cdots & \\sigma^2\n\\end{bmatrix}\n= \\sigma^2 I\n\\]\n\nSaber o resíduo de uma unidade amostral não diz nada sobre o resíduo de outra: é isso que os zeros fora da diagonal afirmam. E o mesmo \\(\\sigma^2\\) repetido na diagonal é a homocedasticidade."
+  },
+  {
+    "objectID": "slides/e02.html#toda-violação-é-um-buraco-nessa-matriz",
+    "href": "slides/e02.html#toda-violação-é-um-buraco-nessa-matriz",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Toda violação é um buraco nessa matriz",
+    "text": "Toda violação é um buraco nessa matriz\n\\[\n\\underbrace{\\sigma^2\\begin{bmatrix}1&0&0&0\\\\0&1&0&0\\\\0&0&1&0\\\\0&0&0&1\\end{bmatrix}}_{\\text{OLS}}\n\\qquad\n\\underbrace{\\begin{bmatrix}\\sigma_1^2&0&0&0\\\\0&\\sigma_2^2&0&0\\\\0&0&\\sigma_3^2&0\\\\0&0&0&\\sigma_4^2\\end{bmatrix}}_{\\text{variância desigual}}\n\\qquad\n\\underbrace{\\sigma^2\\begin{bmatrix}1&\\rho&0&0\\\\\\rho&1&0&0\\\\0&0&1&\\rho\\\\0&0&\\rho&1\\end{bmatrix}}_{\\text{dois grupos}}\n\\]\n\nHeterocedasticidade mexe na diagonal: cada unidade tem a sua variância. Dependência — praias, espaço, tempo, filogenia — preenche o que está fora da diagonal.\n\nO curso inteiro cabe nessa frase: trocar o \\(I\\) por outra coisa. O modelo misto do Encontro 7 escreve os blocos a partir do delineamento; o glmmTMB com propto() põe ali a matriz da filogenia; o GLS com estrutura de correlação põe a do espaço ou a do tempo."
+  },
+  {
     "objectID": "slides/e02.html#o-hábito-mais-útil-do-ros",
     "href": "slides/e02.html#o-hábito-mais-útil-do-ros",
     "title": "O modelo linear como arcabouço unificador",
@@ -1677,7 +1698,7 @@
     "href": "encontros/e01-eda-reprodutibilidade/index.html#dados",
     "title": "E1 — EDA, reprodutibilidade e literacia em IA",
     "section": "Dados",
-    "text": "Dados\n\nRoadKills.txt — anfíbios atropelados em 52 sítios em Portugal (Zuur et al. 2009). É o conjunto do productive failure que abre a aula, e volta nos Encontros 5, 6 e 9.\ndados_com_outliers_e_faltantes.csv — passo 1, o gráfico de Cleveland.\nRIKZ.txt — riqueza de macrofauna em 9 praias holandesas (Zuur et al. 2009); passo 2, heterogeneidade entre grupos. Volta nos Encontros 7 e 8."
+    "text": "Dados\n\nRoadKills.txt — anfíbios atropelados em 52 segmentos de 500 m de uma mesma estrada, ao longo de 25,5 km, em Portugal (Zuur et al. 2009). As colunas X e Y dão a posição de cada segmento e D.PARK a distância ao parque, que vai de 250 m a 24,9 km. É o conjunto do productive failure que abre a aula, e volta nos Encontros 5, 6 e 9.\ndados_com_outliers_e_faltantes.csv — passo 1, o gráfico de Cleveland.\nRIKZ.txt — riqueza de macrofauna em 9 praias holandesas (Zuur et al. 2009); passo 2, heterogeneidade entre grupos. Volta nos Encontros 7 e 8."
   },
   {
     "objectID": "encontros/e01-eda-reprodutibilidade/index.html#preparação-prévia-sala-de-aula-invertida",
@@ -2034,7 +2055,21 @@
     "href": "slides/e01.html#os-dados",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Os dados",
-    "text": "Os dados\n\nRK &lt;- read.delim(\"../dados/RoadKills.txt\")\ndim(RK)\n\n[1] 52 23\n\nRK[1:4, c(\"TOT.N\", \"D.PARK\", \"OPEN.L\", \"L.WAT.C\")]\n\n  TOT.N   D.PARK OPEN.L L.WAT.C\n1    22  250.214 22.684   0.583\n2    14  741.179 24.657   1.419\n3    65 1240.080 30.121   2.005\n4    55 1739.885 50.277   1.924\n\n\n\nDados de Zuur, Ieno & Smith, usados em Mixed Effects Models and Extensions in Ecology with R (2009). Voltaremos a eles no Encontro 5."
+    "text": "Os dados\n\nRK &lt;- read.delim(\"../dados/RoadKills.txt\")\ndim(RK)\n\n[1] 52 23\n\nRK[1:4, c(\"TOT.N\", \"D.PARK\", \"OPEN.L\", \"L.WAT.C\")]\n\n  TOT.N   D.PARK OPEN.L L.WAT.C\n1    22  250.214 22.684   0.583\n2    14  741.179 24.657   1.419\n3    65 1240.080 30.121   2.005\n4    55 1739.885 50.277   1.924\n\n\n\nDados de Zuur, Ieno & Smith, usados em Mixed Effects Models and Extensions in Ecology with R (2009). Eles nos acompanham a semana inteira."
+  },
+  {
+    "objectID": "slides/e01.html#de-onde-vêm-esses-números",
+    "href": "slides/e01.html#de-onde-vêm-esses-números",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "De onde vêm esses números",
+    "text": "De onde vêm esses números\n\n\n\n\n\n\n\n\n\nCada ponto é um segmento de 500 m de uma mesma estrada, 52 deles ao longo de 25,5 km. A cor e o tamanho são a contagem de anfíbios mortos."
+  },
+  {
+    "objectID": "slides/e01.html#duas-coisas-que-o-mapa-já-entrega",
+    "href": "slides/e01.html#duas-coisas-que-o-mapa-já-entrega",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Duas coisas que o mapa já entrega",
+    "text": "Duas coisas que o mapa já entrega\n\nUm gradiente. A mortalidade cai com a distância ao parque (\\(r = -0{,}75\\)). Essa é a pergunta do Encontro 5, e o mapa mostra que ela é geográfica antes de ser estatística.\nUm problema. Segmentos vizinhos distam 500 m: eles não são réplicas independentes. É o assunto do Encontro 7, e está embutido no desenho da coleta — nenhuma análise conserta isso depois.\n\n\nAs coordenadas do arquivo estão em metros, num sistema projetado que a fonte não documenta. Por isso o mapa é desenhado no sistema do próprio conjunto, com escala 1:1: a geometria é fiel e nenhuma afirmação é feita sobre onde isso fica no globo."
   },
   {
     "objectID": "slides/e01.html#uma-coisa-que-vocês-já-viram",

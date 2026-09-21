@@ -331,7 +331,30 @@ Diogo B. Provete
 </div>
 </div>
 <div class="nota">
-<p>Dados de Zuur, Ieno &amp; Smith, usados em <em>Mixed Effects Models and Extensions in Ecology with R</em> (2009). Voltaremos a eles no Encontro 5.</p>
+<p>Dados de Zuur, Ieno &amp; Smith, usados em <em>Mixed Effects Models and Extensions in Ecology with R</em> (2009). Eles nos acompanham a semana inteira.</p>
+</div>
+</section>
+<section id="de-onde-vêm-esses-números" class="slide level2 smaller">
+<h2>De onde vêm esses números</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-2-1.png" width="864"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Cada ponto é um segmento de <strong>500 m</strong> de uma mesma estrada, 52 deles ao longo de 25,5 km. A cor e o tamanho são a contagem de anfíbios mortos.</p>
+</section>
+<section id="duas-coisas-que-o-mapa-já-entrega" class="slide level2 smaller">
+<h2>Duas coisas que o mapa já entrega</h2>
+<div class="definicao">
+<p><strong>Um gradiente.</strong> A mortalidade cai com a distância ao parque (<span class="math inline">\(r = -0{,}75\)</span>). Essa é a pergunta do Encontro 5, e o mapa mostra que ela é geográfica antes de ser estatística.</p>
+<p><strong>Um problema.</strong> Segmentos vizinhos distam 500 m: eles não são réplicas independentes. É o assunto do Encontro 7, e está embutido no desenho da coleta — nenhuma análise conserta isso depois.</p>
+</div>
+<div class="nota">
+<p>As coordenadas do arquivo estão em metros, num sistema projetado que a fonte não documenta. Por isso o mapa é desenhado no sistema do próprio conjunto, com escala 1:1: a geometria é fiel e nenhuma afirmação é feita sobre onde isso fica no globo.</p>
 </div>
 </section>
 <section id="uma-coisa-que-vocês-já-viram" class="slide level2">
@@ -340,7 +363,7 @@ Diogo B. Provete
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-2-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-3-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -362,7 +385,7 @@ Diogo B. Provete
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-3-1.png" class="quarto-figure quarto-figure-center" style="width:64.0%"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center" style="width:64.0%"></p>
 </figure>
 </div>
 </div>
@@ -419,8 +442,8 @@ Diogo B. Provete
 <h2>Por que um ciclo e não uma lista</h2>
 <div class="cell">
 <div class="cell-output-display">
-<div id="htmlwidget-1f17fe4556a6c81b6664" style="width:672px;height:150px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1f17fe4556a6c81b6664">{"x":{"diagram":"\ndigraph ppdac {\n  graph [rankdir = LR, bgcolor = \"transparent\", nodesep = 0.40, ranksep = 0.85,\n         fontname = \"Helvetica\"]\n  node  [fontname = \"Helvetica\", fontsize = 18, style = \"filled,rounded\",\n         shape = box, penwidth = 0, margin = \"0.24,0.14\", fontcolor = \"white\"]\n  edge  [penwidth = 3.0, arrowsize = 1.1, color = \"#8a8172\"]\n\n  P1 [label = \"Problema\",  fillcolor = \"#144f64\"]\n  P2 [label = \"Plano\",     fillcolor = \"#1c6e8c\"]\n  D  [label = \"Dados\",     fillcolor = \"#527238\"]\n  A  [label = \"Análise\",   fillcolor = \"#96661f\"]\n  C  [label = \"Conclusão\", fillcolor = \"#a15e3f\"]\n\n  P1 -> P2 -> D -> A -> C\n\n  A -> D  [style = dashed, penwidth = 2.4, color = \"#527238\",\n           constraint = false, arrowsize = 1.0]\n  C -> P1 [style = dashed, penwidth = 2.4, color = \"#a15e3f\",\n           constraint = false, arrowsize = 1.0]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-cc6bb17d3a7a7d86353b" style="width:672px;height:150px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-cc6bb17d3a7a7d86353b">{"x":{"diagram":"\ndigraph ppdac {\n  graph [rankdir = LR, bgcolor = \"transparent\", nodesep = 0.40, ranksep = 0.85,\n         fontname = \"Helvetica\"]\n  node  [fontname = \"Helvetica\", fontsize = 18, style = \"filled,rounded\",\n         shape = box, penwidth = 0, margin = \"0.24,0.14\", fontcolor = \"white\"]\n  edge  [penwidth = 3.0, arrowsize = 1.1, color = \"#8a8172\"]\n\n  P1 [label = \"Problema\",  fillcolor = \"#144f64\"]\n  P2 [label = \"Plano\",     fillcolor = \"#1c6e8c\"]\n  D  [label = \"Dados\",     fillcolor = \"#527238\"]\n  A  [label = \"Análise\",   fillcolor = \"#96661f\"]\n  C  [label = \"Conclusão\", fillcolor = \"#a15e3f\"]\n\n  P1 -> P2 -> D -> A -> C\n\n  A -> D  [style = dashed, penwidth = 2.4, color = \"#527238\",\n           constraint = false, arrowsize = 1.0]\n  C -> P1 [style = dashed, penwidth = 2.4, color = \"#a15e3f\",\n           constraint = false, arrowsize = 1.0]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <p>As setas pontilhadas são o ponto: a análise revela problemas nos dados, e a conclusão quase sempre reformula o problema. <strong>Isso é legítimo</strong> — o que não é legítimo é apagar o percurso e apresentar a última volta do ciclo como se tivesse sido a primeira.</p>
@@ -661,7 +684,7 @@ Diogo B. Provete
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-5-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-6-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -694,7 +717,7 @@ Diogo B. Provete
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-6-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-7-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -726,7 +749,7 @@ Diogo B. Provete
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-7-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-8-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -769,7 +792,7 @@ Diogo B. Provete
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-9-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-10-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -789,7 +812,7 @@ Diogo B. Provete
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-10-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-11-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -824,7 +847,7 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-12-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-13-1.png" width="672"></p>
 </figure>
 </div>
 </div>

@@ -307,6 +307,77 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,
 <p><strong>E a ordem não é opinião.</strong> As premissas 2 e 3 são as condições do <a href="https://en.wikipedia.org/wiki/Gauss%E2%80%93Markov_theorem">teorema de Gauss–Markov</a> — que pede até menos, só resíduos <em>não correlacionados</em> —, e delas vem a garantia de que os mínimos quadrados têm a menor variância entre os estimadores lineares não enviesados. A normalidade <strong>não</strong> está entre elas: não serve para estimar, e sim para a inferência, porque dela saem as distribuições <em>t</em> e <em>F</em>.</p>
 </div>
 </section>
+<section id="as-mesmas-premissas-em-duas-línguas" class="slide level2 smaller">
+<h2>As mesmas premissas, em duas línguas</h2>
+<table class="caption-top">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 54%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Matemática</th>
+<th>Tradução para língua humana</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(y = X\beta + \varepsilon\)</span></td>
+<td>a relação entre <span class="math inline">\(y\)</span> e <span class="math inline">\(X\)</span> é linear</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(X\)</span> é <span class="math inline">\(n \times k\)</span> e tem posto completo</td>
+<td>nenhuma coluna de <span class="math inline">\(X\)</span> é combinação das outras</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(E(\varepsilon\varepsilon' \mid X) = \sigma^2 I\)</span></td>
+<td>variância igual e sem autocorrelação</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\varepsilon \mid X \sim N(0, \sigma^2 I)\)</span></td>
+<td>resíduo normal, média zero — isto é para a <strong>inferência</strong></td>
+</tr>
+</tbody>
+</table>
+<p>A terceira linha é a que faz o trabalho pesado, e é a única que quase nunca é escrita por extenso. Vale abrir.</p>
+</section>
+<section id="a-linha-que-ninguém-desenha" class="slide level2 smaller">
+<h2>A linha que ninguém desenha</h2>
+<p>A premissa de independência e homocedasticidade são <strong>duas afirmações sobre a mesma matriz</strong>:</p>
+<p><span class="math display">\[
+\operatorname{var}[\varepsilon_i \mid X] = \sigma^2 \quad \text{para todo } i
+\qquad\qquad
+\operatorname{cov}[\varepsilon_i, \varepsilon_j \mid X] = 0 \quad \text{para } i \neq j
+\]</span></p>
+<p>Empilhando as duas, a matriz de variância-covariância dos resíduos fica:</p>
+<p><span class="math display">\[
+E(\varepsilon\varepsilon' \mid X) =
+\begin{bmatrix}
+\sigma^2 &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; \sigma^2 &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; \sigma^2
+\end{bmatrix}
+= \sigma^2 I
+\]</span></p>
+<div class="nota">
+<p>Saber o resíduo de uma unidade amostral não diz <strong>nada</strong> sobre o resíduo de outra: é isso que os zeros fora da diagonal afirmam. E o mesmo <span class="math inline">\(\sigma^2\)</span> repetido na diagonal é a homocedasticidade.</p>
+</div>
+</section>
+<section id="toda-violação-é-um-buraco-nessa-matriz" class="slide level2 smaller">
+<h2>Toda violação é um buraco nessa matriz</h2>
+<p><span class="math display">\[
+\underbrace{\sigma^2\begin{bmatrix}1&amp;0&amp;0&amp;0\\0&amp;1&amp;0&amp;0\\0&amp;0&amp;1&amp;0\\0&amp;0&amp;0&amp;1\end{bmatrix}}_{\text{OLS}}
+\qquad
+\underbrace{\begin{bmatrix}\sigma_1^2&amp;0&amp;0&amp;0\\0&amp;\sigma_2^2&amp;0&amp;0\\0&amp;0&amp;\sigma_3^2&amp;0\\0&amp;0&amp;0&amp;\sigma_4^2\end{bmatrix}}_{\text{variância desigual}}
+\qquad
+\underbrace{\sigma^2\begin{bmatrix}1&amp;\rho&amp;0&amp;0\\\rho&amp;1&amp;0&amp;0\\0&amp;0&amp;1&amp;\rho\\0&amp;0&amp;\rho&amp;1\end{bmatrix}}_{\text{dois grupos}}
+\]</span></p>
+<div class="definicao">
+<p><strong>Heterocedasticidade</strong> mexe na <strong>diagonal</strong>: cada unidade tem a sua variância. <strong>Dependência</strong> — praias, espaço, tempo, filogenia — preenche o que está <strong>fora da diagonal</strong>.</p>
+</div>
+<p>O curso inteiro cabe nessa frase: trocar o <span class="math inline">\(I\)</span> por outra coisa. O modelo misto do Encontro 7 escreve os blocos a partir do delineamento; o <code>glmmTMB</code> com <code>propto()</code> põe ali a matriz da filogenia; o GLS com estrutura de correlação põe a do espaço ou a do tempo.</p>
+</section>
 <section class="slide level2">
 
 </section></section>
