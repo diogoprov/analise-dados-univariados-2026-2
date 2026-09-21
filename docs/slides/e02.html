@@ -312,12 +312,38 @@ y_i = \beta_0 + \beta_1 x_i + \varepsilon_i,
 <h2>E as duas que vêm antes das quatro</h2>
 <p>O ROS lista <strong>seis</strong>, em ordem decrescente de importância, e as duas primeiras não são sobre resíduo nenhum:</p>
 <ol type="1">
-<li><strong>Validade</strong> — os dados que você tem respondem à pergunta que você fez?</li>
-<li><strong>Representatividade</strong> — a amostra representa a população sobre a qual você quer falar?</li>
+<li><strong>Validade</strong> — a variável resposta mede mesmo o fenômeno de interesse, o modelo inclui as preditoras relevantes, e ele generaliza para os casos em que vai ser aplicado.</li>
+<li><strong>Representatividade</strong> — a amostra representa a distribuição de <span class="math inline">\(y\)</span> <strong>dadas as preditoras que estão no modelo</strong>.</li>
 </ol>
 <p>Da 3 à 6 são as quatro do slide anterior, na mesma ordem: aditividade e linearidade, independência dos erros, variância igual, normalidade.</p>
 <div class="definicao">
 <p>Nenhum gráfico de resíduo detecta (1) e (2). Elas se decidem na pergunta e no delineamento — é o Encontro 1 — e são as únicas da lista que análise nenhuma conserta depois.</p>
+</div>
+<div class="ref">
+<p>Gelman, Hill &amp; Vehtari (2020), <em>Regression and Other Stories</em>, seção 11.1.</p>
+</div>
+</section>
+<section id="selecionar-em-x-ou-selecionar-em-y" class="slide level2 smaller">
+<h2>Selecionar em <span class="math inline">\(x\)</span> ou selecionar em <span class="math inline">\(y\)</span></h2>
+<p>A regra que o ROS tira da premissa 2, e que decide muita coisa:</p>
+<div class="definicao">
+<p>Selecionar em <span class="math inline">\(x\)</span> <strong>não</strong> atrapalha a inferência do modelo. Selecionar em <span class="math inline">\(y\)</span>, sim.</p>
+</div>
+<p>O exemplo deles é uma regressão de renda contra altura e sexo: ter mulheres e pessoas altas em excesso na amostra é tolerável; ter ricos em excesso, não.</p>
+<p><strong>Traduzindo.</strong> Amostrar de propósito mais sítios de mata do que de campo não quebra nada — desde que “mata × campo” esteja no modelo. Agora, jogar fora os sítios em que você não encontrou nenhum anfíbio é seleção em <span class="math inline">\(y\)</span>, e isso quebra.</p>
+<div class="nota">
+<p>É também um argumento a favor de <strong>incluir mais preditoras</strong>: quanto mais do processo de seleção estiver em <span class="math inline">\(X\)</span>, mais defensável fica a representatividade condicional. E o descarte de zeros volta no Encontro 6, do outro lado — como origem de inflação de zeros.</p>
+</div>
+</section>
+<section id="o-que-o-ros-diz-sobre-testar-normalidade" class="slide level2 smaller">
+<h2>O que o ROS diz sobre testar normalidade</h2>
+<p>Sobre a premissa 6, eles vão além do que dissemos no bloco anterior:</p>
+<blockquote>
+<p>“we do not recommend diagnostics of the normality of regression residuals”</p>
+</blockquote>
+<p>Não é que o gráfico Q-Q esteja errado — ele é relevante quando o objetivo é <strong>prever observações individuais</strong>. É que, para estimar a reta, a normalidade quase não pesa, e a atenção está mal alocada.</p>
+<div class="nota">
+<p>Compare com o Kozak &amp; Piepho (2018) e o Shatz (2024), nas leituras: eles argumentam que a premissa se checa no <strong>resíduo</strong> e por <strong>gráfico</strong>, não por teste. O ROS assina embaixo e acrescenta que, para esta premissa específica, nem o gráfico merece muito do seu tempo. As três posições concordam no que importa: o valor de <em>p</em> de um teste de normalidade não decide nada.</p>
 </div>
 <div class="ref">
 <p>Gelman, Hill &amp; Vehtari (2020), <em>Regression and Other Stories</em>, seção 11.1.</p>

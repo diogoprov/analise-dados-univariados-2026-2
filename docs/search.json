@@ -1005,7 +1005,21 @@
     "href": "slides/e02.html#e-as-duas-que-vêm-antes-das-quatro",
     "title": "O modelo linear como arcabouço unificador",
     "section": "E as duas que vêm antes das quatro",
-    "text": "E as duas que vêm antes das quatro\nO ROS lista seis, em ordem decrescente de importância, e as duas primeiras não são sobre resíduo nenhum:\n\nValidade — os dados que você tem respondem à pergunta que você fez?\nRepresentatividade — a amostra representa a população sobre a qual você quer falar?\n\nDa 3 à 6 são as quatro do slide anterior, na mesma ordem: aditividade e linearidade, independência dos erros, variância igual, normalidade.\n\nNenhum gráfico de resíduo detecta (1) e (2). Elas se decidem na pergunta e no delineamento — é o Encontro 1 — e são as únicas da lista que análise nenhuma conserta depois.\n\n\nGelman, Hill & Vehtari (2020), Regression and Other Stories, seção 11.1."
+    "text": "E as duas que vêm antes das quatro\nO ROS lista seis, em ordem decrescente de importância, e as duas primeiras não são sobre resíduo nenhum:\n\nValidade — a variável resposta mede mesmo o fenômeno de interesse, o modelo inclui as preditoras relevantes, e ele generaliza para os casos em que vai ser aplicado.\nRepresentatividade — a amostra representa a distribuição de \\(y\\) dadas as preditoras que estão no modelo.\n\nDa 3 à 6 são as quatro do slide anterior, na mesma ordem: aditividade e linearidade, independência dos erros, variância igual, normalidade.\n\nNenhum gráfico de resíduo detecta (1) e (2). Elas se decidem na pergunta e no delineamento — é o Encontro 1 — e são as únicas da lista que análise nenhuma conserta depois.\n\n\nGelman, Hill & Vehtari (2020), Regression and Other Stories, seção 11.1."
+  },
+  {
+    "objectID": "slides/e02.html#selecionar-em-x-ou-selecionar-em-y",
+    "href": "slides/e02.html#selecionar-em-x-ou-selecionar-em-y",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Selecionar em \\(x\\) ou selecionar em \\(y\\)",
+    "text": "Selecionar em \\(x\\) ou selecionar em \\(y\\)\nA regra que o ROS tira da premissa 2, e que decide muita coisa:\n\nSelecionar em \\(x\\) não atrapalha a inferência do modelo. Selecionar em \\(y\\), sim.\n\nO exemplo deles é uma regressão de renda contra altura e sexo: ter mulheres e pessoas altas em excesso na amostra é tolerável; ter ricos em excesso, não.\nTraduzindo. Amostrar de propósito mais sítios de mata do que de campo não quebra nada — desde que “mata × campo” esteja no modelo. Agora, jogar fora os sítios em que você não encontrou nenhum anfíbio é seleção em \\(y\\), e isso quebra.\n\nÉ também um argumento a favor de incluir mais preditoras: quanto mais do processo de seleção estiver em \\(X\\), mais defensável fica a representatividade condicional. E o descarte de zeros volta no Encontro 6, do outro lado — como origem de inflação de zeros."
+  },
+  {
+    "objectID": "slides/e02.html#o-que-o-ros-diz-sobre-testar-normalidade",
+    "href": "slides/e02.html#o-que-o-ros-diz-sobre-testar-normalidade",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "O que o ROS diz sobre testar normalidade",
+    "text": "O que o ROS diz sobre testar normalidade\nSobre a premissa 6, eles vão além do que dissemos no bloco anterior:\n\n“we do not recommend diagnostics of the normality of regression residuals”\n\nNão é que o gráfico Q-Q esteja errado — ele é relevante quando o objetivo é prever observações individuais. É que, para estimar a reta, a normalidade quase não pesa, e a atenção está mal alocada.\n\nCompare com o Kozak & Piepho (2018) e o Shatz (2024), nas leituras: eles argumentam que a premissa se checa no resíduo e por gráfico, não por teste. O ROS assina embaixo e acrescenta que, para esta premissa específica, nem o gráfico merece muito do seu tempo. As três posições concordam no que importa: o valor de p de um teste de normalidade não decide nada.\n\n\nGelman, Hill & Vehtari (2020), Regression and Other Stories, seção 11.1."
   },
   {
     "objectID": "slides/e02.html#as-mesmas-premissas-em-duas-línguas",
@@ -1614,7 +1628,7 @@
     "href": "encontros/e05-glm-i/index.html#leituras",
     "title": "E5 — GLM I: verossimilhança, binomial e Poisson",
     "section": "Leituras",
-    "text": "Leituras\nObrigatória\n\nAgresti, A. 2015. Foundations of Linear and Generalized Linear Models. Wiley.\n\nComplementar\n\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA. — o fluxograma conectando variáveis, no cap. 2, é este mesmo raciocínio em português; cap. 8 para os GLMs.\nGelman, A.; Hill, J. & Vehtari, A. 2020. Regression and Other Stories. Cap. 13 (Logistic regression), 14 (Working with logistic regression) e 15 (Other generalized linear models).\nMcElreath, R. 2020. Statistical Rethinking, 2ª ed., cap. 5 — The Many Variables & The Spurious Waffles, na versão em brms de Kurz.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer.\nArif, S. & MacNeil, M.A. 2023. Applying the structural causal model framework for observational causal inference in ecology. Ecological Monographs 93:e1554.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Cap. 7, “Prediction, generalization, and causal inference”."
+    "text": "Leituras\nObrigatória\n\nAgresti, A. 2015. Foundations of Linear and Generalized Linear Models. Wiley.\n\nComplementar\n\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA. — o fluxograma conectando variáveis, no cap. 2, é este mesmo raciocínio em português; cap. 8 para os GLMs.\nGelman, A.; Hill, J. & Vehtari, A. 2020. Regression and Other Stories. Cap. 13 (Logistic regression), 14 (Working with logistic regression) e 15 (Other generalized linear models).\nCrawley, M.J. 2022. Generalised Linear Models. Cap. 11 de The R Book, 3ª ed. Wiley. p. 499–577. — quase 80 páginas de GLM com a saída do R na frente; é a referência para consultar de laptop aberto, não para ler antes.\nMcElreath, R. 2020. Statistical Rethinking, 2ª ed., cap. 5 — The Many Variables & The Spurious Waffles, na versão em brms de Kurz.\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer.\nArif, S. & MacNeil, M.A. 2023. Applying the structural causal model framework for observational causal inference in ecology. Ecological Monographs 93:e1554.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Cap. 7, “Prediction, generalization, and causal inference”."
   },
   {
     "objectID": "encontros/e05-glm-i/index.html#recursos-externos",
@@ -1817,7 +1831,7 @@
     "href": "encontros/e04-distribuicoes/index.html#leituras",
     "title": "E4 — Distribuições de probabilidade e a família exponencial",
     "section": "Leituras",
-    "text": "Leituras\nObrigatória\n\nAgresti, A. 2015. Foundations of Linear and Generalized Linear Models. Wiley.\n\nComplementar\n\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA.\nKurz, A.S. Statistical Rethinking recoded — o livro do McElreath em brms, ggplot2 e tidyverse."
+    "text": "Leituras\nObrigatória\n\nAgresti, A. 2015. Foundations of Linear and Generalized Linear Models. Wiley.\n\nComplementar\n\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA.\nCrawley, M.J. 2022. Probability Distributions in R. Cap. 8 de The R Book, 3ª ed. Wiley. p. 373–404. — o mesmo assunto deste encontro, pelo lado do R.\nKurz, A.S. Statistical Rethinking recoded — o livro do McElreath em brms, ggplot2 e tidyverse."
   },
   {
     "objectID": "encontros/e04-distribuicoes/index.html#recursos-externos",
@@ -1866,7 +1880,7 @@
     "href": "encontros/e06-glm-ii/index.html#leituras",
     "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Leituras",
-    "text": "Leituras\nObrigatória\n\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer.\n\nComplementar\n\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA.\nKurz, A.S. Statistical Rethinking recoded — o livro do McElreath em brms, ggplot2 e tidyverse.\nBlasco-Moreno, A.; Pérez-Casany, M.; Puig, P.; Morante, M. & Castells, E.\n\nWhat does a zero mean? Understanding false, random and structural zeros in ecology. Methods in Ecology and Evolution 10(7):949–959. — a classificação dos zeros usada no slide “Quatro origens para o mesmo zero”.\n\nHartig, F. DHARMa: residual diagnostics for hierarchical regression models.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Cap. 8, “Visualizing and checking fitted models”."
+    "text": "Leituras\nObrigatória\n\nZuur, A.F. et al. 2009. Mixed Effects Models and Extensions in Ecology with R. Springer.\n\nComplementar\n\nda Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; Provete, D.B. & Vancine, M.A. 2022. Análises Ecológicas no R. NUPEEA.\nKurz, A.S. Statistical Rethinking recoded — o livro do McElreath em brms, ggplot2 e tidyverse.\nCrawley, M.J. 2022. Generalised Linear Models. Cap. 11 de The R Book, 3ª ed. Wiley. p. 499–577. — o mesmo capítulo indicado no Encontro 5, que cobre os GLMs em geral.\nBlasco-Moreno, A.; Pérez-Casany, M.; Puig, P.; Morante, M. & Castells, E.\n\nWhat does a zero mean? Understanding false, random and structural zeros in ecology. Methods in Ecology and Evolution 10(7):949–959. — a classificação dos zeros usada no slide “Quatro origens para o mesmo zero”.\n\nHartig, F. DHARMa: residual diagnostics for hierarchical regression models.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Cap. 8, “Visualizing and checking fitted models”."
   },
   {
     "objectID": "encontros/e06-glm-ii/index.html#recursos-externos",
