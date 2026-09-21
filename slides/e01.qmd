@@ -142,9 +142,11 @@ RK[1:4, c("TOT.N", "D.PARK", "OPEN.L", "L.WAT.C")]
 ```
 
 ::: {.nota}
-Anfíbios atropelados na estrada IP2, sul de Portugal, no cap. 16 de Zuur,
-Mira, Carvalho, Ieno, Saveliev, Smith & Walker (2009), *Mixed Effects
-Models and Extensions in Ecology with R*, p. 383--397
+Anfíbios atropelados na estrada IP2, sul de Portugal. Fonte primária:
+[Ascensão & Mira (2005)](https://escholarship.org/uc/item/8r07z6nf),
+*ICOET 2005 --- On the Road to Stewardship*, p. 641. A reanálise que ficou
+conhecida está no cap. 16 de Zuur, Mira, Carvalho, Ieno, Saveliev, Smith &
+Walker (2009)
 ([doi:10.1007/978-0-387-87458-6_16](https://doi.org/10.1007/978-0-387-87458-6_16)).
 Eles nos acompanham a semana inteira.
 :::
@@ -162,27 +164,53 @@ mapa_roadkills(RK)
 ```
 
 Cada ponto é o meio de um segmento de **500 m** da IP2, entre Portalegre e
-Monforte: 52 segmentos cobrindo 25,5 km. A cor e o tamanho são a contagem
+Monforte: 52 segmentos, 26 km de estrada. A cor e o tamanho são a contagem
 de anfíbios mortos.
 
 ---
 
 ## Como esses números foram feitos {.smaller}
 
-- Um trecho de **27 km** da IP2, no sul de Portugal: duas faixas, menos de
-  10 000 veículos por dia, cortando *montado* de sobreiro
-  (*Quercus suber*) e azinheira (*Q. rotundifolia*) e campo aberto.
-- Percorrido **de carro, a 10--20 km/h**, pelo acostamento, **a cada duas
-  semanas, de março de 1995 a março de 1997**.
-- Cada carcaça identificada até espécie quando possível e **retirada da
-  estrada**, para não ser contada de novo na quinzena seguinte.
+- Um trecho de **26 km** da IP2, distrito de Portalegre, sul de Portugal:
+  tráfego moderado, cerca de **5 000 veículos por dia**, cortando *montado*
+  de sobreiro (*Quercus suber*) e azinheira (*Q. rotundifolia*), campo
+  aberto e olivais.
+- Percorrido **de carro, a cerca de 20 km/h**, **a cada duas semanas por
+  dois anos** --- 54 percursos, entre 1995 e 1997.
+- **2 421 carcaças de 80 espécies** não domésticas. Os anfíbios são a maior
+  fatia: **1 362**. Cada carcaça foi identificada e retirada da pista, para
+  não ser contada de novo na quinzena seguinte.
 - A estrada dividida em segmentos de 500 m, e cada animal atribuído ao
-  **ponto médio** do seu segmento.
+  **ponto médio** do seu segmento. São os 52 segmentos do arquivo.
 
 ::: {.nota}
 Dois anos de campo, quinzena após quinzena, condensados em 52 linhas e uma
 coluna chamada `TOT.N`. Vale lembrar disso na hora de reclamar do tamanho
 da amostra.
+:::
+
+---
+
+## O que a coluna `TOT.N` não conta {.smaller}
+
+Os próprios autores avisam que a contagem é enviesada para baixo: carcaças
+são comidas por outros animais, o clima e as características da pista
+atrapalham a detecção, e --- textualmente --- "non-daily surveys prevent the
+detection of all small-bodied animals like amphibians", cujos corpos duram
+de um a três dias na faixa de rolamento.
+
+::: {.definicao}
+A resposta não é "quantos anfíbios morreram", é "quantos anfíbios mortos
+foram **encontrados** numa visita a cada 15 dias". Toda a interpretação do
+modelo vive dentro dessa frase.
+:::
+
+::: {.nota}
+Há ainda uma lição de procedência. As duas fontes publicadas que descrevem
+este mesmo conjunto discordam: Ascensão & Mira (2005) dizem 26 km e ~5 000
+veículos/dia; Zuur et al. (2009) dizem 27 km e < 10 000 veículos/dia. Os 52
+segmentos de 500 m dão exatamente 26 km. Conferir a fonte primária não é
+preciosismo.
 :::
 
 ---

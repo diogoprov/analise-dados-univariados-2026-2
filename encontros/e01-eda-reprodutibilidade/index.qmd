@@ -43,9 +43,13 @@ outra pessoa — inclusive você daqui a dois anos — consiga refazer.
   pista para não ser contada duas vezes. As colunas `X` e `Y` dão a posição
   de cada segmento e `D.PARK` a distância, ao longo da estrada, ao parque
   natural da Serra de São Mamede, de 250 m a 24,9 km — uma serra mais úmida
-  que a planície em volta, e portanto um *proxy* de umidade. Fonte: Zuur,
-  Mira, Carvalho, Ieno, Saveliev, Smith & Walker (2009), cap. 16 de *Mixed
-  Effects Models and Extensions in Ecology with R*, p. 383–397
+  que a planície em volta, e portanto um *proxy* de umidade. Fonte primária:
+  Ascensão, F. & Mira, A. (2005), *Spatial patterns of road kills: a case
+  study in Southern Portugal*, ICOET 2005 — *On the Road to Stewardship*,
+  p. 641 ([eScholarship](https://escholarship.org/uc/item/8r07z6nf)); a
+  reanálise conhecida está em Zuur, Mira, Carvalho, Ieno, Saveliev, Smith &
+  Walker (2009), cap. 16 de *Mixed Effects Models and Extensions in Ecology
+  with R*, p. 383–397
   ([doi:10.1007/978-0-387-87458-6_16](https://doi.org/10.1007/978-0-387-87458-6_16)).
   É o conjunto do *productive failure* que abre a aula, e volta nos
   Encontros 5, 6 e 9.

@@ -5,8 +5,13 @@ library(patchwork)
 #' Mapa dos 52 segmentos de estrada do conjunto RoadKills
 #'
 #' Os dados vêm de um estudo de dois anos na IP2, trecho Portalegre–Monforte,
-#' sul de Portugal (27 km), descrito em Zuur et al. (2009), cap. 16
-#' (doi:10.1007/978-0-387-87458-6_16). A estrada foi dividida em segmentos de
+#' sul de Portugal (26 km, 54 percursos entre 1995 e 1997), publicado por
+#' Ascensão & Mira (2005), ICOET 2005, p. 641
+#' (https://escholarship.org/uc/item/8r07z6nf) e reanalisado em Zuur et al.
+#' (2009), cap. 16 (doi:10.1007/978-0-387-87458-6_16). O capítulo diz 27 km e
+#' < 10 000 veículos/dia; a fonte primária diz 26 km e ~5 000 veículos/dia, e
+#' 52 segmentos de 500 m dão exatamente 26 km.
+#' A estrada foi dividida em segmentos de
 #' 500 m e cada animal encontrado morto foi atribuído ao ponto médio do seu
 #' segmento; `X` e `Y` são essas coordenadas. O capítulo as chama de
 #' coordenadas UTM, mas os valores não correspondem ao fuso UTM de Portugal,

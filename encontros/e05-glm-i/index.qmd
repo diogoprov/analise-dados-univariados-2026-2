@@ -150,7 +150,9 @@ curso, com um *take-home* por item:
 ## Dados
 
 - [`RoadKills.txt`](../../dados/RoadKills.txt) — anfíbios atropelados em
-  52 segmentos da IP2, sul de Portugal (Zuur et al. 2009, cap. 16,
+  52 segmentos da IP2, sul de Portugal
+  ([Ascensão & Mira 2005](https://escholarship.org/uc/item/8r07z6nf);
+  reanálise em Zuur et al. 2009, cap. 16,
   [doi:10.1007/978-0-387-87458-6_16](https://doi.org/10.1007/978-0-387-87458-6_16));
   o Encontro 1 descreve a coleta.
 - [`UV.csv`](../../dados/UV.csv) — resposta binomial, contagem de células.
