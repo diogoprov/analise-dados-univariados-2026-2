@@ -58,7 +58,7 @@ curso, com um *take-home* por item:
 
 - da Silva, F.R.; Gonçalves-Souza, T.; Paterno, G.; **Provete, D.B.** & Vancine, M.A. 2022. [*Análises Ecológicas no R*](https://analises-ecologicas.com). NUPEEA.
 - Kurz, A.S. [*Statistical Rethinking recoded*](https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/) — o livro do McElreath em `brms`, `ggplot2` e tidyverse.
-- Crawley, M.J. 2022. [Generalised Linear Models](https://doi.org/10.1002/9781119634461.ch11). Cap. 11 de [*The R Book*](https://doi.org/10.1002/9781119634461), 3ª ed. Wiley. p. 499–577. — o mesmo capítulo indicado no Encontro 5, que cobre os GLMs em geral.
+- Jones, E.; Harden, S. & Crawley, M.J. 2022. [Generalised Linear Models](https://doi.org/10.1002/9781119634461.ch11). Cap. 11 de [*The R Book*](https://doi.org/10.1002/9781119634461), 3ª ed. Wiley. p. 499–577. — o mesmo capítulo do Encontro 5; hoje interessa a **11.2**, sobre contagens, com a **11.2.2** dedicada à dispersão e a **11.2.3** à alternativa à Poisson. A **11.3** trata de tabelas de contagem e modelos log-lineares.
 - Blasco-Moreno, A.; Pérez-Casany, M.; Puig, P.; Morante, M. & Castells, E.
   2019. [What does a zero mean? Understanding false, random and structural
   zeros in ecology](https://doi.org/10.1111/2041-210X.13185). *Methods in
