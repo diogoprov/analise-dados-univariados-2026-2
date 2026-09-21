@@ -181,6 +181,80 @@ as distribuições *t* e *F*.
 
 ---
 
+## As mesmas premissas, em duas línguas {.smaller}
+
++--------------------------------------------------+-----------------------------------------------------------+
+| Matemática                                       | Tradução para língua humana                               |
++==================================================+===========================================================+
+| $y = X\beta + \varepsilon$                       | a relação entre $y$ e $X$ é linear                        |
++--------------------------------------------------+-----------------------------------------------------------+
+| $X$ é $n \times k$ e tem posto completo          | nenhuma coluna de $X$ é combinação das outras             |
++--------------------------------------------------+-----------------------------------------------------------+
+| $E(\varepsilon\varepsilon' \mid X) = \sigma^2 I$ | variância igual e sem autocorrelação                      |
++--------------------------------------------------+-----------------------------------------------------------+
+| $\varepsilon \mid X \sim N(0, \sigma^2 I)$       | resíduo normal, média zero — isto é para a **inferência** |
++--------------------------------------------------+-----------------------------------------------------------+
+
+A terceira linha é a que faz o trabalho pesado, e é a única que quase
+nunca é escrita por extenso. Vale abrir.
+
+---
+
+## A linha que ninguém desenha {.smaller}
+
+A premissa de independência e homocedasticidade são **duas afirmações
+sobre a mesma matriz**:
+
+$$
+\operatorname{var}[\varepsilon_i \mid X] = \sigma^2 \quad \text{para todo } i
+\qquad\qquad
+\operatorname{cov}[\varepsilon_i, \varepsilon_j \mid X] = 0 \quad \text{para } i \neq j
+$$
+
+Empilhando as duas, a matriz de variância-covariância dos resíduos fica:
+
+$$
+E(\varepsilon\varepsilon' \mid X) =
+\begin{bmatrix}
+\sigma^2 & 0 & \cdots & 0 \\
+0 & \sigma^2 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & \sigma^2
+\end{bmatrix}
+= \sigma^2 I
+$$
+
+::: {.nota}
+Saber o resíduo de uma unidade amostral não diz **nada** sobre o resíduo
+de outra: é isso que os zeros fora da diagonal afirmam. E o mesmo
+$\sigma^2$ repetido na diagonal é a homocedasticidade.
+:::
+
+---
+
+## Toda violação é um buraco nessa matriz {.smaller}
+
+$$
+\underbrace{\sigma^2\begin{bmatrix}1&0&0&0\\0&1&0&0\\0&0&1&0\\0&0&0&1\end{bmatrix}}_{\text{OLS}}
+\qquad
+\underbrace{\begin{bmatrix}\sigma_1^2&0&0&0\\0&\sigma_2^2&0&0\\0&0&\sigma_3^2&0\\0&0&0&\sigma_4^2\end{bmatrix}}_{\text{variância desigual}}
+\qquad
+\underbrace{\sigma^2\begin{bmatrix}1&\rho&0&0\\\rho&1&0&0\\0&0&1&\rho\\0&0&\rho&1\end{bmatrix}}_{\text{dois grupos}}
+$$
+
+::: {.definicao}
+**Heterocedasticidade** mexe na **diagonal**: cada unidade tem a sua
+variância. **Dependência** — praias, espaço, tempo, filogenia — preenche
+o que está **fora da diagonal**.
+:::
+
+O curso inteiro cabe nessa frase: trocar o $I$ por outra coisa. O modelo
+misto do Encontro 7 escreve os blocos a partir do delineamento; o
+`glmmTMB` com `propto()` põe ali a matriz da filogenia; o GLS com
+estrutura de correlação põe a do espaço ou a do tempo.
+
+---
+
 # 2. Simular para entender {.secao}
 
 ---
