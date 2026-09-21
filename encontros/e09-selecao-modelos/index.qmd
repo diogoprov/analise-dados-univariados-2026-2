@@ -107,6 +107,13 @@ instalar nada.
 - Coelho, M.T.P.; Diniz-Filho, J.A.F. & Rangel, T.F. 2019. [A parsimonious view of the parsimony principle in ecology and evolution](https://doi.org/10.1111/ecog.04228). *Ecography* 42:968–976.
 - Tredennick, A.T. et al. 2021. [A practical guide to selecting models for exploration, inference, and prediction in ecology](https://doi.org/10.1002/ecy.3336). *Ecology* 102:e03336.
 
+**De onde vem o ritual**
+
+- Fisher, R.A. 1925. [*Statistical Methods for Research Workers*](https://psychclassics.yorku.ca/Fisher/Methods/). Oliver & Boyd, Edimburgo. — a primeira metade do procedimento: uma hipótese só, o *p* como medida de discrepância, e o 0,05 apresentado como conveniência, não como regra.
+- Neyman, J. & Pearson, E.S. 1928. [On the use and interpretation of certain test criteria for purposes of statistical inference: Part I](https://doi.org/10.2307/2331945). *Biometrika* 20A:175–240. — a segunda metade: testar contra uma **alternativa**, por razão de verossimilhança. (A Parte II saiu no mesmo volume, p. 263–294.)
+- Neyman, J. & Pearson, E.S. 1933. [On the problem of the most efficient tests of statistical hypotheses](https://doi.org/10.1098/rsta.1933.0009). *Philosophical Transactions of the Royal Society A* 231:289–337. — aqui o arcabouço fica completo, com erro tipo I, erro tipo II e poder.
+- Gigerenzer, G. 2004. [Mindless statistics](https://doi.org/10.1016/j.socec.2004.09.033). *The Journal of Socio-Economics* 33:587–606. — o argumento de que o que se ensina como "o" teste de hipóteses é um híbrido das duas escolas, que nenhuma delas endossaria.
+
 **O que não fazer**
 
 - Anderson, D.R.; Burnham, K.P. & Thompson, W.L. 2000. [Null hypothesis testing: problems, prevalence, and an alternative](https://doi.org/10.2307/3803199). *The Journal of Wildlife Management* 64:912–923.

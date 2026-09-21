@@ -105,12 +105,32 @@ Guardem o que escreveram. Vamos voltar a ele no fim da manhã.
 
 ---
 
-## O ritual
+## O ritual, e de onde ele veio {.smaller}
 
 O procedimento padrão do século XX: hipótese nula, valor de *p*, limiar
-de 0,05, rejeita ou não rejeita.
+de 0,05, rejeita ou não rejeita. Só que ele não nasceu inteiro --- nasceu
+de **duas escolas que brigavam entre si**.
 
-Três problemas em ecologia:
+**Fisher (1925)**, em *Statistical Methods for Research Workers*, monta a
+primeira metade: uma hipótese só, o *p* como medida contínua de
+discrepância, e a origem do 0,05, que ele apresenta como conveniência ---
+"it is convenient to take this point as a limit" --- e não como regra.
+
+**Neyman & Pearson (1928)** montam a segunda: testar **contra uma
+alternativa**, por razão de verossimilhança. O arcabouço que a gente de
+fato usa, com erro tipo I, erro tipo II e poder, só fica pronto em
+**1933**.
+
+::: {.nota}
+O detalhe que quase ninguém conta: Fisher rejeitava a versão dos outros
+dois, e vice-versa. O que virou receita de livro-texto é um **híbrido**
+que nenhum dos lados endossaria --- é por isso que chamamos de ritual, e
+não de método. Ver Gigerenzer (2004).
+:::
+
+---
+
+## Três problemas do ritual em ecologia
 
 1. **A nula raramente é interessante.** "O efeito da área é exatamente
    zero" quase nunca é uma hipótese biológica séria.
@@ -1130,4 +1150,8 @@ Depois, cinco minutos de apresentação por pessoa.
 - Gelman, A. et al. 2026. [*Bayesian Workflow*](https://avehtari.github.io/Bayesian-Workflow/). Chapman & Hall/CRC. Cap. 9, "Comparing and improving models".
 - Gerstner, K. et al. 2017. [Will your paper be used in a meta-analysis?](https://doi.org/10.1111/2041-210X.12758) *Methods in Ecology and Evolution* 8:777–784.
 - Gelman, A.; Hill, J. & Vehtari, A. 2020. [*Regression and Other Stories*](https://avehtari.github.io/ROS-Examples/), seções 11.8 (validação cruzada) e 12.6 (construir e comparar modelos para predição).
+- Fisher, R.A. 1925. [*Statistical Methods for Research Workers*](https://psychclassics.yorku.ca/Fisher/Methods/). Oliver & Boyd, Edimburgo.
+- Neyman, J. & Pearson, E.S. 1928. [On the use and interpretation of certain test criteria for purposes of statistical inference: Part I](https://doi.org/10.2307/2331945). *Biometrika* 20A:175–240.
+- Neyman, J. & Pearson, E.S. 1933. [On the problem of the most efficient tests of statistical hypotheses](https://doi.org/10.1098/rsta.1933.0009). *Philosophical Transactions of the Royal Society A* 231:289–337.
+- Gigerenzer, G. 2004. [Mindless statistics](https://doi.org/10.1016/j.socec.2004.09.033). *The Journal of Socio-Economics* 33:587–606.
 :::
