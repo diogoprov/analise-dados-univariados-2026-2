@@ -353,7 +353,7 @@ poisson 221.4   1.3 3  0.22  </code></pre>
 <p><code>Model failed to converge with max|grad| = ...</code></p>
 <p>Na ordem de eficácia:</p>
 <ol type="1">
-<li><strong>Reescale as preditoras contínuas</strong> — <code>scale()</code>. Resolve a maioria dos casos.</li>
+<li><strong>Reescale as preditoras contínuas</strong> — <code>scale()</code>. Resolve a maioria dos casos, e é a mesma padronização do Encontro 2: o ajuste não muda, só a unidade em que você lê a inclinação, que passa a ser “por desvio-padrão”. Vale a pena relatar qual é esse desvio-padrão.</li>
 <li><strong>Simplifique a estrutura aleatória</strong> — tirar a inclinação aleatória, ou a correlação entre intercepto e inclinação: <code>(1 | g) + (0 + x | g)</code>.</li>
 <li><strong>Troque o otimizador</strong> — <code>control = glmerControl(optimizer = "bobyqa")</code>.</li>
 <li><strong>Aumente as iterações</strong> — <code>optCtrl = list(maxfun = 1e5)</code>.</li>

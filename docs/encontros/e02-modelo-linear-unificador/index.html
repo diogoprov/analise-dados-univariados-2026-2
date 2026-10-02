@@ -221,7 +221,7 @@ window.Quarto = {
 <li><strong>Teste t é <code>lm(y ~ grupo)</code></strong> — a matriz de delineamento 0/1 escrita à mão, ao lado da saída de <code>t.test()</code>. Mesmos números.</li>
 <li><strong>Correlação e regressão</strong> — o que muda e o que não muda; Pearson <em>versus</em> Spearman.</li>
 <li><strong>Codificação de fatores</strong> — <code>contr.treatment</code> (padrão do R) e <code>contr.sum</code>; por que o intercepto significa coisas diferentes em cada um, e por que isso derruba interpretações.</li>
-<li><strong>Interpretação de coeficientes</strong> — na escala da resposta, com unidade.</li>
+<li><strong>Interpretação de coeficientes</strong> — na escala da resposta, com unidade, e o que muda quando a preditora é <strong>centrada</strong> ou <strong>padronizada</strong>: a centragem move o intercepto, a padronização troca a unidade da inclinação para “por desvio-padrão”. É o que permite comparar preditoras medidas em escalas diferentes — e o que explica o <code>scale()</code> que reaparece nos Encontros 5 e 8.</li>
 <li><strong>Colinearidade</strong> — VIF, e por que ela não é um problema de “violação de premissa”, mas de identificabilidade.</li>
 </ol>
 </section>
@@ -257,6 +257,7 @@ window.Quarto = {
 <ul>
 <li>Quinn, G.P. &amp; Keough, M.J. 2023. <a href="https://doi.org/10.1017/9781139568173.007">Simple Linear Models with One Predictor</a>. Cap. 6 de <em>Experimental Design and Data Analysis for Biologists</em>, 2ª ed., p.&nbsp;76–114. Cambridge University Press. — a continuação natural do cap. 4, e a parte prática deste encontro: a seção 6.2 mostra que um preditor categórico é o mesmo modelo, a 6.4 lista as premissas uma a uma e a 6.5 é o diagnóstico completo (resíduos, alavancagem, medidas de influência, os gráficos).</li>
 <li>Agresti, A. 2015. <a href="https://www.wiley.com/en-us/Foundations+of+Linear+and+Generalized+Linear+Models-p-9781118730034"><em>Foundations of Linear and Generalized Linear Models</em></a>. Wiley.</li>
+<li>Gelman, A. 2008. <a href="https://doi.org/10.1002/sim.3107">Scaling regression inputs by dividing by two standard deviations</a>. <em>Statistics in Medicine</em> 27:2865–2873. — por que dividir por <strong>dois</strong> desvios-padrão, e não um, quando o modelo mistura preditoras contínuas e binárias. É o argumento por trás do <code>two_sd = TRUE</code> do <code>standardize_parameters()</code>.</li>
 <li>Horst, A.M.; Hill, A.P. &amp; Gorman, K.B. 2020. <a href="https://doi.org/10.5281/zenodo.3960218"><code>palmerpenguins</code>: Palmer Archipelago (Antarctica) penguin data</a>. — o conjunto usado nos exemplos do encontro.</li>
 <li>Lindeløv, J.K. <a href="https://lindeloev.github.io/tests-as-linear/"><em>Common statistical tests are linear models</em></a>.</li>
 <li>Gelman, A. et al.&nbsp;2026. <a href="https://avehtari.github.io/Bayesian-Workflow/"><em>Bayesian Workflow</em></a>. Chapman &amp; Hall/CRC. Cap. 6, “Using simulations to capture uncertainty”.</li>
