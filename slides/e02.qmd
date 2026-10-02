@@ -663,7 +663,7 @@ argumento.
 
 ---
 
-## E se eu dividir pelo desvio-padrão também?
+## E se eu dividir pelo desvio-padrão também? {.smaller}
 
 Centrar mexeu no intercepto. Dividir pelo desvio-padrão mexe na
 **unidade da inclinação** --- é o que o `scale()` faz, e é o que se chama
@@ -689,7 +689,7 @@ idênticos --- e a leitura ingênua errou a ordem de grandeza.
 
 ---
 
-## Por que a conta muda tanto {.smaller}
+## Por que a conta muda tanto
 
 Porque as duas preditoras não variam igual. O bico varia 5,5 mm de
 desvio-padrão; a nadadeira, 14,0 mm. Um milímetro é muita coisa para um
@@ -711,7 +711,7 @@ contagem dividida por desvio-padrão não é Poisson.
 
 ---
 
-## Quando vale a pena, e quando não {.smaller}
+## Quando vale a pena, e quando não
 
 ::: {.definicao}
 **Vale** quando a pergunta é *qual preditora importa mais* e elas estão
@@ -730,7 +730,7 @@ desvio-padrão é que torna o número solto de novo.
 
 ---
 
-## Sem reajustar o modelo à mão {.smaller}
+## Sem reajustar o modelo à mão
 
 ```{r}
 #| eval: false

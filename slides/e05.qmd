@@ -423,15 +423,33 @@ round(exp(coef(m_pois)), 3)
 `Phyllopezus pollicaris` tem uma contagem esperada
 `r round(exp(coef(m_pois)[2]), 2)` vez a de `Hemidactylus agrius`.
 
+---
+
+## Em que unidade está aquele coeficiente?
+
+O `scale(CRC)` da chamada anterior não é decoração: ele põe o coeficiente
+do CRC **por desvio-padrão**, não por milímetro.
+
+```{r}
+b_crc <- unname(coef(m_pois)[3])          # o coeficiente de scale(CRC)
+dp    <- sd(penta$CRC)
+
+c(desvio_padrao_CRC = dp,
+  fator_por_desvio  = exp(b_crc),
+  fator_por_mm      = exp(b_crc / dp)) |> round(3)
+```
+
+::: {.definicao}
+A contagem esperada é multiplicada por
+`r round(exp(coef(m_pois)[3]), 2)` a cada
+`r round(sd(penta$CRC), 1)` mm de CRC --- e não a cada milímetro, que
+daria `r round(exp(coef(m_pois)[3] / sd(penta$CRC)), 3)`. Padronizar não
+muda o ajuste: muda a unidade em que o coeficiente é lido.
+:::
+
 ::: {.nota}
-Repare no `scale(CRC)`: aquele coeficiente está **por desvio-padrão de
-CRC**, não por milímetro. O desvio-padrão aqui é
-`r round(sd(penta$CRC), 1)` mm, então
-`r round(exp(coef(m_pois)[3]), 2)` é o fator a cada
-`r round(sd(penta$CRC), 1)` mm a mais --- por milímetro seria
-`r round(exp(coef(m_pois)[3] / sd(penta$CRC)), 3)`. Padronizar não muda o
-ajuste, só a unidade em que o coeficiente é lido; o porquê está no
-Encontro 2.
+Quando padronizar vale a pena, e por que a resposta de um GLM nunca é
+padronizada: Encontro 2, bloco de interpretação de coeficientes.
 :::
 
 ---
