@@ -240,7 +240,6 @@ Diogo B. Provete
 <li><strong>Intervalo</strong></li>
 <li>A família exponencial</li>
 <li>Função de ligação — e por que não é transformar a resposta</li>
-<li>Correlação: Pearson e Spearman (retomada do Encontro 2)</li>
 </ol>
 </section>
 <section id="productive-failure" class="slide level2">
@@ -682,31 +681,6 @@ f(y \mid \theta, \phi) =
 </ol>
 <div class="nota">
 <p>Isto vale sobretudo para contagens e proporções. Para medidas contínuas positivas, transformar às vezes é razoável — mas a Gamma normalmente é melhor.</p>
-</div>
-</section>
-<section class="slide level2">
-
-</section></section>
-<section>
-<section id="correlação" class="title-slide slide level1 secao center">
-<h1>6. Correlação</h1>
-
-</section>
-<section id="de-volta-a-pearson-e-spearman" class="slide level2">
-<h2>De volta a Pearson e Spearman</h2>
-<p>No Encontro 2 as duas apareceram sobre os pinguins. Nos lagartos:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a>lag <span class="ot">&lt;-</span> lagartos <span class="sc">|&gt;</span> <span class="fu">drop_na</span>(SVL, Autotomized_tail_length)</span>
-<span id="cb10-2"><a></a><span class="fu">c</span>(<span class="at">pearson  =</span> <span class="fu">cor</span>(lag<span class="sc">$</span>SVL, lag<span class="sc">$</span>Autotomized_tail_length),</span>
-<span id="cb10-3"><a></a>  <span class="at">spearman =</span> <span class="fu">cor</span>(lag<span class="sc">$</span>SVL, lag<span class="sc">$</span>Autotomized_tail_length, <span class="at">method =</span> <span class="st">"spearman"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>  pearson  spearman 
-0.2291663 0.1827049 </code></pre>
-</div>
-</div>
-<p>Pearson mede associação <strong>linear</strong>; Spearman é Pearson <strong>nos postos</strong> e mede associação <strong>monotônica</strong>. Divergência grande entre as duas é sinal para olhar o gráfico — não para escolher a maior.</p>
-<div class="definicao">
-<p>Correlação é uma estatística descritiva de <strong>duas</strong> variáveis. Ela não controla nada, não prediz nada e não acomoda covariáveis. Quando a pergunta tem direção, ou mais de uma preditora, você quer um modelo — que é o assunto do curso inteiro.</p>
 </div>
 </section>
 <section class="slide level2">

@@ -781,7 +781,7 @@
     "href": "slides/e04.html#hoje",
     "title": "Distribuições de probabilidade e a família exponencial",
     "section": "Hoje",
-    "text": "Hoje\n\nProductive failure\nVariável aleatória: massa e densidade de probabilidade\nAs distribuições que importam em ecologia\nA relação média–variância\nIntervalo\nA família exponencial\nFunção de ligação — e por que não é transformar a resposta\nCorrelação: Pearson e Spearman (retomada do Encontro 2)"
+    "text": "Hoje\n\nProductive failure\nVariável aleatória: massa e densidade de probabilidade\nAs distribuições que importam em ecologia\nA relação média–variância\nIntervalo\nA família exponencial\nFunção de ligação — e por que não é transformar a resposta"
   },
   {
     "objectID": "slides/e04.html#productive-failure",
@@ -915,13 +915,6 @@
     "title": "Distribuições de probabilidade e a família exponencial",
     "section": "Três razões para preferir a ligação",
     "text": "Três razões para preferir a ligação\n\nZeros. log(0) é indefinido; some 0,5 e você inventou dado.\nVariância. Transformar muda a distribuição do erro de um jeito que você não controla; a ligação deixa a distribuição intacta.\nInterpretação. O coeficiente do GLM é sobre a média — que é o que a pergunta biológica quer.\n\n\nIsto vale sobretudo para contagens e proporções. Para medidas contínuas positivas, transformar às vezes é razoável — mas a Gamma normalmente é melhor."
-  },
-  {
-    "objectID": "slides/e04.html#de-volta-a-pearson-e-spearman",
-    "href": "slides/e04.html#de-volta-a-pearson-e-spearman",
-    "title": "Distribuições de probabilidade e a família exponencial",
-    "section": "De volta a Pearson e Spearman",
-    "text": "De volta a Pearson e Spearman\nNo Encontro 2 as duas apareceram sobre os pinguins. Nos lagartos:\n\nlag &lt;- lagartos |&gt; drop_na(SVL, Autotomized_tail_length)\nc(pearson  = cor(lag$SVL, lag$Autotomized_tail_length),\n  spearman = cor(lag$SVL, lag$Autotomized_tail_length, method = \"spearman\"))\n\n  pearson  spearman \n0.2291663 0.1827049 \n\n\nPearson mede associação linear; Spearman é Pearson nos postos e mede associação monotônica. Divergência grande entre as duas é sinal para olhar o gráfico — não para escolher a maior.\n\nCorrelação é uma estatística descritiva de duas variáveis. Ela não controla nada, não prediz nada e não acomoda covariáveis. Quando a pergunta tem direção, ou mais de uma preditora, você quer um modelo — que é o assunto do curso inteiro."
   },
   {
     "objectID": "slides/e04.html#o-que-fica-de-hoje",
@@ -1139,6 +1132,13 @@
     "title": "O modelo linear como arcabouço unificador",
     "section": "Pearson × Spearman",
     "text": "Pearson × Spearman\n\ncor(pinguins$bill_length_mm, pinguins$body_mass_g, method = \"pearson\")\n\n[1] 0.5894511\n\ncor(pinguins$bill_length_mm, pinguins$body_mass_g, method = \"spearman\")\n\n[1] 0.5764804\n\n\n\nPearson mede associação linear; sensível a outliers.\nSpearman é Pearson nos postos: mede associação monotônica, robusta a outliers e a não linearidade.\n\nDiferença grande entre as duas é sinal de não linearidade ou de outlier influente — vale olhar o gráfico antes de escolher."
+  },
+  {
+    "objectID": "slides/e02.html#e-por-que-paramos-por-aqui",
+    "href": "slides/e02.html#e-por-que-paramos-por-aqui",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "E por que paramos por aqui",
+    "text": "E por que paramos por aqui\n\nCorrelação é uma estatística descritiva de duas variáveis. Ela não controla nada, não prediz nada e não acomoda covariáveis.\n\nQuando a pergunta tem direção — o que explica o quê —, ou quando há mais de uma preditora, você não quer um coeficiente de correlação: quer um modelo. É o que fazemos a partir de agora, e no resto da semana.\n\nÉ também por isso que a correlação aparece aqui, no segundo encontro, e não volta mais: ela é o ponto de partida, não uma ferramenta de análise que a gente vá usar."
   },
   {
     "objectID": "slides/e02.html#regressão-simples",
@@ -1467,7 +1467,7 @@
     "href": "index.html#cronograma",
     "title": "Análise de Dados Univariados",
     "section": "Cronograma",
-    "text": "Cronograma\n\n\n\n\n\n\nEnc.\n\n\n\nTópico\n\n\n\nConteúdo\n\n\n\n\n\n\n\n\n1\n\n\nE1 — EDA, reprodutibilidade e literacia em IA\n\n\nCiclo PPDAC e raciocínio estatístico. Análise exploratória segundo Zuur & Ieno (2016). Fluxo Quarto + git. Pergunta focada, PICO e pré-registro. Uso responsável de LLMs em estatística.\n\n\n\n\n\n\n2\n\n\nE2 — O modelo linear como arcabouço unificador\n\n\nTeste t e regressão como o mesmo lm(). Matriz de delineamento explicitada. Dummy e effect coding, contr.treatment e contr.sum. Interpretação de coeficientes.\n\n\n\n\n\n\n3\n\n\nE3 — ANOVA, ANCOVA e interações como modelos lineares\n\n\nANOVA de um e dois fatores, ANCOVA e interações escritas como lm(). Somas de quadrados tipo I, II e III. Comparações planejadas com emmeans.\n\n\n\n\n\n\n4\n\n\nE4 — Distribuições de probabilidade e a família exponencial\n\n\nNormal, Gamma, Binomial, Poisson e binomial negativa como família exponencial. Simulação em R. O que a função de ligação resolve. Pearson e Spearman.\n\n\n\n\n\n\n5\n\n\nE5 — GLM I: verossimilhança, binomial e Poisson\n\n\nMáxima verossimilhança. Regressão logística e de Poisson. Escala do preditor linear versus escala da resposta. DAGs e raciocínio causal na escolha de covariáveis.\n\n\n\n\n\n\n6\n\n\nE6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais\n\n\nResíduos quantílicos com DHARMa. Sobredispersão: quasi-Poisson e binomial negativa. Modelos ZIP, ZINB e hurdle com glmmTMB. Regressão ordinal com ordinal::clm.\n\n\n\n\n\n\n7\n\n\nE7 — GLMM I: por que efeitos aleatórios\n\n\nPseudorreplicação. O que um efeito aleatório é e o que estima. Intercepto e inclinação aleatórios. Anatomia de lmer e glmer. ICC e graus de liberdade.\n\n\n\n\n\n\n8\n\n\nE8 — GLMM II: lme4, glmmTMB e a ponte bayesiana\n\n\nAjuste e diagnóstico de GLMM. Convergência. lme4 versus glmmTMB. O mesmo modelo reajustado em brms: priors, MCMC, pp_check() e relato BARG.\n\n\n\n\n\n\n9\n\n\nE9 — Teoria da informação e seleção de modelos\n\n\nDivergência de Kullback–Leibler e AIC. AICc, BIC, pesos de Akaike e razões de evidência. Model averaging. Crítica ao dredge. LOO e WAIC.\n\n\n\n\n\n\n10\n\n\nE10 — Clínica Estatística e apresentação de resultados\n\n\nConsultoria sobre os dados de cada aluno, com toda a turma junto. Apresentação dos resultados preliminares. Encerramento e caminhos depois do curso.\n\n\n\n\n\n\nNenhum item correspondente"
+    "text": "Cronograma\n\n\n\n\n\n\nEnc.\n\n\n\nTópico\n\n\n\nConteúdo\n\n\n\n\n\n\n\n\n1\n\n\nE1 — EDA, reprodutibilidade e literacia em IA\n\n\nCiclo PPDAC e raciocínio estatístico. Análise exploratória segundo Zuur & Ieno (2016). Fluxo Quarto + git. Pergunta focada, PICO e pré-registro. Uso responsável de LLMs em estatística.\n\n\n\n\n\n\n2\n\n\nE2 — O modelo linear como arcabouço unificador\n\n\nTeste t e regressão como o mesmo lm(). Matriz de delineamento explicitada. Dummy e effect coding, contr.treatment e contr.sum. Interpretação de coeficientes.\n\n\n\n\n\n\n3\n\n\nE3 — ANOVA, ANCOVA e interações como modelos lineares\n\n\nANOVA de um e dois fatores, ANCOVA e interações escritas como lm(). Somas de quadrados tipo I, II e III. Comparações planejadas com emmeans.\n\n\n\n\n\n\n4\n\n\nE4 — Distribuições de probabilidade e a família exponencial\n\n\nNormal, Gamma, Binomial, Poisson e binomial negativa como família exponencial. Simulação em R. O que a função de ligação resolve.\n\n\n\n\n\n\n5\n\n\nE5 — GLM I: verossimilhança, binomial e Poisson\n\n\nMáxima verossimilhança. Regressão logística e de Poisson. Escala do preditor linear versus escala da resposta. DAGs e raciocínio causal na escolha de covariáveis.\n\n\n\n\n\n\n6\n\n\nE6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais\n\n\nResíduos quantílicos com DHARMa. Sobredispersão: quasi-Poisson e binomial negativa. Modelos ZIP, ZINB e hurdle com glmmTMB. Regressão ordinal com ordinal::clm.\n\n\n\n\n\n\n7\n\n\nE7 — GLMM I: por que efeitos aleatórios\n\n\nPseudorreplicação. O que um efeito aleatório é e o que estima. Intercepto e inclinação aleatórios. Anatomia de lmer e glmer. ICC e graus de liberdade.\n\n\n\n\n\n\n8\n\n\nE8 — GLMM II: lme4, glmmTMB e a ponte bayesiana\n\n\nAjuste e diagnóstico de GLMM. Convergência. lme4 versus glmmTMB. O mesmo modelo reajustado em brms: priors, MCMC, pp_check() e relato BARG.\n\n\n\n\n\n\n9\n\n\nE9 — Teoria da informação e seleção de modelos\n\n\nDivergência de Kullback–Leibler e AIC. AICc, BIC, pesos de Akaike e razões de evidência. Model averaging. Crítica ao dredge. LOO e WAIC.\n\n\n\n\n\n\n10\n\n\nE10 — Clínica Estatística e apresentação de resultados\n\n\nConsultoria sobre os dados de cada aluno, com toda a turma junto. Apresentação dos resultados preliminares. Encerramento e caminhos depois do curso.\n\n\n\n\n\n\nNenhum item correspondente"
   },
   {
     "objectID": "index.html#antes-do-primeiro-dia",
@@ -1838,7 +1838,7 @@
     "href": "encontros/e04-distribuicoes/index.html#conteúdo",
     "title": "E4 — Distribuições de probabilidade e a família exponencial",
     "section": "Conteúdo",
-    "text": "Conteúdo\n\nVariável aleatória, função de densidade e de massa — o mínimo necessário, sem formalismo desnecessário.\nAs distribuições que importam em ecologia — Normal, Gamma, Binomial, Poisson, binomial negativa, Beta. Para cada uma: que tipo de medida gera, quais parâmetros tem, como se parece.\nSimulação em R — rnorm(), rpois(), rnbinom(), rgamma(), rbinom(). Simular antes de ajustar é a melhor forma de entender um modelo.\nA família exponencial — o que essas distribuições têm em comum e por que isso permite um único algoritmo de ajuste.\nFunção de ligação — o problema que ela resolve, e por que não é a mesma coisa que transformar a variável resposta.\nCorrelação — Pearson e Spearman, o que cada uma assume."
+    "text": "Conteúdo\n\nVariável aleatória, função de densidade e de massa — o mínimo necessário, sem formalismo desnecessário.\nAs distribuições que importam em ecologia — Normal, Gamma, Binomial, Poisson, binomial negativa, Beta. Para cada uma: que tipo de medida gera, quais parâmetros tem, como se parece.\nSimulação em R — rnorm(), rpois(), rnbinom(), rgamma(), rbinom(). Simular antes de ajustar é a melhor forma de entender um modelo.\nA família exponencial — o que essas distribuições têm em comum e por que isso permite um único algoritmo de ajuste.\nFunção de ligação — o problema que ela resolve, e por que não é a mesma coisa que transformar a variável resposta."
   },
   {
     "objectID": "encontros/e04-distribuicoes/index.html#prática",
@@ -1852,7 +1852,7 @@
     "href": "encontros/e04-distribuicoes/index.html#dados",
     "title": "E4 — Distribuições de probabilidade e a família exponencial",
     "section": "Dados",
-    "text": "Dados\n\nPlanilha_Pentastomida.txt — contagens de Raillietiella mottae em 195 lagartos; muitos zeros. É o conjunto do capítulo 8 de Análises Ecológicas no R, e volta nos Encontros 5 e 6.\ncamila_cauda_lagartos.txt — 223 lagartos Coleodactylus meridionalis: sexo, CRC, comprimento da cauda intacta e da regenerada, e se o indivíduo já sofreu autotomia.\nUV.csv — contagem de tipos celulares sob tratamento de radiação UV; resposta em proporção."
+    "text": "Dados\n\nPlanilha_Pentastomida.txt — contagens de Raillietiella mottae em 195 lagartos; muitos zeros. É o conjunto do capítulo 8 de Análises Ecológicas no R, e volta nos Encontros 5 e 6.\nUV.csv — contagem de tipos celulares sob tratamento de radiação UV; resposta em proporção."
   },
   {
     "objectID": "encontros/e04-distribuicoes/index.html#leituras",
