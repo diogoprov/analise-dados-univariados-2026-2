@@ -38,7 +38,6 @@ theme_set(theme_minimal(base_size = 15))
 penta <- read_tsv("../dados/Planilha_Pentastomida.txt", show_col_types = FALSE) |>
   rename(id = 1) |> drop_na(Raillietiella_mottae, CRC, Especie)
 uv <- read_delim("../dados/UV.csv", delim = ";", show_col_types = FALSE)
-lagartos <- read_tsv("../dados/camila_cauda_lagartos.txt", show_col_types = FALSE)
 ```
 
 ## Onde estamos no ciclo PPDAC
@@ -81,7 +80,6 @@ para o GLM, que começa amanhã.
 5. **Intervalo**
 6. A família exponencial
 7. Função de ligação — e por que não é transformar a resposta
-8. Correlação: Pearson e Spearman (retomada do Encontro 2)
 
 ---
 
@@ -460,33 +458,6 @@ c(lm_log_y = coef(lm(log(y + 0.5) ~ x))[2],
 Isto vale sobretudo para contagens e proporções. Para medidas contínuas
 positivas, transformar às vezes é razoável — mas a Gamma normalmente é
 melhor.
-:::
-
----
-
-# 6. Correlação {.secao}
-
----
-
-## De volta a Pearson e Spearman
-
-No Encontro 2 as duas apareceram sobre os pinguins. Nos lagartos:
-
-```{r}
-lag <- lagartos |> drop_na(SVL, Autotomized_tail_length)
-c(pearson  = cor(lag$SVL, lag$Autotomized_tail_length),
-  spearman = cor(lag$SVL, lag$Autotomized_tail_length, method = "spearman"))
-```
-
-Pearson mede associação **linear**; Spearman é Pearson **nos postos** e
-mede associação **monotônica**. Divergência grande entre as duas é sinal
-para olhar o gráfico — não para escolher a maior.
-
-::: {.definicao}
-Correlação é uma estatística descritiva de **duas** variáveis. Ela não
-controla nada, não prediz nada e não acomoda covariáveis. Quando a
-pergunta tem direção, ou mais de uma preditora, você quer um modelo — que
-é o assunto do curso inteiro.
 :::
 
 ---

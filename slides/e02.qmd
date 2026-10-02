@@ -565,6 +565,25 @@ influente — vale olhar o gráfico antes de escolher.
 
 ---
 
+## E por que paramos por aqui
+
+::: {.definicao}
+Correlação é uma estatística descritiva de **duas** variáveis. Ela não
+controla nada, não prediz nada e não acomoda covariáveis.
+:::
+
+Quando a pergunta tem **direção** --- o que explica o quê ---, ou quando
+há mais de uma preditora, você não quer um coeficiente de correlação:
+quer um modelo. É o que fazemos a partir de agora, e no resto da semana.
+
+::: {.nota}
+É também por isso que a correlação aparece aqui, no segundo encontro, e
+não volta mais: ela é o ponto de partida, não uma ferramenta de análise
+que a gente vá usar.
+:::
+
+---
+
 # Intervalo {.secao}
 
 15 minutos.

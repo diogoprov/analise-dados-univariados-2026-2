@@ -1,7 +1,7 @@
 ---
 title: "E4 — Distribuições de probabilidade e a família exponencial"
 order: 4
-description: "Normal, Gamma, Binomial, Poisson e binomial negativa como família exponencial. Simulação em R. O que a função de ligação resolve. Pearson e Spearman."
+description: "Normal, Gamma, Binomial, Poisson e binomial negativa como família exponencial. Simulação em R. O que a função de ligação resolve."
 ---
 
 ::: {.aula-meta}
@@ -30,7 +30,6 @@ plausivelmente tem?*
    por que isso permite um único algoritmo de ajuste.
 5. **Função de ligação** — o problema que ela resolve, e por que não é a
    mesma coisa que transformar a variável resposta.
-6. **Correlação** — Pearson e Spearman, o que cada uma assume.
 
 ## Prática
 
@@ -45,9 +44,6 @@ curso, com um *take-home* por item:
   contagens de *Raillietiella mottae* em 195 lagartos; muitos zeros. É o
   conjunto do [capítulo 8 de *Análises Ecológicas no
   R*](https://analises-ecologicas.com/cap8), e volta nos Encontros 5 e 6.
-- [`camila_cauda_lagartos.txt`](../../dados/camila_cauda_lagartos.txt) — 223
-  lagartos *Coleodactylus meridionalis*: sexo, CRC, comprimento da cauda
-  intacta e da regenerada, e se o indivíduo já sofreu autotomia.
 - [`UV.csv`](../../dados/UV.csv) — contagem de tipos celulares sob
   tratamento de radiação UV; resposta em proporção.
 
