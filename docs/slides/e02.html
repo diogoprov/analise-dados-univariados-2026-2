@@ -837,7 +837,7 @@ sexmale      3.132877  0.3569599   8.77655  4.440460e-15</code></pre>
 </table>
 <p>A linguagem causal exige um argumento causal — delineamento experimental ou um DAG defensável (Encontro 5). O modelo, sozinho, não fornece esse argumento.</p>
 </section>
-<section id="e-se-eu-dividir-pelo-desvio-padrão-também" class="slide level2">
+<section id="e-se-eu-dividir-pelo-desvio-padrão-também" class="slide level2 smaller">
 <h2>E se eu dividir pelo desvio-padrão também?</h2>
 <p>Centrar mexeu no intercepto. Dividir pelo desvio-padrão mexe na <strong>unidade da inclinação</strong> — é o que o <code>scale()</code> faz, e é o que se chama de padronizar, ou escore <em>z</em>.</p>
 <div class="cell">
@@ -859,7 +859,7 @@ sexmale      3.132877  0.3569599   8.77655  4.440460e-15</code></pre>
 <p>No bruto, a nadadeira parece pesar <strong>dez vezes</strong> mais que o bico (48,9 contra 5,0 g por mm). Padronizado, são <strong>vinte e cinco</strong> vezes (685 contra 27 g por desvio-padrão). O mesmo modelo — <span class="math inline">\(R^2\)</span> e <span class="math inline">\(\sigma\)</span> idênticos — e a leitura ingênua errou a ordem de grandeza.</p>
 </div>
 </section>
-<section id="por-que-a-conta-muda-tanto" class="slide level2 smaller">
+<section id="por-que-a-conta-muda-tanto" class="slide level2">
 <h2>Por que a conta muda tanto</h2>
 <p>Porque as duas preditoras não variam igual. O bico varia 5,5 mm de desvio-padrão; a nadadeira, 14,0 mm. Um milímetro é muita coisa para um bico e pouca para uma nadadeira, então comparar “por mm” compara quantidades que não são comparáveis.</p>
 <p><span class="math display">\[
@@ -870,7 +870,7 @@ b^{\text{padronizado}} = b^{\text{bruto}} \times s_x
 <p>E vale para <strong>preditoras</strong>. A resposta fica como está: num modelo linear padronizá-la só reescala tudo de novo, e num GLM ela não pode mesmo — contagem dividida por desvio-padrão não é Poisson.</p>
 </div>
 </section>
-<section id="quando-vale-a-pena-e-quando-não" class="slide level2 smaller">
+<section id="quando-vale-a-pena-e-quando-não" class="slide level2">
 <h2>Quando vale a pena, e quando não</h2>
 <div class="definicao">
 <p><strong>Vale</strong> quando a pergunta é <em>qual preditora importa mais</em> e elas estão em escalas diferentes. Vale também como conserto de convergência no Encontro 8, e para domar interações e termos polinomiais.</p>
@@ -878,7 +878,7 @@ b^{\text{padronizado}} = b^{\text{bruto}} \times s_x
 </div>
 <p>Isso contradiz o “coeficiente com unidade” de agora há pouco só na aparência: o coeficiente padronizado <strong>continua tendo unidade</strong>, ela é que virou “por desvio-padrão de <span class="math inline">\(x\)</span>”. Relatar sem dizer quanto vale esse desvio-padrão é que torna o número solto de novo.</p>
 </section>
-<section id="sem-reajustar-o-modelo-à-mão" class="slide level2 smaller">
+<section id="sem-reajustar-o-modelo-à-mão" class="slide level2">
 <h2>Sem reajustar o modelo à mão</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a><span class="co"># o mesmo que o nosso scale(): padroniza só as preditoras</span></span>
