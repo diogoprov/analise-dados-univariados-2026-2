@@ -423,6 +423,17 @@ round(exp(coef(m_pois)), 3)
 `Phyllopezus pollicaris` tem uma contagem esperada
 `r round(exp(coef(m_pois)[2]), 2)` vez a de `Hemidactylus agrius`.
 
+::: {.nota}
+Repare no `scale(CRC)`: aquele coeficiente está **por desvio-padrão de
+CRC**, não por milímetro. O desvio-padrão aqui é
+`r round(sd(penta$CRC), 1)` mm, então
+`r round(exp(coef(m_pois)[3]), 2)` é o fator a cada
+`r round(sd(penta$CRC), 1)` mm a mais --- por milímetro seria
+`r round(exp(coef(m_pois)[3] / sd(penta$CRC)), 3)`. Padronizar não muda o
+ajuste, só a unidade em que o coeficiente é lido; o porquê está no
+Encontro 2.
+:::
+
 ---
 
 ## Multiplicativo, não aditivo

@@ -103,7 +103,7 @@ e 8. Uma notação só para o curso inteiro.
 3. Teste t é `lm()`: a matriz de delineamento escrita à mão
 4. Correlação e regressão
 5. **Intervalo**
-6. Interpretar coeficientes: comparação, não efeito
+6. Interpretar coeficientes: comparação, não efeito --- e centrar × padronizar
 7. Codificação de fatores: `contr.treatment` e `contr.sum`
 8. A mesma regressão em `brms`
 9. Colinearidade e diagnóstico de resíduos
@@ -662,6 +662,109 @@ ou um DAG defensável (Encontro 5). O modelo, sozinho, não fornece esse
 argumento.
 
 ---
+
+## E se eu dividir pelo desvio-padrão também?
+
+Centrar mexeu no intercepto. Dividir pelo desvio-padrão mexe na
+**unidade da inclinação** --- é o que o `scale()` faz, e é o que se chama
+de padronizar, ou escore *z*.
+
+```{r}
+# o m_mult do slide anterior, agora com as duas preditoras padronizadas
+m_pad <- lm(body_mass_g ~ scale(bill_length_mm) + scale(flipper_length_mm),
+            data = pinguins)
+
+data.frame(preditora   = c("bico", "nadadeira"),
+           por_mm      = round(coef(m_mult)[-1], 2),
+           por_desvio  = round(coef(m_pad)[-1],  1),
+           row.names   = NULL)
+```
+
+::: {.definicao}
+No bruto, a nadadeira parece pesar **dez vezes** mais que o bico (48,9
+contra 5,0 g por mm). Padronizado, são **vinte e cinco** vezes (685
+contra 27 g por desvio-padrão). O mesmo modelo --- $R^2$ e $\sigma$
+idênticos --- e a leitura ingênua errou a ordem de grandeza.
+:::
+
+---
+
+## Por que a conta muda tanto {.smaller}
+
+Porque as duas preditoras não variam igual. O bico varia 5,5 mm de
+desvio-padrão; a nadadeira, 14,0 mm. Um milímetro é muita coisa para um
+bico e pouca para uma nadadeira, então comparar "por mm" compara
+quantidades que não são comparáveis.
+
+$$
+b^{\text{padronizado}} = b^{\text{bruto}} \times s_x
+$$
+
+Confira na tabela acima: $4{,}96 \times 5{,}47 = 27{,}1$ e
+$48{,}89 \times 14{,}02 = 685{,}2$.
+
+::: {.nota}
+E vale para **preditoras**. A resposta fica como está: num modelo linear
+padronizá-la só reescala tudo de novo, e num GLM ela não pode mesmo ---
+contagem dividida por desvio-padrão não é Poisson.
+:::
+
+---
+
+## Quando vale a pena, e quando não {.smaller}
+
+::: {.definicao}
+**Vale** quando a pergunta é *qual preditora importa mais* e elas estão
+em escalas diferentes. Vale também como conserto de convergência no
+Encontro 8, e para domar interações e termos polinomiais.
+
+**Não vale** quando a unidade natural é justamente o que interessa ---
+"a cada 1 mm de bico, +5 g" é uma frase que um biólogo entende e
+confere. Esse é o caso mais comum.
+:::
+
+Isso contradiz o "coeficiente com unidade" de agora há pouco só na
+aparência: o coeficiente padronizado **continua tendo unidade**, ela é
+que virou "por desvio-padrão de $x$". Relatar sem dizer quanto vale esse
+desvio-padrão é que torna o número solto de novo.
+
+---
+
+## Sem reajustar o modelo à mão {.smaller}
+
+```{r}
+#| eval: false
+# o mesmo que o nosso scale(): padroniza só as preditoras
+effectsize::standardize_parameters(m_mult, include_response = FALSE)
+
+# o padrão, num lm, padroniza a resposta também — e aí o coeficiente
+# fica adimensional: desvios-padrão de y por desvio-padrão de x
+effectsize::standardize_parameters(m_mult)
+
+# por DOIS desvios-padrão, para ficar comparável a preditoras
+# binárias (Gelman 2008)
+effectsize::standardize_parameters(m_mult, two_sd = TRUE)
+```
+
+As três respondem perguntas diferentes. A primeira devolve os nossos
+27,1 e 685,2 g por desvio-padrão. A segunda divide isso pelo desvio-padrão
+da massa (805 g) e devolve 0,03 e 0,85 --- números sem unidade nenhuma.
+
+::: {.nota}
+Num **GLM** a escolha nem existe: a resposta nunca é padronizada,
+qualquer que seja o argumento. É o que diz a documentação da função ---
+"for GLMs the response value will never be standardized" --- e é por isso
+que no Encontro 5 o `scale(CRC)` aparece só na preditora.
+:::
+
+::: {.ref}
+Gelman, A. 2008. [Scaling regression inputs by dividing by two standard
+deviations](https://doi.org/10.1002/sim.3107). *Statistics in Medicine*
+27:2865–2873.
+:::
+
+---
+
 
 ## Paradoxo de Simpson
 

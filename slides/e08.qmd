@@ -178,7 +178,9 @@ correlação** explícita — temporal ou espacial. Fora isso, `lme4` e
 Na ordem de eficácia:
 
 1. **Reescale as preditoras contínuas** — `scale()`. Resolve a maioria
-   dos casos.
+   dos casos, e é a mesma padronização do Encontro 2: o ajuste não muda,
+   só a unidade em que você lê a inclinação, que passa a ser "por
+   desvio-padrão". Vale a pena relatar qual é esse desvio-padrão.
 2. **Simplifique a estrutura aleatória** — tirar a inclinação aleatória,
    ou a correlação entre intercepto e inclinação: `(1 | g) + (0 + x | g)`.
 3. **Troque o otimizador** — `control = glmerControl(optimizer = "bobyqa")`.
