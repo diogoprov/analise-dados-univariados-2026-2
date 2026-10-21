@@ -48,6 +48,29 @@ curso, com um *take-home* por item:
   R*](https://analises-ecologicas.com/cap8) e do Encontro 4.
 - [`NA.csv`](../../dados/NA.csv) — índice melanofórico, resposta ordinal.
 
+## Para além dos slides
+
+**O tamanho da razão de dispersão.** O argumento do slide vem de Burnham &
+Anderson (2002, §2.5, p. 68): com dados reais espera-se $c > 1$, mas não
+muito acima de 4 se a estrutura do modelo for aceitável e só a
+sobredispersão estiver agindo; valores de 6 a 10 costumam indicar, em
+parte, estrutura inadequada.
+
+**A premissa de *odds* proporcionais.** O `nominal_test()` testa a
+premissa termo a termo; se ela falhar para um termo, esse termo pode
+variar por limiar com o argumento `nominal`:
+
+```r
+library(ordinal)
+m_ord  <- clm(Black ~ Treatment + Time, data = mela, link = "logit")
+nominal_test(m_ord)
+m_nom  <- clm(Black ~ Time, nominal = ~ Treatment, data = mela)
+
+m_ordm <- clmm(Black ~ Treatment * Time + (1 | Animal),
+               data = mela, link = "logit")
+summary(m_ordm)
+```
+
 ## Leituras
 
 **Obrigatória**

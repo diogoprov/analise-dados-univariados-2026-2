@@ -21,6 +21,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -73,6 +108,35 @@ ul.task-list li input[type="checkbox"] {
 <style>html{ scroll-behavior: smooth; }</style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../../styles.css">
 <meta property="og:title" content="E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais – Análise de Dados Univariados">
@@ -145,6 +209,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#conteúdo" id="toc-conteúdo" class="nav-link" data-scroll-target="#conteúdo">Conteúdo</a></li>
   <li><a href="#prática" id="toc-prática" class="nav-link" data-scroll-target="#prática">Prática</a></li>
   <li><a href="#dados" id="toc-dados" class="nav-link" data-scroll-target="#dados">Dados</a></li>
+  <li><a href="#para-além-dos-slides" id="toc-para-além-dos-slides" class="nav-link" data-scroll-target="#para-além-dos-slides">Para além dos slides</a></li>
   <li><a href="#leituras" id="toc-leituras" class="nav-link" data-scroll-target="#leituras">Leituras</a></li>
   <li><a href="#recursos-externos" id="toc-recursos-externos" class="nav-link" data-scroll-target="#recursos-externos">Recursos externos</a></li>
   </ul>
@@ -209,6 +274,19 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="../../dados/Planilha_Pentastomida.txt"><code>Planilha_Pentastomida.txt</code></a> — <em>Raillietiella mottae</em> em dois lagartos; excesso de zeros. É o mesmo conjunto do <a href="https://analises-ecologicas.com/cap8">capítulo 8 de <em>Análises Ecológicas no R</em></a> e do Encontro 4.</li>
 <li><a href="../../dados/NA.csv"><code>NA.csv</code></a> — índice melanofórico, resposta ordinal.</li>
 </ul>
+</section>
+<section id="para-além-dos-slides" class="level2">
+<h2 class="anchored" data-anchor-id="para-além-dos-slides">Para além dos slides</h2>
+<p><strong>O tamanho da razão de dispersão.</strong> O argumento do slide vem de Burnham &amp; Anderson (2002, §2.5, p.&nbsp;68): com dados reais espera-se <span class="math inline">\(c &gt; 1\)</span>, mas não muito acima de 4 se a estrutura do modelo for aceitável e só a sobredispersão estiver agindo; valores de 6 a 10 costumam indicar, em parte, estrutura inadequada.</p>
+<p><strong>A premissa de <em>odds</em> proporcionais.</strong> O <code>nominal_test()</code> testa a premissa termo a termo; se ela falhar para um termo, esse termo pode variar por limiar com o argumento <code>nominal</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ordinal)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>m_ord  <span class="ot">&lt;-</span> <span class="fu">clm</span>(Black <span class="sc">~</span> Treatment <span class="sc">+</span> Time, <span class="at">data =</span> mela, <span class="at">link =</span> <span class="st">"logit"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">nominal_test</span>(m_ord)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>m_nom  <span class="ot">&lt;-</span> <span class="fu">clm</span>(Black <span class="sc">~</span> Time, <span class="at">nominal =</span> <span class="sc">~</span> Treatment, <span class="at">data =</span> mela)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>m_ordm <span class="ot">&lt;-</span> <span class="fu">clmm</span>(Black <span class="sc">~</span> Treatment <span class="sc">*</span> Time <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Animal),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>               <span class="at">data =</span> mela, <span class="at">link =</span> <span class="st">"logit"</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_ordm)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="leituras" class="level2">
 <h2 class="anchored" data-anchor-id="leituras">Leituras</h2>

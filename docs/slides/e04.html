@@ -651,10 +651,10 @@ f(y \mid \theta, \phi) =
 </tbody>
 </table>
 <div class="nota">
-<p>“Canônica” significa que ela cai naturalmente da álgebra da família. Nada impede usar outra — <code>binomial(link = "probit")</code>, por exemplo — mas a canônica costuma ter as melhores propriedades numéricas.</p>
+<p>“Canônica” significa que ela cai naturalmente da álgebra da família. Nada impede usar outra — <code>binomial(link = "probit")</code>, por exemplo. A Gamma é o caso em que quase ninguém usa a canônica: na prática ela é ajustada com <code>Gamma(link = "log")</code>, que mantém a média positiva e dá coeficientes interpretáveis como razões.</p>
 </div>
 </section>
-<section id="ligar-não-é-transformar-a-resposta" class="slide level2">
+<section id="ligar-não-é-transformar-a-resposta" class="slide level2 smaller">
 <h2>Ligar <strong>não</strong> é transformar a resposta</h2>
 <div class="definicao">
 <p><code>lm(log(y) ~ x)</code> modela <strong>a média do log</strong> de <span class="math inline">\(y\)</span>.</p>
@@ -662,15 +662,19 @@ f(y \mid \theta, \phi) =
 <p>São coisas diferentes, e a diferença importa.</p>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
-<span id="cb8-2"><a></a>y <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">300</span>, <span class="fu">exp</span>(<span class="dv">1</span> <span class="sc">+</span> .<span class="dv">05</span> <span class="sc">*</span> (x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">300</span>, <span class="dv">0</span>, <span class="dv">40</span>))))</span>
-<span id="cb8-3"><a></a><span class="fu">c</span>(<span class="at">lm_log_y =</span> <span class="fu">coef</span>(<span class="fu">lm</span>(<span class="fu">log</span>(y <span class="sc">+</span> <span class="fl">0.5</span>) <span class="sc">~</span> x))[<span class="dv">2</span>],</span>
-<span id="cb8-4"><a></a>  <span class="at">glm_log_mu =</span> <span class="fu">coef</span>(<span class="fu">glm</span>(y <span class="sc">~</span> x, <span class="at">family =</span> poisson))[<span class="dv">2</span>])</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb8-2"><a></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">300</span>, <span class="dv">0</span>, <span class="dv">40</span>)</span>
+<span id="cb8-3"><a></a>y <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">300</span>, <span class="fu">exp</span>(<span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.05</span> <span class="sc">*</span> x))   <span class="co"># verdade: inclinação 0,05 no log da média</span></span>
+<span id="cb8-4"><a></a></span>
+<span id="cb8-5"><a></a><span class="fu">c</span>(<span class="at">zeros      =</span> <span class="fu">mean</span>(y <span class="sc">==</span> <span class="dv">0</span>),</span>
+<span id="cb8-6"><a></a>  <span class="at">lm_log_y   =</span> <span class="fu">unname</span>(<span class="fu">coef</span>(<span class="fu">lm</span>(<span class="fu">log</span>(y <span class="sc">+</span> <span class="fl">0.5</span>) <span class="sc">~</span> x))[<span class="dv">2</span>]),</span>
+<span id="cb8-7"><a></a>  <span class="at">glm_log_mu =</span> <span class="fu">unname</span>(<span class="fu">coef</span>(<span class="fu">glm</span>(y <span class="sc">~</span> x, <span class="at">family =</span> poisson))[<span class="dv">2</span>])) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  lm_log_y.x glm_log_mu.x 
-  0.04905947   0.04934276 </code></pre>
+<pre><code>     zeros   lm_log_y glm_log_mu 
+     0.370      0.036      0.050 </code></pre>
 </div>
 </div>
+<p>Com contagens baixas e muitos zeros, o GLM recupera os 0,05 que simulamos; o <code>lm()</code> no log subestima a inclinação em cerca de 30 %. Com contagens altas e sem zeros, os dois quase coincidem — e é por isso que o atalho parece funcionar até o dia em que não funciona.</p>
 </section>
 <section id="três-razões-para-preferir-a-ligação" class="slide level2">
 <h2>Três razões para preferir a ligação</h2>

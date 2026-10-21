@@ -557,7 +557,7 @@
     "href": "slides/e06.html#o-tamanho-da-razão-já-diz-qual-causa",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "O tamanho da razão já diz qual causa",
-    "text": "O tamanho da razão já diz qual causa\nA razão de deviance do nosso Poisson foi 7,8. Burnham & Anderson tratam esse número como diagnóstico, não como mero fator de correção:\n\n“We might expect \\(c &gt; 1\\) with real data but would not expect \\(c\\) to exceed about 4 if model structure is acceptable and only overdispersion is affecting \\(c\\). Substantially larger values of \\(c\\) (say, 6–10) are usually caused partly by a model structure that is inadequate.”\n\n\nOu seja: 7,8 aponta para a primeira linha da tabela — falta estrutura — antes de apontar para a quarta. Trocar de família conserta o erro-padrão sem consertar o modelo. Voltamos a isso no Encontro 7, quando a estrutura que falta for o agrupamento.\n\n\nBurnham & Anderson (2002), §2.5, p. 68."
+    "text": "O tamanho da razão já diz qual causa\nA razão de deviance do nosso Poisson foi 7,8. Para Burnham & Anderson, esse número é diagnóstico, não só fator de correção: até ~4 é compatível com sobredispersão pura; entre 6 e 10, costuma faltar estrutura no modelo.\n\n7,8 aponta para as primeiras linhas da tabela — falta estrutura — antes da última. Trocar de família conserta o erro-padrão sem consertar o modelo. Voltamos a isso no Encontro 7, quando a estrutura que falta for o agrupamento.\n\n\nBurnham & Anderson (2002), §2.5, p. 68."
   },
   {
     "objectID": "slides/e06.html#remédio-1-quasi-poisson",
@@ -613,7 +613,7 @@
     "href": "slides/e06.html#comece-pelo-modelo-simples",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Comece pelo modelo simples",
-    "text": "Comece pelo modelo simples\n\nlibrary(performance)\n\npois_plain &lt;- glm(Raillietiella_mottae ~ CRC + Sexo * Especie,\n                  data = parasitas, family = \"poisson\")\n\ncheck_overdispersion(pois_plain)\n\n# Overdispersion test\n\n       dispersion ratio =   1.932\n  Pearson's Chi-Squared = 367.133\n                p-value = &lt; 0.001"
+    "text": "Comece pelo modelo simples\n\nlibrary(performance)\n\npois_plain &lt;- glm(Raillietiella_mottae ~ CRC + Sexo * Especie,\n                  data = parasitas, family = \"poisson\")\n\ncheck_overdispersion(pois_plain)\n\n# Overdispersion test\n\n       dispersion ratio =   1.932\n  Pearson's Chi-Squared = 367.133\n                p-value = &lt; 0.001\n\ncheck_zeroinflation(pois_plain)\n\n# Check for zero-inflation\n\n   Observed zeros: 156\n  Predicted zeros: 140\n            Ratio: 0.90\n\n\n\ncheck_zeroinflation() compara os zeros observados com os que a Poisson ajustada esperaria: não é opinião sobre “muitos zeros”."
   },
   {
     "objectID": "slides/e06.html#e-pergunte-pelos-zeros",
@@ -627,7 +627,7 @@
     "href": "slides/e06.html#os-três-candidatos",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Os três candidatos",
-    "text": "Os três candidatos\n\nlibrary(glmmTMB)\n\nziP  &lt;- glmmTMB(Raillietiella_mottae ~ CRC + Sexo * Especie,\n                ziformula = ~ ., data = parasitas, family = poisson)\n\nziNB &lt;- glmmTMB(Raillietiella_mottae ~ CRC + Sexo * Especie,\n                ziformula = ~ ., data = parasitas, family = nbinom2)\n\nhurNB &lt;- glmmTMB(Raillietiella_mottae ~ CRC + Sexo * Especie,\n                 ziformula = ~ ., data = parasitas,\n                 family = truncated_nbinom2)\n\n\nziformula = ~ . diz “use no modelo dos zeros as mesmas preditoras do modelo das contagens”. No capítulo 8 do livro isso aparece como zi = ~ ., que funciona por correspondência parcial de argumento."
+    "text": "Os três candidatos\n\nlibrary(glmmTMB)\n\nziP  &lt;- glmmTMB(Raillietiella_mottae ~ CRC + Sexo * Especie,\n                ziformula = ~ ., data = parasitas, family = poisson)\n\nziNB &lt;- glmmTMB(Raillietiella_mottae ~ CRC + Sexo * Especie,\n                ziformula = ~ ., data = parasitas, family = nbinom2)\n\nhurNB &lt;- glmmTMB(Raillietiella_mottae ~ CRC + Sexo * Especie,\n                 ziformula = ~ ., data = parasitas,\n                 family = truncated_nbinom2)\n\nziformula = ~ . usa no modelo dos zeros as mesmas preditoras do modelo das contagens."
   },
   {
     "objectID": "slides/e06.html#o-ziformula-é-um-segundo-modelo",
@@ -718,7 +718,7 @@
     "href": "slides/e06.html#verificando-a-premissa",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Verificando a premissa",
-    "text": "Verificando a premissa\nA premissa de odds proporcionais é que o efeito da preditora é o mesmo em todos os limiares. Se não for, o ordinal permite relaxá-la:\n\nnominal_test(m_ord)          # testa a premissa termo a termo\n\nTests of nominal effects\n\nformula: Black ~ Treatment + Time\n          Df  logLik    AIC    LRT Pr(&gt;Chi)   \n&lt;none&gt;       -71.054 156.11                   \nTreatment  2 -65.608 149.22 10.891 0.004315 **\nTime                                          \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n# se ela falhar para um termo, esse termo pode variar por limiar:\nm_nom &lt;- clm(Black ~ Time, nominal = ~ Treatment, data = mela)"
+    "text": "Verificando a premissa\nA premissa de odds proporcionais é que o efeito da preditora é o mesmo em todos os limiares. O ordinal testa isso com nominal_test() e, se falhar, permite relaxá-la termo a termo — o código está na página do encontro."
   },
   {
     "objectID": "slides/e06.html#o-texto-mínimo",
@@ -900,14 +900,14 @@
     "href": "slides/e04.html#ligações-canônicas",
     "title": "Distribuições de probabilidade e a família exponencial",
     "section": "Ligações canônicas",
-    "text": "Ligações canônicas\n\n\n\nFamília\nLigação\n\\(g(\\mu)\\)\nInversa\n\n\n\n\nNormal\nidentidade\n\\(\\mu\\)\n\\(\\eta\\)\n\n\nPoisson\nlog\n\\(\\log \\mu\\)\n\\(e^{\\eta}\\)\n\n\nBinomial\nlogit\n\\(\\log\\frac{\\mu}{1-\\mu}\\)\n\\(\\frac{1}{1+e^{-\\eta}}\\)\n\n\nGamma\ninversa\n\\(1/\\mu\\)\n\\(1/\\eta\\)\n\n\n\n\n“Canônica” significa que ela cai naturalmente da álgebra da família. Nada impede usar outra — binomial(link = \"probit\"), por exemplo — mas a canônica costuma ter as melhores propriedades numéricas."
+    "text": "Ligações canônicas\n\n\n\nFamília\nLigação\n\\(g(\\mu)\\)\nInversa\n\n\n\n\nNormal\nidentidade\n\\(\\mu\\)\n\\(\\eta\\)\n\n\nPoisson\nlog\n\\(\\log \\mu\\)\n\\(e^{\\eta}\\)\n\n\nBinomial\nlogit\n\\(\\log\\frac{\\mu}{1-\\mu}\\)\n\\(\\frac{1}{1+e^{-\\eta}}\\)\n\n\nGamma\ninversa\n\\(1/\\mu\\)\n\\(1/\\eta\\)\n\n\n\n\n“Canônica” significa que ela cai naturalmente da álgebra da família. Nada impede usar outra — binomial(link = \"probit\"), por exemplo. A Gamma é o caso em que quase ninguém usa a canônica: na prática ela é ajustada com Gamma(link = \"log\"), que mantém a média positiva e dá coeficientes interpretáveis como razões."
   },
   {
     "objectID": "slides/e04.html#ligar-não-é-transformar-a-resposta",
     "href": "slides/e04.html#ligar-não-é-transformar-a-resposta",
     "title": "Distribuições de probabilidade e a família exponencial",
     "section": "Ligar não é transformar a resposta",
-    "text": "Ligar não é transformar a resposta\n\nlm(log(y) ~ x) modela a média do log de \\(y\\).\nglm(y ~ x, family = poisson(link = \"log\")) modela o log da média de \\(y\\).\nSão coisas diferentes, e a diferença importa.\n\n\nset.seed(7)\ny &lt;- rpois(300, exp(1 + .05 * (x &lt;- runif(300, 0, 40))))\nc(lm_log_y = coef(lm(log(y + 0.5) ~ x))[2],\n  glm_log_mu = coef(glm(y ~ x, family = poisson))[2])\n\n  lm_log_y.x glm_log_mu.x \n  0.04905947   0.04934276"
+    "text": "Ligar não é transformar a resposta\n\nlm(log(y) ~ x) modela a média do log de \\(y\\).\nglm(y ~ x, family = poisson(link = \"log\")) modela o log da média de \\(y\\).\nSão coisas diferentes, e a diferença importa.\n\n\nset.seed(10)\nx &lt;- runif(300, 0, 40)\ny &lt;- rpois(300, exp(-1 + 0.05 * x))   # verdade: inclinação 0,05 no log da média\n\nc(zeros      = mean(y == 0),\n  lm_log_y   = unname(coef(lm(log(y + 0.5) ~ x))[2]),\n  glm_log_mu = unname(coef(glm(y ~ x, family = poisson))[2])) |&gt; round(3)\n\n     zeros   lm_log_y glm_log_mu \n     0.370      0.036      0.050 \n\n\nCom contagens baixas e muitos zeros, o GLM recupera os 0,05 que simulamos; o lm() no log subestima a inclinação em cerca de 30 %. Com contagens altas e sem zeros, os dois quase coincidem — e é por isso que o atalho parece funcionar até o dia em que não funciona."
   },
   {
     "objectID": "slides/e04.html#três-razões-para-preferir-a-ligação",
@@ -3574,7 +3574,7 @@
     "href": "slides/e09.html#na-prática-1",
     "title": "Teoria da informação e seleção de modelos",
     "section": "Na prática",
-    "text": "Na prática\n\nlibrary(brms)\nlibrary(loo)\n\nm_a &lt;- brm(TOT.N ~ D.PARK_km, family = negbinomial(), data = RK,\n           file = \"../cache/e09_a\")\nm_b &lt;- brm(TOT.N ~ D.PARK_km + L.WAT.C, family = negbinomial(), data = RK,\n           file = \"../cache/e09_b\")\n\nloo_compare(loo(m_a), loo(m_b))\n\n model elpd_diff se_diff p_worse diag_diff diag_elpd\n   m_b       0.0     0.0      NA                    \n   m_a      -0.3     1.6    0.57   N &lt; 100          \n\n\nA saída dá a diferença de expected log predictive density e o seu erro-padrão. Se a diferença é menor que duas vezes o erro-padrão, os modelos são indistinguíveis."
+    "text": "Na prática\n\nlibrary(brms)\nlibrary(loo)\n\nm_a &lt;- brm(TOT.N ~ D.PARK_km, family = negbinomial(), data = RK,\n           file = \"../cache/e09_a\")\nm_b &lt;- brm(TOT.N ~ D.PARK_km + L.WAT.C, family = negbinomial(), data = RK,\n           file = \"../cache/e09_b\")\n\nloo_compare(loo(m_a), loo(m_b))\n\n model elpd_diff se_diff p_worse diag_diff diag_elpd\n   m_b       0.0     0.0      NA                    \n   m_a       0.0     1.6    0.50   N &lt; 100          \n\n\nA saída dá a diferença de expected log predictive density e o seu erro-padrão. Se a diferença é menor que duas vezes o erro-padrão, os modelos são indistinguíveis."
   },
   {
     "objectID": "slides/e09.html#waic-loo-e-aic",
@@ -3588,7 +3588,7 @@
     "href": "slides/e09.html#a-vantagem-do-hatk",
     "title": "Teoria da informação e seleção de modelos",
     "section": "A vantagem do \\(\\hat{k}\\)",
-    "text": "A vantagem do \\(\\hat{k}\\)\nO PSIS-LOO avisa quando a aproximação falha, observação por observação.\n\nloo_a &lt;- loo(m_a)\nprint(loo_a)        # valores de k-hat; &gt; 0,7 é problema\n\n\nComputed from 4000 by 52 log-likelihood matrix.\n\n         Estimate   SE\nelpd_loo   -196.8  7.6\np_loo         3.1  0.7\nlooic       393.6 15.1\n------\nMCSE of elpd_loo is 0.0.\nMCSE and ESS estimates assume MCMC draws (r_eff in [0.6, 1.1]).\n\nAll Pareto k estimates are good (k &lt; 0.7).\nSee help('pareto-k-diagnostic') for details."
+    "text": "A vantagem do \\(\\hat{k}\\)\nO PSIS-LOO avisa quando a aproximação falha, observação por observação.\n\nloo_a &lt;- loo(m_a)\nprint(loo_a)        # valores de k-hat; &gt; 0,7 é problema\n\n\nComputed from 4000 by 52 log-likelihood matrix.\n\n         Estimate   SE\nelpd_loo   -196.6  7.6\np_loo         3.0  0.6\nlooic       393.3 15.1\n------\nMCSE of elpd_loo is 0.0.\nMCSE and ESS estimates assume MCMC draws (r_eff in [0.7, 1.2]).\n\nAll Pareto k estimates are good (k &lt; 0.7).\nSee help('pareto-k-diagnostic') for details."
   },
   {
     "objectID": "slides/e09.html#onde-a-aproximação-falha",
@@ -3750,5 +3750,33 @@
     "title": "O modelo linear como arcabouço unificador",
     "section": "Lendo o VIF",
     "text": "Lendo o VIF\nAlém dos VIFs, o vifcor() diz qual par é o mais correlacionado e quanto: aqui, nadadeira com bico, r = 0,65, e nenhum VIF passa de 2,6.\nRegras práticas: acima de 5 desconfie, acima de 10 preocupe-se. Mas a decisão é biológica, não mecânica:\n\nas duas preditoras medem coisas distintas na sua hipótese? → mantenha e relate a incerteza;\nsão proxies da mesma coisa? → escolha uma, pelo argumento, não pelo p.\n\n\nUse a saída, não a exclusão automática da função: baixar o th até alguma coisa cair é escolher preditora pelo resultado."
+  },
+  {
+    "objectID": "slides/e06.html#os-zeros-foram-resolvidos",
+    "href": "slides/e06.html#os-zeros-foram-resolvidos",
+    "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Os zeros foram resolvidos?",
+    "text": "Os zeros foram resolvidos?\n\nlibrary(DHARMa)\n\nset.seed(2026)\nres &lt;- simulateResiduals(ziP, n = 1000)\ntestZeroInflation(res, plot = FALSE)\n\n\n    DHARMa zero-inflation test via comparison to expected zeros with\n    simulation under H0 = fitted model\n\ndata:  simulationOutput\nratioObsSim = 1.0028, p-value = 1\nalternative hypothesis: two.sided\n\n\nO DHARMa simula conjuntos de dados a partir do modelo ajustado inteiro, parte zi incluída, e compara a proporção de zeros simulada com a observada. Por ser baseado em simulação, não depende de alguém ter derivado a fórmula certa para cada família."
+  },
+  {
+    "objectID": "slides/e09.html#o-que-essas-ressalvas-condenam",
+    "href": "slides/e09.html#o-que-essas-ressalvas-condenam",
+    "title": "Teoria da informação e seleção de modelos",
+    "section": "O que essas ressalvas condenam",
+    "text": "O que essas ressalvas condenam\n\nA terceira. Os \\(\\Delta\\) são reportados com a mesma régua em delineamentos agrupados — onde a premissa de independência é justamente a que não vale. É o assunto dos Encontros 7 e 8, e a razão de o agrupamento vir antes da seleção de modelos.\n\nA primeira é o argumento contra o dredge escrito pelos próprios autores do método: as regras valem para conjuntos pequenos, e param de valer quando há milhares de modelos."
+  },
+  {
+    "objectID": "slides/e09.html#o-melhor-modelo-é-bom",
+    "href": "slides/e09.html#o-melhor-modelo-é-bom",
+    "title": "Teoria da informação e seleção de modelos",
+    "section": "O melhor modelo é bom?",
+    "text": "O melhor modelo é bom?\nAIC, \\(\\Delta_i\\) e pesos são relativos: os pesos somam 1 dentro do conjunto que você escolheu, e o melhor de um conjunto ruim ainda recebe peso alto. Mac Nally et al. (2018) pedem o ajuste absoluto ao lado:\n\nlibrary(performance)\n\ncompare_performance(modelos, metrics = \"common\", rank = TRUE)\n\n# Comparison of Model Performance Indices\n\nName        |  Model | Nagelkerke's R2 |   RMSE | AIC weights | BIC weights | Performance-Score\n-----------------------------------------------------------------------------------------------\nparque      | negbin |           0.901 | 17.383 |       0.451 |       0.685 |            92.92%\nparque_agua | negbin |           0.915 | 16.734 |       0.549 |       0.315 |            86.48%\nagua        | negbin |           0.167 | 23.028 |    1.91e-12 |    1.10e-12 |             8.04%\nhabitat     | negbin |           0.156 | 24.042 |    1.55e-12 |    8.90e-13 |             4.27%\nnulo        | negbin |       2.322e-15 | 24.041 |    6.37e-13 |    2.57e-12 |         4.06e-03%\n\n\n\nUm peso alto diz “o melhor entre os cinco que propus”, não “este modelo está certo”. Quem responde “isto é bom?” é o \\(R^2\\) e o diagnóstico de resíduos — a coluna Performance-Score também é relativa, reescalada dentro do conjunto comparado.\n\nAqui o modelo do parque tem \\(R^2\\) de Nagelkerke perto de 0,9: é bom de fato, e não só melhor que os outros."
+  },
+  {
+    "objectID": "encontros/e06-glm-ii/index.html#para-além-dos-slides",
+    "href": "encontros/e06-glm-ii/index.html#para-além-dos-slides",
+    "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Para além dos slides",
+    "text": "Para além dos slides\nO tamanho da razão de dispersão. O argumento do slide vem de Burnham & Anderson (2002, §2.5, p. 68): com dados reais espera-se \\(c &gt; 1\\), mas não muito acima de 4 se a estrutura do modelo for aceitável e só a sobredispersão estiver agindo; valores de 6 a 10 costumam indicar, em parte, estrutura inadequada.\nA premissa de odds proporcionais. O nominal_test() testa a premissa termo a termo; se ela falhar para um termo, esse termo pode variar por limiar com o argumento nominal:\nlibrary(ordinal)\nm_ord  &lt;- clm(Black ~ Treatment + Time, data = mela, link = \"logit\")\nnominal_test(m_ord)\nm_nom  &lt;- clm(Black ~ Time, nominal = ~ Treatment, data = mela)\n\nm_ordm &lt;- clmm(Black ~ Treatment * Time + (1 | Animal),\n               data = mela, link = \"logit\")\nsummary(m_ordm)"
   }
 ]

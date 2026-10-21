@@ -517,7 +517,7 @@ Burnham & Anderson (2002), §2.6, p. 70–71.
 
 ---
 
-## O que essas duas frases condenam
+## O que essas ressalvas condenam
 
 ::: {.definicao}
 **A terceira.** Os $\Delta$ são reportados com a mesma régua em
@@ -532,30 +532,11 @@ valer quando há milhares de modelos.
 
 ---
 
-## "But is the 'best' model any good?"
+## O melhor modelo é bom? {.smaller}
 
-Mac Nally et al. (2018) fazem a pergunta que o procedimento não faz
-sozinho: depois de eleger o modelo mais bem apoiado, **ele é bom**?
-
-::: {.definicao}
-AIC, $\Delta_i$ e pesos são medidas **relativas**. Elas ordenam os
-candidatos entre si e não dizem nada sobre o quanto qualquer um deles
-descreve os dados.
-:::
-
-Duas coisas a relatar junto com a tabela:
-
-- **ajuste absoluto** — $R^2$, ou o diagnóstico de resíduos do modelo
-  escolhido;
-- **desempenho preditivo** — validação cruzada, ou pelo menos uma
-  comparação com o modelo nulo.
-
-Um modelo com $w = 0{,}98$ e $R^2 = 0{,}04$ é o melhor de um conjunto
-ruim. Isso precisa aparecer no texto.
-
----
-
-## Ajuste absoluto, na prática {.smaller}
+AIC, $\Delta_i$ e pesos são **relativos**: os pesos somam 1 dentro do
+conjunto que você escolheu, e o melhor de um conjunto ruim ainda recebe
+peso alto. Mac Nally et al. (2018) pedem o ajuste absoluto ao lado:
 
 ```{r}
 library(performance)
@@ -563,29 +544,15 @@ library(performance)
 compare_performance(modelos, metrics = "common", rank = TRUE)
 ```
 
-Ao lado dos pesos vêm $R^2$ e RMSE: as medidas que dizem se **algum** dos
-candidatos descreve os dados. Aqui o modelo do parque tem $R^2$ de
-Nagelkerke perto de 0,9 — é bom de fato, e não só melhor que os outros.
-
 ::: {.definicao}
-Cuidado com a coluna `Performance-Score`. Ela vai de 0 a 100, mas sai de
-reescalar os índices **dentro do conjunto comparado** e tirar a média. É
-mais uma medida relativa. Quem responde "isto é bom?" é o $R^2$ ao lado
-dela, e o diagnóstico de resíduos.
+Um peso alto diz "o melhor entre os cinco que propus", não "este modelo
+está certo". Quem responde "isto é bom?" é o $R^2$ e o diagnóstico de
+resíduos --- a coluna `Performance-Score` também é relativa, reescalada
+dentro do conjunto comparado.
 :::
 
----
-
-## A ressalva que quase nunca aparece
-
-::: {.definicao}
-Os pesos somam 1 **dentro do conjunto que você escolheu**. Se todos os
-modelos são ruins, o melhor deles ainda recebe peso alto.
-:::
-
-Um peso de 0,95 diz "este é claramente o melhor entre os cinco que
-propus" — não "este modelo está certo". A qualidade do conjunto é
-responsabilidade sua, e é uma questão biológica.
+Aqui o modelo do parque tem $R^2$ de Nagelkerke perto de 0,9: é bom de
+fato, e não só melhor que os outros.
 
 ---
 

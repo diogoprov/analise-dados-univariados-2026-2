@@ -360,6 +360,14 @@ Diogo B. Provete
 <p>Três razões para usar o <code>DHARMa</code> em vez dos gráficos do <code>plot()</code>: funciona para qualquer família, funciona para modelos mistos (Encontros 7 e 8), e devolve testes com valor de <em>p</em> em vez de “parece um padrão?”.</p>
 </div>
 </section>
+<section id="lendo-os-gráficos-do-dharma" class="slide level2">
+<h2>Lendo os gráficos do <code>DHARMa</code></h2>
+<ul>
+<li><strong>QQ uniforme</strong> — os pontos devem seguir a diagonal. Desvio em S = dispersão errada.</li>
+<li><strong>Resíduo contra predito</strong> — as três linhas de quantil (0,25, 0,50, 0,75) devem ser horizontais. Inclinação = relação média–variância errada ou termo faltando.</li>
+<li><strong><code>testDispersion</code></strong> — razão &gt; 1 é sobredispersão; &lt; 1 é subdispersão (mais raro, e também um problema).</li>
+</ul>
+</section>
 <section id="os-mesmos-diagnósticos-com-valor-de-p" class="slide level2 smaller codigo-compacto">
 <h2>Os mesmos diagnósticos, com valor de <em>p</em></h2>
 <div class="cell">
@@ -398,14 +406,6 @@ outlier frequency (expected: 0.00365384615384615 )
                                          0.1538462 </code></pre>
 </div>
 </div>
-</section>
-<section id="lendo-os-gráficos-do-dharma" class="slide level2">
-<h2>Lendo os gráficos do <code>DHARMa</code></h2>
-<ul>
-<li><strong>QQ uniforme</strong> — os pontos devem seguir a diagonal. Desvio em S = dispersão errada.</li>
-<li><strong>Resíduo contra predito</strong> — as três linhas de quantil (0,25, 0,50, 0,75) devem ser horizontais. Inclinação = relação média–variância errada ou termo faltando.</li>
-<li><strong><code>testDispersion</code></strong> — razão &gt; 1 é sobredispersão; &lt; 1 é subdispersão (mais raro, e também um problema).</li>
-</ul>
 </section>
 <section class="slide level2">
 
@@ -464,12 +464,9 @@ outlier frequency (expected: 0.00365384615384615 )
 </section>
 <section id="o-tamanho-da-razão-já-diz-qual-causa" class="slide level2">
 <h2>O tamanho da razão já diz qual causa</h2>
-<p>A razão de <em>deviance</em> do nosso Poisson foi <strong>7,8</strong>. Burnham &amp; Anderson tratam esse número como diagnóstico, não como mero fator de correção:</p>
-<blockquote>
-<p>“We might expect <span class="math inline">\(c &gt; 1\)</span> with real data but would not expect <span class="math inline">\(c\)</span> to exceed about 4 if model structure is acceptable and only overdispersion is affecting <span class="math inline">\(c\)</span>. Substantially larger values of <span class="math inline">\(c\)</span> (say, 6–10) are usually caused partly by a model structure that is inadequate.”</p>
-</blockquote>
-<div class="nota">
-<p>Ou seja: 7,8 aponta para a <strong>primeira</strong> linha da tabela — falta estrutura — antes de apontar para a quarta. Trocar de família conserta o erro-padrão sem consertar o modelo. Voltamos a isso no Encontro 7, quando a estrutura que falta for o agrupamento.</p>
+<p>A razão de <em>deviance</em> do nosso Poisson foi <strong>7,8</strong>. Para Burnham &amp; Anderson, esse número é diagnóstico, não só fator de correção: até ~4 é compatível com sobredispersão pura; entre 6 e 10, costuma faltar <strong>estrutura</strong> no modelo.</p>
+<div class="definicao">
+<p>7,8 aponta para as primeiras linhas da tabela — falta estrutura — antes da última. Trocar de família conserta o erro-padrão sem consertar o modelo. Voltamos a isso no Encontro 7, quando a estrutura que falta for o agrupamento.</p>
 </div>
 <div class="ref">
 <p>Burnham &amp; Anderson (2002), §2.5, p.&nbsp;68.</p>
@@ -590,7 +587,7 @@ poisson 634.5 240.9 2  &lt;0.001</code></pre>
 <p>Use <em>hurdle</em> quando todos os zeros têm a mesma origem e você quer modelar presença e abundância separadamente. Use zero-inflado quando acredita que existem as duas origens de zero.</p>
 </div>
 </section>
-<section id="comece-pelo-modelo-simples" class="slide level2">
+<section id="comece-pelo-modelo-simples" class="slide level2 smaller codigo-compacto">
 <h2>Comece pelo modelo simples</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a></a><span class="fu">library</span>(performance)</span>
@@ -606,11 +603,6 @@ poisson 634.5 240.9 2  &lt;0.001</code></pre>
   Pearson's Chi-Squared = 367.133
                 p-value = &lt; 0.001</code></pre>
 </div>
-</div>
-</section>
-<section id="e-pergunte-pelos-zeros" class="slide level2">
-<h2>E pergunte pelos zeros</h2>
-<div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">check_zeroinflation</span>(pois_plain)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># Check for zero-inflation
@@ -621,7 +613,7 @@ poisson 634.5 240.9 2  &lt;0.001</code></pre>
 </div>
 </div>
 <div class="definicao">
-<p>A função compara os zeros observados com o número que a Poisson ajustada <strong>esperaria</strong> produzir. Não é uma questão de opinião sobre “muitos zeros”: é uma comparação com o que o modelo assume.</p>
+<p><code>check_zeroinflation()</code> compara os zeros observados com os que a Poisson ajustada <strong>esperaria</strong>: não é opinião sobre “muitos zeros”.</p>
 </div>
 </section>
 <section id="os-três-candidatos" class="slide level2">
@@ -639,9 +631,7 @@ poisson 634.5 240.9 2  &lt;0.001</code></pre>
 <span id="cb22-10"><a></a>                 <span class="at">ziformula =</span> <span class="sc">~</span> ., <span class="at">data =</span> parasitas,</span>
 <span id="cb22-11"><a></a>                 <span class="at">family =</span> truncated_nbinom2)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="nota">
-<p><code>ziformula = ~ .</code> diz “use no modelo dos zeros as mesmas preditoras do modelo das contagens”. No capítulo 8 do livro isso aparece como <code>zi = ~ .</code>, que funciona por correspondência parcial de argumento.</p>
-</div>
+<p><code>ziformula = ~ .</code> usa no modelo dos zeros as mesmas preditoras do modelo das contagens.</p>
 </section>
 <section id="o-ziformula-é-um-segundo-modelo" class="slide level2">
 <h2>O <code>ziformula</code> é um segundo modelo</h2>
@@ -666,46 +656,14 @@ poisson  320.2  44.6 5  &lt;0.001</code></pre>
 </div>
 <p>O ZIP leva 62% do peso, a ZINB 28% e o <em>hurdle</em> 10%. A Poisson simples fica 45 unidades atrás: o excesso de zeros era real. Mas entre os três candidatos nenhum manda sozinho — e a escolha entre ZIP e ZINB volta a ser biológica, não aritmética.</p>
 </section>
-<section id="confira-se-os-zeros-foram-mesmo-resolvidos" class="slide level2">
-<h2>Confira se os zeros foram mesmo resolvidos</h2>
+<section id="os-zeros-foram-resolvidos" class="slide level2">
+<h2>Os zeros foram resolvidos?</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a>lambda <span class="ot">&lt;-</span> <span class="fu">predict</span>(ziP, <span class="at">type =</span> <span class="st">"conditional"</span>)</span>
-<span id="cb25-2"><a></a>pi_zi  <span class="ot">&lt;-</span> <span class="fu">predict</span>(ziP, <span class="at">type =</span> <span class="st">"zprob"</span>)</span>
-<span id="cb25-3"><a></a></span>
-<span id="cb25-4"><a></a><span class="fu">c</span>(<span class="at">observados    =</span> <span class="fu">sum</span>(parasitas<span class="sc">$</span>Raillietiella_mottae <span class="sc">==</span> <span class="dv">0</span>),</span>
-<span id="cb25-5"><a></a>  <span class="at">esperados_ZIP =</span> <span class="fu">round</span>(<span class="fu">sum</span>(pi_zi <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">-</span> pi_zi) <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>lambda))))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   observados esperados_ZIP 
-          156           156 </code></pre>
-</div>
-</div>
-<p><span class="math inline">\(P(Y = 0)\)</span> sob o ZIP é <span class="math inline">\(\pi + (1-\pi)\,e^{-\lambda}\)</span>: a probabilidade de ser um zero estrutural, mais a de não ser e ainda assim sair zero.</p>
-</section>
-<section id="e-compare-com-o-atalho" class="slide level2">
-<h2>E compare com o atalho</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">check_zeroinflation</span>(ziP)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># Check for zero-inflation
-
-   Observed zeros: 156
-  Predicted zeros: 155
-            Ratio: 0.99</code></pre>
-</div>
-</div>
-<div class="definicao">
-<p>Confira se os dois números batem na sua versão dos pacotes. No ambiente em que estes slides foram testados (<code>performance</code> 0.10.8) eles <strong>não</strong> batiam: a função reportava os zeros esperados sem levar em conta a parte <code>zi</code> do modelo, e concluía que ainda havia inflação.</p>
-</div>
-<p>Lição geral, que vale além deste caso: <strong>saiba o que a função está contando</strong> antes de aceitar o veredito.</p>
-</section>
-<section id="a-rota-robusta" class="slide level2">
-<h2>A rota robusta</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">library</span>(DHARMa)</span>
-<span id="cb29-2"><a></a></span>
-<span id="cb29-3"><a></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
-<span id="cb29-4"><a></a>res <span class="ot">&lt;-</span> <span class="fu">simulateResiduals</span>(ziP, <span class="at">n =</span> <span class="dv">1000</span>)</span>
-<span id="cb29-5"><a></a><span class="fu">testZeroInflation</span>(res, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a></a><span class="fu">library</span>(DHARMa)</span>
+<span id="cb25-2"><a></a></span>
+<span id="cb25-3"><a></a><span class="fu">set.seed</span>(<span class="dv">2026</span>)</span>
+<span id="cb25-4"><a></a>res <span class="ot">&lt;-</span> <span class="fu">simulateResiduals</span>(ziP, <span class="at">n =</span> <span class="dv">1000</span>)</span>
+<span id="cb25-5"><a></a><span class="fu">testZeroInflation</span>(res, <span class="at">plot =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     DHARMa zero-inflation test via comparison to expected zeros with
@@ -721,7 +679,7 @@ alternative hypothesis: two.sided</code></pre>
 <section id="lendo-as-duas-tabelas" class="slide level2 smaller">
 <h2>Lendo as duas tabelas</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">summary</span>(ziNB)<span class="sc">$</span>coefficients<span class="sc">$</span>cond</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a></a><span class="fu">summary</span>(ziNB)<span class="sc">$</span>coefficients<span class="sc">$</span>cond</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                       Estimate Std. Error    z value
 (Intercept)                          3.46085778 2.02383003  1.7100536
@@ -740,7 +698,7 @@ attr(,"ddf")
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a><span class="fu">summary</span>(ziNB)<span class="sc">$</span>coefficients<span class="sc">$</span>zi</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a></a><span class="fu">summary</span>(ziNB)<span class="sc">$</span>coefficients<span class="sc">$</span>zi</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                      Estimate Std. Error   z value    Pr(&gt;|z|)
 (Intercept)                         13.7128613 4.27210534  3.209860 0.001327995
@@ -785,7 +743,7 @@ attr(,"ddf")
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e06_files/figure-revealjs/unnamed-chunk-22-1.png" width="672"></p>
+<p><img data-src="e06_files/figure-revealjs/unnamed-chunk-19-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -801,11 +759,11 @@ attr(,"ddf")
 <section id="ajustando" class="slide level2">
 <h2>Ajustando</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a></a><span class="fu">library</span>(ordinal)</span>
-<span id="cb35-2"><a></a>mela <span class="ot">&lt;-</span> mela <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Black =</span> <span class="fu">factor</span>(Black, <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb35-3"><a></a>                       <span class="at">Animal =</span> <span class="fu">factor</span>(Animal))</span>
-<span id="cb35-4"><a></a>m_ord <span class="ot">&lt;-</span> <span class="fu">clm</span>(Black <span class="sc">~</span> Treatment <span class="sc">+</span> Time, <span class="at">data =</span> mela, <span class="at">link =</span> <span class="st">"logit"</span>)</span>
-<span id="cb35-5"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(<span class="fu">summary</span>(m_ord)), <span class="dv">3</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a></a><span class="fu">library</span>(ordinal)</span>
+<span id="cb31-2"><a></a>mela <span class="ot">&lt;-</span> mela <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Black =</span> <span class="fu">factor</span>(Black, <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb31-3"><a></a>                       <span class="at">Animal =</span> <span class="fu">factor</span>(Animal))</span>
+<span id="cb31-4"><a></a>m_ord <span class="ot">&lt;-</span> <span class="fu">clm</span>(Black <span class="sc">~</span> Treatment <span class="sc">+</span> Time, <span class="at">data =</span> mela, <span class="at">link =</span> <span class="st">"logit"</span>)</span>
+<span id="cb31-5"><a></a><span class="fu">round</span>(<span class="fu">coef</span>(<span class="fu">summary</span>(m_ord)), <span class="dv">3</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                Estimate Std. Error z value Pr(&gt;|z|)
 2|3               -6.185      0.952  -6.494    0.000
@@ -822,70 +780,16 @@ Time3h            -3.356      0.780  -4.301    0.000</code></pre>
 <section id="com-medidas-repetidas" class="slide level2">
 <h2>Com medidas repetidas</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a></a>m_ordm <span class="ot">&lt;-</span> <span class="fu">clmm</span>(Black <span class="sc">~</span> Treatment <span class="sc">*</span> Time <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Animal),</span>
-<span id="cb37-2"><a></a>               <span class="at">data =</span> mela, <span class="at">link =</span> <span class="st">"logit"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a></a>m_ordm <span class="ot">&lt;-</span> <span class="fu">clmm</span>(Black <span class="sc">~</span> Treatment <span class="sc">*</span> Time <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Animal),</span>
+<span id="cb33-2"><a></a>               <span class="at">data =</span> mela, <span class="at">link =</span> <span class="st">"logit"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="nota">
 <p>Cada animal foi medido em vários tempos: as observações não são independentes. O <code>(1 | Animal)</code> é o assunto de amanhã de manhã — e o <code>clmm</code> é a forma padrão de fazer GLMM ordinal, porque nem <code>lme4</code> nem <code>glmmTMB</code> cobrem bem <em>odds</em> proporcionais.</p>
 </div>
 </section>
-<section id="o-que-o-clmm-devolve" class="slide level2">
-<h2>O que o <code>clmm</code> devolve</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="fu">summary</span>(m_ordm)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Cumulative Link Mixed Model fitted with the Laplace approximation
-
-formula: Black ~ Treatment * Time + (1 | Animal)
-data:    mela
-
- link  threshold nobs logLik AIC    niter     max.grad cond.H 
- logit flexible  80   -39.53 101.07 613(2984) 4.61e-06 5.6e+02
-
-Random effects:
- Groups Name        Variance Std.Dev.
- Animal (Intercept) 7.451    2.73    
-Number of groups:  Animal 10 
-
-Coefficients:
-                       Estimate Std. Error z value Pr(&gt;|z|)    
-TreatmentNA10uM          0.8333     1.3031   0.639 0.522527    
-Time1h                  -0.9228     1.3780  -0.670 0.503075    
-Time2h                  -0.9318     1.3825  -0.674 0.500333    
-Time3h                  -0.9228     1.3780  -0.670 0.503078    
-TreatmentNA10uM:Time1h -10.1693     2.8920  -3.516 0.000437 ***
-TreatmentNA10uM:Time2h -13.1611     3.3510  -3.927 8.58e-05 ***
-TreatmentNA10uM:Time3h -16.6791     4.0302  -4.139 3.50e-05 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Threshold coefficients:
-    Estimate Std. Error z value
-2|3  -12.314      3.048  -4.040
-3|4   -6.974      2.185  -3.191
-4|5    1.441      1.317   1.094</code></pre>
-</div>
-</div>
-</section>
 <section id="verificando-a-premissa" class="slide level2">
 <h2>Verificando a premissa</h2>
-<p>A premissa de <em>odds</em> proporcionais é que o efeito da preditora é o mesmo em todos os limiares. Se não for, o <code>ordinal</code> permite relaxá-la:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a><span class="fu">nominal_test</span>(m_ord)          <span class="co"># testa a premissa termo a termo</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Tests of nominal effects
-
-formula: Black ~ Treatment + Time
-          Df  logLik    AIC    LRT Pr(&gt;Chi)   
-&lt;none&gt;       -71.054 156.11                   
-Treatment  2 -65.608 149.22 10.891 0.004315 **
-Time                                          
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="co"># se ela falhar para um termo, esse termo pode variar por limiar:</span></span>
-<span id="cb42-2"><a></a>m_nom <span class="ot">&lt;-</span> <span class="fu">clm</span>(Black <span class="sc">~</span> Time, <span class="at">nominal =</span> <span class="sc">~</span> Treatment, <span class="at">data =</span> mela)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
+<p>A premissa de <em>odds</em> proporcionais é que o efeito da preditora é o mesmo em todos os limiares. O <code>ordinal</code> testa isso com <code>nominal_test()</code> e, se falhar, permite relaxá-la termo a termo — o código está na página do encontro.</p>
 </section>
 <section class="slide level2">
 
