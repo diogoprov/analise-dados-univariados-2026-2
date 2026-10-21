@@ -55,11 +55,16 @@ cronometra("E2 — massa ~ comprimento do bico (gaussiano)", {
 rikz <- read.table("dados/RIKZ.txt", header = TRUE, row.names = 1) |>
   mutate(Beach = factor(Beach))
 
+priors <- c(prior(normal(0, 1),     class = "b"),
+            prior(normal(2, 1),     class = "Intercept"),
+            prior(exponential(1),   class = "sd"))
+
 cronometra("E8 — riqueza ~ NAP + (1|praia), Poisson", {
   brm(Richness ~ NAP + (1 | Beach),
-      family = poisson(), data = rikz,
+      family = poisson(), data = rikz, prior = priors,
       chains = 4, iter = 2000, seed = 2026,
-      file = "cache/e08_rikz_pois", file_refit = "on_change")
+      control = list(adapt_delta = 0.95),
+      file = "cache/e08_rikz_pois_priors", file_refit = "on_change")
 })
 
 # ---- Encontro 9 ---------------------------------------------------
@@ -77,7 +82,7 @@ cronometra("E9 — + distância a corpos d'água", {
 })
 
 # ---- Conferência --------------------------------------------------
-esperados <- c("e02_bico", "e08_rikz_pois", "e09_a", "e09_b")
+esperados <- c("e02_bico", "e08_rikz_pois_priors", "e09_a", "e09_b")
 existe <- file.exists(file.path("cache", paste0(esperados, ".rds")))
 
 message("\n---------------------------------------------")

@@ -549,13 +549,14 @@ b_j \sim \mathcal{N}(0, \sigma^2_{\text{praia}}),
 </div>
 </div>
 </div>
-<p>As estimativas do modelo misto são <strong>puxadas para a média geral</strong> — mais ainda nas praias com menos amostras.</p>
+<p>As estimativas do modelo misto são <strong>puxadas para a média geral</strong> — mais ainda nas praias cuja regressão separada deu um intercepto extremo ou pouco preciso.</p>
 </section>
 <section id="por-que-isso-é-bom" class="slide level2">
 <h2>Por que isso é bom</h2>
 <div class="definicao">
-<p><em>Shrinkage</em> não é um defeito: é o modelo reconhecendo que uma média baseada em 3 amostras é menos confiável que uma baseada em 9, e pedindo emprestada informação das outras praias.</p>
+<p><em>Shrinkage</em> não é um defeito: é o modelo reconhecendo que uma reta ajustada a só 5 pontos é pouco confiável, e pedindo emprestada informação das outras praias.</p>
 </div>
+<p>O RIKZ é balanceado — 5 amostras em cada uma das 9 praias —, então aqui o encolhimento depende de quão ruidosa e quão longe da média é cada estimativa isolada. Num delineamento desbalanceado, as praias com menos amostras encolheriam mais.</p>
 <p>É o mesmo princípio da regularização bayesiana — e, de fato, um efeito aleatório <strong>é</strong> uma prior sobre os níveis do fator. Voltamos a isso à tarde.</p>
 </section>
 <section class="slide level2">

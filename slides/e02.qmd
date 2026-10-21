@@ -86,14 +86,6 @@ máquina de produzir valores de *p*. Simular, ajustar, prever, checar.
 demonstração: a tabela que mostra cada teste clássico como um `lm()` com
 uma matriz de delineamento específica.
 
-::: {.nota}
-O ROS ajusta quase tudo com `stan_glm()`. Neste curso usamos `lm()` e
-`glm()` como padrão — que é o que vocês vão encontrar na literatura e nos
-laboratórios — e, quando mostramos a versão bayesiana, usamos `brms`, cuja
-sintaxe é idêntica à do `lme4` e do `glmmTMB` que veremos nos Encontros 7
-e 8. Uma notação só para o curso inteiro.
-:::
-
 ---
 
 ## Hoje
@@ -142,7 +134,7 @@ entre um teste t e uma regressão.
 set.seed(42)
 d <- tibble(x = runif(300, 0, 10), y = 2 + 1.5 * x + rnorm(300, 0, 2))
 bind_rows(
-  tibble(valor = d$y,              tipo = "Resposta y (bimodal, nada normal)"),
+  tibble(valor = d$y,              tipo = "Resposta y (achatada, nada normal)"),
   tibble(valor = resid(lm(y ~ x, d)), tipo = "Resíduo (normal — é o que importa)")
 ) |>
   ggplot(aes(valor)) +
@@ -463,19 +455,32 @@ Uma coluna de 1 (o intercepto) e uma coluna 0/1 que marca `male`.
 
 ---
 
-## Lendo a matriz
+## Lendo a matriz {.smaller}
 
-Para uma fêmea, a linha é $(1, 0)$:
+A coluna `sexmale` é um **interruptor**: desligada (0) nas fêmeas, o grupo
+de referência, e ligada (1) nos machos. O modelo é
 
-$$\hat{y} = \beta_0 \cdot 1 + \beta_1 \cdot 0 = \beta_0$$
+$$\hat{y}_i = \beta_0 \cdot 1 + \beta_1 \cdot \texttt{sexmale}_i$$
 
-Para um macho, $(1, 1)$:
+**Fêmea** — linha $(1, 0)$:
+$\;\hat{y} = \beta_0 \cdot 1 + \beta_1 \cdot 0 = \beta_0$
 
-$$\hat{y} = \beta_0 + \beta_1$$
+**Macho** — linha $(1, 1)$:
+$\;\hat{y} = \beta_0 \cdot 1 + \beta_1 \cdot 1 = \beta_0 + \beta_1$
+
+Com um fator só, o valor predito de cada grupo é a média do grupo. Logo:
+
+$$
+\bar{y}_{\text{fêmeas}} = \beta_0
+\qquad
+\bar{y}_{\text{machos}} = \beta_0 + \beta_1
+\qquad\Longrightarrow\qquad
+\beta_1 = \bar{y}_{\text{machos}} - \bar{y}_{\text{fêmeas}}
+$$
 
 ::: {.definicao}
-$\beta_0$ = média das fêmeas. $\beta_1$ = **diferença** macho − fêmea.
-O "teste t" é o teste de que $\beta_1 = 0$.
+$\beta_0$ = média das fêmeas. $\beta_1$ = **diferença** macho − fêmea ---
+não a média dos machos.
 :::
 
 ---
@@ -490,6 +495,82 @@ medias
 
 coef(m_t)
 ```
+
+---
+
+## Do teste t ao coeficiente {.smaller}
+
+| | Teste t | Modelo linear |
+|---|---|---|
+| Pergunta | as médias diferem? | o coeficiente é zero? |
+| $H_0$ | $\mu_F = \mu_M$ | $\beta_1 = 0$ |
+| Estatística | $t = \dfrac{\bar{y}_M - \bar{y}_F}{s_p\sqrt{1/n_F + 1/n_M}}$ | $t = \dfrac{\hat{\beta}_1}{\mathrm{EP}(\hat{\beta}_1)}$ |
+
+```{r}
+n   <- table(adelie$sex)
+s2  <- tapply(adelie$bill_length_mm, adelie$sex, var)
+sp  <- sqrt(sum((n - 1) * s2) / (sum(n) - 2))   # desvio-padrão combinado
+dif <- diff(tapply(adelie$bill_length_mm, adelie$sex, mean))
+
+c(t_teste = unname(dif / (sp * sqrt(sum(1 / n)))),
+  t_lm    = summary(m_t)$coefficients["sexmale", "t value"])
+```
+
+::: {.definicao}
+$\mu_F = \mu_M$ é o mesmo que $\mu_M - \mu_F = 0$, e $\mu_M - \mu_F$ é
+$\beta_1$. Mesma hipótese, mesmo numerador, mesmo denominador ---
+$\mathrm{EP}(\hat{\beta}_1)$ **é** $s_p\sqrt{1/n_F + 1/n_M}$ ---, os
+mesmos $n - 2$ graus de liberdade e, portanto, o mesmo *p*.
+:::
+
+---
+
+## Desafio do coeficiente (5 min) {.smaller}
+
+Pinguins-gentoo (*Pygoscelis papua*): machos e fêmeas diferem na massa
+corporal?
+
+```{r}
+gentoo <- pinguins |> filter(species == "Gentoo")
+m_gentoo <- lm(body_mass_g ~ sex, data = gentoo)
+summary(m_gentoo)$coefficients
+```
+
+**Em duplas, só com a tabela acima:**
+
+1. Qual é a massa média das fêmeas?
+2. Quanto os machos pesam a mais, em média?
+3. E qual é a massa média dos machos?
+4. Qual seria a $H_0$ do teste t? E a do modelo linear?
+5. Com $\alpha = 0{,}05$, a diferença é distinguível de zero? Por quê?
+
+---
+
+## Desafio do coeficiente: respostas {.smaller}
+
+```{r}
+#| echo: false
+cf <- summary(m_gentoo)$coefficients
+b0 <- round(cf["(Intercept)", "Estimate"])
+b1 <- round(cf["sexmale", "Estimate"])
+t1 <- format(round(cf["sexmale", "t value"], 1), decimal.mark = ",")
+```
+
+1. **`r b0` g** --- o intercepto $\beta_0$, a média do grupo de referência
+   (fêmeas).
+2. **`r b1` g** --- o coeficiente `sexmale`, $\beta_1$.
+3. **`r b0 + b1` g** --- $\beta_0 + \beta_1$. A média dos machos não está na
+   tabela: é a soma das duas linhas.
+4. Teste t: $H_0\!: \mu_F = \mu_M$. Modelo linear: $H_0\!: \beta_1 = 0$. É a
+   mesma hipótese.
+5. Sim: *t* = `r t1` e *p* < 0,001, na linha `sexmale`. A linha do
+   intercepto testa outra coisa --- se a massa média das fêmeas é zero ---,
+   e o *p* dela não responde à pergunta.
+
+::: {.definicao}
+A tabela de coeficientes **é** o teste t. Quem sabe ler as duas linhas não
+precisa da saída do `t.test()`.
+:::
 
 ---
 
@@ -610,14 +691,6 @@ A cada **1 mm** a mais de bico, a massa esperada aumenta
 Repare que a interpretação só existe **com unidade**. Coeficiente sem
 unidade é número solto.
 
-::: {.nota}
-O que o `lm()` está fazendo por baixo é o assunto do cap. 8 do ROS,
-*Fitting regression models*: a seção 8.1 põe mínimos quadrados, máxima
-verossimilhança e inferência bayesiana como três respostas à mesma
-pergunta, a 8.2 mostra quanto cada ponto puxa a reta, e a 8.4 ajusta o
-mesmo modelo com `lm()` e com `stan_glm()` lado a lado.
-:::
-
 ---
 
 ## E o intercepto?
@@ -689,7 +762,7 @@ Centrar mexeu no intercepto. Dividir pelo desvio-padrão mexe na
 de padronizar, ou escore *z*.
 
 ```{r}
-# o m_mult do slide anterior, agora com as duas preditoras padronizadas
+# o m_mult da regressão múltipla, agora com as duas preditoras padronizadas
 m_pad <- lm(body_mass_g ~ scale(bill_length_mm) + scale(flipper_length_mm),
             data = pinguins)
 
@@ -708,79 +781,31 @@ idênticos --- e a leitura ingênua errou a ordem de grandeza.
 
 ---
 
-## Por que a conta muda tanto
+## Por que a conta muda, e quando vale a pena {.smaller}
 
-Porque as duas preditoras não variam igual. O bico varia 5,5 mm de
-desvio-padrão; a nadadeira, 14,0 mm. Um milímetro é muita coisa para um
-bico e pouca para uma nadadeira, então comparar "por mm" compara
-quantidades que não são comparáveis.
+O bico varia 5,5 mm de desvio-padrão; a nadadeira, 14,0 mm. Um milímetro
+é muita coisa para um bico e pouca para uma nadadeira:
 
 $$
 b^{\text{padronizado}} = b^{\text{bruto}} \times s_x
+\qquad
+4{,}96 \times 5{,}47 = 27{,}1
+\qquad
+48{,}89 \times 14{,}02 = 685{,}2
 $$
-
-Confira na tabela acima: $4{,}96 \times 5{,}47 = 27{,}1$ e
-$48{,}89 \times 14{,}02 = 685{,}2$.
-
-::: {.nota}
-E vale para **preditoras**. A resposta fica como está: num modelo linear
-padronizá-la só reescala tudo de novo, e num GLM ela não pode mesmo ---
-contagem dividida por desvio-padrão não é Poisson.
-:::
-
----
-
-## Quando vale a pena, e quando não
 
 ::: {.definicao}
 **Vale** quando a pergunta é *qual preditora importa mais* e elas estão
-em escalas diferentes. Vale também como conserto de convergência no
-Encontro 8, e para domar interações e termos polinomiais.
+em escalas diferentes --- e como conserto de convergência no Encontro 8.
 
-**Não vale** quando a unidade natural é justamente o que interessa ---
-"a cada 1 mm de bico, +5 g" é uma frase que um biólogo entende e
-confere. Esse é o caso mais comum.
+**Não vale** quando a unidade natural é o que interessa: "a cada 1 mm de
+bico, +5 g" é uma frase que um biólogo entende e confere. É o caso mais
+comum.
 :::
 
-Isso contradiz o "coeficiente com unidade" de agora há pouco só na
-aparência: o coeficiente padronizado **continua tendo unidade**, ela é
-que virou "por desvio-padrão de $x$". Relatar sem dizer quanto vale esse
-desvio-padrão é que torna o número solto de novo.
-
----
-
-## Sem reajustar o modelo à mão
-
-```{r}
-#| eval: false
-# o mesmo que o nosso scale(): padroniza só as preditoras
-effectsize::standardize_parameters(m_mult, include_response = FALSE)
-
-# o padrão, num lm, padroniza a resposta também — e aí o coeficiente
-# fica adimensional: desvios-padrão de y por desvio-padrão de x
-effectsize::standardize_parameters(m_mult)
-
-# por DOIS desvios-padrão, para ficar comparável a preditoras
-# binárias (Gelman 2008)
-effectsize::standardize_parameters(m_mult, two_sd = TRUE)
-```
-
-As três respondem perguntas diferentes. A primeira devolve os nossos
-27,1 e 685,2 g por desvio-padrão. A segunda divide isso pelo desvio-padrão
-da massa (805 g) e devolve 0,03 e 0,85 --- números sem unidade nenhuma.
-
-::: {.nota}
-Num **GLM** a escolha nem existe: a resposta nunca é padronizada,
-qualquer que seja o argumento. É o que diz a documentação da função ---
-"for GLMs the response value will never be standardized" --- e é por isso
-que no Encontro 5 o `scale(CRC)` aparece só na preditora.
-:::
-
-::: {.ref}
-Gelman, A. 2008. [Scaling regression inputs by dividing by two standard
-deviations](https://doi.org/10.1002/sim.3107). *Statistics in Medicine*
-27:2865–2873.
-:::
+O coeficiente padronizado continua tendo unidade: "por desvio-padrão de
+$x$". Relate quanto vale esse desvio-padrão. E padronize só as
+**preditoras** --- num GLM a resposta não pode ser padronizada.
 
 ---
 
@@ -873,11 +898,7 @@ condição basal, a espécie focal.
 
 ---
 
-## Por que mostrar isso agora
-
-O livro-texto do curso ajusta quase tudo em bayesiano. Vale ver, desde já,
-que é **o mesmo modelo** — e começar a usar a notação que vai valer até o
-fim do curso.
+## A mesma fórmula, outro motor {.smaller}
 
 ```{r}
 library(brms)
@@ -885,28 +906,22 @@ library(brms)
 m_bayes <- brm(body_mass_g ~ bill_length_mm, data = pinguins,
                chains = 4, iter = 2000, seed = 2026,
                file = "../cache/e02_bico")   # compila uma vez, reusa depois
+
+rbind(lm  = coef(m_reg),
+      brm = fixef(m_bayes)[, "Estimate"]) |> round(1)
 ```
 
 ::: {.definicao}
-A fórmula é exatamente a mesma que você escreveria em `lm()`. E a mesma
-que você vai escrever em `lmer()`, `glmmTMB()` e `brm()` nos Encontros 7 e
-8 — só acrescentando `(1 | grupo)`.
+A fórmula é exatamente a mesma do `lm()` --- e a mesma que vocês vão
+escrever em `lmer()`, `glmmTMB()` e `brm()` nos Encontros 7 e 8, só
+acrescentando `(1 | grupo)`. Com bastante dado, as estimativas coincidem.
 :::
 
 ::: {.nota}
-Hoje é só isso: **a fórmula é a mesma**. O que são prior, posterior,
-MCMC, `Rhat` e `ESS` fica para o Encontro 8, que abre o bloco bayesiano
-com dois slides de definição. Se a saída aqui parecer críptica, é porque ainda é — olhe a
-coluna `Estimate` e compare com o `lm()`.
+Prior, posterior, MCMC, `Rhat` e `ESS` ficam para o Encontro 8. O `brms`
+compila cada modelo em C++ na primeira vez; com `file =`, as vezes
+seguintes são instantâneas.
 :::
-
----
-
-## O que o `brm()` devolve
-
-```{r}
-summary(m_bayes)
-```
 
 ---
 
@@ -923,65 +938,9 @@ brms::brm    (massa ~ svl + (1 | poca), family = Gamma, data = d)     # bayesian
 ```
 
 ::: {.nota}
-É por isso que escolhemos `brms` e não outro pacote bayesiano: o custo de
-transferência entre as cinco linhas acima é quase zero. Referência prática:
-Kurz, *Statistical Rethinking recoded*
-(<https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/>).
+É por isso que o curso usa `brms`: o custo de transferência entre as
+cinco linhas acima é quase zero.
 :::
-
----
-
-## O preço: compilação
-
-O `brms` traduz cada modelo para um programa Stan e **compila em C++**.
-
-- primeira vez na vida da máquina: alguns minutos;
-- cada modelo **novo**: dezenas de segundos;
-- mesmo modelo de novo, com `file = "cache/..."`: instantâneo.
-
-::: {.definicao}
-Por isso todos os modelos `brms` deste curso já estão em cache no
-repositório. Nas suas análises, use sempre `file =` — vocês vão agradecer
-na terceira vez que renderizarem o relatório.
-:::
-
----
-
-## O que muda e o que não muda
-
-| | `lm()` | `brm()` |
-|---|---|---|
-| Estimativa pontual | idêntica, na prática | mediana da posterior |
-| Incerteza | erro-padrão, IC de 95 % | desvio-padrão da posterior, intervalo de credibilidade |
-| Priors | nenhuma (implicitamente planas) | fracamente informativas por padrão |
-| O que você pode dizer | "95 % dos ICs construídos assim conteriam o valor" | "há 95 % de probabilidade de o parâmetro estar aqui" |
-| Amostra pequena | estimativa instável | a prior regulariza |
-
-::: {.definicao}
-Com bastante dado e priors fracas, os dois dão praticamente o mesmo
-número. A diferença aparece quando o dado é pouco — que é a situação de
-boa parte da ecologia de campo.
-:::
-
----
-
-## O que você ganha de graça {.smaller}
-
-```{r}
-#| fig-height: 2.4
-# distribuição preditiva posterior — o que o modelo acha
-# que seriam novos dados
-pp_check(m_bayes, ndraws = 50)
-
-# incerteza sobre qualquer quantidade derivada, sem fórmula:
-posterior <- as_draws_df(m_bayes)
-quantile(posterior$b_bill_length_mm * 10, c(.025, .5, .975))
-```
-
-Propagar incerteza para uma quantidade derivada — "massa esperada de um
-pinguim com bico 10 mm maior" — é uma linha de código, não uma derivação.
-
-Voltamos a isso no Encontro 8, com GLMM.
 
 ---
 
@@ -1006,8 +965,7 @@ individualmente mal identificados: o modelo prediz bem e interpreta mal.
 ## VIF
 
 ```{r}
-# o usdm quer um data frame de preditoras, nao um modelo — e nao aceita
-# tibble: sem o as.data.frame() ele para com "invalid type (list)"
+# o usdm recebe as preditoras, não o modelo
 preditoras <- as.data.frame(
   pinguins[, c("bill_length_mm", "bill_depth_mm", "flipper_length_mm")]
 )
@@ -1017,18 +975,10 @@ usdm::vifcor(preditoras, th = 0.7)
 
 ---
 
-## O que essa saída diz a mais
+## Lendo o VIF
 
-O `car::vif()` devolve só os valores. O `vifcor()` devolve, além deles,
-**qual par é o mais correlacionado e quanto** — que é a informação de que
-você precisa para decidir. Aqui o par mais apertado é comprimento de
-nadadeira com comprimento de bico, *r* = 0,65, e nenhum VIF passa de 2,6.
-
-::: {.nota}
-A função também **exclui** variáveis sozinha, quando alguma passa do
-limiar. Use a saída, não a exclusão: baixar o `th` até alguma coisa cair é
-a versão com nome técnico de escolher preditora pelo resultado.
-:::
+Além dos VIFs, o `vifcor()` diz **qual par é o mais correlacionado e
+quanto**: aqui, nadadeira com bico, *r* = 0,65, e nenhum VIF passa de 2,6.
 
 Regras práticas: acima de 5 desconfie, acima de 10 preocupe-se. Mas a
 decisão é **biológica**, não mecânica:
@@ -1036,6 +986,11 @@ decisão é **biológica**, não mecânica:
 - as duas preditoras medem coisas distintas na sua hipótese? → mantenha e
   relate a incerteza;
 - são proxies da mesma coisa? → escolha uma, pelo argumento, não pelo *p*.
+
+::: {.nota}
+Use a saída, não a exclusão automática da função: baixar o `th` até
+alguma coisa cair é escolher preditora pelo resultado.
+:::
 
 ---
 
@@ -1063,6 +1018,13 @@ plot(m_mult)
 | Scale–Location | leque? → heterocedasticidade |
 | Residuals vs Leverage | pontos com distância de Cook alta? → influência |
 
+::: {.nota}
+A seguir, os mesmos diagnósticos com `performance::check_model()`, que
+desenha faixas de referência simuladas --- mais fácil de julgar do que
+"isso parece um padrão?". A partir do Encontro 6, com GLMs, entra o
+`DHARMa`.
+:::
+
 ---
 
 ## Versão moderna {.smaller}
@@ -1077,17 +1039,6 @@ plot(m_mult)
 library(performance)
 plot(check_model(m_mult))
 ```
-
----
-
-## Por que esta é melhor
-
-::: {.nota}
-`performance::check_model()` produz os mesmos diagnósticos com intervalos
-de referência simulados — muito mais fácil de julgar do que "isso parece
-um padrão?". A partir do Encontro 6, com GLMs, passamos a usar `DHARMa`,
-que é a única forma honesta de diagnosticar resíduos não gaussianos.
-:::
 
 ---
 

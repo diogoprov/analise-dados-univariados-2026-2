@@ -211,7 +211,7 @@ testOutliers(res, plot = FALSE)
 
 ---
 
-## Quatro causas, quatro remédios
+## Cinco causas, cinco remédios
 
 | Causa | Sinal | O que fazer |
 |---|---|---|

@@ -98,13 +98,13 @@ heterogênea.
 ## Hoje
 
 1. *Productive failure* de abertura — 20 min
-2. O ciclo PPDAC — 30 min
-3. Os quatro princípios de Popovic et al. (2024) — 30 min
+2. O ciclo PPDAC — 20 min
+3. Os quatro princípios de Popovic et al. (2024) — 20 min
 4. Pergunta focada, HARKing e pré-registro — 30 min
-5. **Intervalo**
-6. Exploração de dados: o protocolo em oito passos — 90 min
-7. Fluxo reprodutível: projeto, Quarto, git — 45 min
-8. Uso saudável de LLMs em estatística — 60 min
+5. **Intervalo** — 15 min
+6. Exploração de dados: o protocolo em oito passos — 75 min
+7. Fluxo reprodutível: projeto, Quarto, git — 30 min
+8. Uso saudável de LLMs em estatística — 30 min
 
 ---
 
@@ -158,60 +158,28 @@ Eles nos acompanham a semana inteira.
 ```{r}
 #| echo: false
 #| fig-width: 9
-#| fig-height: 4.1
+#| fig-height: 3.7
 source("../R/roadkills_mapa.R")
 mapa_roadkills(RK)
 ```
 
 Cada ponto é o meio de um segmento de **500 m** da IP2, entre Portalegre e
-Monforte: 52 segmentos, 26 km de estrada, descendo pelo limite sudoeste do
-Parque Natural da Serra de São Mamede. A cor e o tamanho são a contagem de
-anfíbios mortos.
+Monforte, junto ao Parque Natural da Serra de São Mamede. A estrada foi
+percorrida de carro **a cada duas semanas, por dois anos** (1995--1997), e
+cada carcaça foi retirada da pista. Cor e tamanho: anfíbios mortos.
 
 ---
 
-## Como esses números foram feitos
+## O que a coluna `TOT.N` conta
 
-- Um trecho de **26 km** da IP2, distrito de Portalegre, sul de Portugal:
-  tráfego moderado, cerca de **5 000 veículos por dia**, cortando *montado*
-  de sobreiro (*Quercus suber*) e azinheira (*Q. rotundifolia*), campo
-  aberto e olivais.
-- Percorrido **de carro, a cerca de 20 km/h**, **a cada duas semanas por
-  dois anos** --- 54 percursos, entre 1995 e 1997.
-- **2 421 carcaças de 80 espécies** não domésticas. Os anfíbios são a maior
-  fatia: **1 362**. Cada carcaça foi identificada e retirada da pista, para
-  não ser contada de novo na quinzena seguinte.
-- A estrada dividida em segmentos de 500 m, e cada animal atribuído ao
-  **ponto médio** do seu segmento. São os 52 segmentos do arquivo.
-
-::: {.nota}
-Dois anos de campo, quinzena após quinzena, condensados em 52 linhas e uma
-coluna chamada `TOT.N`. Vale lembrar disso na hora de reclamar do tamanho
-da amostra.
-:::
-
----
-
-## O que a coluna `TOT.N` não conta
-
-Os próprios autores avisam que a contagem é enviesada para baixo: carcaças
-são comidas por outros animais, o clima e as características da pista
-atrapalham a detecção, e --- textualmente --- "non-daily surveys prevent the
-detection of all small-bodied animals like amphibians", cujos corpos duram
-de um a três dias na faixa de rolamento.
+Carcaças de anfíbio duram de um a três dias na pista, e outros animais as
+comem. Uma visita a cada 15 dias perde boa parte delas --- os próprios
+autores avisam que a contagem é enviesada para baixo.
 
 ::: {.definicao}
 A resposta não é "quantos anfíbios morreram", é "quantos anfíbios mortos
 foram **encontrados** numa visita a cada 15 dias". Toda a interpretação do
 modelo vive dentro dessa frase.
-:::
-
-::: {.nota}
-Há ainda uma lição de procedência. As duas fontes publicadas que descrevem
-este mesmo conjunto discordam: Ascensão & Mira (2005) dizem 26 km e ~5 000
-veículos/dia; Zuur et al. (2009) dizem 27 km e < 10 000 veículos/dia. Os 52
-segmentos de 500 m dão exatamente 26 km. Conferir a fonte primária não é
-preciosismo.
 :::
 
 ---
@@ -230,18 +198,6 @@ independentes. É o assunto do Encontro 7, e está embutido no desenho da
 coleta — nenhuma análise conserta isso depois.
 :::
 
-::: {.nota}
-Este mapa quase não existiu. O arquivo traz duas colunas `X` e `Y` em
-metros; o capítulo as chama de "UTM coordinates" e **não diz o sistema**, e
-os valores não batem com o fuso UTM de Portugal. São coordenadas do Datum
-Lisboa / Hayford-Gauss Militar, `EPSG:20790` --- descoberto por tentativa e
-conferido de três jeitos: o segmento 1 cai a 1,8 km de Portalegre, o 52 a
-0,6 km de Monforte, e a distância de cada segmento ao limite do parque
-correlaciona **0,988** com a coluna `D.PARK` do próprio arquivo. Uma linha
-de metadado que ninguém escreveu custou isso tudo. É o Encontro 1 inteiro
-numa anedota.
-:::
-
 ---
 
 ## Uma coisa que vocês já viram
@@ -256,10 +212,7 @@ ggplot(RK, aes(TOT.N)) +
   theme_minimal(base_size = 15)
 ```
 
-Contagem. Só inteiros não negativos. Cauda longa à direita. E a variância
-cresce com a média: aqui a média é **25,9** e a variância é **589,3**, quase
-23 vezes maior. Guardem essa desproporção para o Encontro 6 --- parte dela
-some quando as covariáveis entram no modelo, mas não toda.
+Contagem. Só inteiros não negativos. Cauda longa à direita.
 
 **Uma regressão linear comum é apropriada aqui?** Guardem a resposta.
 
@@ -275,11 +228,15 @@ some quando as covariáveis entram no modelo, mas não toda.
 #| echo: false
 #| fig-width: 6.4
 #| fig-height: 5.1
-#| out-width: "53%"
+#| out-width: "40%"
 #| fig-align: center
 source("../R/ppdac.R")
 ppdac_plot()
 ```
+
+A análise revela problemas nos dados, e a conclusão quase sempre
+reformula o problema. **Isso é legítimo** — ilegítimo é apagar o percurso
+e apresentar a última volta como se fosse a primeira.
 
 ::: {.ref}
 Wild, C.J. & Pfannkuch, M. 1999. *International Statistical Review*.
@@ -296,41 +253,6 @@ Wild, C.J. & Pfannkuch, M. 1999. *International Statistical Review*.
 | **Dados** | o que eu de fato tenho, e em que estado? | hoje (EDA em 8 passos) |
 | **Análise** | que modelo corresponde a esses dados e a essa pergunta? | E2 a E9 |
 | **Conclusão** | o que posso afirmar, e com que incerteza? | E5 (escala da resposta), E9 (seleção) |
-
----
-
-## Por que um ciclo e não uma lista
-
-```{r}
-#| echo: false
-DiagrammeR::grViz('
-digraph ppdac {
-  graph [rankdir = LR, bgcolor = "transparent", nodesep = 0.40, ranksep = 0.85,
-         fontname = "Helvetica"]
-  node  [fontname = "Helvetica", fontsize = 18, style = "filled,rounded",
-         shape = box, penwidth = 0, margin = "0.24,0.14", fontcolor = "white"]
-  edge  [penwidth = 3.0, arrowsize = 1.1, color = "#8a8172"]
-
-  P1 [label = "Problema",  fillcolor = "#144f64"]
-  P2 [label = "Plano",     fillcolor = "#1c6e8c"]
-  D  [label = "Dados",     fillcolor = "#527238"]
-  A  [label = "Análise",   fillcolor = "#96661f"]
-  C  [label = "Conclusão", fillcolor = "#a15e3f"]
-
-  P1 -> P2 -> D -> A -> C
-
-  A -> D  [style = dashed, penwidth = 2.4, color = "#527238",
-           constraint = false, arrowsize = 1.0]
-  C -> P1 [style = dashed, penwidth = 2.4, color = "#a15e3f",
-           constraint = false, arrowsize = 1.0]
-}
-', height = 150)
-```
-
-As setas pontilhadas são o ponto: a análise revela problemas nos dados, e
-a conclusão quase sempre reformula o problema. **Isso é legítimo** — o que
-não é legítimo é apagar o percurso e apresentar a última volta do ciclo
-como se tivesse sido a primeira.
 
 ---
 
@@ -693,41 +615,27 @@ delineamento, e é o Encontro 7.
 
 ---
 
-## Passo 3 — Distribuição da resposta {.smaller}
+## Passos 3 e 4 — Distribuição e zeros {.smaller}
 
 ```{r}
 #| fig-height: 2.7
-ggplot(RK, aes(TOT.N)) +
-  geom_histogram(bins = 20, fill = "#1c6e8c", colour = "white", alpha = .85) +
-  theme_minimal(base_size = 15) +
-  labs(x = "Anfíbios mortos por sítio", y = "Frequência")
-```
-
-Contagem, assimétrica à direita, de 2 a 104 em 52 sítios. Média 25,9 e
-variância 589,3 — a variância é **22,7 vezes** a média. Para uma Poisson
-elas seriam iguais; já dá para saber, aqui, que ela não vai servir
-(Encontro 6).
-
-::: {.definicao}
-Atenção: o modelo linear **não** assume que a resposta é normal. Assume
-que o **resíduo** é. Voltaremos a isso no Encontro 2 — é um dos
-mal-entendidos mais caros da estatística aplicada.
-:::
-
----
-
-## Passo 4 — Excesso de zeros
-
-```{r}
-#| fig-height: 3.2
 ggplot(RK, aes(TOT.N)) +
   geom_bar(fill = "#1c6e8c") +
   labs(x = "Anfíbios mortos", y = "Nº de sítios") +
   theme_minimal(base_size = 15)
 ```
 
-Quantos zeros são "demais" depende da distribuição assumida — é uma
-pergunta sobre o modelo, não sobre os dados. Encontro 6.
+Contagem, assimétrica à direita, de 2 a 104 em 52 sítios. Média 25,9 e
+variância 589,3 — a variância é **22,7 vezes** a média. Para uma Poisson
+elas seriam iguais; já dá para saber, aqui, que ela não vai servir
+(Encontro 6). Zeros, nenhum — mas quantos zeros são "demais" depende da
+distribuição assumida, não dos dados.
+
+::: {.definicao}
+Atenção: o modelo linear **não** assume que a resposta é normal. Assume
+que o **resíduo** é. Voltaremos a isso no Encontro 2 — é um dos
+mal-entendidos mais caros da estatística aplicada.
+:::
 
 ---
 
@@ -862,35 +770,10 @@ read_csv(here("dados", "brutos", "anuros.csv"))
 `here()` resolve a partir da raiz do projeto. O script roda na sua
 máquina, na do orientando e no GitHub Actions.
 
----
-
-## Como o `here()` acha a raiz {.smaller}
-
-Ao ser carregado, o `here` sobe a árvore de diretórios a partir de onde o R
-está e para no primeiro diretório que contenha uma **âncora**. As duas que
-importam na prática: um arquivo `.Rproj` e uma pasta `.git`. Esse diretório
-vira a raiz, e `here("dados", "x.csv")` monta o caminho a partir dele.
-
-```{r}
-#| eval: false
-here::here()                       # qual raiz ele encontrou
-here::here("dados", "anuros.csv")  # o caminho, montado na hora
-```
-
-O detalhe que morde: **um `.Rproj` vazio não conta**. O critério exige que
-o arquivo comece com `Version:`. Sem âncora válida, o `here` não avisa
-nada — ele simplesmente devolve o diretório de trabalho atual, e o script
-passa a funcionar só quando você o abre do lugar certo.
-
 ::: {.nota}
-Se `here::here()` apontar para um lugar estranho, é isso. Crie o projeto
-do RStudio, ou declare a raiz à mão com `here::i_am("scripts/analise.R")`.
-:::
-
-::: {.definicao}
-`setwd()` faz o oposto: fixa no código um caminho que só existe no seu
-computador. É a única linha de um script que tem garantia de quebrar na
-máquina de outra pessoa.
+A raiz é o primeiro diretório acima com um `.Rproj` ou uma pasta `.git`.
+Se `here::here()` apontar para um lugar estranho, declare-a à mão com
+`here::i_am("scripts/analise.R")`.
 :::
 
 ---
@@ -1032,8 +915,6 @@ Terceirize o código. Nunca terceirize o pensamento estatístico.
 - *Prompts* críticos vão como material suplementar.
 - **O autor responde pelo código** como se o tivesse escrito. Não existe
   "o ChatGPT errou".
-- IA **não pode ser coautora** — política vigente em praticamente todos os
-  periódicos da área.
 
 Vale igual no trabalho final desta disciplina.
 
@@ -1074,10 +955,6 @@ responda pelo que saiu**.
 2. Exploração de dados é **lista de verificação**, não caça ao resultado.
 3. Reprodutibilidade é um favor ao seu eu futuro.
 4. LLM é ferramenta de código, não de interpretação.
-
----
-
-## O que fica de hoje, em uma linha
 
 ::: {.definicao}
 O ciclo PPDAC é o mapa; os quatro princípios são o critério de qualidade;

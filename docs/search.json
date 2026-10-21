@@ -326,21 +326,21 @@
     "href": "slides/e08.html#a-mesma-fórmula",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "A mesma fórmula",
-    "text": "A mesma fórmula\n\nlibrary(brms)\n\nm_bayes &lt;- brm(Richness ~ NAP + (1 | Beach),\n               family = poisson(), data = rikz,\n               chains = 4, iter = 2000, seed = 2026,\n               file = \"../cache/e08_rikz_pois\")\n\nCompare com a linha do bloco 1:\n\nglmer(Richness ~ NAP + (1 | Beach), family = poisson, data = rikz)\n\n\nReajustamos o modelo que de fato escolhemos de manhã, o Poisson com intercepto aleatório. Não o binomial negativo, que a comparação de AIC mostrou ser desnecessário.\n\n\nA fórmula é idêntica. O custo de transferência é a família e três argumentos de MCMC."
+    "text": "A mesma fórmula\n\nm_bayes &lt;- brm(Richness ~ NAP + (1 | Beach),\n               family = poisson(), data = rikz, prior = priors,\n               chains = 4, iter = 2000, seed = 2026,\n               control = list(adapt_delta = 0.95),\n               file = \"../cache/e08_rikz_pois_priors\")\n\nCompare com a linha do bloco 1:\n\nglmer(Richness ~ NAP + (1 | Beach), family = poisson, data = rikz)\n\n\nReajustamos o modelo que de fato escolhemos de manhã, o Poisson com intercepto aleatório. Não o binomial negativo, que a comparação de AIC mostrou ser desnecessário.\n\n\nA fórmula é idêntica. O custo de transferência é a família, as priors e os argumentos de MCMC."
   },
   {
     "objectID": "slides/e08.html#e-o-que-ele-devolve",
     "href": "slides/e08.html#e-o-que-ele-devolve",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "E o que ele devolve",
-    "text": "E o que ele devolve\n\nsummary(m_bayes)\n\n Family: poisson \n  Links: mu = log \nFormula: Richness ~ NAP + (1 | Beach) \n   Data: rikz (Number of observations: 45) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nMultilevel Hyperparameters:\n~Beach (Number of levels: 9) \n              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsd(Intercept)     0.61      0.21     0.33     1.16 1.01      829     1313\n\nRegression Coefficients:\n          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nIntercept     1.66      0.23     1.22     2.12 1.00      788      941\nNAP          -0.50      0.07    -0.65    -0.36 1.00     2815     2814\n\nDraws were sampled using sampling(NUTS). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
+    "text": "E o que ele devolve\n\nsummary(m_bayes)\n\n Family: poisson \n  Links: mu = log \nFormula: Richness ~ NAP + (1 | Beach) \n   Data: rikz (Number of observations: 45) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nMultilevel Hyperparameters:\n~Beach (Number of levels: 9) \n              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsd(Intercept)     0.58      0.18     0.32     1.04 1.00     1036     1812\n\nRegression Coefficients:\n          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nIntercept     1.67      0.22     1.25     2.12 1.00      988     1254\nNAP          -0.50      0.08    -0.65    -0.35 1.00     3062     2714\n\nDraws were sampled using sampling(NUTS). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
   },
   {
     "objectID": "slides/e08.html#lendo-a-saída",
     "href": "slides/e08.html#lendo-a-saída",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Lendo a saída",
-    "text": "Lendo a saída\n\nRhat em 1,00 e ESS na casa dos milhares: as quatro cadeias convergiram, e a amostra da posterior é utilizável. Guardem esses dois números — no próximo slide eles reaparecem de outro jeito.\n\nA estimativa de NAP é praticamente a mesma do glmer do bloco 1. O que muda é o que está em volta dela: em lugar de erro-padrão e intervalo de confiança, um desvio da posterior e um intervalo de credibilidade."
+    "text": "Lendo a saída\n\nRhat em 1,00 e ESS perto de mil ou acima: as quatro cadeias convergiram, e a amostra da posterior é utilizável. Guardem esses dois números — no próximo slide eles reaparecem de outro jeito.\n\nA estimativa de NAP é praticamente a mesma do glmer do bloco 1. O que muda é o que está em volta dela: em lugar de erro-padrão e intervalo de confiança, um desvio da posterior e um intervalo de credibilidade."
   },
   {
     "objectID": "slides/e08.html#o-que-acontece-se-insistirmos-na-nb",
@@ -368,7 +368,7 @@
     "href": "slides/e08.html#priors",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Priors",
-    "text": "Priors\n\nget_prior(Richness ~ NAP + (1 | Beach), family = poisson(), data = rikz)\n\n                  prior     class      coef group resp dpar nlpar lb ub tag\n                 (flat)         b                                          \n                 (flat)         b       NAP                                \n student_t(3, 1.4, 2.5) Intercept                                          \n   student_t(3, 0, 2.5)        sd                                  0       \n   student_t(3, 0, 2.5)        sd           Beach                  0       \n   student_t(3, 0, 2.5)        sd Intercept Beach                  0       \n       source\n      default\n (vectorized)\n      default\n      default\n (vectorized)\n (vectorized)\n\npriors &lt;- c(prior(normal(0, 1),     class = \"b\"),\n            prior(normal(2, 1),     class = \"Intercept\"),\n            prior(exponential(1),   class = \"sd\"))\n\n\nFracamente informativa não é “sem informação”. É dizer ao modelo que um coeficiente de 500 na escala log é absurdo — o que você sabe, e os dados nem sempre conseguem dizer sozinhos."
+    "text": "Priors\n\nlibrary(brms)\n\nget_prior(Richness ~ NAP + (1 | Beach), family = poisson(), data = rikz)\n\n                  prior     class      coef group resp dpar nlpar lb ub tag\n                 (flat)         b                                          \n                 (flat)         b       NAP                                \n student_t(3, 1.4, 2.5) Intercept                                          \n   student_t(3, 0, 2.5)        sd                                  0       \n   student_t(3, 0, 2.5)        sd           Beach                  0       \n   student_t(3, 0, 2.5)        sd Intercept Beach                  0       \n       source\n      default\n (vectorized)\n      default\n      default\n (vectorized)\n (vectorized)\n\npriors &lt;- c(prior(normal(0, 1),     class = \"b\"),\n            prior(normal(2, 1),     class = \"Intercept\"),\n            prior(exponential(1),   class = \"sd\"))\n\n\nFracamente informativa não é “sem informação”. É dizer ao modelo que um coeficiente de 500 na escala log é absurdo — o que você sabe, e os dados nem sempre conseguem dizer sozinhos."
   },
   {
     "objectID": "slides/e08.html#sensibilidade-à-prior",
@@ -452,7 +452,7 @@
     "href": "slides/e08.html#o-que-fica-de-hoje",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "O que fica de hoje",
-    "text": "O que fica de hoje\n\nRiqueza é contagem: GLMM de Poisson ou NB, não gaussiano.\nAjuste singular = os dados não sustentam aquela estrutura aleatória.\nReescalar preditoras resolve a maioria dos problemas de convergência.\nRelate \\(R^2\\) marginal e condicional, e diga o que o efeito aleatório representa.\nbrm() usa a mesma fórmula — a ponte custa três argumentos."
+    "text": "O que fica de hoje\n\nRiqueza é contagem: GLMM de Poisson ou NB, não gaussiano.\nAjuste singular = os dados não sustentam aquela estrutura aleatória.\nReescalar preditoras resolve a maioria dos problemas de convergência.\nRelate \\(R^2\\) marginal e condicional, e diga o que o efeito aleatório representa.\nbrm() usa a mesma fórmula — a ponte custa as priors, declaradas, e os argumentos de MCMC."
   },
   {
     "objectID": "slides/e08.html#prática-o-resto-do-bloco",
@@ -963,7 +963,7 @@
     "href": "slides/e02.html#de-onde-vem-este-curso",
     "title": "O modelo linear como arcabouço unificador",
     "section": "De onde vem este curso",
-    "text": "De onde vem este curso\nTrês fontes sustentam os Encontros 2 e 3:\nQuinn & Keough (2023), cap. 4 — o arcabouço: as “técnicas” de nome próprio como variantes de um mesmo modelo.\nGelman, Hill & Vehtari (2020), Regression and Other Stories — a postura: regressão é uma ferramenta de comparação e predição, não uma máquina de produzir valores de p. Simular, ajustar, prever, checar.\nLindeløv, Common statistical tests are linear models — a demonstração: a tabela que mostra cada teste clássico como um lm() com uma matriz de delineamento específica.\n\nO ROS ajusta quase tudo com stan_glm(). Neste curso usamos lm() e glm() como padrão — que é o que vocês vão encontrar na literatura e nos laboratórios — e, quando mostramos a versão bayesiana, usamos brms, cuja sintaxe é idêntica à do lme4 e do glmmTMB que veremos nos Encontros 7 e 8. Uma notação só para o curso inteiro."
+    "text": "De onde vem este curso\nTrês fontes sustentam os Encontros 2 e 3:\nQuinn & Keough (2023), cap. 4 — o arcabouço: as “técnicas” de nome próprio como variantes de um mesmo modelo.\nGelman, Hill & Vehtari (2020), Regression and Other Stories — a postura: regressão é uma ferramenta de comparação e predição, não uma máquina de produzir valores de p. Simular, ajustar, prever, checar.\nLindeløv, Common statistical tests are linear models — a demonstração: a tabela que mostra cada teste clássico como um lm() com uma matriz de delineamento específica."
   },
   {
     "objectID": "slides/e02.html#hoje",
@@ -1096,7 +1096,7 @@
     "href": "slides/e02.html#lendo-a-matriz",
     "title": "O modelo linear como arcabouço unificador",
     "section": "Lendo a matriz",
-    "text": "Lendo a matriz\nPara uma fêmea, a linha é \\((1, 0)\\):\n\\[\\hat{y} = \\beta_0 \\cdot 1 + \\beta_1 \\cdot 0 = \\beta_0\\]\nPara um macho, \\((1, 1)\\):\n\\[\\hat{y} = \\beta_0 + \\beta_1\\]\n\n\\(\\beta_0\\) = média das fêmeas. \\(\\beta_1\\) = diferença macho − fêmea. O “teste t” é o teste de que \\(\\beta_1 = 0\\)."
+    "text": "Lendo a matriz\nA coluna sexmale é um interruptor: desligada (0) nas fêmeas, o grupo de referência, e ligada (1) nos machos. O modelo é\n\\[\\hat{y}_i = \\beta_0 \\cdot 1 + \\beta_1 \\cdot \\texttt{sexmale}_i\\]\nFêmea — linha \\((1, 0)\\): \\(\\;\\hat{y} = \\beta_0 \\cdot 1 + \\beta_1 \\cdot 0 = \\beta_0\\)\nMacho — linha \\((1, 1)\\): \\(\\;\\hat{y} = \\beta_0 \\cdot 1 + \\beta_1 \\cdot 1 = \\beta_0 + \\beta_1\\)\nCom um fator só, o valor predito de cada grupo é a média do grupo. Logo:\n\\[\n\\bar{y}_{\\text{fêmeas}} = \\beta_0\n\\qquad\n\\bar{y}_{\\text{machos}} = \\beta_0 + \\beta_1\n\\qquad\\Longrightarrow\\qquad\n\\beta_1 = \\bar{y}_{\\text{machos}} - \\bar{y}_{\\text{fêmeas}}\n\\]\n\n\\(\\beta_0\\) = média das fêmeas. \\(\\beta_1\\) = diferença macho − fêmea — não a média dos machos."
   },
   {
     "objectID": "slides/e02.html#confirmando-na-mão",
@@ -1145,7 +1145,7 @@
     "href": "slides/e02.html#regressão-simples",
     "title": "O modelo linear como arcabouço unificador",
     "section": "Regressão simples",
-    "text": "Regressão simples\n\ncoef(m_reg)\n\n   (Intercept) bill_length_mm \n     388.84516       86.79176 \n\n\n\nA cada 1 mm a mais de bico, a massa esperada aumenta 86.8 g.\n\nRepare que a interpretação só existe com unidade. Coeficiente sem unidade é número solto.\n\nO que o lm() está fazendo por baixo é o assunto do cap. 8 do ROS, Fitting regression models: a seção 8.1 põe mínimos quadrados, máxima verossimilhança e inferência bayesiana como três respostas à mesma pergunta, a 8.2 mostra quanto cada ponto puxa a reta, e a 8.4 ajusta o mesmo modelo com lm() e com stan_glm() lado a lado."
+    "text": "Regressão simples\n\ncoef(m_reg)\n\n   (Intercept) bill_length_mm \n     388.84516       86.79176 \n\n\n\nA cada 1 mm a mais de bico, a massa esperada aumenta 86.8 g.\n\nRepare que a interpretação só existe com unidade. Coeficiente sem unidade é número solto."
   },
   {
     "objectID": "slides/e02.html#e-o-intercepto",
@@ -1180,7 +1180,7 @@
     "href": "slides/e02.html#e-se-eu-dividir-pelo-desvio-padrão-também",
     "title": "O modelo linear como arcabouço unificador",
     "section": "E se eu dividir pelo desvio-padrão também?",
-    "text": "E se eu dividir pelo desvio-padrão também?\nCentrar mexeu no intercepto. Dividir pelo desvio-padrão mexe na unidade da inclinação — é o que o scale() faz, e é o que se chama de padronizar, ou escore z.\n\n# o m_mult do slide anterior, agora com as duas preditoras padronizadas\nm_pad &lt;- lm(body_mass_g ~ scale(bill_length_mm) + scale(flipper_length_mm),\n            data = pinguins)\n\ndata.frame(preditora   = c(\"bico\", \"nadadeira\"),\n           por_mm      = round(coef(m_mult)[-1], 2),\n           por_desvio  = round(coef(m_pad)[-1],  1),\n           row.names   = NULL)\n\n  preditora por_mm por_desvio\n1      bico   4.96       27.1\n2 nadadeira  48.89      685.2\n\n\n\nNo bruto, a nadadeira parece pesar dez vezes mais que o bico (48,9 contra 5,0 g por mm). Padronizado, são vinte e cinco vezes (685 contra 27 g por desvio-padrão). O mesmo modelo — \\(R^2\\) e \\(\\sigma\\) idênticos — e a leitura ingênua errou a ordem de grandeza."
+    "text": "E se eu dividir pelo desvio-padrão também?\nCentrar mexeu no intercepto. Dividir pelo desvio-padrão mexe na unidade da inclinação — é o que o scale() faz, e é o que se chama de padronizar, ou escore z.\n\n# o m_mult da regressão múltipla, agora com as duas preditoras padronizadas\nm_pad &lt;- lm(body_mass_g ~ scale(bill_length_mm) + scale(flipper_length_mm),\n            data = pinguins)\n\ndata.frame(preditora   = c(\"bico\", \"nadadeira\"),\n           por_mm      = round(coef(m_mult)[-1], 2),\n           por_desvio  = round(coef(m_pad)[-1],  1),\n           row.names   = NULL)\n\n  preditora por_mm por_desvio\n1      bico   4.96       27.1\n2 nadadeira  48.89      685.2\n\n\n\nNo bruto, a nadadeira parece pesar dez vezes mais que o bico (48,9 contra 5,0 g por mm). Padronizado, são vinte e cinco vezes (685 contra 27 g por desvio-padrão). O mesmo modelo — \\(R^2\\) e \\(\\sigma\\) idênticos — e a leitura ingênua errou a ordem de grandeza."
   },
   {
     "objectID": "slides/e02.html#por-que-a-conta-muda-tanto",
@@ -1257,7 +1257,7 @@
     "href": "slides/e02.html#uma-notação-quatro-pacotes",
     "title": "O modelo linear como arcabouço unificador",
     "section": "Uma notação, quatro pacotes",
-    "text": "Uma notação, quatro pacotes\n\n# nomes ilustrativos: este bloco mostra a notação, não roda\nlm       (massa ~ svl,                  data = d)                     # gaussiano\nglm      (massa ~ svl, family = Gamma,  data = d)                     # GLM\nlme4::lmer   (massa ~ svl + (1 | poca),               data = d)       # LMM\nglmmTMB::glmmTMB(massa ~ svl + (1 | poca), family = Gamma, data = d)  # GLMM\nbrms::brm    (massa ~ svl + (1 | poca), family = Gamma, data = d)     # bayesiano\n\n\nÉ por isso que escolhemos brms e não outro pacote bayesiano: o custo de transferência entre as cinco linhas acima é quase zero. Referência prática: Kurz, Statistical Rethinking recoded (https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/)."
+    "text": "Uma notação, quatro pacotes\n\n# nomes ilustrativos: este bloco mostra a notação, não roda\nlm       (massa ~ svl,                  data = d)                     # gaussiano\nglm      (massa ~ svl, family = Gamma,  data = d)                     # GLM\nlme4::lmer   (massa ~ svl + (1 | poca),               data = d)       # LMM\nglmmTMB::glmmTMB(massa ~ svl + (1 | poca), family = Gamma, data = d)  # GLMM\nbrms::brm    (massa ~ svl + (1 | poca), family = Gamma, data = d)     # bayesiano\n\n\nÉ por isso que o curso usa brms: o custo de transferência entre as cinco linhas acima é quase zero."
   },
   {
     "objectID": "slides/e02.html#o-preço-compilação",
@@ -1292,7 +1292,7 @@
     "href": "slides/e02.html#vif",
     "title": "O modelo linear como arcabouço unificador",
     "section": "VIF",
-    "text": "VIF\n\n# o usdm quer um data frame de preditoras, nao um modelo — e nao aceita\n# tibble: sem o as.data.frame() ele para com \"invalid type (list)\"\npreditoras &lt;- as.data.frame(\n  pinguins[, c(\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\")]\n)\n\nusdm::vifcor(preditoras, th = 0.7)\n\nNo variable from the 3 input variables has collinearity problem. \n\nThe linear correlation coefficients ranges between: \nmin correlation ( bill_depth_mm ~ bill_length_mm ):  -0.2286256 \nmax correlation ( flipper_length_mm ~ bill_length_mm ):  0.6530956 \n\n---------- VIFs of the remained variables -------- \n          Variables      VIF\n1    bill_length_mm 1.850958\n2     bill_depth_mm 1.593411\n3 flipper_length_mm 2.633327"
+    "text": "VIF\n\n# o usdm recebe as preditoras, não o modelo\npreditoras &lt;- as.data.frame(\n  pinguins[, c(\"bill_length_mm\", \"bill_depth_mm\", \"flipper_length_mm\")]\n)\n\nusdm::vifcor(preditoras, th = 0.7)\n\nNo variable from the 3 input variables has collinearity problem. \n\nThe linear correlation coefficients ranges between: \nmin correlation ( bill_depth_mm ~ bill_length_mm ):  -0.2286256 \nmax correlation ( flipper_length_mm ~ bill_length_mm ):  0.6530956 \n\n---------- VIFs of the remained variables -------- \n          Variables      VIF\n1    bill_length_mm 1.850958\n2     bill_depth_mm 1.593411\n3 flipper_length_mm 2.633327"
   },
   {
     "objectID": "slides/e02.html#o-que-essa-saída-diz-a-mais",
@@ -1313,7 +1313,7 @@
     "href": "slides/e02.html#o-que-procurar-em-cada-um",
     "title": "O modelo linear como arcabouço unificador",
     "section": "O que procurar em cada um",
-    "text": "O que procurar em cada um\n\n\n\n\n\n\n\nGráfico\nPergunta\n\n\n\n\nResiduals vs Fitted\nhá padrão? curvatura? → falta termo no modelo\n\n\nQ-Q residuals\ncaudas muito fora da reta? → normalidade do resíduo\n\n\nScale–Location\nleque? → heterocedasticidade\n\n\nResiduals vs Leverage\npontos com distância de Cook alta? → influência"
+    "text": "O que procurar em cada um\n\n\n\n\n\n\n\nGráfico\nPergunta\n\n\n\n\nResiduals vs Fitted\nhá padrão? curvatura? → falta termo no modelo\n\n\nQ-Q residuals\ncaudas muito fora da reta? → normalidade do resíduo\n\n\nScale–Location\nleque? → heterocedasticidade\n\n\nResiduals vs Leverage\npontos com distância de Cook alta? → influência\n\n\n\n\nA seguir, os mesmos diagnósticos com performance::check_model(), que desenha faixas de referência simuladas — mais fácil de julgar do que “isso parece um padrão?”. A partir do Encontro 6, com GLMs, entra o DHARMa."
   },
   {
     "objectID": "slides/e02.html#versão-moderna",
@@ -1726,7 +1726,7 @@
     "href": "encontros/e01-eda-reprodutibilidade/index.html",
     "title": "E1 — EDA, reprodutibilidade e literacia em IA",
     "section": "",
-    "text": "Segunda, 21 de setembro de 2026 · manhã · 4,5 h\nAntes de começar a pensar na análise: como olhar para os dados, como formular a pergunta antes de olhar, e como documentar tudo de modo que outra pessoa — inclusive você daqui a dois anos — consiga refazer."
+    "text": "Segunda, 21 de setembro de 2026 · manhã · 4 h\nAntes de começar a pensar na análise: como olhar para os dados, como formular a pergunta antes de olhar, e como documentar tudo de modo que outra pessoa — inclusive você daqui a dois anos — consiga refazer."
   },
   {
     "objectID": "encontros/e01-eda-reprodutibilidade/index.html#slides",
@@ -1740,7 +1740,7 @@
     "href": "encontros/e01-eda-reprodutibilidade/index.html#conteúdo",
     "title": "E1 — EDA, reprodutibilidade e literacia em IA",
     "section": "Conteúdo",
-    "text": "Conteúdo\n\nProductive failure de abertura (20 min) — uma pergunta, um conjunto de dados, nenhuma instrução.\nO ciclo PPDAC (30 min) — Problema, Plano, Dados, Análise, Conclusão: onde cada parte do curso se encaixa.\nOs quatro princípios de Popovic et al. (2024) como moldura do curso (30 min).\nPergunta focada, PICO e pré-registro (30 min) — HARKing, p-hacking, a distinção entre análise confirmatória e exploratória, e o custo real de mudar a hipótese depois de ver os dados.\nEDA segundo Zuur & Ieno (2016) — o protocolo em oito passos, com dados problemáticos de verdade.\nFluxo reprodutível — projeto do RStudio, here, Quarto, git, princípios FAIR.\nUso saudável de LLMs em estatística (60 min) — onde ajudam, onde fazem mal, como declarar."
+    "text": "Conteúdo\n\nProductive failure de abertura (20 min) — uma pergunta, um conjunto de dados, nenhuma instrução.\nO ciclo PPDAC (20 min) — Problema, Plano, Dados, Análise, Conclusão: onde cada parte do curso se encaixa.\nOs quatro princípios de Popovic et al. (2024) como moldura do curso (20 min).\nPergunta focada, PICO e pré-registro (30 min) — HARKing, p-hacking, a distinção entre análise confirmatória e exploratória, e o custo real de mudar a hipótese depois de ver os dados.\nEDA segundo Zuur & Ieno (2016) (75 min) — o protocolo em oito passos, com dados problemáticos de verdade.\nFluxo reprodutível (30 min) — projeto do RStudio, here, Quarto, git, princípios FAIR.\nUso saudável de LLMs em estatística (30 min) — onde ajudam, onde fazem mal, como declarar."
   },
   {
     "objectID": "encontros/e01-eda-reprodutibilidade/index.html#dados",
@@ -1810,7 +1810,7 @@
     "href": "encontros/e02-modelo-linear-unificador/index.html#leituras",
     "title": "E2 — O modelo linear como arcabouço unificador",
     "section": "Leituras",
-    "text": "Leituras\nObrigatória\n\nQuinn, G.P. & Keough, M.J. 2023. Introduction to Linear Models. Cap. 4 de Experimental Design and Data Analysis for Biologists, 2ª ed., p. 45–61. Cambridge University Press. — a leitura que mais se aproxima deste encontro, e em 17 páginas. O Quadro 4.1 separa os dois sentidos de “linear” — linear na forma e linear nos parâmetros —, que é a confusão desfeita no bloco 1. O Quadro 4.2 e a Tabela 4.1 põem lado a lado, para cada distribuição, o parâmetro canônico, a função de variância e a ligação canônica: é a tabela do Encontro 4, já pronta. A seção 4.3 monta o modelo com os três componentes (aleatório, sistemático e ligação). A 4.6.1 escreve as premissas do OLS na forma \\(\\varepsilon \\sim \\text{i.i.d.}\\,N(0, \\sigma^2)\\) — a matriz que desenhamos no quadro. E os Key Points da 4.8 abrem com a tese da semana inteira: as “técnicas” de nome próprio são melhor entendidas como variantes de um mesmo tema.\nGelman, A.; Hill, J. & Vehtari, A. 2020. Regression and Other Stories. Cambridge University Press. — código e exemplos no site. Para este encontro, quatro trechos, não o livro inteiro: cap. 6 (Background on regression modeling, p. 81), e nele a seção 6.3, “Interpret coefficients as comparisons, not effects”, que é o slide “Comparação, não efeito” na origem; cap. 7 (Linear regression with a single predictor, p. 93), com a 7.2 sobre checar o próprio procedimento de ajuste com dados simulados; a seção 5.5, “Fake-data simulation as a way of life” (p. 69), que é o bloco 2 da aula inteiro; e o cap. 11 (Assumptions, diagnostics, and model evaluation, p. 153), onde a 11.1 lista as seis premissas em ordem decrescente de importância — validade, representatividade, aditividade e linearidade, independência dos erros, variância igual, normalidade —, a 11.3 traz os gráficos de resíduo e a 11.6 o \\(\\sigma\\) com o \\(R^2\\). As duas primeiras não são sobre resíduo, e é por isso que elas abrem o bloco de premissas na aula.\n\nComplementar\n\nQuinn, G.P. & Keough, M.J. 2023. Simple Linear Models with One Predictor. Cap. 6 de Experimental Design and Data Analysis for Biologists, 2ª ed., p. 76–114. Cambridge University Press. — a continuação natural do cap. 4, e a parte prática deste encontro: a seção 6.2 mostra que um preditor categórico é o mesmo modelo, a 6.4 lista as premissas uma a uma e a 6.5 é o diagnóstico completo (resíduos, alavancagem, medidas de influência, os gráficos).\nAgresti, A. 2015. Foundations of Linear and Generalized Linear Models. Wiley.\nGelman, A. 2008. Scaling regression inputs by dividing by two standard deviations. Statistics in Medicine 27:2865–2873. — por que dividir por dois desvios-padrão, e não um, quando o modelo mistura preditoras contínuas e binárias. É o argumento por trás do two_sd = TRUE do standardize_parameters().\nHorst, A.M.; Hill, A.P. & Gorman, K.B. 2020. palmerpenguins: Palmer Archipelago (Antarctica) penguin data. — o conjunto usado nos exemplos do encontro.\nLindeløv, J.K. Common statistical tests are linear models.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Cap. 6, “Using simulations to capture uncertainty”.\n\nSobre checar premissas\nO bloco 1 afirma que a premissa de normalidade está no resíduo, e não nos dados. Estes dois artigos sustentam isso — e, principalmente, sustentam por que não se decide sobre premissa com valor de p. São argumentos diferentes, não duas versões do mesmo:\n\nKozak, M. & Piepho, H.-P. 2018. What’s normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions. Journal of Agronomy and Crop Science 204:86–98. — as duas perguntas, uma de cada vez: checar no dado bruto ou no resíduo? por teste ou por gráfico? Responde a primeira a favor do resíduo e a segunda a favor do gráfico, com dois exemplos trabalhados.\nShatz, I. 2024. Assumption-checking rather than (just) testing: the importance of visualization and effect size in statistical diagnostics. Behavior Research Methods 56:826–845. Acesso aberto (CC BY 4.0). Consolida por simulação o que dá errado no teste: falso positivo com \\(n\\) grande, falso negativo com \\(n\\) pequeno, falsa binariedade, o p lido como se fosse tamanho de efeito, e o próprio teste de premissa com premissas que ninguém checou. Cita o Shapiro–Wilk pelo nome.\n\nAo vivo: o teste de normalidade rodando no navegador — a simulação do Shatz em três blocos editáveis, sem instalar nada. Dez minutos, e o argumento fica visível em vez de citado."
+    "text": "Leituras\nObrigatória\n\nQuinn, G.P. & Keough, M.J. 2023. Introduction to Linear Models. Cap. 4 de Experimental Design and Data Analysis for Biologists, 2ª ed., p. 45–61. Cambridge University Press. — a leitura que mais se aproxima deste encontro, e em 17 páginas. O Quadro 4.1 separa os dois sentidos de “linear” — linear na forma e linear nos parâmetros —, que é a confusão desfeita no bloco 1. O Quadro 4.2 e a Tabela 4.1 põem lado a lado, para cada distribuição, o parâmetro canônico, a função de variância e a ligação canônica: é a tabela do Encontro 4, já pronta. A seção 4.3 monta o modelo com os três componentes (aleatório, sistemático e ligação). A 4.6.1 escreve as premissas do OLS na forma \\(\\varepsilon \\sim \\text{i.i.d.}\\,N(0, \\sigma^2)\\) — a matriz que desenhamos no quadro. E os Key Points da 4.8 abrem com a tese da semana inteira: as “técnicas” de nome próprio são melhor entendidas como variantes de um mesmo tema.\nGelman, A.; Hill, J. & Vehtari, A. 2020. Regression and Other Stories. Cambridge University Press. — código e exemplos no site. Para este encontro, quatro trechos, não o livro inteiro: cap. 6 (Background on regression modeling, p. 81), e nele a seção 6.3, “Interpret coefficients as comparisons, not effects”, que é o slide “Comparação, não efeito” na origem; cap. 7 (Linear regression with a single predictor, p. 93), com a 7.2 sobre checar o próprio procedimento de ajuste com dados simulados; a seção 5.5, “Fake-data simulation as a way of life” (p. 69), que é o bloco 2 da aula inteiro; e o cap. 11 (Assumptions, diagnostics, and model evaluation, p. 153), onde a 11.1 lista as seis premissas em ordem decrescente de importância — validade, representatividade, aditividade e linearidade, independência dos erros, variância igual, normalidade —, a 11.3 traz os gráficos de resíduo e a 11.6 o \\(\\sigma\\) com o \\(R^2\\). As duas primeiras não são sobre resíduo, e é por isso que elas abrem o bloco de premissas na aula. Para quem quiser saber o que o lm() faz por baixo: o cap. 8 (Fitting regression models) põe mínimos quadrados, máxima verossimilhança e inferência bayesiana como três respostas à mesma pergunta (8.1), mostra quanto cada ponto puxa a reta (8.2) e ajusta o mesmo modelo com lm() e stan_glm() lado a lado (8.4).\n\nComplementar\n\nQuinn, G.P. & Keough, M.J. 2023. Simple Linear Models with One Predictor. Cap. 6 de Experimental Design and Data Analysis for Biologists, 2ª ed., p. 76–114. Cambridge University Press. — a continuação natural do cap. 4, e a parte prática deste encontro: a seção 6.2 mostra que um preditor categórico é o mesmo modelo, a 6.4 lista as premissas uma a uma e a 6.5 é o diagnóstico completo (resíduos, alavancagem, medidas de influência, os gráficos).\nAgresti, A. 2015. Foundations of Linear and Generalized Linear Models. Wiley.\nGelman, A. 2008. Scaling regression inputs by dividing by two standard deviations. Statistics in Medicine 27:2865–2873. — por que dividir por dois desvios-padrão, e não um, quando o modelo mistura preditoras contínuas e binárias. É o argumento por trás do two_sd = TRUE do effectsize::standardize_parameters(), que padroniza os coeficientes sem reajustar o modelo.\nHorst, A.M.; Hill, A.P. & Gorman, K.B. 2020. palmerpenguins: Palmer Archipelago (Antarctica) penguin data. — o conjunto usado nos exemplos do encontro.\nLindeløv, J.K. Common statistical tests are linear models.\nGelman, A. et al. 2026. Bayesian Workflow. Chapman & Hall/CRC. Cap. 6, “Using simulations to capture uncertainty”.\n\nSobre checar premissas\nO bloco 1 afirma que a premissa de normalidade está no resíduo, e não nos dados. Estes dois artigos sustentam isso — e, principalmente, sustentam por que não se decide sobre premissa com valor de p. São argumentos diferentes, não duas versões do mesmo:\n\nKozak, M. & Piepho, H.-P. 2018. What’s normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions. Journal of Agronomy and Crop Science 204:86–98. — as duas perguntas, uma de cada vez: checar no dado bruto ou no resíduo? por teste ou por gráfico? Responde a primeira a favor do resíduo e a segunda a favor do gráfico, com dois exemplos trabalhados.\nShatz, I. 2024. Assumption-checking rather than (just) testing: the importance of visualization and effect size in statistical diagnostics. Behavior Research Methods 56:826–845. Acesso aberto (CC BY 4.0). Consolida por simulação o que dá errado no teste: falso positivo com \\(n\\) grande, falso negativo com \\(n\\) pequeno, falsa binariedade, o p lido como se fosse tamanho de efeito, e o próprio teste de premissa com premissas que ninguém checou. Cita o Shapiro–Wilk pelo nome.\n\nAo vivo: o teste de normalidade rodando no navegador — a simulação do Shatz em três blocos editáveis, sem instalar nada. Dez minutos, e o argumento fica visível em vez de citado."
   },
   {
     "objectID": "encontros/e02-modelo-linear-unificador/index.html#recursos-externos",
@@ -2097,7 +2097,7 @@
     "href": "slides/e01.html#hoje",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Hoje",
-    "text": "Hoje\n\nProductive failure de abertura — 20 min\nO ciclo PPDAC — 30 min\nOs quatro princípios de Popovic et al. (2024) — 30 min\nPergunta focada, HARKing e pré-registro — 30 min\nIntervalo\nExploração de dados: o protocolo em oito passos — 90 min\nFluxo reprodutível: projeto, Quarto, git — 45 min\nUso saudável de LLMs em estatística — 60 min"
+    "text": "Hoje\n\nProductive failure de abertura — 20 min\nO ciclo PPDAC — 20 min\nOs quatro princípios de Popovic et al. (2024) — 20 min\nPergunta focada, HARKing e pré-registro — 30 min\nIntervalo — 15 min\nExploração de dados: o protocolo em oito passos — 75 min\nFluxo reprodutível: projeto, Quarto, git — 30 min\nUso saudável de LLMs em estatística — 30 min"
   },
   {
     "objectID": "slides/e01.html#o-problema",
@@ -2118,7 +2118,7 @@
     "href": "slides/e01.html#de-onde-vêm-esses-números",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "De onde vêm esses números",
-    "text": "De onde vêm esses números\n\n\n\n\n\n\n\n\n\nCada ponto é o meio de um segmento de 500 m da IP2, entre Portalegre e Monforte: 52 segmentos, 26 km de estrada, descendo pelo limite sudoeste do Parque Natural da Serra de São Mamede. A cor e o tamanho são a contagem de anfíbios mortos."
+    "text": "De onde vêm esses números\n\n\n\n\n\n\n\n\n\nCada ponto é o meio de um segmento de 500 m da IP2, entre Portalegre e Monforte, junto ao Parque Natural da Serra de São Mamede. A estrada foi percorrida de carro a cada duas semanas, por dois anos (1995–1997), e cada carcaça foi retirada da pista. Cor e tamanho: anfíbios mortos."
   },
   {
     "objectID": "slides/e01.html#como-esses-números-foram-feitos",
@@ -2139,21 +2139,21 @@
     "href": "slides/e01.html#duas-coisas-que-o-mapa-já-entrega",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Duas coisas que o mapa já entrega",
-    "text": "Duas coisas que o mapa já entrega\n\nUm gradiente. A mortalidade cai com a distância ao parque natural da Serra de São Mamede (\\(r = -0{,}75\\)) — uma serra mais úmida e chuvosa que a planície em volta, ou seja, a variável é um proxy de umidade. Essa é a pergunta do Encontro 5, e o mapa mostra que ela é geográfica antes de ser estatística.\nUm problema. Segmentos vizinhos distam 500 m: eles não são réplicas independentes. É o assunto do Encontro 7, e está embutido no desenho da coleta — nenhuma análise conserta isso depois.\n\n\nEste mapa quase não existiu. O arquivo traz duas colunas X e Y em metros; o capítulo as chama de “UTM coordinates” e não diz o sistema, e os valores não batem com o fuso UTM de Portugal. São coordenadas do Datum Lisboa / Hayford-Gauss Militar, EPSG:20790 — descoberto por tentativa e conferido de três jeitos: o segmento 1 cai a 1,8 km de Portalegre, o 52 a 0,6 km de Monforte, e a distância de cada segmento ao limite do parque correlaciona 0,988 com a coluna D.PARK do próprio arquivo. Uma linha de metadado que ninguém escreveu custou isso tudo. É o Encontro 1 inteiro numa anedota."
+    "text": "Duas coisas que o mapa já entrega\n\nUm gradiente. A mortalidade cai com a distância ao parque natural da Serra de São Mamede (\\(r = -0{,}75\\)) — uma serra mais úmida e chuvosa que a planície em volta, ou seja, a variável é um proxy de umidade. Essa é a pergunta do Encontro 5, e o mapa mostra que ela é geográfica antes de ser estatística.\nUm problema. Segmentos vizinhos distam 500 m: eles não são réplicas independentes. É o assunto do Encontro 7, e está embutido no desenho da coleta — nenhuma análise conserta isso depois."
   },
   {
     "objectID": "slides/e01.html#uma-coisa-que-vocês-já-viram",
     "href": "slides/e01.html#uma-coisa-que-vocês-já-viram",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Uma coisa que vocês já viram",
-    "text": "Uma coisa que vocês já viram\n\n\n\n\n\n\n\n\n\nContagem. Só inteiros não negativos. Cauda longa à direita. E a variância cresce com a média: aqui a média é 25,9 e a variância é 589,3, quase 23 vezes maior. Guardem essa desproporção para o Encontro 6 — parte dela some quando as covariáveis entram no modelo, mas não toda.\nUma regressão linear comum é apropriada aqui? Guardem a resposta."
+    "text": "Uma coisa que vocês já viram\n\n\n\n\n\n\n\n\n\nContagem. Só inteiros não negativos. Cauda longa à direita.\nUma regressão linear comum é apropriada aqui? Guardem a resposta."
   },
   {
     "objectID": "slides/e01.html#o-mapa-da-disciplina-inteira",
     "href": "slides/e01.html#o-mapa-da-disciplina-inteira",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "O mapa da disciplina inteira",
-    "text": "O mapa da disciplina inteira\n\n\n\n\n\n\n\n\n\n\nWild, C.J. & Pfannkuch, M. 1999. International Statistical Review."
+    "text": "O mapa da disciplina inteira\n\n\n\n\n\n\n\n\n\nA análise revela problemas nos dados, e a conclusão quase sempre reformula o problema. Isso é legítimo — ilegítimo é apagar o percurso e apresentar a última volta como se fosse a primeira.\n\nWild, C.J. & Pfannkuch, M. 1999. International Statistical Review."
   },
   {
     "objectID": "slides/e01.html#onde-cada-etapa-aparece-no-curso",
@@ -2377,7 +2377,7 @@
     "href": "slides/e01.html#caminhos",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Caminhos",
-    "text": "Caminhos\n\n# Nunca:\nread.csv(\"/Users/diogo/Documents/projeto-final-v3/dados.csv\")\n\n# Sempre:\nlibrary(here)\nread_csv(here(\"dados\", \"brutos\", \"anuros.csv\"))\n\nhere() resolve a partir da raiz do projeto. O script roda na sua máquina, na do orientando e no GitHub Actions."
+    "text": "Caminhos\n\n# Nunca:\nread.csv(\"/Users/diogo/Documents/projeto-final-v3/dados.csv\")\n\n# Sempre:\nlibrary(here)\nread_csv(here(\"dados\", \"brutos\", \"anuros.csv\"))\n\nhere() resolve a partir da raiz do projeto. O script roda na sua máquina, na do orientando e no GitHub Actions.\n\nA raiz é o primeiro diretório acima com um .Rproj ou uma pasta .git. Se here::here() apontar para um lugar estranho, declare-a à mão com here::i_am(\"scripts/analise.R\")."
   },
   {
     "objectID": "slides/e01.html#como-o-here-acha-a-raiz",
@@ -2447,7 +2447,7 @@
     "href": "slides/e01.html#declaração-e-responsabilidade",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Declaração e responsabilidade",
-    "text": "Declaração e responsabilidade\n\nDeclarar modelo, versão e que parte do código foi gerada.\nPrompts críticos vão como material suplementar.\nO autor responde pelo código como se o tivesse escrito. Não existe “o ChatGPT errou”.\nIA não pode ser coautora — política vigente em praticamente todos os periódicos da área.\n\nVale igual no trabalho final desta disciplina."
+    "text": "Declaração e responsabilidade\n\nDeclarar modelo, versão e que parte do código foi gerada.\nPrompts críticos vão como material suplementar.\nO autor responde pelo código como se o tivesse escrito. Não existe “o ChatGPT errou”.\n\nVale igual no trabalho final desta disciplina."
   },
   {
     "objectID": "slides/e01.html#as-três-normas-que-valem-para-vocês",
@@ -2468,7 +2468,7 @@
     "href": "slides/e01.html#o-que-fica-de-hoje",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "O que fica de hoje",
-    "text": "O que fica de hoje\n\nA pergunta vem antes dos dados — e o rótulo confirmatório/exploratório é honestidade básica.\nExploração de dados é lista de verificação, não caça ao resultado.\nReprodutibilidade é um favor ao seu eu futuro.\nLLM é ferramenta de código, não de interpretação."
+    "text": "O que fica de hoje\n\nA pergunta vem antes dos dados — e o rótulo confirmatório/exploratório é honestidade básica.\nExploração de dados é lista de verificação, não caça ao resultado.\nReprodutibilidade é um favor ao seu eu futuro.\nLLM é ferramenta de código, não de interpretação.\n\n\nO ciclo PPDAC é o mapa; os quatro princípios são o critério de qualidade; o protocolo de oito passos é a lista de verificação. O resto do curso é a etapa “Análise”."
   },
   {
     "objectID": "slides/e01.html#o-que-fica-de-hoje-em-uma-linha",
@@ -3168,14 +3168,14 @@
     "href": "slides/e07.html#shrinkage",
     "title": "GLMM I: por que efeitos aleatórios",
     "section": "Shrinkage",
-    "text": "Shrinkage\n\n\n\n\n\n\n\n\n\nAs estimativas do modelo misto são puxadas para a média geral — mais ainda nas praias com menos amostras."
+    "text": "Shrinkage\n\n\n\n\n\n\n\n\n\nAs estimativas do modelo misto são puxadas para a média geral — mais ainda nas praias cuja regressão separada deu um intercepto extremo ou pouco preciso."
   },
   {
     "objectID": "slides/e07.html#por-que-isso-é-bom",
     "href": "slides/e07.html#por-que-isso-é-bom",
     "title": "GLMM I: por que efeitos aleatórios",
     "section": "Por que isso é bom",
-    "text": "Por que isso é bom\n\nShrinkage não é um defeito: é o modelo reconhecendo que uma média baseada em 3 amostras é menos confiável que uma baseada em 9, e pedindo emprestada informação das outras praias.\n\nÉ o mesmo princípio da regularização bayesiana — e, de fato, um efeito aleatório é uma prior sobre os níveis do fator. Voltamos a isso à tarde."
+    "text": "Por que isso é bom\n\nShrinkage não é um defeito: é o modelo reconhecendo que uma reta ajustada a só 5 pontos é pouco confiável, e pedindo emprestada informação das outras praias.\n\nO RIKZ é balanceado — 5 amostras em cada uma das 9 praias —, então aqui o encolhimento depende de quão ruidosa e quão longe da média é cada estimativa isolada. Num delineamento desbalanceado, as praias com menos amostras encolheriam mais.\nÉ o mesmo princípio da regularização bayesiana — e, de fato, um efeito aleatório é uma prior sobre os níveis do fator. Voltamos a isso à tarde."
   },
   {
     "objectID": "slides/e07.html#o-incômodo",
@@ -3687,5 +3687,68 @@
     "title": "O teste de normalidade, ao vivo",
     "section": "O que levar disso",
     "text": "O que levar disso\nO shapiro.test() responde “tenho evidência de que estes dados não vieram de uma normal?”. Essa não é a pergunta que interessa. A que interessa é “o quanto este desvio ameaça a minha inferência?” — e essa depende do tamanho do desvio e do que o modelo faz com ele, não do n.\n\nShatz, I. 2024. Assumption-checking rather than (just) testing: the importance of visualization and effect size in statistical diagnostics. Behavior Research Methods 56:826–845. Acesso aberto; é o artigo que esta página ilustra.\nKozak, M. & Piepho, H.-P. 2018. What’s normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions. Journal of Agronomy and Crop Science 204:86–98.\n\n\nVolta para o Encontro 2."
+  },
+  {
+    "objectID": "slides/e06.html#cinco-causas-cinco-remédios",
+    "href": "slides/e06.html#cinco-causas-cinco-remédios",
+    "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Cinco causas, cinco remédios",
+    "text": "Cinco causas, cinco remédios\n\n\n\n\n\n\n\n\nCausa\nSinal\nO que fazer\n\n\n\n\nFalta uma covariável importante\nresíduo estruturado\nincluir a covariável\n\n\nFalta um termo não linear\ncurvatura no resíduo\npoly(), s()\n\n\nObservações agrupadas\ngrupos com médias distintas\nefeito aleatório (E7)\n\n\nExcesso de zeros\npico em zero\nZI ou hurdle\n\n\nVariação genuína além da Poisson\nnada acima explica\nbinomial negativa\n\n\n\n\nSobredispersão é quase sempre sintoma, não doença. Trocar a distribuição sem investigar a causa esconde o problema em vez de resolvê-lo."
+  },
+  {
+    "objectID": "slides/e01.html#o-que-a-coluna-tot.n-conta",
+    "href": "slides/e01.html#o-que-a-coluna-tot.n-conta",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "O que a coluna TOT.N conta",
+    "text": "O que a coluna TOT.N conta\nCarcaças de anfíbio duram de um a três dias na pista, e outros animais as comem. Uma visita a cada 15 dias perde boa parte delas — os próprios autores avisam que a contagem é enviesada para baixo.\n\nA resposta não é “quantos anfíbios morreram”, é “quantos anfíbios mortos foram encontrados numa visita a cada 15 dias”. Toda a interpretação do modelo vive dentro dessa frase."
+  },
+  {
+    "objectID": "slides/e01.html#passos-3-e-4-distribuição-e-zeros",
+    "href": "slides/e01.html#passos-3-e-4-distribuição-e-zeros",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Passos 3 e 4 — Distribuição e zeros",
+    "text": "Passos 3 e 4 — Distribuição e zeros\n\nggplot(RK, aes(TOT.N)) +\n  geom_bar(fill = \"#1c6e8c\") +\n  labs(x = \"Anfíbios mortos\", y = \"Nº de sítios\") +\n  theme_minimal(base_size = 15)\n\n\n\n\n\n\n\n\nContagem, assimétrica à direita, de 2 a 104 em 52 sítios. Média 25,9 e variância 589,3 — a variância é 22,7 vezes a média. Para uma Poisson elas seriam iguais; já dá para saber, aqui, que ela não vai servir (Encontro 6). Zeros, nenhum — mas quantos zeros são “demais” depende da distribuição assumida, não dos dados.\n\nAtenção: o modelo linear não assume que a resposta é normal. Assume que o resíduo é. Voltaremos a isso no Encontro 2 — é um dos mal-entendidos mais caros da estatística aplicada."
+  },
+  {
+    "objectID": "slides/e02.html#do-teste-t-ao-coeficiente",
+    "href": "slides/e02.html#do-teste-t-ao-coeficiente",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Do teste t ao coeficiente",
+    "text": "Do teste t ao coeficiente\n\n\n\n\n\n\n\n\n\nTeste t\nModelo linear\n\n\n\n\nPergunta\nas médias diferem?\no coeficiente é zero?\n\n\n\\(H_0\\)\n\\(\\mu_F = \\mu_M\\)\n\\(\\beta_1 = 0\\)\n\n\nEstatística\n\\(t = \\dfrac{\\bar{y}_M - \\bar{y}_F}{s_p\\sqrt{1/n_F + 1/n_M}}\\)\n\\(t = \\dfrac{\\hat{\\beta}_1}{\\mathrm{EP}(\\hat{\\beta}_1)}\\)\n\n\n\n\nn   &lt;- table(adelie$sex)\ns2  &lt;- tapply(adelie$bill_length_mm, adelie$sex, var)\nsp  &lt;- sqrt(sum((n - 1) * s2) / (sum(n) - 2))   # desvio-padrão combinado\ndif &lt;- diff(tapply(adelie$bill_length_mm, adelie$sex, mean))\n\nc(t_teste = unname(dif / (sp * sqrt(sum(1 / n)))),\n  t_lm    = summary(m_t)$coefficients[\"sexmale\", \"t value\"])\n\nt_teste    t_lm \n8.77655 8.77655 \n\n\n\n\\(\\mu_F = \\mu_M\\) é o mesmo que \\(\\mu_M - \\mu_F = 0\\), e \\(\\mu_M - \\mu_F\\) é \\(\\beta_1\\). Mesma hipótese, mesmo numerador, mesmo denominador — \\(\\mathrm{EP}(\\hat{\\beta}_1)\\) é \\(s_p\\sqrt{1/n_F + 1/n_M}\\) —, os mesmos \\(n - 2\\) graus de liberdade e, portanto, o mesmo p."
+  },
+  {
+    "objectID": "slides/e02.html#desafio-do-coeficiente-5-min",
+    "href": "slides/e02.html#desafio-do-coeficiente-5-min",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Desafio do coeficiente (5 min)",
+    "text": "Desafio do coeficiente (5 min)\nPinguins-gentoo (Pygoscelis papua): machos e fêmeas diferem na massa corporal?\n\ngentoo &lt;- pinguins |&gt; filter(species == \"Gentoo\")\nm_gentoo &lt;- lm(body_mass_g ~ sex, data = gentoo)\nsummary(m_gentoo)$coefficients\n\n             Estimate Std. Error   t value      Pr(&gt;|t|)\n(Intercept) 4679.7414   39.15445 119.52004 3.888027e-124\nsexmale      805.0947   54.68770  14.72168  2.133688e-28\n\n\nEm duplas, só com a tabela acima:\n\nQual é a massa média das fêmeas?\nQuanto os machos pesam a mais, em média?\nE qual é a massa média dos machos?\nQual seria a \\(H_0\\) do teste t? E a do modelo linear?\nCom \\(\\alpha = 0{,}05\\), a diferença é distinguível de zero? Por quê?"
+  },
+  {
+    "objectID": "slides/e02.html#desafio-do-coeficiente-respostas",
+    "href": "slides/e02.html#desafio-do-coeficiente-respostas",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Desafio do coeficiente: respostas",
+    "text": "Desafio do coeficiente: respostas\n\n4680 g — o intercepto \\(\\beta_0\\), a média do grupo de referência (fêmeas).\n805 g — o coeficiente sexmale, \\(\\beta_1\\).\n5485 g — \\(\\beta_0 + \\beta_1\\). A média dos machos não está na tabela: é a soma das duas linhas.\nTeste t: \\(H_0\\!: \\mu_F = \\mu_M\\). Modelo linear: \\(H_0\\!: \\beta_1 = 0\\). É a mesma hipótese.\nSim: t = 14,7 e p &lt; 0,001, na linha sexmale. A linha do intercepto testa outra coisa — se a massa média das fêmeas é zero —, e o p dela não responde à pergunta.\n\n\nA tabela de coeficientes é o teste t. Quem sabe ler as duas linhas não precisa da saída do t.test()."
+  },
+  {
+    "objectID": "slides/e02.html#por-que-a-conta-muda-e-quando-vale-a-pena",
+    "href": "slides/e02.html#por-que-a-conta-muda-e-quando-vale-a-pena",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Por que a conta muda, e quando vale a pena",
+    "text": "Por que a conta muda, e quando vale a pena\nO bico varia 5,5 mm de desvio-padrão; a nadadeira, 14,0 mm. Um milímetro é muita coisa para um bico e pouca para uma nadadeira:\n\\[\nb^{\\text{padronizado}} = b^{\\text{bruto}} \\times s_x\n\\qquad\n4{,}96 \\times 5{,}47 = 27{,}1\n\\qquad\n48{,}89 \\times 14{,}02 = 685{,}2\n\\]\n\nVale quando a pergunta é qual preditora importa mais e elas estão em escalas diferentes — e como conserto de convergência no Encontro 8.\nNão vale quando a unidade natural é o que interessa: “a cada 1 mm de bico, +5 g” é uma frase que um biólogo entende e confere. É o caso mais comum.\n\nO coeficiente padronizado continua tendo unidade: “por desvio-padrão de \\(x\\)”. Relate quanto vale esse desvio-padrão. E padronize só as preditoras — num GLM a resposta não pode ser padronizada."
+  },
+  {
+    "objectID": "slides/e02.html#a-mesma-fórmula-outro-motor",
+    "href": "slides/e02.html#a-mesma-fórmula-outro-motor",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "A mesma fórmula, outro motor",
+    "text": "A mesma fórmula, outro motor\n\nlibrary(brms)\n\nm_bayes &lt;- brm(body_mass_g ~ bill_length_mm, data = pinguins,\n               chains = 4, iter = 2000, seed = 2026,\n               file = \"../cache/e02_bico\")   # compila uma vez, reusa depois\n\nrbind(lm  = coef(m_reg),\n      brm = fixef(m_bayes)[, \"Estimate\"]) |&gt; round(1)\n\n    (Intercept) bill_length_mm\nlm        388.8           86.8\nbrm       386.2           86.9\n\n\n\nA fórmula é exatamente a mesma do lm() — e a mesma que vocês vão escrever em lmer(), glmmTMB() e brm() nos Encontros 7 e 8, só acrescentando (1 | grupo). Com bastante dado, as estimativas coincidem.\n\n\nPrior, posterior, MCMC, Rhat e ESS ficam para o Encontro 8. O brms compila cada modelo em C++ na primeira vez; com file =, as vezes seguintes são instantâneas."
+  },
+  {
+    "objectID": "slides/e02.html#lendo-o-vif",
+    "href": "slides/e02.html#lendo-o-vif",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Lendo o VIF",
+    "text": "Lendo o VIF\nAlém dos VIFs, o vifcor() diz qual par é o mais correlacionado e quanto: aqui, nadadeira com bico, r = 0,65, e nenhum VIF passa de 2,6.\nRegras práticas: acima de 5 desconfie, acima de 10 preocupe-se. Mas a decisão é biológica, não mecânica:\n\nas duas preditoras medem coisas distintas na sua hipótese? → mantenha e relate a incerteza;\nsão proxies da mesma coisa? → escolha uma, pelo argumento, não pelo p.\n\n\nUse a saída, não a exclusão automática da função: baixar o th até alguma coisa cair é escolher preditora pelo resultado."
   }
 ]
