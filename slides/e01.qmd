@@ -521,7 +521,7 @@ ggplot(quarteto, aes(x, y)) +
 ## Os quatro dão os mesmos números
 
 Média de *x*, média de *y*, desvio-padrão, correlação (0,816) e reta de
-regressão ($y = 3 + 0{,}5x$): **idênticos até a terceira casa decimal**
+regressão ($y = 3 + 0{,}5x$): **idênticos até a segunda casa decimal**
 nos quatro conjuntos de Anscombe (1973).
 
 ::: {.definicao}

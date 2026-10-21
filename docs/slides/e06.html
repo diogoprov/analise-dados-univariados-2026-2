@@ -222,8 +222,8 @@ Diogo B. Provete
 </div>
 <p>Quando o diagnóstico falha, o ciclo manda voltar aos <strong>Dados</strong> — e às vezes ao <strong>Plano</strong>. Excesso de zeros costuma ser um fato sobre a coleta, não sobre o modelo.</p>
 </section>
-<section id="o-problema-de-ontem" class="slide level2 secao">
-<h2>O problema de ontem</h2>
+<section id="o-problema-desta-manhã" class="slide level2 secao">
+<h2>O problema desta manhã</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>deviance       gl    razao 
@@ -281,7 +281,7 @@ Diogo B. Provete
 </div>
 </div>
 </div>
-<p>Esse padrão em faixas é <strong>esperado</strong> num GLM com contagens baixas: a resposta é discreta. Não dá para julgar se é bom ou ruim só olhando.</p>
+<p>Num GLM, o resíduo de <em>deviance</em> não tem uma distribuição de referência: não dá para saber, só olhando, se essa dispersão é a que o modelo espera ou um problema. Com contagens baixas é pior — aparecem faixas, uma por valor observado.</p>
 </section>
 <section id="pearson-deviance-quantílico" class="slide level2">
 <h2>Pearson, deviance, quantílico</h2>
@@ -616,6 +616,22 @@ poisson 634.5 240.9 2  &lt;0.001</code></pre>
 <p><code>check_zeroinflation()</code> compara os zeros observados com os que a Poisson ajustada <strong>esperaria</strong>: não é opinião sobre “muitos zeros”.</p>
 </div>
 </section>
+<section id="armadilha-frequente" class="slide level2">
+<h2>Armadilha frequente</h2>
+<div class="definicao">
+<p>Muito “excesso de zeros” desaparece quando você troca Poisson por binomial negativa. A binomial negativa <strong>gera mais zeros</strong> que a Poisson de mesma média.</p>
+</div>
+<p>Ordem recomendada:</p>
+<ol type="1">
+<li>teste sobredispersão;</li>
+<li>se houver, ajuste a binomial negativa;</li>
+<li><strong>só então</strong> teste excesso de zeros, no modelo NB;</li>
+<li>se ainda houver, aí sim zero-inflado ou <em>hurdle</em>.</li>
+</ol>
+<div class="nota">
+<p>Neste conjunto, a binomial negativa sozinha já prevê os 156 zeros observados (<code>check_zeroinflation()</code> dá razão 1,00). Pela ordem acima, não haveria excesso de zeros a modelar — e é com isso em mente que vamos ler a comparação a seguir.</p>
+</div>
+</section>
 <section id="os-três-candidatos" class="slide level2">
 <h2>Os três candidatos</h2>
 <div class="cell">
@@ -643,18 +659,23 @@ poisson 634.5 240.9 2  &lt;0.001</code></pre>
 <section id="comparando" class="slide level2">
 <h2>Comparando</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">ICtab</span>(<span class="fu">list</span>(<span class="at">poisson =</span> pois_plain, <span class="at">ZIP =</span> ziP, <span class="at">ZINB =</span> ziNB, <span class="at">hurdleNB =</span> hurNB),</span>
-<span id="cb23-2"><a></a>      <span class="at">type =</span> <span class="st">"AICc"</span>, <span class="at">weights =</span> <span class="cn">TRUE</span>, <span class="at">delta =</span> <span class="cn">TRUE</span>, <span class="at">base =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb23-3"><a></a>      <span class="at">mnames =</span> <span class="fu">c</span>(<span class="st">"poisson"</span>, <span class="st">"ZIP"</span>, <span class="st">"ZINB"</span>, <span class="st">"hurdleNB"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a>nb_plain <span class="ot">&lt;-</span> MASS<span class="sc">::</span><span class="fu">glm.nb</span>(Raillietiella_mottae <span class="sc">~</span> CRC <span class="sc">+</span> Sexo <span class="sc">*</span> Especie,</span>
+<span id="cb23-2"><a></a>                         <span class="at">data =</span> parasitas)</span>
+<span id="cb23-3"><a></a></span>
+<span id="cb23-4"><a></a><span class="fu">ICtab</span>(<span class="fu">list</span>(<span class="at">poisson =</span> pois_plain, <span class="at">NB =</span> nb_plain, <span class="at">ZIP =</span> ziP, <span class="at">ZINB =</span> ziNB,</span>
+<span id="cb23-5"><a></a>           <span class="at">hurdleNB =</span> hurNB),</span>
+<span id="cb23-6"><a></a>      <span class="at">type =</span> <span class="st">"AICc"</span>, <span class="at">weights =</span> <span class="cn">TRUE</span>, <span class="at">delta =</span> <span class="cn">TRUE</span>, <span class="at">base =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb23-7"><a></a>      <span class="at">mnames =</span> <span class="fu">c</span>(<span class="st">"poisson"</span>, <span class="st">"NB"</span>, <span class="st">"ZIP"</span>, <span class="st">"ZINB"</span>, <span class="st">"hurdleNB"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         AICc  dAICc df weight
-ZIP      275.7   0.0 10 0.62  
-ZINB     277.3   1.6 11 0.28  
-hurdleNB 279.3   3.6 11 0.10  
+ZIP      275.7   0.0 10 0.6169
+ZINB     277.3   1.6 11 0.2747
+hurdleNB 279.3   3.6 11 0.1022
+NB       284.9   9.2 6  0.0062
 poisson  320.2  44.6 5  &lt;0.001</code></pre>
 </div>
 </div>
-<p>O ZIP leva 62% do peso, a ZINB 28% e o <em>hurdle</em> 10%. A Poisson simples fica 45 unidades atrás: o excesso de zeros era real. Mas entre os três candidatos nenhum manda sozinho — e a escolha entre ZIP e ZINB volta a ser biológica, não aritmética.</p>
+<p>A Poisson fica 45 unidades atrás, mas a NB simples, sem parte de zeros, fica só 9 — e já reproduz os zeros observados. Boa parte do “excesso de zeros” era sobredispersão. O ZIP ainda leva 62 % do peso; isso só vira argumento para zero estrutural se houver razão <strong>biológica</strong> para ele.</p>
 </section>
 <section id="os-zeros-foram-resolvidos" class="slide level2">
 <h2>Os zeros foram resolvidos?</h2>
@@ -710,23 +731,7 @@ attr(,"ddf")
 [1] "asymptotic"</code></pre>
 </div>
 </div>
-<p>A primeira está em <strong>log da contagem esperada</strong>; a segunda em <strong>log-<em>odds</em> de ser zero estrutural</strong>. Sinais opostos nas duas não são contradição: uma diz quantos parasitas há onde há, a outra diz onde não pode haver.</p>
-</section>
-<section id="armadilha-frequente" class="slide level2">
-<h2>Armadilha frequente</h2>
-<div class="definicao">
-<p>Muito “excesso de zeros” desaparece quando você troca Poisson por binomial negativa. A binomial negativa <strong>gera mais zeros</strong> que a Poisson de mesma média.</p>
-</div>
-<p>Ordem recomendada:</p>
-<ol type="1">
-<li>teste sobredispersão;</li>
-<li>se houver, ajuste a binomial negativa;</li>
-<li><strong>só então</strong> teste excesso de zeros, no modelo NB;</li>
-<li>se ainda houver, aí sim zero-inflado ou <em>hurdle</em>.</li>
-</ol>
-<div class="nota">
-<p>Repare que neste conjunto de dados o ZIP ganha do ZINB por pouco no AIC. Com 80 % de zeros, a inflação é o problema dominante, não a dispersão.</p>
-</div>
+<p>A primeira está em <strong>log da contagem esperada</strong>; a segunda em <strong>log-<em>odds</em> de ser zero estrutural</strong>. Aqui os sinais coincidem: <em>Phyllopezus pollicaris</em> tem mais chance de zero estrutural e, entre os infectados, mais parasitas. Não há contradição nisso — nem haveria com sinais opostos: as duas partes respondem a perguntas diferentes.</p>
 </section>
 <section class="slide level2">
 
@@ -839,7 +844,7 @@ Time3h            -3.356      0.780  -4.301    0.000</code></pre>
 <section id="prática-o-resto-do-bloco" class="slide level2">
 <h2>Prática (o resto do bloco)</h2>
 <ol type="1">
-<li>Rode <code>DHARMa::simulateResiduals()</code> no seu GLM de ontem.</li>
+<li>Rode <code>DHARMa::simulateResiduals()</code> no seu GLM da manhã.</li>
 <li>Teste dispersão, zeros e outliers. Escreva o que encontrou.</li>
 <li>Se houver sobredispersão, ajuste a NB e compare erros-padrão.</li>
 <li>Se houver excesso de zeros <strong>depois da NB</strong>, ajuste um ZINB e escreva uma frase justificando biologicamente o zero estrutural.</li>

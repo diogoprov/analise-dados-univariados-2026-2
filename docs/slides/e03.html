@@ -251,7 +251,7 @@ Diogo B. Provete
 </section>
 <section id="productive-failure" class="slide level2">
 <h2><em>Productive failure</em></h2>
-<p>Vocês têm 223 lagartos <em>Coleodactylus meridionalis</em>, com sexo, comprimento rostro-cloacal (SVL) e comprimento da cauda regenerada após autotomia.</p>
+<p>Vocês têm 223 lagartos <em>Coleodactylus meridionalis</em>; em 77 deles, que já tinham perdido a cauda, há sexo, comprimento rostro-cloacal (SVL) e comprimento da cauda regenerada após autotomia.</p>
 <div class="definicao">
 <p><strong>Pergunta:</strong> machos e fêmeas regeneram cauda de forma diferente?</p>
 </div>
@@ -769,15 +769,15 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>m_int3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species <span class="sc">*</span> sex, <span class="at">data =</span> pinguins,</span>
 <span id="cb40-2"><a></a>             <span class="at">contrasts =</span> <span class="fu">list</span>(<span class="at">species =</span> <span class="st">"contr.sum"</span>, <span class="at">sex =</span> <span class="st">"contr.sum"</span>))</span>
-<span id="cb40-3"><a></a>car<span class="sc">::</span><span class="fu">Anova</span>(m_int3, <span class="at">type =</span> <span class="st">"III"</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, ]</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb40-3"><a></a>car<span class="sc">::</span><span class="fu">Anova</span>(m_int3, <span class="at">type =</span> <span class="st">"III"</span>)[<span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>, ]</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Anova Table (Type III tests)
 
 Response: body_mass_g
-                Sum Sq Df  F value    Pr(&gt;F)    
-(Intercept) 5232595969  1 54661.83 &lt; 2.2e-16 ***
-species      143001222  2   746.92 &lt; 2.2e-16 ***
-sex           29851220  1   311.84 &lt; 2.2e-16 ***
+               Sum Sq Df F value    Pr(&gt;F)    
+species     143001222  2 746.924 &lt; 2.2e-16 ***
+sex          29851220  1 311.838 &lt; 2.2e-16 ***
+species:sex   1676557  2   8.757 0.0001973 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -828,7 +828,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h1>6. Comparações</h1>
 
 </section>
-<section id="emmeans-médias-marginais-estimadas" class="slide level2">
+<section id="emmeans-médias-marginais-estimadas" class="slide level2 smaller codigo-compacto">
 <h2><code>emmeans</code>: médias marginais estimadas</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">library</span>(emmeans)</span>
@@ -852,7 +852,7 @@ species = Gentoo:
 Confidence level used: 0.95 </code></pre>
 </div>
 </div>
-<p>Médias ajustadas pelo modelo — não as médias brutas dos grupos.</p>
+<p>Médias estimadas pelo modelo. Aqui coincidem com as médias brutas de cada célula, porque <code>species * sex</code> tem um parâmetro por combinação; num modelo aditivo ou com covariável, deixam de coincidir.</p>
 </section>
 <section id="contrastes" class="slide level2">
 <h2>Contrastes</h2>

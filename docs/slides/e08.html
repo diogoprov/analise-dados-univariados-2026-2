@@ -306,7 +306,7 @@ poisson 221.4   1.3 3  0.22  </code></pre>
 <p>Os três modelos ficam dentro de 1,5 unidade de AICc, nenhum leva mais de 43% do peso de Akaike, e a razão de <em>deviance</em> do Poisson era 1,15. <strong>Não havia sobredispersão a corrigir.</strong> O remédio não era necessário.</p>
 </div>
 <p>Isso é um resultado, não um fracasso do procedimento. O Poisson com intercepto aleatório já dá conta: a variação que parecia excesso estava na estrutura de praias, e o efeito aleatório a absorveu.</p>
-<p>Guardem esta conclusão. Vamos reencontrá-la à tarde, de um jeito bem mais dramático.</p>
+<p>Guardem esta conclusão. Vamos reencontrá-la depois do intervalo, de um jeito bem mais dramático.</p>
 </section>
 <section id="lme4-ou-glmmtmb" class="slide level2">
 <h2><code>lme4</code> ou <code>glmmTMB</code>?</h2>
@@ -477,7 +477,7 @@ alternative hypothesis: two.sided</code></pre>
 <p><strong>Prior.</strong> O que você considera plausível para um parâmetro <strong>antes</strong> de olhar estes dados, escrito como distribuição. “A inclinação está entre −3 e 3” é uma prior.</p>
 </div>
 <div class="definicao">
-<p><strong>Verossimilhança.</strong> O que <strong>estes</strong> dados dizem sobre o parâmetro, dado o modelo. É a mesma função que o <code>glmer()</code> maximizou de manhã.</p>
+<p><strong>Verossimilhança.</strong> O que <strong>estes</strong> dados dizem sobre o parâmetro, dado o modelo. É a mesma função que o <code>glmer()</code> maximizou no bloco 1.</p>
 </div>
 <div class="definicao">
 <p><strong>Posterior.</strong> As duas combinadas — o que sobra de plausível depois de ver os dados. <strong>É a resposta</strong>: tudo que o <code>brms</code> imprime é resumo dela.</p>
@@ -545,7 +545,7 @@ alternative hypothesis: two.sided</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">glmer</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> poisson, <span class="at">data =</span> rikz)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="nota">
-<p>Reajustamos o modelo que de fato <strong>escolhemos</strong> de manhã, o Poisson com intercepto aleatório. Não o binomial negativo, que a comparação de AIC mostrou ser desnecessário.</p>
+<p>Reajustamos o modelo que de fato <strong>escolhemos</strong> no bloco 1, o Poisson com intercepto aleatório. Não o binomial negativo, que a comparação de AIC mostrou ser desnecessário.</p>
 </div>
 <div class="definicao">
 <p>A fórmula é <strong>idêntica</strong>. O custo de transferência é a família, as priors e os argumentos de MCMC.</p>
@@ -588,14 +588,16 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 </section>
 <section id="o-que-acontece-se-insistirmos-na-nb" class="slide level2">
 <h2>O que acontece se insistirmos na NB</h2>
-<p>Ajustando o mesmo modelo com <code>family = negbinomial()</code> nestes dados:</p>
+<p>Ajustando o mesmo modelo com <code>family = negbinomial()</code> e as priors <strong>padrão</strong> do <code>brms</code> (planas nos coeficientes):</p>
 <pre><code>Further Distributional Parameters:
-                    Estimate      Est.Error  l-95% CI      u-95% CI  Rhat
-shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code></pre>
+          Estimate    Est.Error  l-95% CI     u-95% CI  Rhat
+shape 3.546404e+16 3.636776e+16  5.41      8.229341e+16  3.43
+
+Warning: There were 382 divergent transitions after warmup.</code></pre>
 <div class="definicao">
-<p>O parâmetro de forma foge para <span class="math inline">\(10^{18}\)</span>, e o <span class="math inline">\(\hat{R}\)</span> de <strong>todo</strong> o modelo vai a 3,2. Não é instabilidade numérica: é a posterior dizendo que <strong>os dados não identificam esse parâmetro</strong>. Quando a dispersão extra tende a zero, a binomial negativa converge para a Poisson, e a forma tende ao infinito sem que a verossimilhança mude.</p>
+<p>O parâmetro de forma foge para <span class="math inline">\(10^{16}\)</span>, e o <span class="math inline">\(\hat{R}\)</span> vai a 3,4. Não é instabilidade numérica: é a posterior dizendo que <strong>os dados não identificam esse parâmetro</strong>. Quando a dispersão extra tende a zero, a binomial negativa converge para a Poisson, e a forma tende ao infinito sem que a verossimilhança mude.</p>
 </div>
-<p>O <code>glmmTMB</code> devolveu, para o mesmo modelo, um ponto confortável: 15,5. Um número, sem alarme.</p>
+<p>Com as priors declaradas do slide “Priors”, as cadeias convergem (<span class="math inline">\(\hat{R} = 1{,}00\)</span>), mas a posterior da forma ainda vai de 4 a 1 800: a prior estabiliza o passeio, e os dados continuam sem identificar o parâmetro. O <code>glmmTMB</code> devolveu um ponto confortável: 15,5, sem alarme.</p>
 </section>
 <section id="a-mesma-lição-do-encontro-9-adiantada" class="slide level2">
 <h2>A mesma lição do Encontro 9, adiantada</h2>
@@ -636,12 +638,14 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a></a><span class="fu">library</span>(priorsense)</span>
 <span id="cb28-2"><a></a></span>
-<span id="cb28-3"><a></a><span class="fu">powerscale_sensitivity</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb28-3"><a></a><span class="fu">powerscale_sensitivity</span>(m_bayes,</span>
+<span id="cb28-4"><a></a>                       <span class="at">variable =</span> <span class="fu">c</span>(<span class="st">"b_Intercept"</span>, <span class="st">"b_NAP"</span>, <span class="st">"sd_Beach__Intercept"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<pre><code> variable    prior likelihood                           diagnosis
- b_Intercept 0.369      0.518 potential prior-likelihood conflict
- sigma       0.282      0.506 potential prior-likelihood conflict</code></pre>
-<p>Duas colunas, uma pergunta cada: <strong>quanto a posterior se mexe</strong> quando se aperta a prior, e quanto ela se mexe quando se aperta a verossimilhança. O limiar padrão é 0,05.</p>
+<pre><code>            variable prior likelihood diagnosis
+         b_Intercept 0.023      0.013         -
+               b_NAP 0.008      0.105         -
+ sd_Beach__Intercept 0.049      0.039         -</code></pre>
+<p>Duas colunas, uma pergunta cada: <strong>quanto a posterior se mexe</strong> quando se aperta a prior, e quanto ela se mexe quando se aperta a verossimilhança. O limiar padrão é 0,05. Aqui nenhum diagnóstico dispara: a prior pesa pouco em tudo, e quem sustenta o <code>NAP</code> são os dados.</p>
 <div class="definicao">
 <p>As duas colunas juntas é que dizem algo. <strong>Prior alta e verossimilhança alta</strong> — as duas puxam para lados diferentes: possível conflito, e o pacote sinaliza. <strong>Prior alta e verossimilhança baixa</strong> — quem está sustentando o resultado é a prior, não os dados. <strong>As duas baixas</strong> — a conclusão não depende de nenhuma das escolhas, que é o que você quer poder escrever.</p>
 </div>

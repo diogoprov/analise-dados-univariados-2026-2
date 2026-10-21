@@ -249,7 +249,7 @@
     "href": "slides/e08.html#e-o-que-essa-tabela-diz",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "E o que essa tabela diz",
-    "text": "E o que essa tabela diz\n\nOs três modelos ficam dentro de 1,5 unidade de AICc, nenhum leva mais de 43% do peso de Akaike, e a razão de deviance do Poisson era 1,15. Não havia sobredispersão a corrigir. O remédio não era necessário.\n\nIsso é um resultado, não um fracasso do procedimento. O Poisson com intercepto aleatório já dá conta: a variação que parecia excesso estava na estrutura de praias, e o efeito aleatório a absorveu.\nGuardem esta conclusão. Vamos reencontrá-la à tarde, de um jeito bem mais dramático."
+    "text": "E o que essa tabela diz\n\nOs três modelos ficam dentro de 1,5 unidade de AICc, nenhum leva mais de 43% do peso de Akaike, e a razão de deviance do Poisson era 1,15. Não havia sobredispersão a corrigir. O remédio não era necessário.\n\nIsso é um resultado, não um fracasso do procedimento. O Poisson com intercepto aleatório já dá conta: a variação que parecia excesso estava na estrutura de praias, e o efeito aleatório a absorveu.\nGuardem esta conclusão. Vamos reencontrá-la depois do intervalo, de um jeito bem mais dramático."
   },
   {
     "objectID": "slides/e08.html#lme4-ou-glmmtmb",
@@ -312,7 +312,7 @@
     "href": "slides/e08.html#três-palavras-antes-de-qualquer-código",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Três palavras, antes de qualquer código",
-    "text": "Três palavras, antes de qualquer código\n\nPrior. O que você considera plausível para um parâmetro antes de olhar estes dados, escrito como distribuição. “A inclinação está entre −3 e 3” é uma prior.\n\n\nVerossimilhança. O que estes dados dizem sobre o parâmetro, dado o modelo. É a mesma função que o glmer() maximizou de manhã.\n\n\nPosterior. As duas combinadas — o que sobra de plausível depois de ver os dados. É a resposta: tudo que o brms imprime é resumo dela.\n\nCom dados informativos, a verossimilhança domina e a prior quase não importa. Com poucos dados, ela segura o modelo — que é exatamente o caso das nove praias."
+    "text": "Três palavras, antes de qualquer código\n\nPrior. O que você considera plausível para um parâmetro antes de olhar estes dados, escrito como distribuição. “A inclinação está entre −3 e 3” é uma prior.\n\n\nVerossimilhança. O que estes dados dizem sobre o parâmetro, dado o modelo. É a mesma função que o glmer() maximizou no bloco 1.\n\n\nPosterior. As duas combinadas — o que sobra de plausível depois de ver os dados. É a resposta: tudo que o brms imprime é resumo dela.\n\nCom dados informativos, a verossimilhança domina e a prior quase não importa. Com poucos dados, ela segura o modelo — que é exatamente o caso das nove praias."
   },
   {
     "objectID": "slides/e08.html#por-que-isso-precisa-de-mcmc",
@@ -326,7 +326,7 @@
     "href": "slides/e08.html#a-mesma-fórmula",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "A mesma fórmula",
-    "text": "A mesma fórmula\n\nm_bayes &lt;- brm(Richness ~ NAP + (1 | Beach),\n               family = poisson(), data = rikz, prior = priors,\n               chains = 4, iter = 2000, seed = 2026,\n               control = list(adapt_delta = 0.95),\n               file = \"../cache/e08_rikz_pois_priors\")\n\nCompare com a linha do bloco 1:\n\nglmer(Richness ~ NAP + (1 | Beach), family = poisson, data = rikz)\n\n\nReajustamos o modelo que de fato escolhemos de manhã, o Poisson com intercepto aleatório. Não o binomial negativo, que a comparação de AIC mostrou ser desnecessário.\n\n\nA fórmula é idêntica. O custo de transferência é a família, as priors e os argumentos de MCMC."
+    "text": "A mesma fórmula\n\nm_bayes &lt;- brm(Richness ~ NAP + (1 | Beach),\n               family = poisson(), data = rikz, prior = priors,\n               chains = 4, iter = 2000, seed = 2026,\n               control = list(adapt_delta = 0.95),\n               file = \"../cache/e08_rikz_pois_priors\")\n\nCompare com a linha do bloco 1:\n\nglmer(Richness ~ NAP + (1 | Beach), family = poisson, data = rikz)\n\n\nReajustamos o modelo que de fato escolhemos no bloco 1, o Poisson com intercepto aleatório. Não o binomial negativo, que a comparação de AIC mostrou ser desnecessário.\n\n\nA fórmula é idêntica. O custo de transferência é a família, as priors e os argumentos de MCMC."
   },
   {
     "objectID": "slides/e08.html#e-o-que-ele-devolve",
@@ -347,7 +347,7 @@
     "href": "slides/e08.html#o-que-acontece-se-insistirmos-na-nb",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "O que acontece se insistirmos na NB",
-    "text": "O que acontece se insistirmos na NB\nAjustando o mesmo modelo com family = negbinomial() nestes dados:\nFurther Distributional Parameters:\n                    Estimate      Est.Error  l-95% CI      u-95% CI  Rhat\nshape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22\n\nO parâmetro de forma foge para \\(10^{18}\\), e o \\(\\hat{R}\\) de todo o modelo vai a 3,2. Não é instabilidade numérica: é a posterior dizendo que os dados não identificam esse parâmetro. Quando a dispersão extra tende a zero, a binomial negativa converge para a Poisson, e a forma tende ao infinito sem que a verossimilhança mude.\n\nO glmmTMB devolveu, para o mesmo modelo, um ponto confortável: 15,5. Um número, sem alarme."
+    "text": "O que acontece se insistirmos na NB\nAjustando o mesmo modelo com family = negbinomial() e as priors padrão do brms (planas nos coeficientes):\nFurther Distributional Parameters:\n          Estimate    Est.Error  l-95% CI     u-95% CI  Rhat\nshape 3.546404e+16 3.636776e+16  5.41      8.229341e+16  3.43\n\nWarning: There were 382 divergent transitions after warmup.\n\nO parâmetro de forma foge para \\(10^{16}\\), e o \\(\\hat{R}\\) vai a 3,4. Não é instabilidade numérica: é a posterior dizendo que os dados não identificam esse parâmetro. Quando a dispersão extra tende a zero, a binomial negativa converge para a Poisson, e a forma tende ao infinito sem que a verossimilhança mude.\n\nCom as priors declaradas do slide “Priors”, as cadeias convergem (\\(\\hat{R} = 1{,}00\\)), mas a posterior da forma ainda vai de 4 a 1 800: a prior estabiliza o passeio, e os dados continuam sem identificar o parâmetro. O glmmTMB devolveu um ponto confortável: 15,5, sem alarme."
   },
   {
     "objectID": "slides/e08.html#a-mesma-lição-do-encontro-9-adiantada",
@@ -382,7 +382,7 @@
     "href": "slides/e08.html#o-mesmo-teste-sem-reajustar",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "O mesmo teste, sem reajustar",
-    "text": "O mesmo teste, sem reajustar\nO priorsense faz isso de uma vez só, e sem ajustar nada de novo: ele reponderá os sorteios que você já tem, por amostragem de importância, como se a prior tivesse sido um pouco mais forte ou um pouco mais fraca. É a power-scaling.\n\nlibrary(priorsense)\n\npowerscale_sensitivity(m_bayes)\n\n variable    prior likelihood                           diagnosis\n b_Intercept 0.369      0.518 potential prior-likelihood conflict\n sigma       0.282      0.506 potential prior-likelihood conflict\nDuas colunas, uma pergunta cada: quanto a posterior se mexe quando se aperta a prior, e quanto ela se mexe quando se aperta a verossimilhança. O limiar padrão é 0,05.\n\nAs duas colunas juntas é que dizem algo. Prior alta e verossimilhança alta — as duas puxam para lados diferentes: possível conflito, e o pacote sinaliza. Prior alta e verossimilhança baixa — quem está sustentando o resultado é a prior, não os dados. As duas baixas — a conclusão não depende de nenhuma das escolhas, que é o que você quer poder escrever.\n\n\nO brms já vem preparado: “brms has built-in support for priorsense, such that it can be used directly without any modifications to model code.” Dá para marcar priors com tag = \"...\" e testar uma de cada vez com prior_selection =. powerscale_plot_dens() mostra a posterior deslizando conforme a prior é escalada. Kallioinen, N.; Paananen, T.; Bürkner, P.-C. & Vehtari, A. 2023. Detecting and diagnosing prior and likelihood sensitivity with power-scaling. Statistics and Computing 34:57."
+    "text": "O mesmo teste, sem reajustar\nO priorsense faz isso de uma vez só, e sem ajustar nada de novo: ele reponderá os sorteios que você já tem, por amostragem de importância, como se a prior tivesse sido um pouco mais forte ou um pouco mais fraca. É a power-scaling.\n\nlibrary(priorsense)\n\npowerscale_sensitivity(m_bayes,\n                       variable = c(\"b_Intercept\", \"b_NAP\", \"sd_Beach__Intercept\"))\n\n            variable prior likelihood diagnosis\n         b_Intercept 0.023      0.013         -\n               b_NAP 0.008      0.105         -\n sd_Beach__Intercept 0.049      0.039         -\nDuas colunas, uma pergunta cada: quanto a posterior se mexe quando se aperta a prior, e quanto ela se mexe quando se aperta a verossimilhança. O limiar padrão é 0,05. Aqui nenhum diagnóstico dispara: a prior pesa pouco em tudo, e quem sustenta o NAP são os dados.\n\nAs duas colunas juntas é que dizem algo. Prior alta e verossimilhança alta — as duas puxam para lados diferentes: possível conflito, e o pacote sinaliza. Prior alta e verossimilhança baixa — quem está sustentando o resultado é a prior, não os dados. As duas baixas — a conclusão não depende de nenhuma das escolhas, que é o que você quer poder escrever.\n\n\nO brms já vem preparado: “brms has built-in support for priorsense, such that it can be used directly without any modifications to model code.” Dá para marcar priors com tag = \"...\" e testar uma de cada vez com prior_selection =. powerscale_plot_dens() mostra a posterior deslizando conforme a prior é escalada. Kallioinen, N.; Paananen, T.; Bürkner, P.-C. & Vehtari, A. 2023. Detecting and diagnosing prior and likelihood sensitivity with power-scaling. Statistics and Computing 34:57."
   },
   {
     "objectID": "slides/e08.html#diagnóstico-de-mcmc",
@@ -508,7 +508,7 @@
     "href": "slides/e06.html#os-resíduos-comuns-mentem",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Os resíduos comuns mentem",
-    "text": "Os resíduos comuns mentem\n\n\n\n\n\n\n\n\n\nEsse padrão em faixas é esperado num GLM com contagens baixas: a resposta é discreta. Não dá para julgar se é bom ou ruim só olhando."
+    "text": "Os resíduos comuns mentem\n\n\n\n\n\n\n\n\n\nNum GLM, o resíduo de deviance não tem uma distribuição de referência: não dá para saber, só olhando, se essa dispersão é a que o modelo espera ou um problema. Com contagens baixas é pior — aparecem faixas, uma por valor observado."
   },
   {
     "objectID": "slides/e06.html#pearson-deviance-quantílico",
@@ -641,7 +641,7 @@
     "href": "slides/e06.html#comparando",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Comparando",
-    "text": "Comparando\n\nICtab(list(poisson = pois_plain, ZIP = ziP, ZINB = ziNB, hurdleNB = hurNB),\n      type = \"AICc\", weights = TRUE, delta = TRUE, base = TRUE,\n      mnames = c(\"poisson\", \"ZIP\", \"ZINB\", \"hurdleNB\"))\n\n         AICc  dAICc df weight\nZIP      275.7   0.0 10 0.62  \nZINB     277.3   1.6 11 0.28  \nhurdleNB 279.3   3.6 11 0.10  \npoisson  320.2  44.6 5  &lt;0.001\n\n\nO ZIP leva 62% do peso, a ZINB 28% e o hurdle 10%. A Poisson simples fica 45 unidades atrás: o excesso de zeros era real. Mas entre os três candidatos nenhum manda sozinho — e a escolha entre ZIP e ZINB volta a ser biológica, não aritmética."
+    "text": "Comparando\n\nnb_plain &lt;- MASS::glm.nb(Raillietiella_mottae ~ CRC + Sexo * Especie,\n                         data = parasitas)\n\nICtab(list(poisson = pois_plain, NB = nb_plain, ZIP = ziP, ZINB = ziNB,\n           hurdleNB = hurNB),\n      type = \"AICc\", weights = TRUE, delta = TRUE, base = TRUE,\n      mnames = c(\"poisson\", \"NB\", \"ZIP\", \"ZINB\", \"hurdleNB\"))\n\n         AICc  dAICc df weight\nZIP      275.7   0.0 10 0.6169\nZINB     277.3   1.6 11 0.2747\nhurdleNB 279.3   3.6 11 0.1022\nNB       284.9   9.2 6  0.0062\npoisson  320.2  44.6 5  &lt;0.001\n\n\nA Poisson fica 45 unidades atrás, mas a NB simples, sem parte de zeros, fica só 9 — e já reproduz os zeros observados. Boa parte do “excesso de zeros” era sobredispersão. O ZIP ainda leva 62 % do peso; isso só vira argumento para zero estrutural se houver razão biológica para ele."
   },
   {
     "objectID": "slides/e06.html#confira-se-os-zeros-foram-mesmo-resolvidos",
@@ -669,14 +669,14 @@
     "href": "slides/e06.html#lendo-as-duas-tabelas",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Lendo as duas tabelas",
-    "text": "Lendo as duas tabelas\n\nsummary(ziNB)$coefficients$cond\n\n                                       Estimate Std. Error    z value\n(Intercept)                          3.46085778 2.02383003  1.7100536\nCRC                                 -0.05982158 0.04022531 -1.4871625\nSexoM                               -1.10711321 0.54876450 -2.0174651\nEspeciePhyllopezus_pollicaris        0.79906460 0.99862455  0.8001652\nSexoM:EspeciePhyllopezus_pollicaris  1.49021930 0.77818607  1.9149910\n                                      Pr(&gt;|z|)\n(Intercept)                         0.08725597\nCRC                                 0.13697190\nSexoM                               0.04364700\nEspeciePhyllopezus_pollicaris       0.42361510\nSexoM:EspeciePhyllopezus_pollicaris 0.05549365\nattr(,\"ddf\")\n[1] \"asymptotic\"\n\n\n\nsummary(ziNB)$coefficients$zi\n\n                                      Estimate Std. Error   z value    Pr(&gt;|z|)\n(Intercept)                         13.7128613 4.27210534  3.209860 0.001327995\nCRC                                 -0.2617157 0.08955219 -2.922494 0.003472408\nSexoM                               -3.1046855 1.86521061 -1.664523 0.096008012\nEspeciePhyllopezus_pollicaris        4.0973433 1.64629390  2.488829 0.012816476\nSexoM:EspeciePhyllopezus_pollicaris  5.1728391 2.25825139  2.290639 0.021984292\nattr(,\"ddf\")\n[1] \"asymptotic\"\n\n\nA primeira está em log da contagem esperada; a segunda em log-odds de ser zero estrutural. Sinais opostos nas duas não são contradição: uma diz quantos parasitas há onde há, a outra diz onde não pode haver."
+    "text": "Lendo as duas tabelas\n\nsummary(ziNB)$coefficients$cond\n\n                                       Estimate Std. Error    z value\n(Intercept)                          3.46085778 2.02383003  1.7100536\nCRC                                 -0.05982158 0.04022531 -1.4871625\nSexoM                               -1.10711321 0.54876450 -2.0174651\nEspeciePhyllopezus_pollicaris        0.79906460 0.99862455  0.8001652\nSexoM:EspeciePhyllopezus_pollicaris  1.49021930 0.77818607  1.9149910\n                                      Pr(&gt;|z|)\n(Intercept)                         0.08725597\nCRC                                 0.13697190\nSexoM                               0.04364700\nEspeciePhyllopezus_pollicaris       0.42361510\nSexoM:EspeciePhyllopezus_pollicaris 0.05549365\nattr(,\"ddf\")\n[1] \"asymptotic\"\n\n\n\nsummary(ziNB)$coefficients$zi\n\n                                      Estimate Std. Error   z value    Pr(&gt;|z|)\n(Intercept)                         13.7128613 4.27210534  3.209860 0.001327995\nCRC                                 -0.2617157 0.08955219 -2.922494 0.003472408\nSexoM                               -3.1046855 1.86521061 -1.664523 0.096008012\nEspeciePhyllopezus_pollicaris        4.0973433 1.64629390  2.488829 0.012816476\nSexoM:EspeciePhyllopezus_pollicaris  5.1728391 2.25825139  2.290639 0.021984292\nattr(,\"ddf\")\n[1] \"asymptotic\"\n\n\nA primeira está em log da contagem esperada; a segunda em log-odds de ser zero estrutural. Aqui os sinais coincidem: Phyllopezus pollicaris tem mais chance de zero estrutural e, entre os infectados, mais parasitas. Não há contradição nisso — nem haveria com sinais opostos: as duas partes respondem a perguntas diferentes."
   },
   {
     "objectID": "slides/e06.html#armadilha-frequente",
     "href": "slides/e06.html#armadilha-frequente",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Armadilha frequente",
-    "text": "Armadilha frequente\n\nMuito “excesso de zeros” desaparece quando você troca Poisson por binomial negativa. A binomial negativa gera mais zeros que a Poisson de mesma média.\n\nOrdem recomendada:\n\nteste sobredispersão;\nse houver, ajuste a binomial negativa;\nsó então teste excesso de zeros, no modelo NB;\nse ainda houver, aí sim zero-inflado ou hurdle.\n\n\nRepare que neste conjunto de dados o ZIP ganha do ZINB por pouco no AIC. Com 80 % de zeros, a inflação é o problema dominante, não a dispersão."
+    "text": "Armadilha frequente\n\nMuito “excesso de zeros” desaparece quando você troca Poisson por binomial negativa. A binomial negativa gera mais zeros que a Poisson de mesma média.\n\nOrdem recomendada:\n\nteste sobredispersão;\nse houver, ajuste a binomial negativa;\nsó então teste excesso de zeros, no modelo NB;\nse ainda houver, aí sim zero-inflado ou hurdle.\n\n\nNeste conjunto, a binomial negativa sozinha já prevê os 156 zeros observados (check_zeroinflation() dá razão 1,00). Pela ordem acima, não haveria excesso de zeros a modelar — e é com isso em mente que vamos ler a comparação a seguir."
   },
   {
     "objectID": "slides/e06.html#o-problema",
@@ -746,7 +746,7 @@
     "href": "slides/e06.html#prática-o-resto-do-bloco",
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Prática (o resto do bloco)",
-    "text": "Prática (o resto do bloco)\n\nRode DHARMa::simulateResiduals() no seu GLM de ontem.\nTeste dispersão, zeros e outliers. Escreva o que encontrou.\nSe houver sobredispersão, ajuste a NB e compare erros-padrão.\nSe houver excesso de zeros depois da NB, ajuste um ZINB e escreva uma frase justificando biologicamente o zero estrutural.\nEscreva o parágrafo de métodos correspondente."
+    "text": "Prática (o resto do bloco)\n\nRode DHARMa::simulateResiduals() no seu GLM da manhã.\nTeste dispersão, zeros e outliers. Escreva o que encontrou.\nSe houver sobredispersão, ajuste a NB e compare erros-padrão.\nSe houver excesso de zeros depois da NB, ajuste um ZINB e escreva uma frase justificando biologicamente o zero estrutural.\nEscreva o parágrafo de métodos correspondente."
   },
   {
     "objectID": "slides/e06.html#para-amanhã",
@@ -872,14 +872,14 @@
     "href": "slides/e04.html#o-que-elas-têm-em-comum",
     "title": "Distribuições de probabilidade e a família exponencial",
     "section": "O que elas têm em comum",
-    "text": "O que elas têm em comum\nNormal, Poisson, Binomial, Gamma, binomial negativa (com \\(\\theta\\) fixo) e Beta podem ser escritas na mesma forma geral:\n\\[\nf(y \\mid \\theta, \\phi) =\n\\exp\\!\\left\\{ \\frac{y\\theta - b(\\theta)}{a(\\phi)} + c(y, \\phi) \\right\\}\n\\]\n\nNão é preciso decorar. O que importa é a consequência: como todas compartilham essa estrutura, um único algoritmo ajusta todas — o mesmo glm(), com um argumento family diferente."
+    "text": "O que elas têm em comum\nNormal, Poisson, Binomial, Gamma e binomial negativa (com \\(\\theta\\) fixo) podem ser escritas na mesma forma geral:\n\\[\nf(y \\mid \\theta, \\phi) =\n\\exp\\!\\left\\{ \\frac{y\\theta - b(\\theta)}{a(\\phi)} + c(y, \\phi) \\right\\}\n\\]\n\nNão é preciso decorar. O que importa é a consequência: como todas compartilham essa estrutura, um único algoritmo ajusta todas — o mesmo glm(), com um argumento family diferente.\n\n\nA binomial negativa com \\(\\theta\\) estimado sai do MASS::glm.nb(). A Beta do mapa rápido não cabe nesta forma; ajusta-se com glmmTMB ou betareg."
   },
   {
     "objectID": "slides/e04.html#duas-ferramentas-para-brincar-com-isso",
     "href": "slides/e04.html#duas-ferramentas-para-brincar-com-isso",
     "title": "Distribuições de probabilidade e a família exponencial",
     "section": "Duas ferramentas para brincar com isso",
-    "text": "Duas ferramentas para brincar com isso\nO parentesco entre as distribuições é mais fácil de ver mexendo do que lendo. Duas que valem a hora:\nProbability Playground — 33 distribuições com gráficos interativos: você arrasta os parâmetros e vê a forma mudar. É o jeito mais rápido de sentir por que a binomial negativa vira Poisson quando a dispersão some, ou a Poisson vira normal quando \\(\\lambda\\) cresce.\nUnivariate Distribution Relationships — o mapa completo: 76 distribuições e as setas que as ligam, tudo clicável. Cada seta é uma relação com nome (limite, transformação, caso especial).\n\nUm exercício de cinco minutos que rende: no mapa, encontrem as quatro famílias que vimos hoje e sigam as setas entre elas. As que o curso usa não são um punhado de escolhas soltas — são vizinhas no mapa."
+    "text": "Duas ferramentas para brincar com isso\nO parentesco entre as distribuições é mais fácil de ver mexendo do que lendo. Duas que valem a hora:\nProbability Playground — 33 distribuições com gráficos interativos: você arrasta os parâmetros e vê a forma mudar. É o jeito mais rápido de sentir por que a binomial negativa vira Poisson quando a dispersão some, ou a Poisson vira normal quando \\(\\lambda\\) cresce.\nUnivariate Distribution Relationships — o mapa completo: 76 distribuições e as setas que as ligam, tudo clicável. Cada seta é uma relação com nome (limite, transformação, caso especial).\n\nUm exercício de cinco minutos que rende: no mapa, encontrem as cinco famílias que vimos hoje e sigam as setas entre elas. As que o curso usa não são um punhado de escolhas soltas — são vizinhas no mapa."
   },
   {
     "objectID": "slides/e04.html#os-três-ingredientes-de-um-glm",
@@ -1698,7 +1698,7 @@
     "href": "encontros/e03-anova-ancova/index.html#dados",
     "title": "E3 — ANOVA, ANCOVA e interações como modelos lineares",
     "section": "Dados",
-    "text": "Dados\n\ncamila_cauda_lagartos.txt — 223 lagartos Coleodactylus meridionalis: sexo, CRC, comprimento da cauda intacta e da regenerada, e se o indivíduo já sofreu autotomia. É o conjunto da ANCOVA do bloco 3.\nanova_dois_fatores.csv — para a prática.\nCap7_exercicio1.csv — para a prática."
+    "text": "Dados\n\ncamila_cauda_lagartos.txt — 223 lagartos Coleodactylus meridionalis: sexo, CRC, comprimento da cauda intacta e da regenerada, e se o indivíduo já sofreu autotomia. A ANCOVA do bloco 3 usa os 77 que têm a cauda regenerada medida.\nanova_dois_fatores.csv — para a prática.\nCap7_exercicio1.csv — para a prática."
   },
   {
     "objectID": "encontros/e03-anova-ancova/index.html#exercícios-extras-no-swirl",
@@ -2279,7 +2279,7 @@
     "href": "slides/e01.html#os-quatro-dão-os-mesmos-números",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Os quatro dão os mesmos números",
-    "text": "Os quatro dão os mesmos números\nMédia de x, média de y, desvio-padrão, correlação (0,816) e reta de regressão (\\(y = 3 + 0{,}5x\\)): idênticos até a terceira casa decimal nos quatro conjuntos de Anscombe (1973).\n\nNenhuma estatística-resumo distingue os quatro. O gráfico distingue em um segundo. É por isso que o protocolo abaixo começa por olhar, e não por calcular.\n\n\nO pacote quartets reúne este e outros conjuntos com a mesma moral — inclusive um quarteto causal, em que as quatro estruturas causais produzem números idênticos. Voltamos a ele no Encontro 5."
+    "text": "Os quatro dão os mesmos números\nMédia de x, média de y, desvio-padrão, correlação (0,816) e reta de regressão (\\(y = 3 + 0{,}5x\\)): idênticos até a segunda casa decimal nos quatro conjuntos de Anscombe (1973).\n\nNenhuma estatística-resumo distingue os quatro. O gráfico distingue em um segundo. É por isso que o protocolo abaixo começa por olhar, e não por calcular.\n\n\nO pacote quartets reúne este e outros conjuntos com a mesma moral — inclusive um quarteto causal, em que as quatro estruturas causais produzem números idênticos. Voltamos a ele no Encontro 5."
   },
   {
     "objectID": "slides/e01.html#passo-1-outliers",
@@ -2517,7 +2517,7 @@
     "href": "slides/e03.html#productive-failure",
     "title": "ANOVA, ANCOVA e interações como modelos lineares",
     "section": "Productive failure",
-    "text": "Productive failure\nVocês têm 223 lagartos Coleodactylus meridionalis, com sexo, comprimento rostro-cloacal (SVL) e comprimento da cauda regenerada após autotomia.\n\nPergunta: machos e fêmeas regeneram cauda de forma diferente?\n\nEm grupos, 10 minutos:\n\nque análise? escrevam a fórmula;\no que “de forma diferente” significa exatamente — mesma média? mesma relação com o tamanho do corpo?\no que pode dar errado?"
+    "text": "Productive failure\nVocês têm 223 lagartos Coleodactylus meridionalis; em 77 deles, que já tinham perdido a cauda, há sexo, comprimento rostro-cloacal (SVL) e comprimento da cauda regenerada após autotomia.\n\nPergunta: machos e fêmeas regeneram cauda de forma diferente?\n\nEm grupos, 10 minutos:\n\nque análise? escrevam a fórmula;\no que “de forma diferente” significa exatamente — mesma média? mesma relação com o tamanho do corpo?\no que pode dar errado?"
   },
   {
     "objectID": "slides/e03.html#três-espécies-uma-resposta",
@@ -2699,7 +2699,7 @@
     "href": "slides/e03.html#tipo-iii-exige-contr.sum",
     "title": "ANOVA, ANCOVA e interações como modelos lineares",
     "section": "Tipo III exige contr.sum",
-    "text": "Tipo III exige contr.sum\n\nm_int3 &lt;- lm(body_mass_g ~ species * sex, data = pinguins,\n             contrasts = list(species = \"contr.sum\", sex = \"contr.sum\"))\ncar::Anova(m_int3, type = \"III\")[1:3, ]\n\nAnova Table (Type III tests)\n\nResponse: body_mass_g\n                Sum Sq Df  F value    Pr(&gt;F)    \n(Intercept) 5232595969  1 54661.83 &lt; 2.2e-16 ***\nspecies      143001222  2   746.92 &lt; 2.2e-16 ***\nsex           29851220  1   311.84 &lt; 2.2e-16 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\nRodar tipo III com o contr.treatment padrão do R produz um teste de efeito principal que não significa o que você pensa. É um dos erros mais comuns em artigos de ecologia."
+    "text": "Tipo III exige contr.sum\n\nm_int3 &lt;- lm(body_mass_g ~ species * sex, data = pinguins,\n             contrasts = list(species = \"contr.sum\", sex = \"contr.sum\"))\ncar::Anova(m_int3, type = \"III\")[2:4, ]\n\nAnova Table (Type III tests)\n\nResponse: body_mass_g\n               Sum Sq Df F value    Pr(&gt;F)    \nspecies     143001222  2 746.924 &lt; 2.2e-16 ***\nsex          29851220  1 311.838 &lt; 2.2e-16 ***\nspecies:sex   1676557  2   8.757 0.0001973 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\nRodar tipo III com o contr.treatment padrão do R produz um teste de efeito principal que não significa o que você pensa. É um dos erros mais comuns em artigos de ecologia."
   },
   {
     "objectID": "slides/e03.html#qual-usar",
@@ -2713,7 +2713,7 @@
     "href": "slides/e03.html#emmeans-médias-marginais-estimadas",
     "title": "ANOVA, ANCOVA e interações como modelos lineares",
     "section": "emmeans: médias marginais estimadas",
-    "text": "emmeans: médias marginais estimadas\n\nlibrary(emmeans)\nemmeans(m_int, ~ sex | species)\n\nspecies = Adelie:\n sex    emmean   SE  df lower.CL upper.CL\n female   3369 36.2 327     3298     3440\n male     4043 36.2 327     3972     4115\n\nspecies = Chinstrap:\n sex    emmean   SE  df lower.CL upper.CL\n female   3527 53.1 327     3423     3632\n male     3939 53.1 327     3835     4043\n\nspecies = Gentoo:\n sex    emmean   SE  df lower.CL upper.CL\n female   4680 40.6 327     4600     4760\n male     5485 39.6 327     5407     5563\n\nConfidence level used: 0.95 \n\n\nMédias ajustadas pelo modelo — não as médias brutas dos grupos."
+    "text": "emmeans: médias marginais estimadas\n\nlibrary(emmeans)\nemmeans(m_int, ~ sex | species)\n\nspecies = Adelie:\n sex    emmean   SE  df lower.CL upper.CL\n female   3369 36.2 327     3298     3440\n male     4043 36.2 327     3972     4115\n\nspecies = Chinstrap:\n sex    emmean   SE  df lower.CL upper.CL\n female   3527 53.1 327     3423     3632\n male     3939 53.1 327     3835     4043\n\nspecies = Gentoo:\n sex    emmean   SE  df lower.CL upper.CL\n female   4680 40.6 327     4600     4760\n male     5485 39.6 327     5407     5563\n\nConfidence level used: 0.95 \n\n\nMédias estimadas pelo modelo. Aqui coincidem com as médias brutas de cada célula, porque species * sex tem um parâmetro por combinação; num modelo aditivo ou com covariável, deixam de coincidir."
   },
   {
     "objectID": "slides/e03.html#contrastes",
@@ -2825,7 +2825,7 @@
     "href": "slides/e05.html#uma-grade-de-candidatos",
     "title": "GLM I: verossimilhança, binomial e Poisson",
     "section": "Uma grade de candidatos",
-    "text": "Uma grade de candidatos\n\ny &lt;- lagartos$cauda_perdida\nx &lt;- lagartos$SVLc   # SVL centrada na média — ver a nota dois slides adiante\n\nlog_vero &lt;- function(b0, b1) {\n  p &lt;- plogis(b0 + b1 * x)\n  sum(dbinom(y, size = 1, prob = p, log = TRUE))\n}\n\nb0_grade &lt;- seq(-0.75, 0.65, length.out = 60)\nb1_grade &lt;- seq(-0.07, 0.42, length.out = 60)\n\ngrade &lt;- crossing(b0 = b0_grade, b1 = b1_grade) |&gt;\n  mutate(ll = map2_dbl(b0, b1, log_vero))\n\nCada linha da grade é um par de candidatos \\((\\beta_0, \\beta_1)\\), e ll diz o quanto os dados que observamos seriam prováveis se aquele par fosse o verdadeiro."
+    "text": "Uma grade de candidatos\n\ny &lt;- lagartos$cauda_perdida\nx &lt;- lagartos$SVLc   # SVL centrada na média — ver o slide \"Por que a SVL centrada\"\n\nlog_vero &lt;- function(b0, b1) {\n  p &lt;- plogis(b0 + b1 * x)\n  sum(dbinom(y, size = 1, prob = p, log = TRUE))\n}\n\nb0_grade &lt;- seq(-0.75, 0.65, length.out = 60)\nb1_grade &lt;- seq(-0.07, 0.42, length.out = 60)\n\ngrade &lt;- crossing(b0 = b0_grade, b1 = b1_grade) |&gt;\n  mutate(ll = map2_dbl(b0, b1, log_vero))\n\nCada linha da grade é um par de candidatos \\((\\beta_0, \\beta_1)\\), e ll diz o quanto os dados que observamos seriam prováveis se aquele par fosse o verdadeiro."
   },
   {
     "objectID": "slides/e05.html#vendo-a-superfície",
@@ -3021,7 +3021,7 @@
     "href": "slides/e05.html#para-a-tarde",
     "title": "GLM I: verossimilhança, binomial e Poisson",
     "section": "Para a tarde",
-    "text": "Para a tarde\nLeitura: Análises Ecológicas no R, cap. 8, seções sobre Poisson e quasi-verossimilhança.\nÀ tarde: o que fazer quando a razão do slide 22 dá 7,8."
+    "text": "Para a tarde\nLeitura: Análises Ecológicas no R, cap. 8, seções sobre Poisson e quasi-verossimilhança.\nÀ tarde: o que fazer quando a razão de deviance de “O primeiro aviso” dá 7,8."
   },
   {
     "objectID": "slides/e05.html#referências",
@@ -3778,5 +3778,12 @@
     "title": "E6 — GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Para além dos slides",
     "text": "Para além dos slides\nO tamanho da razão de dispersão. O argumento do slide vem de Burnham & Anderson (2002, §2.5, p. 68): com dados reais espera-se \\(c &gt; 1\\), mas não muito acima de 4 se a estrutura do modelo for aceitável e só a sobredispersão estiver agindo; valores de 6 a 10 costumam indicar, em parte, estrutura inadequada.\nA premissa de odds proporcionais. O nominal_test() testa a premissa termo a termo; se ela falhar para um termo, esse termo pode variar por limiar com o argumento nominal:\nlibrary(ordinal)\nm_ord  &lt;- clm(Black ~ Treatment + Time, data = mela, link = \"logit\")\nnominal_test(m_ord)\nm_nom  &lt;- clm(Black ~ Time, nominal = ~ Treatment, data = mela)\n\nm_ordm &lt;- clmm(Black ~ Treatment * Time + (1 | Animal),\n               data = mela, link = \"logit\")\nsummary(m_ordm)"
+  },
+  {
+    "objectID": "slides/e06.html#o-problema-desta-manhã",
+    "href": "slides/e06.html#o-problema-desta-manhã",
+    "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "O problema desta manhã",
+    "text": "O problema desta manhã\n\n\ndeviance       gl    razao \n  390.90    50.00     7.82 \n\n\n\nA Poisson assume variância = média. Aqui a variância é quase 8 vezes maior do que o modelo supõe. Todo erro-padrão do modelo está subestimado, e todo valor de p está otimista.\n\nEsta tarde: como detectar, o que causa, e o que fazer."
   }
 ]

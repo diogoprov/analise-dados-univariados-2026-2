@@ -59,7 +59,7 @@ Quando o diagnóstico falha, o ciclo manda voltar aos **Dados** — e às vezes 
 
 ---
 
-## O problema de ontem {.secao}
+## O problema desta manhã {.secao}
 
 ```{r}
 #| echo: false
@@ -126,8 +126,10 @@ tibble(fit = fitted(m_rk), res = resid(m_rk, type = "deviance")) |>
   labs(x = "Valor predito", y = "Resíduo de deviance")
 ```
 
-Esse padrão em faixas é **esperado** num GLM com contagens baixas: a
-resposta é discreta. Não dá para julgar se é bom ou ruim só olhando.
+Num GLM, o resíduo de *deviance* não tem uma distribuição de referência:
+não dá para saber, só olhando, se essa dispersão é a que o modelo espera
+ou um problema. Com contagens baixas é pior --- aparecem faixas, uma por
+valor observado.
 
 ---
 
@@ -403,6 +405,30 @@ ajustada **esperaria**: não é opinião sobre "muitos zeros".
 
 ---
 
+## Armadilha frequente
+
+::: {.definicao}
+Muito "excesso de zeros" desaparece quando você troca Poisson por
+binomial negativa. A binomial negativa **gera mais zeros** que a Poisson
+de mesma média.
+:::
+
+Ordem recomendada:
+
+1. teste sobredispersão;
+2. se houver, ajuste a binomial negativa;
+3. **só então** teste excesso de zeros, no modelo NB;
+4. se ainda houver, aí sim zero-inflado ou *hurdle*.
+
+::: {.nota}
+Neste conjunto, a binomial negativa sozinha já prevê os 156 zeros
+observados (`check_zeroinflation()` dá razão 1,00). Pela ordem acima, não
+haveria excesso de zeros a modelar --- e é com isso em mente que vamos ler
+a comparação a seguir.
+:::
+
+---
+
 ## Os três candidatos
 
 ```{r}
@@ -440,15 +466,19 @@ O `~ .` é um ponto de partida cômodo, não uma escolha automática.
 ## Comparando
 
 ```{r}
-ICtab(list(poisson = pois_plain, ZIP = ziP, ZINB = ziNB, hurdleNB = hurNB),
+nb_plain <- MASS::glm.nb(Raillietiella_mottae ~ CRC + Sexo * Especie,
+                         data = parasitas)
+
+ICtab(list(poisson = pois_plain, NB = nb_plain, ZIP = ziP, ZINB = ziNB,
+           hurdleNB = hurNB),
       type = "AICc", weights = TRUE, delta = TRUE, base = TRUE,
-      mnames = c("poisson", "ZIP", "ZINB", "hurdleNB"))
+      mnames = c("poisson", "NB", "ZIP", "ZINB", "hurdleNB"))
 ```
 
-O ZIP leva 62% do peso, a ZINB 28% e o *hurdle* 10%. A Poisson simples
-fica 45 unidades atrás: o excesso de zeros era real. Mas entre os três
-candidatos nenhum manda sozinho — e a escolha entre ZIP e ZINB volta a
-ser biológica, não aritmética.
+A Poisson fica 45 unidades atrás, mas a NB simples, sem parte de zeros,
+fica só 9 --- e já reproduz os zeros observados. Boa parte do "excesso de
+zeros" era sobredispersão. O ZIP ainda leva 62 % do peso; isso só vira
+argumento para zero estrutural se houver razão **biológica** para ele.
 
 ---
 
@@ -480,31 +510,10 @@ summary(ziNB)$coefficients$zi
 ```
 
 A primeira está em **log da contagem esperada**; a segunda em
-**log-*odds* de ser zero estrutural**. Sinais opostos nas duas não são
-contradição: uma diz quantos parasitas há onde há, a outra diz onde não
-pode haver.
-
----
-
-## Armadilha frequente
-
-::: {.definicao}
-Muito "excesso de zeros" desaparece quando você troca Poisson por
-binomial negativa. A binomial negativa **gera mais zeros** que a Poisson
-de mesma média.
-:::
-
-Ordem recomendada:
-
-1. teste sobredispersão;
-2. se houver, ajuste a binomial negativa;
-3. **só então** teste excesso de zeros, no modelo NB;
-4. se ainda houver, aí sim zero-inflado ou *hurdle*.
-
-::: {.nota}
-Repare que neste conjunto de dados o ZIP ganha do ZINB por pouco no AIC.
-Com 80 % de zeros, a inflação é o problema dominante, não a dispersão.
-:::
+**log-*odds* de ser zero estrutural**. Aqui os sinais coincidem:
+*Phyllopezus pollicaris* tem mais chance de zero estrutural e, entre os
+infectados, mais parasitas. Não há contradição nisso --- nem haveria com
+sinais opostos: as duas partes respondem a perguntas diferentes.
 
 ---
 
@@ -630,7 +639,7 @@ o que permite ao leitor confiar no resto.
 
 ## Prática (o resto do bloco)
 
-1. Rode `DHARMa::simulateResiduals()` no seu GLM de ontem.
+1. Rode `DHARMa::simulateResiduals()` no seu GLM da manhã.
 2. Teste dispersão, zeros e outliers. Escreva o que encontrou.
 3. Se houver sobredispersão, ajuste a NB e compare erros-padrão.
 4. Se houver excesso de zeros **depois da NB**, ajuste um ZINB e escreva
