@@ -432,17 +432,23 @@ tibble(Beach = sep$Beach, n = sep$n, separado = sep$intercepto, misto = misto) |
 ```
 
 As estimativas do modelo misto são **puxadas para a média geral** — mais
-ainda nas praias com menos amostras.
+ainda nas praias cuja regressão separada deu um intercepto extremo ou
+pouco preciso.
 
 ---
 
 ## Por que isso é bom
 
 ::: {.definicao}
-*Shrinkage* não é um defeito: é o modelo reconhecendo que uma média
-baseada em 3 amostras é menos confiável que uma baseada em 9, e pedindo
-emprestada informação das outras praias.
+*Shrinkage* não é um defeito: é o modelo reconhecendo que uma reta
+ajustada a só 5 pontos é pouco confiável, e pedindo emprestada
+informação das outras praias.
 :::
+
+O RIKZ é balanceado — 5 amostras em cada uma das 9 praias —, então aqui
+o encolhimento depende de quão ruidosa e quão longe da média é cada
+estimativa isolada. Num delineamento desbalanceado, as praias com menos
+amostras encolheriam mais.
 
 É o mesmo princípio da regularização bayesiana — e, de fato, um efeito
 aleatório **é** uma prior sobre os níveis do fator. Voltamos a isso à

@@ -501,31 +501,60 @@ alternative hypothesis: two.sided</code></pre>
 <p>Daí vêm os diagnósticos de que falaremos adiante. <code>Rhat</code> e <code>ESS</code> não dizem se o <strong>modelo</strong> é bom — dizem se o <strong>passeio</strong> funcionou. São duas perguntas diferentes, e é comum confundi-las.</p>
 </div>
 </section>
-<section id="a-mesma-fórmula" class="slide level2">
-<h2>A mesma fórmula</h2>
+<section id="priors" class="slide level2 smaller">
+<h2>Priors</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a></a><span class="fu">library</span>(brms)</span>
 <span id="cb19-2"><a></a></span>
-<span id="cb19-3"><a></a>m_bayes <span class="ot">&lt;-</span> <span class="fu">brm</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach),</span>
-<span id="cb19-4"><a></a>               <span class="at">family =</span> <span class="fu">poisson</span>(), <span class="at">data =</span> rikz,</span>
-<span id="cb19-5"><a></a>               <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">seed =</span> <span class="dv">2026</span>,</span>
-<span id="cb19-6"><a></a>               <span class="at">file =</span> <span class="st">"../cache/e08_rikz_pois"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-3"><a></a><span class="fu">get_prior</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> <span class="fu">poisson</span>(), <span class="at">data =</span> rikz)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                  prior     class      coef group resp dpar nlpar lb ub tag
+                 (flat)         b                                          
+                 (flat)         b       NAP                                
+ student_t(3, 1.4, 2.5) Intercept                                          
+   student_t(3, 0, 2.5)        sd                                  0       
+   student_t(3, 0, 2.5)        sd           Beach                  0       
+   student_t(3, 0, 2.5)        sd Intercept Beach                  0       
+       source
+      default
+ (vectorized)
+      default
+      default
+ (vectorized)
+ (vectorized)</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a>priors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>),     <span class="at">class =</span> <span class="st">"b"</span>),</span>
+<span id="cb21-2"><a></a>            <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">2</span>, <span class="dv">1</span>),     <span class="at">class =</span> <span class="st">"Intercept"</span>),</span>
+<span id="cb21-3"><a></a>            <span class="fu">prior</span>(<span class="fu">exponential</span>(<span class="dv">1</span>),   <span class="at">class =</span> <span class="st">"sd"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="definicao">
+<p><strong>Fracamente informativa</strong> não é “sem informação”. É dizer ao modelo que um coeficiente de 500 na escala log é absurdo — o que você sabe, e os dados nem sempre conseguem dizer sozinhos.</p>
+</div>
+</section>
+<section id="a-mesma-fórmula" class="slide level2">
+<h2>A mesma fórmula</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a></a>m_bayes <span class="ot">&lt;-</span> <span class="fu">brm</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach),</span>
+<span id="cb22-2"><a></a>               <span class="at">family =</span> <span class="fu">poisson</span>(), <span class="at">data =</span> rikz, <span class="at">prior =</span> priors,</span>
+<span id="cb22-3"><a></a>               <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">seed =</span> <span class="dv">2026</span>,</span>
+<span id="cb22-4"><a></a>               <span class="at">control =</span> <span class="fu">list</span>(<span class="at">adapt_delta =</span> <span class="fl">0.95</span>),</span>
+<span id="cb22-5"><a></a>               <span class="at">file =</span> <span class="st">"../cache/e08_rikz_pois_priors"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Compare com a linha do bloco 1:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a></a><span class="fu">glmer</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> poisson, <span class="at">data =</span> rikz)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a></a><span class="fu">glmer</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> poisson, <span class="at">data =</span> rikz)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="nota">
 <p>Reajustamos o modelo que de fato <strong>escolhemos</strong> de manhã, o Poisson com intercepto aleatório. Não o binomial negativo, que a comparação de AIC mostrou ser desnecessário.</p>
 </div>
 <div class="definicao">
-<p>A fórmula é <strong>idêntica</strong>. O custo de transferência é a família e três argumentos de MCMC.</p>
+<p>A fórmula é <strong>idêntica</strong>. O custo de transferência é a família, as priors e os argumentos de MCMC.</p>
 </div>
 </section>
 <section id="e-o-que-ele-devolve" class="slide level2">
 <h2>E o que ele devolve</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a></a><span class="fu">summary</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">summary</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> Family: poisson 
   Links: mu = log 
@@ -537,12 +566,12 @@ Formula: Richness ~ NAP + (1 | Beach)
 Multilevel Hyperparameters:
 ~Beach (Number of levels: 9) 
               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sd(Intercept)     0.61      0.21     0.33     1.16 1.01      829     1313
+sd(Intercept)     0.58      0.18     0.32     1.04 1.00     1036     1812
 
 Regression Coefficients:
           Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept     1.66      0.23     1.22     2.12 1.00      788      941
-NAP          -0.50      0.07    -0.65    -0.36 1.00     2815     2814
+Intercept     1.67      0.22     1.25     2.12 1.00      988     1254
+NAP          -0.50      0.08    -0.65    -0.35 1.00     3062     2714
 
 Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
 and Tail_ESS are effective sample size measures, and Rhat is the potential
@@ -553,7 +582,7 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="lendo-a-saída" class="slide level2">
 <h2>Lendo a saída</h2>
 <div class="definicao">
-<p><code>Rhat</code> em 1,00 e <code>ESS</code> na casa dos milhares: as quatro cadeias convergiram, e a amostra da posterior é utilizável. Guardem esses dois números — no próximo slide eles reaparecem de outro jeito.</p>
+<p><code>Rhat</code> em 1,00 e <code>ESS</code> perto de mil ou acima: as quatro cadeias convergiram, e a amostra da posterior é utilizável. Guardem esses dois números — no próximo slide eles reaparecem de outro jeito.</p>
 </div>
 <p>A estimativa de <code>NAP</code> é praticamente a mesma do <code>glmer</code> do bloco 1. O que muda é o que está em volta dela: em lugar de erro-padrão e intervalo de confiança, um desvio da posterior e um intervalo de credibilidade.</p>
 </section>
@@ -588,34 +617,6 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 </ol>
 <div class="nota">
 <p>Cuidado com o item 4: <strong>filogenia não entra nessa lista</strong>. O <code>glmmTMB</code> ajusta modelo misto filogenético por máxima verossimilhança com a estrutura <a href="https://cran.r-project.org/web/packages/glmmTMB/vignettes/covstruct.html#proportional"><code>propto</code></a>, que encaixa um efeito aleatório proporcional a uma matriz de covariância conhecida — a de Brownian da árvore, por exemplo: <code>propto(0 + species | dummy, phylo_varcov)</code>. É exatamente o remédio para a pseudorréplica filogenética do Encontro 7. A vantagem bayesiana aqui é de grau, não de espécie: estimar a filogenia junto com o modelo, ou pôr prior sobre o sinal filogenético.</p>
-</div>
-</section>
-<section id="priors" class="slide level2 smaller">
-<h2>Priors</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a></a><span class="fu">get_prior</span>(Richness <span class="sc">~</span> NAP <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> Beach), <span class="at">family =</span> <span class="fu">poisson</span>(), <span class="at">data =</span> rikz)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>                  prior     class      coef group resp dpar nlpar lb ub tag
-                 (flat)         b                                          
-                 (flat)         b       NAP                                
- student_t(3, 1.4, 2.5) Intercept                                          
-   student_t(3, 0, 2.5)        sd                                  0       
-   student_t(3, 0, 2.5)        sd           Beach                  0       
-   student_t(3, 0, 2.5)        sd Intercept Beach                  0       
-       source
-      default
- (vectorized)
-      default
-      default
- (vectorized)
- (vectorized)</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a></a>priors <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">1</span>),     <span class="at">class =</span> <span class="st">"b"</span>),</span>
-<span id="cb26-2"><a></a>            <span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">2</span>, <span class="dv">1</span>),     <span class="at">class =</span> <span class="st">"Intercept"</span>),</span>
-<span id="cb26-3"><a></a>            <span class="fu">prior</span>(<span class="fu">exponential</span>(<span class="dv">1</span>),   <span class="at">class =</span> <span class="st">"sd"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="definicao">
-<p><strong>Fracamente informativa</strong> não é “sem informação”. É dizer ao modelo que um coeficiente de 500 na escala log é absurdo — o que você sabe, e os dados nem sempre conseguem dizer sozinhos.</p>
 </div>
 </section>
 <section id="sensibilidade-à-prior" class="slide level2">
@@ -865,7 +866,7 @@ shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22</code><
 <li>Ajuste singular = os dados não sustentam aquela estrutura aleatória.</li>
 <li>Reescalar preditoras resolve a maioria dos problemas de convergência.</li>
 <li>Relate <span class="math inline">\(R^2\)</span> marginal <strong>e</strong> condicional, e diga o que o efeito aleatório representa.</li>
-<li><code>brm()</code> usa a mesma fórmula — a ponte custa três argumentos.</li>
+<li><code>brm()</code> usa a mesma fórmula — a ponte custa as priors, declaradas, e os argumentos de MCMC.</li>
 </ol>
 </section>
 <section id="prática-o-resto-do-bloco" class="slide level2">

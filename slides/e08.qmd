@@ -355,15 +355,34 @@ perguntas diferentes, e é comum confundi-las.
 
 ---
 
-## A mesma fórmula
+## Priors {.smaller}
 
 ```{r}
 library(brms)
 
+get_prior(Richness ~ NAP + (1 | Beach), family = poisson(), data = rikz)
+
+priors <- c(prior(normal(0, 1),     class = "b"),
+            prior(normal(2, 1),     class = "Intercept"),
+            prior(exponential(1),   class = "sd"))
+```
+
+::: {.definicao}
+**Fracamente informativa** não é "sem informação". É dizer ao modelo que
+um coeficiente de 500 na escala log é absurdo — o que você sabe, e os
+dados nem sempre conseguem dizer sozinhos.
+:::
+
+---
+
+## A mesma fórmula
+
+```{r}
 m_bayes <- brm(Richness ~ NAP + (1 | Beach),
-               family = poisson(), data = rikz,
+               family = poisson(), data = rikz, prior = priors,
                chains = 4, iter = 2000, seed = 2026,
-               file = "../cache/e08_rikz_pois")
+               control = list(adapt_delta = 0.95),
+               file = "../cache/e08_rikz_pois_priors")
 ```
 
 Compare com a linha do bloco 1:
@@ -380,8 +399,8 @@ mostrou ser desnecessário.
 :::
 
 ::: {.definicao}
-A fórmula é **idêntica**. O custo de transferência é a família e três
-argumentos de MCMC.
+A fórmula é **idêntica**. O custo de transferência é a família, as
+priors e os argumentos de MCMC.
 :::
 
 ---
@@ -397,7 +416,7 @@ summary(m_bayes)
 ## Lendo a saída
 
 ::: {.definicao}
-`Rhat` em 1,00 e `ESS` na casa dos milhares: as quatro cadeias
+`Rhat` em 1,00 e `ESS` perto de mil ou acima: as quatro cadeias
 convergiram, e a amostra da posterior é utilizável. Guardem esses dois
 números — no próximo slide eles reaparecem de outro jeito.
 :::
@@ -470,24 +489,6 @@ conhecida — a de Brownian da árvore, por exemplo:
 pseudorréplica filogenética do Encontro 7. A vantagem bayesiana aqui é de
 grau, não de espécie: estimar a filogenia junto com o modelo, ou pôr prior
 sobre o sinal filogenético.
-:::
-
----
-
-## Priors {.smaller}
-
-```{r}
-get_prior(Richness ~ NAP + (1 | Beach), family = poisson(), data = rikz)
-
-priors <- c(prior(normal(0, 1),     class = "b"),
-            prior(normal(2, 1),     class = "Intercept"),
-            prior(exponential(1),   class = "sd"))
-```
-
-::: {.definicao}
-**Fracamente informativa** não é "sem informação". É dizer ao modelo que
-um coeficiente de 500 na escala log é absurdo — o que você sabe, e os
-dados nem sempre conseguem dizer sozinhos.
 :::
 
 ---
@@ -688,7 +689,8 @@ aparecer:
 3. Reescalar preditoras resolve a maioria dos problemas de convergência.
 4. Relate $R^2$ marginal **e** condicional, e diga o que o efeito
    aleatório representa.
-5. `brm()` usa a mesma fórmula — a ponte custa três argumentos.
+5. `brm()` usa a mesma fórmula — a ponte custa as priors, declaradas,
+   e os argumentos de MCMC.
 
 ---
 

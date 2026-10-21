@@ -142,7 +142,7 @@ entre um teste t e uma regressão.
 set.seed(42)
 d <- tibble(x = runif(300, 0, 10), y = 2 + 1.5 * x + rnorm(300, 0, 2))
 bind_rows(
-  tibble(valor = d$y,              tipo = "Resposta y (bimodal, nada normal)"),
+  tibble(valor = d$y,              tipo = "Resposta y (achatada, nada normal)"),
   tibble(valor = resid(lm(y ~ x, d)), tipo = "Resíduo (normal — é o que importa)")
 ) |>
   ggplot(aes(valor)) +

@@ -326,21 +326,21 @@
     "href": "slides/e08.html#a-mesma-fórmula",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "A mesma fórmula",
-    "text": "A mesma fórmula\n\nlibrary(brms)\n\nm_bayes &lt;- brm(Richness ~ NAP + (1 | Beach),\n               family = poisson(), data = rikz,\n               chains = 4, iter = 2000, seed = 2026,\n               file = \"../cache/e08_rikz_pois\")\n\nCompare com a linha do bloco 1:\n\nglmer(Richness ~ NAP + (1 | Beach), family = poisson, data = rikz)\n\n\nReajustamos o modelo que de fato escolhemos de manhã, o Poisson com intercepto aleatório. Não o binomial negativo, que a comparação de AIC mostrou ser desnecessário.\n\n\nA fórmula é idêntica. O custo de transferência é a família e três argumentos de MCMC."
+    "text": "A mesma fórmula\n\nm_bayes &lt;- brm(Richness ~ NAP + (1 | Beach),\n               family = poisson(), data = rikz, prior = priors,\n               chains = 4, iter = 2000, seed = 2026,\n               control = list(adapt_delta = 0.95),\n               file = \"../cache/e08_rikz_pois_priors\")\n\nCompare com a linha do bloco 1:\n\nglmer(Richness ~ NAP + (1 | Beach), family = poisson, data = rikz)\n\n\nReajustamos o modelo que de fato escolhemos de manhã, o Poisson com intercepto aleatório. Não o binomial negativo, que a comparação de AIC mostrou ser desnecessário.\n\n\nA fórmula é idêntica. O custo de transferência é a família, as priors e os argumentos de MCMC."
   },
   {
     "objectID": "slides/e08.html#e-o-que-ele-devolve",
     "href": "slides/e08.html#e-o-que-ele-devolve",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "E o que ele devolve",
-    "text": "E o que ele devolve\n\nsummary(m_bayes)\n\n Family: poisson \n  Links: mu = log \nFormula: Richness ~ NAP + (1 | Beach) \n   Data: rikz (Number of observations: 45) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nMultilevel Hyperparameters:\n~Beach (Number of levels: 9) \n              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsd(Intercept)     0.61      0.21     0.33     1.16 1.01      829     1313\n\nRegression Coefficients:\n          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nIntercept     1.66      0.23     1.22     2.12 1.00      788      941\nNAP          -0.50      0.07    -0.65    -0.36 1.00     2815     2814\n\nDraws were sampled using sampling(NUTS). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
+    "text": "E o que ele devolve\n\nsummary(m_bayes)\n\n Family: poisson \n  Links: mu = log \nFormula: Richness ~ NAP + (1 | Beach) \n   Data: rikz (Number of observations: 45) \n  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;\n         total post-warmup draws = 4000\n\nMultilevel Hyperparameters:\n~Beach (Number of levels: 9) \n              Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nsd(Intercept)     0.58      0.18     0.32     1.04 1.00     1036     1812\n\nRegression Coefficients:\n          Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS\nIntercept     1.67      0.22     1.25     2.12 1.00      988     1254\nNAP          -0.50      0.08    -0.65    -0.35 1.00     3062     2714\n\nDraws were sampled using sampling(NUTS). For each parameter, Bulk_ESS\nand Tail_ESS are effective sample size measures, and Rhat is the potential\nscale reduction factor on split chains (at convergence, Rhat = 1)."
   },
   {
     "objectID": "slides/e08.html#lendo-a-saída",
     "href": "slides/e08.html#lendo-a-saída",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Lendo a saída",
-    "text": "Lendo a saída\n\nRhat em 1,00 e ESS na casa dos milhares: as quatro cadeias convergiram, e a amostra da posterior é utilizável. Guardem esses dois números — no próximo slide eles reaparecem de outro jeito.\n\nA estimativa de NAP é praticamente a mesma do glmer do bloco 1. O que muda é o que está em volta dela: em lugar de erro-padrão e intervalo de confiança, um desvio da posterior e um intervalo de credibilidade."
+    "text": "Lendo a saída\n\nRhat em 1,00 e ESS perto de mil ou acima: as quatro cadeias convergiram, e a amostra da posterior é utilizável. Guardem esses dois números — no próximo slide eles reaparecem de outro jeito.\n\nA estimativa de NAP é praticamente a mesma do glmer do bloco 1. O que muda é o que está em volta dela: em lugar de erro-padrão e intervalo de confiança, um desvio da posterior e um intervalo de credibilidade."
   },
   {
     "objectID": "slides/e08.html#o-que-acontece-se-insistirmos-na-nb",
@@ -368,7 +368,7 @@
     "href": "slides/e08.html#priors",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "Priors",
-    "text": "Priors\n\nget_prior(Richness ~ NAP + (1 | Beach), family = poisson(), data = rikz)\n\n                  prior     class      coef group resp dpar nlpar lb ub tag\n                 (flat)         b                                          \n                 (flat)         b       NAP                                \n student_t(3, 1.4, 2.5) Intercept                                          \n   student_t(3, 0, 2.5)        sd                                  0       \n   student_t(3, 0, 2.5)        sd           Beach                  0       \n   student_t(3, 0, 2.5)        sd Intercept Beach                  0       \n       source\n      default\n (vectorized)\n      default\n      default\n (vectorized)\n (vectorized)\n\npriors &lt;- c(prior(normal(0, 1),     class = \"b\"),\n            prior(normal(2, 1),     class = \"Intercept\"),\n            prior(exponential(1),   class = \"sd\"))\n\n\nFracamente informativa não é “sem informação”. É dizer ao modelo que um coeficiente de 500 na escala log é absurdo — o que você sabe, e os dados nem sempre conseguem dizer sozinhos."
+    "text": "Priors\n\nlibrary(brms)\n\nget_prior(Richness ~ NAP + (1 | Beach), family = poisson(), data = rikz)\n\n                  prior     class      coef group resp dpar nlpar lb ub tag\n                 (flat)         b                                          \n                 (flat)         b       NAP                                \n student_t(3, 1.4, 2.5) Intercept                                          \n   student_t(3, 0, 2.5)        sd                                  0       \n   student_t(3, 0, 2.5)        sd           Beach                  0       \n   student_t(3, 0, 2.5)        sd Intercept Beach                  0       \n       source\n      default\n (vectorized)\n      default\n      default\n (vectorized)\n (vectorized)\n\npriors &lt;- c(prior(normal(0, 1),     class = \"b\"),\n            prior(normal(2, 1),     class = \"Intercept\"),\n            prior(exponential(1),   class = \"sd\"))\n\n\nFracamente informativa não é “sem informação”. É dizer ao modelo que um coeficiente de 500 na escala log é absurdo — o que você sabe, e os dados nem sempre conseguem dizer sozinhos."
   },
   {
     "objectID": "slides/e08.html#sensibilidade-à-prior",
@@ -452,7 +452,7 @@
     "href": "slides/e08.html#o-que-fica-de-hoje",
     "title": "GLMM II: lme4, glmmTMB e a ponte bayesiana",
     "section": "O que fica de hoje",
-    "text": "O que fica de hoje\n\nRiqueza é contagem: GLMM de Poisson ou NB, não gaussiano.\nAjuste singular = os dados não sustentam aquela estrutura aleatória.\nReescalar preditoras resolve a maioria dos problemas de convergência.\nRelate \\(R^2\\) marginal e condicional, e diga o que o efeito aleatório representa.\nbrm() usa a mesma fórmula — a ponte custa três argumentos."
+    "text": "O que fica de hoje\n\nRiqueza é contagem: GLMM de Poisson ou NB, não gaussiano.\nAjuste singular = os dados não sustentam aquela estrutura aleatória.\nReescalar preditoras resolve a maioria dos problemas de convergência.\nRelate \\(R^2\\) marginal e condicional, e diga o que o efeito aleatório representa.\nbrm() usa a mesma fórmula — a ponte custa as priors, declaradas, e os argumentos de MCMC."
   },
   {
     "objectID": "slides/e08.html#prática-o-resto-do-bloco",
@@ -3168,14 +3168,14 @@
     "href": "slides/e07.html#shrinkage",
     "title": "GLMM I: por que efeitos aleatórios",
     "section": "Shrinkage",
-    "text": "Shrinkage\n\n\n\n\n\n\n\n\n\nAs estimativas do modelo misto são puxadas para a média geral — mais ainda nas praias com menos amostras."
+    "text": "Shrinkage\n\n\n\n\n\n\n\n\n\nAs estimativas do modelo misto são puxadas para a média geral — mais ainda nas praias cuja regressão separada deu um intercepto extremo ou pouco preciso."
   },
   {
     "objectID": "slides/e07.html#por-que-isso-é-bom",
     "href": "slides/e07.html#por-que-isso-é-bom",
     "title": "GLMM I: por que efeitos aleatórios",
     "section": "Por que isso é bom",
-    "text": "Por que isso é bom\n\nShrinkage não é um defeito: é o modelo reconhecendo que uma média baseada em 3 amostras é menos confiável que uma baseada em 9, e pedindo emprestada informação das outras praias.\n\nÉ o mesmo princípio da regularização bayesiana — e, de fato, um efeito aleatório é uma prior sobre os níveis do fator. Voltamos a isso à tarde."
+    "text": "Por que isso é bom\n\nShrinkage não é um defeito: é o modelo reconhecendo que uma reta ajustada a só 5 pontos é pouco confiável, e pedindo emprestada informação das outras praias.\n\nO RIKZ é balanceado — 5 amostras em cada uma das 9 praias —, então aqui o encolhimento depende de quão ruidosa e quão longe da média é cada estimativa isolada. Num delineamento desbalanceado, as praias com menos amostras encolheriam mais.\nÉ o mesmo princípio da regularização bayesiana — e, de fato, um efeito aleatório é uma prior sobre os níveis do fator. Voltamos a isso à tarde."
   },
   {
     "objectID": "slides/e07.html#o-incômodo",
@@ -3687,5 +3687,12 @@
     "title": "O teste de normalidade, ao vivo",
     "section": "O que levar disso",
     "text": "O que levar disso\nO shapiro.test() responde “tenho evidência de que estes dados não vieram de uma normal?”. Essa não é a pergunta que interessa. A que interessa é “o quanto este desvio ameaça a minha inferência?” — e essa depende do tamanho do desvio e do que o modelo faz com ele, não do n.\n\nShatz, I. 2024. Assumption-checking rather than (just) testing: the importance of visualization and effect size in statistical diagnostics. Behavior Research Methods 56:826–845. Acesso aberto; é o artigo que esta página ilustra.\nKozak, M. & Piepho, H.-P. 2018. What’s normal anyway? Residual plots are more telling than significance tests when checking ANOVA assumptions. Journal of Agronomy and Crop Science 204:86–98.\n\n\nVolta para o Encontro 2."
+  },
+  {
+    "objectID": "slides/e06.html#cinco-causas-cinco-remédios",
+    "href": "slides/e06.html#cinco-causas-cinco-remédios",
+    "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
+    "section": "Cinco causas, cinco remédios",
+    "text": "Cinco causas, cinco remédios\n\n\n\n\n\n\n\n\nCausa\nSinal\nO que fazer\n\n\n\n\nFalta uma covariável importante\nresíduo estruturado\nincluir a covariável\n\n\nFalta um termo não linear\ncurvatura no resíduo\npoly(), s()\n\n\nObservações agrupadas\ngrupos com médias distintas\nefeito aleatório (E7)\n\n\nExcesso de zeros\npico em zero\nZI ou hurdle\n\n\nVariação genuína além da Poisson\nnada acima explica\nbinomial negativa\n\n\n\n\nSobredispersão é quase sempre sintoma, não doença. Trocar a distribuição sem investigar a causa esconde o problema em vez de resolvê-lo."
   }
 ]

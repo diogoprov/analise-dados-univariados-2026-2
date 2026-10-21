@@ -3,7 +3,7 @@
 # GLMM, diagnóstico por grupo, R2 de Nakagawa e a ponte bayesiana.
 #
 # ATENÇÃO ao item 4: a chamada brm() é IDÊNTICA à do slide e aponta para o
-# mesmo cache (cache/e08_rikz_pois). Se você mudar a fórmula aqui, mude
+# mesmo cache (cache/e08_rikz_pois_priors). Se você mudar a fórmula aqui, mude
 # também no slide e em R/precompila-cache.R — o brms, no padrão
 # file_refit = "never", carrega o .rds sem conferir a fórmula.
 # ---------------------------------------------------------------------
@@ -53,9 +53,14 @@ r2_nakagawa(m_pois)
 # 4. O mesmo modelo em brms --------------------------------------------
 if (requireNamespace("brms", quietly = TRUE)) {
   library(brms)
+  priors <- c(prior(normal(0, 1),     class = "b"),
+              prior(normal(2, 1),     class = "Intercept"),
+              prior(exponential(1),   class = "sd"))
   m_bayes <- brm(Richness ~ NAP + (1 | Beach), family = poisson(), data = rikz,
+                 prior = priors,
                  chains = 4, iter = 2000, seed = 2026,
-                 file = "cache/e08_rikz_pois")
+                 control = list(adapt_delta = 0.95),
+                 file = "cache/e08_rikz_pois_priors")
   print(summary(m_bayes))
   print(pp_check(m_bayes, ndraws = 100))
 } else {
