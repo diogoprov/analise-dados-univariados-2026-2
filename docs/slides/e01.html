@@ -187,10 +187,6 @@
       margin-right: 0; 
     }
   </style>
-  <script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
-  <script src="../site_libs/viz-1.8.2/viz.js"></script>
-  <link href="../site_libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet">
-  <script src="../site_libs/grViz-binding-1.0.12/grViz.js"></script>
 <meta property="og:title" content="EDA, reprodutibilidade e literacia em IA – Análise de Dados Univariados">
 <meta property="og:description" content="Encontro 1 · Análise de Dados Univariados · PPGBA/UFMS">
 <meta property="og:site_name" content="Análise de Dados Univariados">
@@ -283,13 +279,13 @@ Diogo B. Provete
 <h2>Hoje</h2>
 <ol type="1">
 <li><em>Productive failure</em> de abertura — 20 min</li>
-<li>O ciclo PPDAC — 30 min</li>
-<li>Os quatro princípios de Popovic et al.&nbsp;(2024) — 30 min</li>
+<li>O ciclo PPDAC — 20 min</li>
+<li>Os quatro princípios de Popovic et al.&nbsp;(2024) — 20 min</li>
 <li>Pergunta focada, HARKing e pré-registro — 30 min</li>
-<li><strong>Intervalo</strong></li>
-<li>Exploração de dados: o protocolo em oito passos — 90 min</li>
-<li>Fluxo reprodutível: projeto, Quarto, git — 45 min</li>
-<li>Uso saudável de LLMs em estatística — 60 min</li>
+<li><strong>Intervalo</strong> — 15 min</li>
+<li>Exploração de dados: o protocolo em oito passos — 75 min</li>
+<li>Fluxo reprodutível: projeto, Quarto, git — 30 min</li>
+<li>Uso saudável de LLMs em estatística — 30 min</li>
 </ol>
 </section>
 <section class="slide level2">
@@ -345,28 +341,13 @@ Diogo B. Provete
 </div>
 </div>
 </div>
-<p>Cada ponto é o meio de um segmento de <strong>500 m</strong> da IP2, entre Portalegre e Monforte: 52 segmentos, 26 km de estrada, descendo pelo limite sudoeste do Parque Natural da Serra de São Mamede. A cor e o tamanho são a contagem de anfíbios mortos.</p>
+<p>Cada ponto é o meio de um segmento de <strong>500 m</strong> da IP2, entre Portalegre e Monforte, junto ao Parque Natural da Serra de São Mamede. A estrada foi percorrida de carro <strong>a cada duas semanas, por dois anos</strong> (1995–1997), e cada carcaça foi retirada da pista. Cor e tamanho: anfíbios mortos.</p>
 </section>
-<section id="como-esses-números-foram-feitos" class="slide level2">
-<h2>Como esses números foram feitos</h2>
-<ul>
-<li>Um trecho de <strong>26 km</strong> da IP2, distrito de Portalegre, sul de Portugal: tráfego moderado, cerca de <strong>5 000 veículos por dia</strong>, cortando <em>montado</em> de sobreiro (<em>Quercus suber</em>) e azinheira (<em>Q. rotundifolia</em>), campo aberto e olivais.</li>
-<li>Percorrido <strong>de carro, a cerca de 20 km/h</strong>, <strong>a cada duas semanas por dois anos</strong> — 54 percursos, entre 1995 e 1997.</li>
-<li><strong>2 421 carcaças de 80 espécies</strong> não domésticas. Os anfíbios são a maior fatia: <strong>1 362</strong>. Cada carcaça foi identificada e retirada da pista, para não ser contada de novo na quinzena seguinte.</li>
-<li>A estrada dividida em segmentos de 500 m, e cada animal atribuído ao <strong>ponto médio</strong> do seu segmento. São os 52 segmentos do arquivo.</li>
-</ul>
-<div class="nota">
-<p>Dois anos de campo, quinzena após quinzena, condensados em 52 linhas e uma coluna chamada <code>TOT.N</code>. Vale lembrar disso na hora de reclamar do tamanho da amostra.</p>
-</div>
-</section>
-<section id="o-que-a-coluna-tot.n-não-conta" class="slide level2">
-<h2>O que a coluna <code>TOT.N</code> não conta</h2>
-<p>Os próprios autores avisam que a contagem é enviesada para baixo: carcaças são comidas por outros animais, o clima e as características da pista atrapalham a detecção, e — textualmente — “non-daily surveys prevent the detection of all small-bodied animals like amphibians”, cujos corpos duram de um a três dias na faixa de rolamento.</p>
+<section id="o-que-a-coluna-tot.n-conta" class="slide level2">
+<h2>O que a coluna <code>TOT.N</code> conta</h2>
+<p>Carcaças de anfíbio duram de um a três dias na pista, e outros animais as comem. Uma visita a cada 15 dias perde boa parte delas — os próprios autores avisam que a contagem é enviesada para baixo.</p>
 <div class="definicao">
 <p>A resposta não é “quantos anfíbios morreram”, é “quantos anfíbios mortos foram <strong>encontrados</strong> numa visita a cada 15 dias”. Toda a interpretação do modelo vive dentro dessa frase.</p>
-</div>
-<div class="nota">
-<p>Há ainda uma lição de procedência. As duas fontes publicadas que descrevem este mesmo conjunto discordam: Ascensão &amp; Mira (2005) dizem 26 km e ~5 000 veículos/dia; Zuur et al.&nbsp;(2009) dizem 27 km e &lt; 10 000 veículos/dia. Os 52 segmentos de 500 m dão exatamente 26 km. Conferir a fonte primária não é preciosismo.</p>
 </div>
 </section>
 <section id="duas-coisas-que-o-mapa-já-entrega" class="slide level2">
@@ -374,9 +355,6 @@ Diogo B. Provete
 <div class="definicao">
 <p><strong>Um gradiente.</strong> A mortalidade cai com a distância ao parque natural da Serra de São Mamede (<span class="math inline">\(r = -0{,}75\)</span>) — uma serra mais úmida e chuvosa que a planície em volta, ou seja, a variável é um <strong>proxy</strong> de umidade. Essa é a pergunta do Encontro 5, e o mapa mostra que ela é geográfica antes de ser estatística.</p>
 <p><strong>Um problema.</strong> Segmentos vizinhos distam 500 m: eles não são réplicas independentes. É o assunto do Encontro 7, e está embutido no desenho da coleta — nenhuma análise conserta isso depois.</p>
-</div>
-<div class="nota">
-<p>Este mapa quase não existiu. O arquivo traz duas colunas <code>X</code> e <code>Y</code> em metros; o capítulo as chama de “UTM coordinates” e <strong>não diz o sistema</strong>, e os valores não batem com o fuso UTM de Portugal. São coordenadas do Datum Lisboa / Hayford-Gauss Militar, <code>EPSG:20790</code> — descoberto por tentativa e conferido de três jeitos: o segmento 1 cai a 1,8 km de Portalegre, o 52 a 0,6 km de Monforte, e a distância de cada segmento ao limite do parque correlaciona <strong>0,988</strong> com a coluna <code>D.PARK</code> do próprio arquivo. Uma linha de metadado que ninguém escreveu custou isso tudo. É o Encontro 1 inteiro numa anedota.</p>
 </div>
 </section>
 <section id="uma-coisa-que-vocês-já-viram" class="slide level2">
@@ -390,7 +368,7 @@ Diogo B. Provete
 </div>
 </div>
 </div>
-<p>Contagem. Só inteiros não negativos. Cauda longa à direita. E a variância cresce com a média: aqui a média é <strong>25,9</strong> e a variância é <strong>589,3</strong>, quase 23 vezes maior. Guardem essa desproporção para o Encontro 6 — parte dela some quando as covariáveis entram no modelo, mas não toda.</p>
+<p>Contagem. Só inteiros não negativos. Cauda longa à direita.</p>
 <p><strong>Uma regressão linear comum é apropriada aqui?</strong> Guardem a resposta.</p>
 </section>
 <section class="slide level2">
@@ -407,11 +385,12 @@ Diogo B. Provete
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center" style="width:53.0%"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-4-1.png" class="quarto-figure quarto-figure-center" style="width:40.0%"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>A análise revela problemas nos dados, e a conclusão quase sempre reformula o problema. <strong>Isso é legítimo</strong> — ilegítimo é apagar o percurso e apresentar a última volta como se fosse a primeira.</p>
 <div class="ref">
 <p>Wild, C.J. &amp; Pfannkuch, M. 1999. <em>International Statistical Review</em>.</p>
 </div>
@@ -459,16 +438,6 @@ Diogo B. Provete
 </tr>
 </tbody>
 </table>
-</section>
-<section id="por-que-um-ciclo-e-não-uma-lista" class="slide level2">
-<h2>Por que um ciclo e não uma lista</h2>
-<div class="cell">
-<div class="cell-output-display">
-<div id="htmlwidget-428dcb25cc2946365924" style="width:672px;height:150px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-428dcb25cc2946365924">{"x":{"diagram":"\ndigraph ppdac {\n  graph [rankdir = LR, bgcolor = \"transparent\", nodesep = 0.40, ranksep = 0.85,\n         fontname = \"Helvetica\"]\n  node  [fontname = \"Helvetica\", fontsize = 18, style = \"filled,rounded\",\n         shape = box, penwidth = 0, margin = \"0.24,0.14\", fontcolor = \"white\"]\n  edge  [penwidth = 3.0, arrowsize = 1.1, color = \"#8a8172\"]\n\n  P1 [label = \"Problema\",  fillcolor = \"#144f64\"]\n  P2 [label = \"Plano\",     fillcolor = \"#1c6e8c\"]\n  D  [label = \"Dados\",     fillcolor = \"#527238\"]\n  A  [label = \"Análise\",   fillcolor = \"#96661f\"]\n  C  [label = \"Conclusão\", fillcolor = \"#a15e3f\"]\n\n  P1 -> P2 -> D -> A -> C\n\n  A -> D  [style = dashed, penwidth = 2.4, color = \"#527238\",\n           constraint = false, arrowsize = 1.0]\n  C -> P1 [style = dashed, penwidth = 2.4, color = \"#a15e3f\",\n           constraint = false, arrowsize = 1.0]\n}\n","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
-</div>
-</div>
-<p>As setas pontilhadas são o ponto: a análise revela problemas nos dados, e a conclusão quase sempre reformula o problema. <strong>Isso é legítimo</strong> — o que não é legítimo é apagar o percurso e apresentar a última volta do ciclo como se tivesse sido a primeira.</p>
 </section>
 <section id="onde-a-maioria-dos-trabalhos-quebra" class="slide level2">
 <h2>Onde a maioria dos trabalhos quebra</h2>
@@ -706,7 +675,7 @@ Diogo B. Provete
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-6-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-5-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -739,7 +708,7 @@ Diogo B. Provete
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-7-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-6-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -771,7 +740,7 @@ Diogo B. Provete
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-8-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-7-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -804,50 +773,33 @@ Diogo B. Provete
 <p>E repare de onde vem a heterogeneidade: não de uma preditora contínua, mas do <strong>agrupamento</strong>. Isso não é ruído a corrigir — é estrutura do delineamento, e é o Encontro 7.</p>
 </div>
 </section>
-<section id="passo-3-distribuição-da-resposta" class="slide level2 smaller">
-<h2>Passo 3 — Distribuição da resposta</h2>
+<section id="passos-3-e-4-distribuição-e-zeros" class="slide level2 smaller">
+<h2>Passos 3 e 4 — Distribuição e zeros</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a></a><span class="fu">ggplot</span>(RK, <span class="fu">aes</span>(TOT.N)) <span class="sc">+</span></span>
-<span id="cb10-2"><a></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">20</span>, <span class="at">fill =</span> <span class="st">"#1c6e8c"</span>, <span class="at">colour =</span> <span class="st">"white"</span>, <span class="at">alpha =</span> .<span class="dv">85</span>) <span class="sc">+</span></span>
-<span id="cb10-3"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">15</span>) <span class="sc">+</span></span>
-<span id="cb10-4"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Anfíbios mortos por sítio"</span>, <span class="at">y =</span> <span class="st">"Frequência"</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb10-2"><a></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#1c6e8c"</span>) <span class="sc">+</span></span>
+<span id="cb10-3"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Anfíbios mortos"</span>, <span class="at">y =</span> <span class="st">"Nº de sítios"</span>) <span class="sc">+</span></span>
+<span id="cb10-4"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-10-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-9-1.png" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Contagem, assimétrica à direita, de 2 a 104 em 52 sítios. Média 25,9 e variância 589,3 — a variância é <strong>22,7 vezes</strong> a média. Para uma Poisson elas seriam iguais; já dá para saber, aqui, que ela não vai servir (Encontro 6).</p>
+<p>Contagem, assimétrica à direita, de 2 a 104 em 52 sítios. Média 25,9 e variância 589,3 — a variância é <strong>22,7 vezes</strong> a média. Para uma Poisson elas seriam iguais; já dá para saber, aqui, que ela não vai servir (Encontro 6). Zeros, nenhum — mas quantos zeros são “demais” depende da distribuição assumida, não dos dados.</p>
 <div class="definicao">
 <p>Atenção: o modelo linear <strong>não</strong> assume que a resposta é normal. Assume que o <strong>resíduo</strong> é. Voltaremos a isso no Encontro 2 — é um dos mal-entendidos mais caros da estatística aplicada.</p>
 </div>
 </section>
-<section id="passo-4-excesso-de-zeros" class="slide level2">
-<h2>Passo 4 — Excesso de zeros</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a><span class="fu">ggplot</span>(RK, <span class="fu">aes</span>(TOT.N)) <span class="sc">+</span></span>
-<span id="cb11-2"><a></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"#1c6e8c"</span>) <span class="sc">+</span></span>
-<span id="cb11-3"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Anfíbios mortos"</span>, <span class="at">y =</span> <span class="st">"Nº de sítios"</span>) <span class="sc">+</span></span>
-<span id="cb11-4"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-11-1.png" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Quantos zeros são “demais” depende da distribuição assumida — é uma pergunta sobre o modelo, não sobre os dados. Encontro 6.</p>
-</section>
 <section id="passo-5-colinearidade" class="slide level2">
 <h2>Passo 5 — Colinearidade</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a>RK <span class="sc">|&gt;</span></span>
-<span id="cb12-2"><a></a>  <span class="fu">select</span>(D.PARK, OPEN.L, L.WAT.C, MONT.S) <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a></a>  <span class="fu">cor</span>(<span class="at">use =</span> <span class="st">"complete.obs"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb12-4"><a></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a></a>RK <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a></a>  <span class="fu">select</span>(D.PARK, OPEN.L, L.WAT.C, MONT.S) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a></a>  <span class="fu">cor</span>(<span class="at">use =</span> <span class="st">"complete.obs"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a></a>  <span class="fu">round</span>(<span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        D.PARK OPEN.L L.WAT.C MONT.S
 D.PARK    1.00   0.27    0.28   0.07
@@ -861,15 +813,15 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <section id="passos-6-e-7-relações-e-interações" class="slide level2">
 <h2>Passos 6 e 7 — Relações e interações</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a></a><span class="fu">ggplot</span>(RK, <span class="fu">aes</span>(D.PARK, TOT.N)) <span class="sc">+</span></span>
-<span id="cb14-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#1c6e8c"</span>) <span class="sc">+</span></span>
-<span id="cb14-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">"#144f64"</span>) <span class="sc">+</span></span>
-<span id="cb14-4"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Distância ao parque (m)"</span>, <span class="at">y =</span> <span class="st">"Anfíbios mortos"</span>) <span class="sc">+</span></span>
-<span id="cb14-5"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a></a><span class="fu">ggplot</span>(RK, <span class="fu">aes</span>(D.PARK, TOT.N)) <span class="sc">+</span></span>
+<span id="cb13-2"><a></a>  <span class="fu">geom_point</span>(<span class="at">colour =</span> <span class="st">"#1c6e8c"</span>) <span class="sc">+</span></span>
+<span id="cb13-3"><a></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">colour =</span> <span class="st">"#144f64"</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Distância ao parque (m)"</span>, <span class="at">y =</span> <span class="st">"Anfíbios mortos"</span>) <span class="sc">+</span></span>
+<span id="cb13-5"><a></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">15</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-13-1.png" width="672"></p>
+<p><img data-src="e01_files/figure-revealjs/unnamed-chunk-11-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -942,41 +894,29 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <section id="caminhos" class="slide level2">
 <h2>Caminhos</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a></a><span class="co"># Nunca:</span></span>
-<span id="cb16-2"><a></a><span class="fu">read.csv</span>(<span class="st">"/Users/diogo/Documents/projeto-final-v3/dados.csv"</span>)</span>
-<span id="cb16-3"><a></a></span>
-<span id="cb16-4"><a></a><span class="co"># Sempre:</span></span>
-<span id="cb16-5"><a></a><span class="fu">library</span>(here)</span>
-<span id="cb16-6"><a></a><span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"dados"</span>, <span class="st">"brutos"</span>, <span class="st">"anuros.csv"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a></a><span class="co"># Nunca:</span></span>
+<span id="cb15-2"><a></a><span class="fu">read.csv</span>(<span class="st">"/Users/diogo/Documents/projeto-final-v3/dados.csv"</span>)</span>
+<span id="cb15-3"><a></a></span>
+<span id="cb15-4"><a></a><span class="co"># Sempre:</span></span>
+<span id="cb15-5"><a></a><span class="fu">library</span>(here)</span>
+<span id="cb15-6"><a></a><span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"dados"</span>, <span class="st">"brutos"</span>, <span class="st">"anuros.csv"</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><code>here()</code> resolve a partir da raiz do projeto. O script roda na sua máquina, na do orientando e no GitHub Actions.</p>
-</section>
-<section id="como-o-here-acha-a-raiz" class="slide level2 smaller">
-<h2>Como o <code>here()</code> acha a raiz</h2>
-<p>Ao ser carregado, o <code>here</code> sobe a árvore de diretórios a partir de onde o R está e para no primeiro diretório que contenha uma <strong>âncora</strong>. As duas que importam na prática: um arquivo <code>.Rproj</code> e uma pasta <code>.git</code>. Esse diretório vira a raiz, e <code>here("dados", "x.csv")</code> monta o caminho a partir dele.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a></a>here<span class="sc">::</span><span class="fu">here</span>()                       <span class="co"># qual raiz ele encontrou</span></span>
-<span id="cb17-2"><a></a>here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"dados"</span>, <span class="st">"anuros.csv"</span>)  <span class="co"># o caminho, montado na hora</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>O detalhe que morde: <strong>um <code>.Rproj</code> vazio não conta</strong>. O critério exige que o arquivo comece com <code>Version:</code>. Sem âncora válida, o <code>here</code> não avisa nada — ele simplesmente devolve o diretório de trabalho atual, e o script passa a funcionar só quando você o abre do lugar certo.</p>
 <div class="nota">
-<p>Se <code>here::here()</code> apontar para um lugar estranho, é isso. Crie o projeto do RStudio, ou declare a raiz à mão com <code>here::i_am("scripts/analise.R")</code>.</p>
-</div>
-<div class="definicao">
-<p><code>setwd()</code> faz o oposto: fixa no código um caminho que só existe no seu computador. É a única linha de um script que tem garantia de quebrar na máquina de outra pessoa.</p>
+<p>A raiz é o primeiro diretório acima com um <code>.Rproj</code> ou uma pasta <code>.git</code>. Se <code>here::here()</code> apontar para um lugar estranho, declare-a à mão com <code>here::i_am("scripts/analise.R")</code>.</p>
 </div>
 </section>
 <section id="quarto" class="slide level2">
 <h2>Quarto</h2>
 <p>Texto, código e resultado no mesmo arquivo. O número do texto <strong>é</strong> o número que o código calculou.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a></a>A riqueza média foi de <span class="in">`r round(mean(dados$riqueza), 1)`</span> espécies.</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a></a>A riqueza média foi de <span class="in">`r round(mean(dados$riqueza), 1)`</span> espécies.</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Nunca mais copiar e colar um resultado — e nunca mais esquecer de atualizar o texto quando o dado muda.</p>
 </section>
 <section id="git-em-três-comandos" class="slide level2">
 <h2>git, em três comandos</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a></a><span class="fu">git</span> add .</span>
-<span id="cb19-2"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Adiciona diagnóstico do modelo Poisson"</span></span>
-<span id="cb19-3"><a></a><span class="fu">git</span> push</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a></a><span class="fu">git</span> add .</span>
+<span id="cb17-2"><a></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Adiciona diagnóstico do modelo Poisson"</span></span>
+<span id="cb17-3"><a></a><span class="fu">git</span> push</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <p>O que você ganha:</p>
 <ul>
 <li>histórico de <strong>por que</strong> cada mudança foi feita;</li>
@@ -1060,7 +1000,6 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <li>Declarar <strong>modelo, versão e que parte do código</strong> foi gerada.</li>
 <li><em>Prompts</em> críticos vão como material suplementar.</li>
 <li><strong>O autor responde pelo código</strong> como se o tivesse escrito. Não existe “o ChatGPT errou”.</li>
-<li>IA <strong>não pode ser coautora</strong> — política vigente em praticamente todos os periódicos da área.</li>
 </ul>
 <p>Vale igual no trabalho final desta disciplina.</p>
 </section>
@@ -1114,9 +1053,6 @@ MONT.S    0.07  -0.15   -0.04   1.00</code></pre>
 <li>Reprodutibilidade é um favor ao seu eu futuro.</li>
 <li>LLM é ferramenta de código, não de interpretação.</li>
 </ol>
-</section>
-<section id="o-que-fica-de-hoje-em-uma-linha" class="slide level2">
-<h2>O que fica de hoje, em uma linha</h2>
 <div class="definicao">
 <p>O ciclo PPDAC é o mapa; os quatro princípios são o critério de qualidade; o protocolo de oito passos é a lista de verificação. O resto do curso é a etapa “Análise”.</p>
 </div>

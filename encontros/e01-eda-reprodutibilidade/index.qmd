@@ -5,7 +5,7 @@ description: "Ciclo PPDAC e raciocínio estatístico. Análise exploratória seg
 ---
 
 ::: {.aula-meta}
-**Segunda, 21 de setembro de 2026** · <span class="bloco">manhã</span> · 4,5 h
+**Segunda, 21 de setembro de 2026** · <span class="bloco">manhã</span> · 4 h
 :::
 
 Antes de começar a pensar na análise: como olhar para os dados, como
@@ -20,18 +20,18 @@ outra pessoa — inclusive você daqui a dois anos — consiga refazer.
 
 1. **Productive failure de abertura** (20 min) — uma pergunta, um conjunto
    de dados, nenhuma instrução.
-2. **O ciclo PPDAC** (30 min) — Problema, Plano, Dados, Análise,
+2. **O ciclo PPDAC** (20 min) — Problema, Plano, Dados, Análise,
    Conclusão: onde cada parte do curso se encaixa.
 3. **Os quatro princípios** de Popovic et al. (2024) como moldura do curso
-   (30 min).
+   (20 min).
 4. **Pergunta focada, PICO e pré-registro** (30 min) — HARKing, p-hacking,
    a distinção entre análise confirmatória e exploratória, e o custo real
    de mudar a hipótese depois de ver os dados.
-5. **EDA segundo Zuur & Ieno (2016)** — o protocolo em oito passos, com
+5. **EDA segundo Zuur & Ieno (2016)** (75 min) — o protocolo em oito passos, com
    dados problemáticos de verdade.
-6. **Fluxo reprodutível** — projeto do RStudio, `here`, Quarto, git,
+6. **Fluxo reprodutível** (30 min) — projeto do RStudio, `here`, Quarto, git,
    princípios FAIR.
-7. **Uso saudável de LLMs em estatística** (60 min) — onde ajudam, onde
+7. **Uso saudável de LLMs em estatística** (30 min) — onde ajudam, onde
    fazem mal, como declarar.
 
 ## Dados

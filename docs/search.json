@@ -1726,7 +1726,7 @@
     "href": "encontros/e01-eda-reprodutibilidade/index.html",
     "title": "E1 — EDA, reprodutibilidade e literacia em IA",
     "section": "",
-    "text": "Segunda, 21 de setembro de 2026 · manhã · 4,5 h\nAntes de começar a pensar na análise: como olhar para os dados, como formular a pergunta antes de olhar, e como documentar tudo de modo que outra pessoa — inclusive você daqui a dois anos — consiga refazer."
+    "text": "Segunda, 21 de setembro de 2026 · manhã · 4 h\nAntes de começar a pensar na análise: como olhar para os dados, como formular a pergunta antes de olhar, e como documentar tudo de modo que outra pessoa — inclusive você daqui a dois anos — consiga refazer."
   },
   {
     "objectID": "encontros/e01-eda-reprodutibilidade/index.html#slides",
@@ -1740,7 +1740,7 @@
     "href": "encontros/e01-eda-reprodutibilidade/index.html#conteúdo",
     "title": "E1 — EDA, reprodutibilidade e literacia em IA",
     "section": "Conteúdo",
-    "text": "Conteúdo\n\nProductive failure de abertura (20 min) — uma pergunta, um conjunto de dados, nenhuma instrução.\nO ciclo PPDAC (30 min) — Problema, Plano, Dados, Análise, Conclusão: onde cada parte do curso se encaixa.\nOs quatro princípios de Popovic et al. (2024) como moldura do curso (30 min).\nPergunta focada, PICO e pré-registro (30 min) — HARKing, p-hacking, a distinção entre análise confirmatória e exploratória, e o custo real de mudar a hipótese depois de ver os dados.\nEDA segundo Zuur & Ieno (2016) — o protocolo em oito passos, com dados problemáticos de verdade.\nFluxo reprodutível — projeto do RStudio, here, Quarto, git, princípios FAIR.\nUso saudável de LLMs em estatística (60 min) — onde ajudam, onde fazem mal, como declarar."
+    "text": "Conteúdo\n\nProductive failure de abertura (20 min) — uma pergunta, um conjunto de dados, nenhuma instrução.\nO ciclo PPDAC (20 min) — Problema, Plano, Dados, Análise, Conclusão: onde cada parte do curso se encaixa.\nOs quatro princípios de Popovic et al. (2024) como moldura do curso (20 min).\nPergunta focada, PICO e pré-registro (30 min) — HARKing, p-hacking, a distinção entre análise confirmatória e exploratória, e o custo real de mudar a hipótese depois de ver os dados.\nEDA segundo Zuur & Ieno (2016) (75 min) — o protocolo em oito passos, com dados problemáticos de verdade.\nFluxo reprodutível (30 min) — projeto do RStudio, here, Quarto, git, princípios FAIR.\nUso saudável de LLMs em estatística (30 min) — onde ajudam, onde fazem mal, como declarar."
   },
   {
     "objectID": "encontros/e01-eda-reprodutibilidade/index.html#dados",
@@ -2097,7 +2097,7 @@
     "href": "slides/e01.html#hoje",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Hoje",
-    "text": "Hoje\n\nProductive failure de abertura — 20 min\nO ciclo PPDAC — 30 min\nOs quatro princípios de Popovic et al. (2024) — 30 min\nPergunta focada, HARKing e pré-registro — 30 min\nIntervalo\nExploração de dados: o protocolo em oito passos — 90 min\nFluxo reprodutível: projeto, Quarto, git — 45 min\nUso saudável de LLMs em estatística — 60 min"
+    "text": "Hoje\n\nProductive failure de abertura — 20 min\nO ciclo PPDAC — 20 min\nOs quatro princípios de Popovic et al. (2024) — 20 min\nPergunta focada, HARKing e pré-registro — 30 min\nIntervalo — 15 min\nExploração de dados: o protocolo em oito passos — 75 min\nFluxo reprodutível: projeto, Quarto, git — 30 min\nUso saudável de LLMs em estatística — 30 min"
   },
   {
     "objectID": "slides/e01.html#o-problema",
@@ -2118,7 +2118,7 @@
     "href": "slides/e01.html#de-onde-vêm-esses-números",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "De onde vêm esses números",
-    "text": "De onde vêm esses números\n\n\n\n\n\n\n\n\n\nCada ponto é o meio de um segmento de 500 m da IP2, entre Portalegre e Monforte: 52 segmentos, 26 km de estrada, descendo pelo limite sudoeste do Parque Natural da Serra de São Mamede. A cor e o tamanho são a contagem de anfíbios mortos."
+    "text": "De onde vêm esses números\n\n\n\n\n\n\n\n\n\nCada ponto é o meio de um segmento de 500 m da IP2, entre Portalegre e Monforte, junto ao Parque Natural da Serra de São Mamede. A estrada foi percorrida de carro a cada duas semanas, por dois anos (1995–1997), e cada carcaça foi retirada da pista. Cor e tamanho: anfíbios mortos."
   },
   {
     "objectID": "slides/e01.html#como-esses-números-foram-feitos",
@@ -2139,21 +2139,21 @@
     "href": "slides/e01.html#duas-coisas-que-o-mapa-já-entrega",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Duas coisas que o mapa já entrega",
-    "text": "Duas coisas que o mapa já entrega\n\nUm gradiente. A mortalidade cai com a distância ao parque natural da Serra de São Mamede (\\(r = -0{,}75\\)) — uma serra mais úmida e chuvosa que a planície em volta, ou seja, a variável é um proxy de umidade. Essa é a pergunta do Encontro 5, e o mapa mostra que ela é geográfica antes de ser estatística.\nUm problema. Segmentos vizinhos distam 500 m: eles não são réplicas independentes. É o assunto do Encontro 7, e está embutido no desenho da coleta — nenhuma análise conserta isso depois.\n\n\nEste mapa quase não existiu. O arquivo traz duas colunas X e Y em metros; o capítulo as chama de “UTM coordinates” e não diz o sistema, e os valores não batem com o fuso UTM de Portugal. São coordenadas do Datum Lisboa / Hayford-Gauss Militar, EPSG:20790 — descoberto por tentativa e conferido de três jeitos: o segmento 1 cai a 1,8 km de Portalegre, o 52 a 0,6 km de Monforte, e a distância de cada segmento ao limite do parque correlaciona 0,988 com a coluna D.PARK do próprio arquivo. Uma linha de metadado que ninguém escreveu custou isso tudo. É o Encontro 1 inteiro numa anedota."
+    "text": "Duas coisas que o mapa já entrega\n\nUm gradiente. A mortalidade cai com a distância ao parque natural da Serra de São Mamede (\\(r = -0{,}75\\)) — uma serra mais úmida e chuvosa que a planície em volta, ou seja, a variável é um proxy de umidade. Essa é a pergunta do Encontro 5, e o mapa mostra que ela é geográfica antes de ser estatística.\nUm problema. Segmentos vizinhos distam 500 m: eles não são réplicas independentes. É o assunto do Encontro 7, e está embutido no desenho da coleta — nenhuma análise conserta isso depois."
   },
   {
     "objectID": "slides/e01.html#uma-coisa-que-vocês-já-viram",
     "href": "slides/e01.html#uma-coisa-que-vocês-já-viram",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Uma coisa que vocês já viram",
-    "text": "Uma coisa que vocês já viram\n\n\n\n\n\n\n\n\n\nContagem. Só inteiros não negativos. Cauda longa à direita. E a variância cresce com a média: aqui a média é 25,9 e a variância é 589,3, quase 23 vezes maior. Guardem essa desproporção para o Encontro 6 — parte dela some quando as covariáveis entram no modelo, mas não toda.\nUma regressão linear comum é apropriada aqui? Guardem a resposta."
+    "text": "Uma coisa que vocês já viram\n\n\n\n\n\n\n\n\n\nContagem. Só inteiros não negativos. Cauda longa à direita.\nUma regressão linear comum é apropriada aqui? Guardem a resposta."
   },
   {
     "objectID": "slides/e01.html#o-mapa-da-disciplina-inteira",
     "href": "slides/e01.html#o-mapa-da-disciplina-inteira",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "O mapa da disciplina inteira",
-    "text": "O mapa da disciplina inteira\n\n\n\n\n\n\n\n\n\n\nWild, C.J. & Pfannkuch, M. 1999. International Statistical Review."
+    "text": "O mapa da disciplina inteira\n\n\n\n\n\n\n\n\n\nA análise revela problemas nos dados, e a conclusão quase sempre reformula o problema. Isso é legítimo — ilegítimo é apagar o percurso e apresentar a última volta como se fosse a primeira.\n\nWild, C.J. & Pfannkuch, M. 1999. International Statistical Review."
   },
   {
     "objectID": "slides/e01.html#onde-cada-etapa-aparece-no-curso",
@@ -2377,7 +2377,7 @@
     "href": "slides/e01.html#caminhos",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Caminhos",
-    "text": "Caminhos\n\n# Nunca:\nread.csv(\"/Users/diogo/Documents/projeto-final-v3/dados.csv\")\n\n# Sempre:\nlibrary(here)\nread_csv(here(\"dados\", \"brutos\", \"anuros.csv\"))\n\nhere() resolve a partir da raiz do projeto. O script roda na sua máquina, na do orientando e no GitHub Actions."
+    "text": "Caminhos\n\n# Nunca:\nread.csv(\"/Users/diogo/Documents/projeto-final-v3/dados.csv\")\n\n# Sempre:\nlibrary(here)\nread_csv(here(\"dados\", \"brutos\", \"anuros.csv\"))\n\nhere() resolve a partir da raiz do projeto. O script roda na sua máquina, na do orientando e no GitHub Actions.\n\nA raiz é o primeiro diretório acima com um .Rproj ou uma pasta .git. Se here::here() apontar para um lugar estranho, declare-a à mão com here::i_am(\"scripts/analise.R\")."
   },
   {
     "objectID": "slides/e01.html#como-o-here-acha-a-raiz",
@@ -2447,7 +2447,7 @@
     "href": "slides/e01.html#declaração-e-responsabilidade",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Declaração e responsabilidade",
-    "text": "Declaração e responsabilidade\n\nDeclarar modelo, versão e que parte do código foi gerada.\nPrompts críticos vão como material suplementar.\nO autor responde pelo código como se o tivesse escrito. Não existe “o ChatGPT errou”.\nIA não pode ser coautora — política vigente em praticamente todos os periódicos da área.\n\nVale igual no trabalho final desta disciplina."
+    "text": "Declaração e responsabilidade\n\nDeclarar modelo, versão e que parte do código foi gerada.\nPrompts críticos vão como material suplementar.\nO autor responde pelo código como se o tivesse escrito. Não existe “o ChatGPT errou”.\n\nVale igual no trabalho final desta disciplina."
   },
   {
     "objectID": "slides/e01.html#as-três-normas-que-valem-para-vocês",
@@ -2468,7 +2468,7 @@
     "href": "slides/e01.html#o-que-fica-de-hoje",
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "O que fica de hoje",
-    "text": "O que fica de hoje\n\nA pergunta vem antes dos dados — e o rótulo confirmatório/exploratório é honestidade básica.\nExploração de dados é lista de verificação, não caça ao resultado.\nReprodutibilidade é um favor ao seu eu futuro.\nLLM é ferramenta de código, não de interpretação."
+    "text": "O que fica de hoje\n\nA pergunta vem antes dos dados — e o rótulo confirmatório/exploratório é honestidade básica.\nExploração de dados é lista de verificação, não caça ao resultado.\nReprodutibilidade é um favor ao seu eu futuro.\nLLM é ferramenta de código, não de interpretação.\n\n\nO ciclo PPDAC é o mapa; os quatro princípios são o critério de qualidade; o protocolo de oito passos é a lista de verificação. O resto do curso é a etapa “Análise”."
   },
   {
     "objectID": "slides/e01.html#o-que-fica-de-hoje-em-uma-linha",
@@ -3694,5 +3694,19 @@
     "title": "GLM II: diagnóstico, sobredispersão, zeros inflados e ordinais",
     "section": "Cinco causas, cinco remédios",
     "text": "Cinco causas, cinco remédios\n\n\n\n\n\n\n\n\nCausa\nSinal\nO que fazer\n\n\n\n\nFalta uma covariável importante\nresíduo estruturado\nincluir a covariável\n\n\nFalta um termo não linear\ncurvatura no resíduo\npoly(), s()\n\n\nObservações agrupadas\ngrupos com médias distintas\nefeito aleatório (E7)\n\n\nExcesso de zeros\npico em zero\nZI ou hurdle\n\n\nVariação genuína além da Poisson\nnada acima explica\nbinomial negativa\n\n\n\n\nSobredispersão é quase sempre sintoma, não doença. Trocar a distribuição sem investigar a causa esconde o problema em vez de resolvê-lo."
+  },
+  {
+    "objectID": "slides/e01.html#o-que-a-coluna-tot.n-conta",
+    "href": "slides/e01.html#o-que-a-coluna-tot.n-conta",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "O que a coluna TOT.N conta",
+    "text": "O que a coluna TOT.N conta\nCarcaças de anfíbio duram de um a três dias na pista, e outros animais as comem. Uma visita a cada 15 dias perde boa parte delas — os próprios autores avisam que a contagem é enviesada para baixo.\n\nA resposta não é “quantos anfíbios morreram”, é “quantos anfíbios mortos foram encontrados numa visita a cada 15 dias”. Toda a interpretação do modelo vive dentro dessa frase."
+  },
+  {
+    "objectID": "slides/e01.html#passos-3-e-4-distribuição-e-zeros",
+    "href": "slides/e01.html#passos-3-e-4-distribuição-e-zeros",
+    "title": "EDA, reprodutibilidade e literacia em IA",
+    "section": "Passos 3 e 4 — Distribuição e zeros",
+    "text": "Passos 3 e 4 — Distribuição e zeros\n\nggplot(RK, aes(TOT.N)) +\n  geom_bar(fill = \"#1c6e8c\") +\n  labs(x = \"Anfíbios mortos\", y = \"Nº de sítios\") +\n  theme_minimal(base_size = 15)\n\n\n\n\n\n\n\n\nContagem, assimétrica à direita, de 2 a 104 em 52 sítios. Média 25,9 e variância 589,3 — a variância é 22,7 vezes a média. Para uma Poisson elas seriam iguais; já dá para saber, aqui, que ela não vai servir (Encontro 6). Zeros, nenhum — mas quantos zeros são “demais” depende da distribuição assumida, não dos dados.\n\nAtenção: o modelo linear não assume que a resposta é normal. Assume que o resíduo é. Voltaremos a isso no Encontro 2 — é um dos mal-entendidos mais caros da estatística aplicada."
   }
 ]
