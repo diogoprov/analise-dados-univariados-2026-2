@@ -463,19 +463,32 @@ Uma coluna de 1 (o intercepto) e uma coluna 0/1 que marca `male`.
 
 ---
 
-## Lendo a matriz
+## Lendo a matriz {.smaller}
 
-Para uma fêmea, a linha é $(1, 0)$:
+A coluna `sexmale` é um **interruptor**: desligada (0) nas fêmeas, o grupo
+de referência, e ligada (1) nos machos. O modelo é
 
-$$\hat{y} = \beta_0 \cdot 1 + \beta_1 \cdot 0 = \beta_0$$
+$$\hat{y}_i = \beta_0 \cdot 1 + \beta_1 \cdot \texttt{sexmale}_i$$
 
-Para um macho, $(1, 1)$:
+**Fêmea** — linha $(1, 0)$:
+$\;\hat{y} = \beta_0 \cdot 1 + \beta_1 \cdot 0 = \beta_0$
 
-$$\hat{y} = \beta_0 + \beta_1$$
+**Macho** — linha $(1, 1)$:
+$\;\hat{y} = \beta_0 \cdot 1 + \beta_1 \cdot 1 = \beta_0 + \beta_1$
+
+Com um fator só, o valor predito de cada grupo é a média do grupo. Logo:
+
+$$
+\bar{y}_{\text{fêmeas}} = \beta_0
+\qquad
+\bar{y}_{\text{machos}} = \beta_0 + \beta_1
+\qquad\Longrightarrow\qquad
+\beta_1 = \bar{y}_{\text{machos}} - \bar{y}_{\text{fêmeas}}
+$$
 
 ::: {.definicao}
-$\beta_0$ = média das fêmeas. $\beta_1$ = **diferença** macho − fêmea.
-O "teste t" é o teste de que $\beta_1 = 0$.
+$\beta_0$ = média das fêmeas. $\beta_1$ = **diferença** macho − fêmea ---
+não a média dos machos.
 :::
 
 ---
@@ -490,6 +503,33 @@ medias
 
 coef(m_t)
 ```
+
+---
+
+## Do teste t ao coeficiente {.smaller}
+
+| | Teste t | Modelo linear |
+|---|---|---|
+| Pergunta | as médias diferem? | o coeficiente é zero? |
+| $H_0$ | $\mu_F = \mu_M$ | $\beta_1 = 0$ |
+| Estatística | $t = \dfrac{\bar{y}_M - \bar{y}_F}{s_p\sqrt{1/n_F + 1/n_M}}$ | $t = \dfrac{\hat{\beta}_1}{\mathrm{EP}(\hat{\beta}_1)}$ |
+
+```{r}
+n   <- table(adelie$sex)
+s2  <- tapply(adelie$bill_length_mm, adelie$sex, var)
+sp  <- sqrt(sum((n - 1) * s2) / (sum(n) - 2))   # desvio-padrão combinado
+dif <- diff(tapply(adelie$bill_length_mm, adelie$sex, mean))
+
+c(t_teste = unname(dif / (sp * sqrt(sum(1 / n)))),
+  t_lm    = summary(m_t)$coefficients["sexmale", "t value"])
+```
+
+::: {.definicao}
+$\mu_F = \mu_M$ é o mesmo que $\mu_M - \mu_F = 0$, e $\mu_M - \mu_F$ é
+$\beta_1$. Mesma hipótese, mesmo numerador, mesmo denominador ---
+$\mathrm{EP}(\hat{\beta}_1)$ **é** $s_p\sqrt{1/n_F + 1/n_M}$ ---, os
+mesmos $n - 2$ graus de liberdade e, portanto, o mesmo *p*.
+:::
 
 ---
 

@@ -1096,7 +1096,7 @@
     "href": "slides/e02.html#lendo-a-matriz",
     "title": "O modelo linear como arcabouço unificador",
     "section": "Lendo a matriz",
-    "text": "Lendo a matriz\nPara uma fêmea, a linha é \\((1, 0)\\):\n\\[\\hat{y} = \\beta_0 \\cdot 1 + \\beta_1 \\cdot 0 = \\beta_0\\]\nPara um macho, \\((1, 1)\\):\n\\[\\hat{y} = \\beta_0 + \\beta_1\\]\n\n\\(\\beta_0\\) = média das fêmeas. \\(\\beta_1\\) = diferença macho − fêmea. O “teste t” é o teste de que \\(\\beta_1 = 0\\)."
+    "text": "Lendo a matriz\nA coluna sexmale é um interruptor: desligada (0) nas fêmeas, o grupo de referência, e ligada (1) nos machos. O modelo é\n\\[\\hat{y}_i = \\beta_0 \\cdot 1 + \\beta_1 \\cdot \\texttt{sexmale}_i\\]\nFêmea — linha \\((1, 0)\\): \\(\\;\\hat{y} = \\beta_0 \\cdot 1 + \\beta_1 \\cdot 0 = \\beta_0\\)\nMacho — linha \\((1, 1)\\): \\(\\;\\hat{y} = \\beta_0 \\cdot 1 + \\beta_1 \\cdot 1 = \\beta_0 + \\beta_1\\)\nCom um fator só, o valor predito de cada grupo é a média do grupo. Logo:\n\\[\n\\bar{y}_{\\text{fêmeas}} = \\beta_0\n\\qquad\n\\bar{y}_{\\text{machos}} = \\beta_0 + \\beta_1\n\\qquad\\Longrightarrow\\qquad\n\\beta_1 = \\bar{y}_{\\text{machos}} - \\bar{y}_{\\text{fêmeas}}\n\\]\n\n\\(\\beta_0\\) = média das fêmeas. \\(\\beta_1\\) = diferença macho − fêmea — não a média dos machos."
   },
   {
     "objectID": "slides/e02.html#confirmando-na-mão",
@@ -3708,5 +3708,12 @@
     "title": "EDA, reprodutibilidade e literacia em IA",
     "section": "Passos 3 e 4 — Distribuição e zeros",
     "text": "Passos 3 e 4 — Distribuição e zeros\n\nggplot(RK, aes(TOT.N)) +\n  geom_bar(fill = \"#1c6e8c\") +\n  labs(x = \"Anfíbios mortos\", y = \"Nº de sítios\") +\n  theme_minimal(base_size = 15)\n\n\n\n\n\n\n\n\nContagem, assimétrica à direita, de 2 a 104 em 52 sítios. Média 25,9 e variância 589,3 — a variância é 22,7 vezes a média. Para uma Poisson elas seriam iguais; já dá para saber, aqui, que ela não vai servir (Encontro 6). Zeros, nenhum — mas quantos zeros são “demais” depende da distribuição assumida, não dos dados.\n\nAtenção: o modelo linear não assume que a resposta é normal. Assume que o resíduo é. Voltaremos a isso no Encontro 2 — é um dos mal-entendidos mais caros da estatística aplicada."
+  },
+  {
+    "objectID": "slides/e02.html#do-teste-t-ao-coeficiente",
+    "href": "slides/e02.html#do-teste-t-ao-coeficiente",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Do teste t ao coeficiente",
+    "text": "Do teste t ao coeficiente\n\n\n\n\n\n\n\n\n\nTeste t\nModelo linear\n\n\n\n\nPergunta\nas médias diferem?\no coeficiente é zero?\n\n\n\\(H_0\\)\n\\(\\mu_F = \\mu_M\\)\n\\(\\beta_1 = 0\\)\n\n\nEstatística\n\\(t = \\dfrac{\\bar{y}_M - \\bar{y}_F}{s_p\\sqrt{1/n_F + 1/n_M}}\\)\n\\(t = \\dfrac{\\hat{\\beta}_1}{\\mathrm{EP}(\\hat{\\beta}_1)}\\)\n\n\n\n\nn   &lt;- table(adelie$sex)\ns2  &lt;- tapply(adelie$bill_length_mm, adelie$sex, var)\nsp  &lt;- sqrt(sum((n - 1) * s2) / (sum(n) - 2))   # desvio-padrão combinado\ndif &lt;- diff(tapply(adelie$bill_length_mm, adelie$sex, mean))\n\nc(t_teste = unname(dif / (sp * sqrt(sum(1 / n)))),\n  t_lm    = summary(m_t)$coefficients[\"sexmale\", \"t value\"])\n\nt_teste    t_lm \n8.77655 8.77655 \n\n\n\n\\(\\mu_F = \\mu_M\\) é o mesmo que \\(\\mu_M - \\mu_F = 0\\), e \\(\\mu_M - \\mu_F\\) é \\(\\beta_1\\). Mesma hipótese, mesmo numerador, mesmo denominador — \\(\\mathrm{EP}(\\hat{\\beta}_1)\\) é \\(s_p\\sqrt{1/n_F + 1/n_M}\\) —, os mesmos \\(n - 2\\) graus de liberdade e, portanto, o mesmo p."
   }
 ]
