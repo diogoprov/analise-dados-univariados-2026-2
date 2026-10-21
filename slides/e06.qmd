@@ -59,7 +59,7 @@ Quando o diagnóstico falha, o ciclo manda voltar aos **Dados** — e às vezes 
 
 ---
 
-## O problema de ontem {.secao}
+## O problema desta manhã {.secao}
 
 ```{r}
 #| echo: false
@@ -126,8 +126,10 @@ tibble(fit = fitted(m_rk), res = resid(m_rk, type = "deviance")) |>
   labs(x = "Valor predito", y = "Resíduo de deviance")
 ```
 
-Esse padrão em faixas é **esperado** num GLM com contagens baixas: a
-resposta é discreta. Não dá para julgar se é bom ou ruim só olhando.
+Num GLM, o resíduo de *deviance* não tem uma distribuição de referência:
+não dá para saber, só olhando, se essa dispersão é a que o modelo espera
+ou um problema. Com contagens baixas é pior --- aparecem faixas, uma por
+valor observado.
 
 ---
 
@@ -185,16 +187,6 @@ e 8), e devolve testes com valor de *p* em vez de "parece um padrão?".
 
 ---
 
-## Os mesmos diagnósticos, com valor de *p* {.smaller .codigo-compacto}
-
-```{r}
-testDispersion(res, plot = FALSE)       # sobredispersão
-testZeroInflation(res, plot = FALSE)    # excesso de zeros
-testOutliers(res, plot = FALSE)
-```
-
----
-
 ## Lendo os gráficos do `DHARMa`
 
 - **QQ uniforme** — os pontos devem seguir a diagonal. Desvio em S =
@@ -204,6 +196,16 @@ testOutliers(res, plot = FALSE)
   errada ou termo faltando.
 - **`testDispersion`** — razão > 1 é sobredispersão; < 1 é
   subdispersão (mais raro, e também um problema).
+
+---
+
+## Os mesmos diagnósticos, com valor de *p* {.smaller .codigo-compacto}
+
+```{r}
+testDispersion(res, plot = FALSE)       # sobredispersão
+testZeroInflation(res, plot = FALSE)    # excesso de zeros
+testOutliers(res, plot = FALSE)
+```
 
 ---
 
@@ -231,19 +233,16 @@ resolvê-lo.
 
 ## O tamanho da razão já diz qual causa
 
-A razão de *deviance* do nosso Poisson foi **7,8**. Burnham & Anderson
-tratam esse número como diagnóstico, não como mero fator de correção:
+A razão de *deviance* do nosso Poisson foi **7,8**. Para Burnham &
+Anderson, esse número é diagnóstico, não só fator de correção: até ~4 é
+compatível com sobredispersão pura; entre 6 e 10, costuma faltar
+**estrutura** no modelo.
 
-> "We might expect $c > 1$ with real data but would not expect $c$ to
-> exceed about 4 if model structure is acceptable and only overdispersion
-> is affecting $c$. Substantially larger values of $c$ (say, 6–10) are
-> usually caused partly by a model structure that is inadequate."
-
-::: {.nota}
-Ou seja: 7,8 aponta para a **primeira** linha da tabela — falta estrutura —
-antes de apontar para a quarta. Trocar de família conserta o erro-padrão
-sem consertar o modelo. Voltamos a isso no Encontro 7, quando a estrutura
-que falta for o agrupamento.
+::: {.definicao}
+7,8 aponta para as primeiras linhas da tabela --- falta estrutura ---
+antes da última. Trocar de família conserta o erro-padrão sem consertar o
+modelo. Voltamos a isso no Encontro 7, quando a estrutura que falta for o
+agrupamento.
 :::
 
 ::: {.ref}
@@ -387,7 +386,7 @@ existem as duas origens de zero.
 
 ---
 
-## Comece pelo modelo simples
+## Comece pelo modelo simples {.smaller .codigo-compacto}
 
 ```{r}
 library(performance)
@@ -396,20 +395,36 @@ pois_plain <- glm(Raillietiella_mottae ~ CRC + Sexo * Especie,
                   data = parasitas, family = "poisson")
 
 check_overdispersion(pois_plain)
-```
-
----
-
-## E pergunte pelos zeros
-
-```{r}
 check_zeroinflation(pois_plain)
 ```
 
 ::: {.definicao}
-A função compara os zeros observados com o número que a Poisson ajustada
-**esperaria** produzir. Não é uma questão de opinião sobre "muitos zeros":
-é uma comparação com o que o modelo assume.
+`check_zeroinflation()` compara os zeros observados com os que a Poisson
+ajustada **esperaria**: não é opinião sobre "muitos zeros".
+:::
+
+---
+
+## Armadilha frequente
+
+::: {.definicao}
+Muito "excesso de zeros" desaparece quando você troca Poisson por
+binomial negativa. A binomial negativa **gera mais zeros** que a Poisson
+de mesma média.
+:::
+
+Ordem recomendada:
+
+1. teste sobredispersão;
+2. se houver, ajuste a binomial negativa;
+3. **só então** teste excesso de zeros, no modelo NB;
+4. se ainda houver, aí sim zero-inflado ou *hurdle*.
+
+::: {.nota}
+Neste conjunto, a binomial negativa sozinha já prevê os 156 zeros
+observados (`check_zeroinflation()` dá razão 1,00). Pela ordem acima, não
+haveria excesso de zeros a modelar --- e é com isso em mente que vamos ler
+a comparação a seguir.
 :::
 
 ---
@@ -430,11 +445,8 @@ hurNB <- glmmTMB(Raillietiella_mottae ~ CRC + Sexo * Especie,
                  family = truncated_nbinom2)
 ```
 
-::: {.nota}
-`ziformula = ~ .` diz "use no modelo dos zeros as mesmas preditoras do
-modelo das contagens". No capítulo 8 do livro isso aparece como
-`zi = ~ .`, que funciona por correspondência parcial de argumento.
-:::
+`ziformula = ~ .` usa no modelo dos zeros as mesmas preditoras do modelo
+das contagens.
 
 ---
 
@@ -454,52 +466,23 @@ O `~ .` é um ponto de partida cômodo, não uma escolha automática.
 ## Comparando
 
 ```{r}
-ICtab(list(poisson = pois_plain, ZIP = ziP, ZINB = ziNB, hurdleNB = hurNB),
+nb_plain <- MASS::glm.nb(Raillietiella_mottae ~ CRC + Sexo * Especie,
+                         data = parasitas)
+
+ICtab(list(poisson = pois_plain, NB = nb_plain, ZIP = ziP, ZINB = ziNB,
+           hurdleNB = hurNB),
       type = "AICc", weights = TRUE, delta = TRUE, base = TRUE,
-      mnames = c("poisson", "ZIP", "ZINB", "hurdleNB"))
+      mnames = c("poisson", "NB", "ZIP", "ZINB", "hurdleNB"))
 ```
 
-O ZIP leva 62% do peso, a ZINB 28% e o *hurdle* 10%. A Poisson simples
-fica 45 unidades atrás: o excesso de zeros era real. Mas entre os três
-candidatos nenhum manda sozinho — e a escolha entre ZIP e ZINB volta a
-ser biológica, não aritmética.
+A Poisson fica 45 unidades atrás, mas a NB simples, sem parte de zeros,
+fica só 9 --- e já reproduz os zeros observados. Boa parte do "excesso de
+zeros" era sobredispersão. O ZIP ainda leva 62 % do peso; isso só vira
+argumento para zero estrutural se houver razão **biológica** para ele.
 
 ---
 
-## Confira se os zeros foram mesmo resolvidos
-
-```{r}
-lambda <- predict(ziP, type = "conditional")
-pi_zi  <- predict(ziP, type = "zprob")
-
-c(observados    = sum(parasitas$Raillietiella_mottae == 0),
-  esperados_ZIP = round(sum(pi_zi + (1 - pi_zi) * exp(-lambda))))
-```
-
-$P(Y = 0)$ sob o ZIP é $\pi + (1-\pi)\,e^{-\lambda}$: a probabilidade de
-ser um zero estrutural, mais a de não ser e ainda assim sair zero.
-
----
-
-## E compare com o atalho
-
-```{r}
-check_zeroinflation(ziP)
-```
-
-::: {.definicao}
-Confira se os dois números batem na sua versão dos pacotes. No ambiente em
-que estes slides foram testados (`performance` 0.10.8) eles **não**
-batiam: a função reportava os zeros esperados sem levar em conta a parte
-`zi` do modelo, e concluía que ainda havia inflação.
-:::
-
-Lição geral, que vale além deste caso: **saiba o que a função está
-contando** antes de aceitar o veredito.
-
----
-
-## A rota robusta
+## Os zeros foram resolvidos?
 
 ```{r}
 library(DHARMa)
@@ -527,31 +510,10 @@ summary(ziNB)$coefficients$zi
 ```
 
 A primeira está em **log da contagem esperada**; a segunda em
-**log-*odds* de ser zero estrutural**. Sinais opostos nas duas não são
-contradição: uma diz quantos parasitas há onde há, a outra diz onde não
-pode haver.
-
----
-
-## Armadilha frequente
-
-::: {.definicao}
-Muito "excesso de zeros" desaparece quando você troca Poisson por
-binomial negativa. A binomial negativa **gera mais zeros** que a Poisson
-de mesma média.
-:::
-
-Ordem recomendada:
-
-1. teste sobredispersão;
-2. se houver, ajuste a binomial negativa;
-3. **só então** teste excesso de zeros, no modelo NB;
-4. se ainda houver, aí sim zero-inflado ou *hurdle*.
-
-::: {.nota}
-Repare que neste conjunto de dados o ZIP ganha do ZINB por pouco no AIC.
-Com 80 % de zeros, a inflação é o problema dominante, não a dispersão.
-:::
+**log-*odds* de ser zero estrutural**. Aqui os sinais coincidem:
+*Phyllopezus pollicaris* tem mais chance de zero estrutural e, entre os
+infectados, mais parasitas. Não há contradição nisso --- nem haveria com
+sinais opostos: as duas partes respondem a perguntas diferentes.
 
 ---
 
@@ -620,25 +582,12 @@ independentes. O `(1 | Animal)` é o assunto de amanhã de manhã — e o
 
 ---
 
-## O que o `clmm` devolve
-
-```{r}
-summary(m_ordm)
-```
-
----
-
 ## Verificando a premissa
 
 A premissa de *odds* proporcionais é que o efeito da preditora é o mesmo
-em todos os limiares. Se não for, o `ordinal` permite relaxá-la:
-
-```{r}
-nominal_test(m_ord)          # testa a premissa termo a termo
-
-# se ela falhar para um termo, esse termo pode variar por limiar:
-m_nom <- clm(Black ~ Time, nominal = ~ Treatment, data = mela)
-```
+em todos os limiares. O `ordinal` testa isso com `nominal_test()` e, se
+falhar, permite relaxá-la termo a termo --- o código está na página do
+encontro.
 
 ---
 
@@ -690,7 +639,7 @@ o que permite ao leitor confiar no resto.
 
 ## Prática (o resto do bloco)
 
-1. Rode `DHARMa::simulateResiduals()` no seu GLM de ontem.
+1. Rode `DHARMa::simulateResiduals()` no seu GLM da manhã.
 2. Teste dispersão, zeros e outliers. Escreva o que encontrou.
 3. Se houver sobredispersão, ajuste a NB e compare erros-padrão.
 4. Se houver excesso de zeros **depois da NB**, ajuste um ZINB e escreva

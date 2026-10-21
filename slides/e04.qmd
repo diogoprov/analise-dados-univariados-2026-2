@@ -328,8 +328,8 @@ Na volta: a família exponencial.
 
 ## O que elas têm em comum
 
-Normal, Poisson, Binomial, Gamma, binomial negativa (com $\theta$ fixo) e
-Beta podem ser escritas na mesma forma geral:
+Normal, Poisson, Binomial, Gamma e binomial negativa (com $\theta$ fixo)
+podem ser escritas na mesma forma geral:
 
 $$
 f(y \mid \theta, \phi) =
@@ -340,6 +340,12 @@ $$
 Não é preciso decorar. O que importa é a consequência: como todas
 compartilham essa estrutura, **um único algoritmo** ajusta todas — o
 mesmo `glm()`, com um argumento `family` diferente.
+:::
+
+::: {.nota}
+A binomial negativa com $\theta$ estimado sai do `MASS::glm.nb()`. A
+Beta do mapa rápido não cabe nesta forma; ajusta-se com `glmmTMB` ou
+`betareg`.
 :::
 
 ---
@@ -361,7 +367,7 @@ mapa completo: 76 distribuições e as setas que as ligam, tudo clicável.
 Cada seta é uma relação com nome (limite, transformação, caso especial).
 
 ::: {.nota}
-Um exercício de cinco minutos que rende: no mapa, encontrem as quatro
+Um exercício de cinco minutos que rende: no mapa, encontrem as cinco
 famílias que vimos hoje e sigam as setas entre elas. As que o curso usa
 não são um punhado de escolhas soltas — são vizinhas no mapa.
 :::
@@ -420,13 +426,15 @@ tibble(eta = seq(-4, 4, .05)) |>
 
 ::: {.nota}
 "Canônica" significa que ela cai naturalmente da álgebra da família.
-Nada impede usar outra — `binomial(link = "probit")`, por exemplo — mas a
-canônica costuma ter as melhores propriedades numéricas.
+Nada impede usar outra --- `binomial(link = "probit")`, por exemplo. A
+Gamma é o caso em que quase ninguém usa a canônica: na prática ela é
+ajustada com `Gamma(link = "log")`, que mantém a média positiva e dá
+coeficientes interpretáveis como razões.
 :::
 
 ---
 
-## Ligar **não** é transformar a resposta
+## Ligar **não** é transformar a resposta {.smaller}
 
 ::: {.definicao}
 `lm(log(y) ~ x)` modela **a média do log** de $y$.
@@ -438,11 +446,19 @@ São coisas diferentes, e a diferença importa.
 :::
 
 ```{r}
-set.seed(7)
-y <- rpois(300, exp(1 + .05 * (x <- runif(300, 0, 40))))
-c(lm_log_y = coef(lm(log(y + 0.5) ~ x))[2],
-  glm_log_mu = coef(glm(y ~ x, family = poisson))[2])
+set.seed(10)
+x <- runif(300, 0, 40)
+y <- rpois(300, exp(-1 + 0.05 * x))   # verdade: inclinação 0,05 no log da média
+
+c(zeros      = mean(y == 0),
+  lm_log_y   = unname(coef(lm(log(y + 0.5) ~ x))[2]),
+  glm_log_mu = unname(coef(glm(y ~ x, family = poisson))[2])) |> round(3)
 ```
+
+Com contagens baixas e muitos zeros, o GLM recupera os 0,05 que
+simulamos; o `lm()` no log subestima a inclinação em cerca de 30 %.
+Com contagens altas e sem zeros, os dois quase coincidem --- e é por isso
+que o atalho parece funcionar até o dia em que não funciona.
 
 ---
 

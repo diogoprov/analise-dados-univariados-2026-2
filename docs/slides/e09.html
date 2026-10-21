@@ -633,28 +633,16 @@ nulo        447.9  54.4 2  &lt;0.001</code></pre>
 <p>Burnham &amp; Anderson (2002), §2.6, p.&nbsp;70–71.</p>
 </div>
 </section>
-<section id="o-que-essas-duas-frases-condenam" class="slide level2">
-<h2>O que essas duas frases condenam</h2>
+<section id="o-que-essas-ressalvas-condenam" class="slide level2">
+<h2>O que essas ressalvas condenam</h2>
 <div class="definicao">
 <p><strong>A terceira.</strong> Os <span class="math inline">\(\Delta\)</span> são reportados com a mesma régua em delineamentos agrupados — onde a premissa de independência é justamente a que não vale. É o assunto dos Encontros 7 e 8, e a razão de o agrupamento vir <strong>antes</strong> da seleção de modelos.</p>
 </div>
 <p><strong>A primeira</strong> é o argumento contra o <code>dredge</code> escrito pelos próprios autores do método: as regras valem para conjuntos pequenos, e param de valer quando há milhares de modelos.</p>
 </section>
-<section id="but-is-the-best-model-any-good" class="slide level2">
-<h2>“But is the ‘best’ model any good?”</h2>
-<p>Mac Nally et al.&nbsp;(2018) fazem a pergunta que o procedimento não faz sozinho: depois de eleger o modelo mais bem apoiado, <strong>ele é bom</strong>?</p>
-<div class="definicao">
-<p>AIC, <span class="math inline">\(\Delta_i\)</span> e pesos são medidas <strong>relativas</strong>. Elas ordenam os candidatos entre si e não dizem nada sobre o quanto qualquer um deles descreve os dados.</p>
-</div>
-<p>Duas coisas a relatar junto com a tabela:</p>
-<ul>
-<li><strong>ajuste absoluto</strong> — <span class="math inline">\(R^2\)</span>, ou o diagnóstico de resíduos do modelo escolhido;</li>
-<li><strong>desempenho preditivo</strong> — validação cruzada, ou pelo menos uma comparação com o modelo nulo.</li>
-</ul>
-<p>Um modelo com <span class="math inline">\(w = 0{,}98\)</span> e <span class="math inline">\(R^2 = 0{,}04\)</span> é o melhor de um conjunto ruim. Isso precisa aparecer no texto.</p>
-</section>
-<section id="ajuste-absoluto-na-prática" class="slide level2 smaller">
-<h2>Ajuste absoluto, na prática</h2>
+<section id="o-melhor-modelo-é-bom" class="slide level2 smaller">
+<h2>O melhor modelo é bom?</h2>
+<p>AIC, <span class="math inline">\(\Delta_i\)</span> e pesos são <strong>relativos</strong>: os pesos somam 1 dentro do conjunto que você escolheu, e o melhor de um conjunto ruim ainda recebe peso alto. Mac Nally et al.&nbsp;(2018) pedem o ajuste absoluto ao lado:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a></a><span class="fu">library</span>(performance)</span>
 <span id="cb12-2"><a></a></span>
@@ -671,17 +659,10 @@ habitat     | negbin |           0.156 | 24.042 |    1.55e-12 |    8.90e-13 |   
 nulo        | negbin |       2.322e-15 | 24.041 |    6.37e-13 |    2.57e-12 |         4.06e-03%</code></pre>
 </div>
 </div>
-<p>Ao lado dos pesos vêm <span class="math inline">\(R^2\)</span> e RMSE: as medidas que dizem se <strong>algum</strong> dos candidatos descreve os dados. Aqui o modelo do parque tem <span class="math inline">\(R^2\)</span> de Nagelkerke perto de 0,9 — é bom de fato, e não só melhor que os outros.</p>
 <div class="definicao">
-<p>Cuidado com a coluna <code>Performance-Score</code>. Ela vai de 0 a 100, mas sai de reescalar os índices <strong>dentro do conjunto comparado</strong> e tirar a média. É mais uma medida relativa. Quem responde “isto é bom?” é o <span class="math inline">\(R^2\)</span> ao lado dela, e o diagnóstico de resíduos.</p>
+<p>Um peso alto diz “o melhor entre os cinco que propus”, não “este modelo está certo”. Quem responde “isto é bom?” é o <span class="math inline">\(R^2\)</span> e o diagnóstico de resíduos — a coluna <code>Performance-Score</code> também é relativa, reescalada dentro do conjunto comparado.</p>
 </div>
-</section>
-<section id="a-ressalva-que-quase-nunca-aparece" class="slide level2">
-<h2>A ressalva que quase nunca aparece</h2>
-<div class="definicao">
-<p>Os pesos somam 1 <strong>dentro do conjunto que você escolheu</strong>. Se todos os modelos são ruins, o melhor deles ainda recebe peso alto.</p>
-</div>
-<p>Um peso de 0,95 diz “este é claramente o melhor entre os cinco que propus” — não “este modelo está certo”. A qualidade do conjunto é responsabilidade sua, e é uma questão biológica.</p>
+<p>Aqui o modelo do parque tem <span class="math inline">\(R^2\)</span> de Nagelkerke perto de 0,9: é bom de fato, e não só melhor que os outros.</p>
 </section>
 <section id="model-averaging" class="slide level2">
 <h2><em>Model averaging</em></h2>
@@ -1013,7 +994,7 @@ Chain 1:   Gradient evaluated at the initial value is not finite.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code> model elpd_diff se_diff p_worse diag_diff diag_elpd
    m_b       0.0     0.0      NA                    
-   m_a      -0.3     1.6    0.57   N &lt; 100          </code></pre>
+   m_a       0.0     1.6    0.50   N &lt; 100          </code></pre>
 </div>
 </div>
 <p>A saída dá a diferença de <em>expected log predictive density</em> e o seu erro-padrão. <strong>Se a diferença é menor que duas vezes o erro-padrão, os modelos são indistinguíveis.</strong></p>
@@ -1080,12 +1061,12 @@ Chain 1:   Gradient evaluated at the initial value is not finite.</code></pre>
 Computed from 4000 by 52 log-likelihood matrix.
 
          Estimate   SE
-elpd_loo   -196.8  7.6
-p_loo         3.1  0.7
-looic       393.6 15.1
+elpd_loo   -196.6  7.6
+p_loo         3.0  0.6
+looic       393.3 15.1
 ------
 MCSE of elpd_loo is 0.0.
-MCSE and ESS estimates assume MCMC draws (r_eff in [0.6, 1.1]).
+MCSE and ESS estimates assume MCMC draws (r_eff in [0.7, 1.2]).
 
 All Pareto k estimates are good (k &lt; 0.7).
 See help('pareto-k-diagnostic') for details.</code></pre>

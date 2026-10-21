@@ -147,8 +147,8 @@ Isso é um resultado, não um fracasso do procedimento. O Poisson com
 intercepto aleatório já dá conta: a variação que parecia excesso estava na
 estrutura de praias, e o efeito aleatório a absorveu.
 
-Guardem esta conclusão. Vamos reencontrá-la à tarde, de um jeito bem mais
-dramático.
+Guardem esta conclusão. Vamos reencontrá-la depois do intervalo, de um jeito
+bem mais dramático.
 
 ---
 
@@ -305,7 +305,7 @@ e 3" é uma prior.
 
 ::: {.definicao}
 **Verossimilhança.** O que **estes** dados dizem sobre o parâmetro, dado o
-modelo. É a mesma função que o `glmer()` maximizou de manhã.
+modelo. É a mesma função que o `glmer()` maximizou no bloco 1.
 :::
 
 ::: {.definicao}
@@ -393,7 +393,7 @@ glmer(Richness ~ NAP + (1 | Beach), family = poisson, data = rikz)
 ```
 
 ::: {.nota}
-Reajustamos o modelo que de fato **escolhemos** de manhã, o Poisson com
+Reajustamos o modelo que de fato **escolhemos** no bloco 1, o Poisson com
 intercepto aleatório. Não o binomial negativo, que a comparação de AIC
 mostrou ser desnecessário.
 :::
@@ -429,24 +429,28 @@ confiança, um desvio da posterior e um intervalo de credibilidade.
 
 ## O que acontece se insistirmos na NB
 
-Ajustando o mesmo modelo com `family = negbinomial()` nestes dados:
+Ajustando o mesmo modelo com `family = negbinomial()` e as priors
+**padrão** do `brms` (planas nos coeficientes):
 
 ```
 Further Distributional Parameters:
-                    Estimate      Est.Error  l-95% CI      u-95% CI  Rhat
-shape 6482648188764569600.00  1.31e+19          5.43      4.86e+19  3.22
+          Estimate    Est.Error  l-95% CI     u-95% CI  Rhat
+shape 3.546404e+16 3.636776e+16  5.41      8.229341e+16  3.43
+
+Warning: There were 382 divergent transitions after warmup.
 ```
 
 ::: {.definicao}
-O parâmetro de forma foge para $10^{18}$, e o $\hat{R}$ de **todo** o
-modelo vai a 3,2. Não é instabilidade numérica: é a posterior dizendo que
+O parâmetro de forma foge para $10^{16}$, e o $\hat{R}$ vai a 3,4. Não é instabilidade numérica: é a posterior dizendo que
 **os dados não identificam esse parâmetro**. Quando a dispersão extra
 tende a zero, a binomial negativa converge para a Poisson, e a forma
 tende ao infinito sem que a verossimilhança mude.
 :::
 
-O `glmmTMB` devolveu, para o mesmo modelo, um ponto confortável: 15,5.
-Um número, sem alarme.
+Com as priors declaradas do slide "Priors", as cadeias convergem
+($\hat{R} = 1{,}00$), mas a posterior da forma ainda vai de 4 a 1 800:
+a prior estabiliza o passeio, e os dados continuam sem identificar o
+parâmetro. O `glmmTMB` devolveu um ponto confortável: 15,5, sem alarme.
 
 ---
 
@@ -522,18 +526,21 @@ forte ou um pouco mais fraca. É a *power-scaling*.
 #| eval: false
 library(priorsense)
 
-powerscale_sensitivity(m_bayes)
+powerscale_sensitivity(m_bayes,
+                       variable = c("b_Intercept", "b_NAP", "sd_Beach__Intercept"))
 ```
 
 ```
- variable    prior likelihood                           diagnosis
- b_Intercept 0.369      0.518 potential prior-likelihood conflict
- sigma       0.282      0.506 potential prior-likelihood conflict
+            variable prior likelihood diagnosis
+         b_Intercept 0.023      0.013         -
+               b_NAP 0.008      0.105         -
+ sd_Beach__Intercept 0.049      0.039         -
 ```
 
 Duas colunas, uma pergunta cada: **quanto a posterior se mexe** quando se
 aperta a prior, e quanto ela se mexe quando se aperta a verossimilhança.
-O limiar padrão é 0,05.
+O limiar padrão é 0,05. Aqui nenhum diagnóstico dispara: a prior pesa
+pouco em tudo, e quem sustenta o `NAP` são os dados.
 
 ::: {.definicao}
 As duas colunas juntas é que dizem algo. **Prior alta e verossimilhança

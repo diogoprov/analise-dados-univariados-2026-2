@@ -558,13 +558,16 @@ Diogo B. Provete
 </section>
 <section id="o-que-elas-têm-em-comum" class="slide level2">
 <h2>O que elas têm em comum</h2>
-<p>Normal, Poisson, Binomial, Gamma, binomial negativa (com <span class="math inline">\(\theta\)</span> fixo) e Beta podem ser escritas na mesma forma geral:</p>
+<p>Normal, Poisson, Binomial, Gamma e binomial negativa (com <span class="math inline">\(\theta\)</span> fixo) podem ser escritas na mesma forma geral:</p>
 <p><span class="math display">\[
 f(y \mid \theta, \phi) =
 \exp\!\left\{ \frac{y\theta - b(\theta)}{a(\phi)} + c(y, \phi) \right\}
 \]</span></p>
 <div class="definicao">
 <p>Não é preciso decorar. O que importa é a consequência: como todas compartilham essa estrutura, <strong>um único algoritmo</strong> ajusta todas — o mesmo <code>glm()</code>, com um argumento <code>family</code> diferente.</p>
+</div>
+<div class="nota">
+<p>A binomial negativa com <span class="math inline">\(\theta\)</span> estimado sai do <code>MASS::glm.nb()</code>. A Beta do mapa rápido não cabe nesta forma; ajusta-se com <code>glmmTMB</code> ou <code>betareg</code>.</p>
 </div>
 </section>
 <section id="duas-ferramentas-para-brincar-com-isso" class="slide level2">
@@ -573,7 +576,7 @@ f(y \mid \theta, \phi) =
 <p><strong><a href="https://probabilityplayground.com">Probability Playground</a></strong> — 33 distribuições com gráficos interativos: você arrasta os parâmetros e vê a forma mudar. É o jeito mais rápido de sentir por que a binomial negativa vira Poisson quando a dispersão some, ou a Poisson vira normal quando <span class="math inline">\(\lambda\)</span> cresce.</p>
 <p><strong><a href="https://www.math.wm.edu/~leemis/chart/UDR/UDR.html">Univariate Distribution Relationships</a></strong> — o mapa completo: 76 distribuições e as setas que as ligam, tudo clicável. Cada seta é uma relação com nome (limite, transformação, caso especial).</p>
 <div class="nota">
-<p>Um exercício de cinco minutos que rende: no mapa, encontrem as quatro famílias que vimos hoje e sigam as setas entre elas. As que o curso usa não são um punhado de escolhas soltas — são vizinhas no mapa.</p>
+<p>Um exercício de cinco minutos que rende: no mapa, encontrem as cinco famílias que vimos hoje e sigam as setas entre elas. As que o curso usa não são um punhado de escolhas soltas — são vizinhas no mapa.</p>
 </div>
 </section>
 <section id="os-três-ingredientes-de-um-glm" class="slide level2">
@@ -651,10 +654,10 @@ f(y \mid \theta, \phi) =
 </tbody>
 </table>
 <div class="nota">
-<p>“Canônica” significa que ela cai naturalmente da álgebra da família. Nada impede usar outra — <code>binomial(link = "probit")</code>, por exemplo — mas a canônica costuma ter as melhores propriedades numéricas.</p>
+<p>“Canônica” significa que ela cai naturalmente da álgebra da família. Nada impede usar outra — <code>binomial(link = "probit")</code>, por exemplo. A Gamma é o caso em que quase ninguém usa a canônica: na prática ela é ajustada com <code>Gamma(link = "log")</code>, que mantém a média positiva e dá coeficientes interpretáveis como razões.</p>
 </div>
 </section>
-<section id="ligar-não-é-transformar-a-resposta" class="slide level2">
+<section id="ligar-não-é-transformar-a-resposta" class="slide level2 smaller">
 <h2>Ligar <strong>não</strong> é transformar a resposta</h2>
 <div class="definicao">
 <p><code>lm(log(y) ~ x)</code> modela <strong>a média do log</strong> de <span class="math inline">\(y\)</span>.</p>
@@ -662,15 +665,19 @@ f(y \mid \theta, \phi) =
 <p>São coisas diferentes, e a diferença importa.</p>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">set.seed</span>(<span class="dv">7</span>)</span>
-<span id="cb8-2"><a></a>y <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">300</span>, <span class="fu">exp</span>(<span class="dv">1</span> <span class="sc">+</span> .<span class="dv">05</span> <span class="sc">*</span> (x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">300</span>, <span class="dv">0</span>, <span class="dv">40</span>))))</span>
-<span id="cb8-3"><a></a><span class="fu">c</span>(<span class="at">lm_log_y =</span> <span class="fu">coef</span>(<span class="fu">lm</span>(<span class="fu">log</span>(y <span class="sc">+</span> <span class="fl">0.5</span>) <span class="sc">~</span> x))[<span class="dv">2</span>],</span>
-<span id="cb8-4"><a></a>  <span class="at">glm_log_mu =</span> <span class="fu">coef</span>(<span class="fu">glm</span>(y <span class="sc">~</span> x, <span class="at">family =</span> poisson))[<span class="dv">2</span>])</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a></a><span class="fu">set.seed</span>(<span class="dv">10</span>)</span>
+<span id="cb8-2"><a></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">300</span>, <span class="dv">0</span>, <span class="dv">40</span>)</span>
+<span id="cb8-3"><a></a>y <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="dv">300</span>, <span class="fu">exp</span>(<span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> <span class="fl">0.05</span> <span class="sc">*</span> x))   <span class="co"># verdade: inclinação 0,05 no log da média</span></span>
+<span id="cb8-4"><a></a></span>
+<span id="cb8-5"><a></a><span class="fu">c</span>(<span class="at">zeros      =</span> <span class="fu">mean</span>(y <span class="sc">==</span> <span class="dv">0</span>),</span>
+<span id="cb8-6"><a></a>  <span class="at">lm_log_y   =</span> <span class="fu">unname</span>(<span class="fu">coef</span>(<span class="fu">lm</span>(<span class="fu">log</span>(y <span class="sc">+</span> <span class="fl">0.5</span>) <span class="sc">~</span> x))[<span class="dv">2</span>]),</span>
+<span id="cb8-7"><a></a>  <span class="at">glm_log_mu =</span> <span class="fu">unname</span>(<span class="fu">coef</span>(<span class="fu">glm</span>(y <span class="sc">~</span> x, <span class="at">family =</span> poisson))[<span class="dv">2</span>])) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  lm_log_y.x glm_log_mu.x 
-  0.04905947   0.04934276 </code></pre>
+<pre><code>     zeros   lm_log_y glm_log_mu 
+     0.370      0.036      0.050 </code></pre>
 </div>
 </div>
+<p>Com contagens baixas e muitos zeros, o GLM recupera os 0,05 que simulamos; o <code>lm()</code> no log subestima a inclinação em cerca de 30 %. Com contagens altas e sem zeros, os dois quase coincidem — e é por isso que o atalho parece funcionar até o dia em que não funciona.</p>
 </section>
 <section id="três-razões-para-preferir-a-ligação" class="slide level2">
 <h2>Três razões para preferir a ligação</h2>

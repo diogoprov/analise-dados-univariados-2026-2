@@ -155,7 +155,7 @@ soma dos quadrados **é** maximizar a verossimilhança.
 
 ```{r}
 y <- lagartos$cauda_perdida
-x <- lagartos$SVLc   # SVL centrada na média — ver a nota dois slides adiante
+x <- lagartos$SVLc   # SVL centrada na média — ver o slide "Por que a SVL centrada"
 
 log_vero <- function(b0, b1) {
   p <- plogis(b0 + b1 * x)
@@ -701,7 +701,7 @@ diferentes. Voltamos a isso no Encontro 9.
 **Leitura:** *Análises Ecológicas no R*, cap. 8, seções sobre Poisson e
 quasi-verossimilhança.
 
-**À tarde:** o que fazer quando a razão do slide 22 dá 7,8.
+**À tarde:** o que fazer quando a razão de *deviance* de "O primeiro aviso" dá 7,8.
 
 ---
 

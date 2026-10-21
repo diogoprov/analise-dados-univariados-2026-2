@@ -89,9 +89,9 @@ inferência.**
 
 ## *Productive failure*
 
-Vocês têm 223 lagartos *Coleodactylus meridionalis*, com sexo,
-comprimento rostro-cloacal (SVL) e comprimento da cauda regenerada após
-autotomia.
+Vocês têm 223 lagartos *Coleodactylus meridionalis*; em 77 deles, que já
+tinham perdido a cauda, há sexo, comprimento rostro-cloacal (SVL) e
+comprimento da cauda regenerada após autotomia.
 
 ::: {.definicao}
 **Pergunta:** machos e fêmeas regeneram cauda de forma diferente?
@@ -570,7 +570,7 @@ car::Anova(m_int, type = "II")
 ```{r}
 m_int3 <- lm(body_mass_g ~ species * sex, data = pinguins,
              contrasts = list(species = "contr.sum", sex = "contr.sum"))
-car::Anova(m_int3, type = "III")[1:3, ]
+car::Anova(m_int3, type = "III")[2:4, ]
 ```
 
 ::: {.definicao}
@@ -598,14 +598,16 @@ mais comuns em artigos de ecologia.
 
 ---
 
-## `emmeans`: médias marginais estimadas
+## `emmeans`: médias marginais estimadas {.smaller .codigo-compacto}
 
 ```{r}
 library(emmeans)
 emmeans(m_int, ~ sex | species)
 ```
 
-Médias ajustadas pelo modelo — não as médias brutas dos grupos.
+Médias estimadas pelo modelo. Aqui coincidem com as médias brutas de cada
+célula, porque `species * sex` tem um parâmetro por combinação; num modelo
+aditivo ou com covariável, deixam de coincidir.
 
 ---
 
