@@ -533,6 +533,55 @@ mesmos $n - 2$ graus de liberdade e, portanto, o mesmo *p*.
 
 ---
 
+## Desafio do coeficiente (5 min) {.smaller}
+
+Pinguins-gentoo (*Pygoscelis papua*): machos e fêmeas diferem na massa
+corporal?
+
+```{r}
+gentoo <- pinguins |> filter(species == "Gentoo")
+m_gentoo <- lm(body_mass_g ~ sex, data = gentoo)
+summary(m_gentoo)$coefficients
+```
+
+**Em duplas, só com a tabela acima:**
+
+1. Qual é a massa média das fêmeas?
+2. Quanto os machos pesam a mais, em média?
+3. E qual é a massa média dos machos?
+4. Qual seria a $H_0$ do teste t? E a do modelo linear?
+5. Com $\alpha = 0{,}05$, a diferença é distinguível de zero? Por quê?
+
+---
+
+## Desafio do coeficiente: respostas {.smaller}
+
+```{r}
+#| echo: false
+cf <- summary(m_gentoo)$coefficients
+b0 <- round(cf["(Intercept)", "Estimate"])
+b1 <- round(cf["sexmale", "Estimate"])
+t1 <- format(round(cf["sexmale", "t value"], 1), decimal.mark = ",")
+```
+
+1. **`r b0` g** --- o intercepto $\beta_0$, a média do grupo de referência
+   (fêmeas).
+2. **`r b1` g** --- o coeficiente `sexmale`, $\beta_1$.
+3. **`r b0 + b1` g** --- $\beta_0 + \beta_1$. A média dos machos não está na
+   tabela: é a soma das duas linhas.
+4. Teste t: $H_0\!: \mu_F = \mu_M$. Modelo linear: $H_0\!: \beta_1 = 0$. É a
+   mesma hipótese.
+5. Sim: *t* = `r t1` e *p* < 0,001, na linha `sexmale`. A linha do
+   intercepto testa outra coisa --- se a massa média das fêmeas é zero ---,
+   e o *p* dela não responde à pergunta.
+
+::: {.definicao}
+A tabela de coeficientes **é** o teste t. Quem sabe ler as duas linhas não
+precisa da saída do `t.test()`.
+:::
+
+---
+
 ## O mapa completo
 
 | Teste clássico | O mesmo modelo |

@@ -3715,5 +3715,19 @@
     "title": "O modelo linear como arcabouço unificador",
     "section": "Do teste t ao coeficiente",
     "text": "Do teste t ao coeficiente\n\n\n\n\n\n\n\n\n\nTeste t\nModelo linear\n\n\n\n\nPergunta\nas médias diferem?\no coeficiente é zero?\n\n\n\\(H_0\\)\n\\(\\mu_F = \\mu_M\\)\n\\(\\beta_1 = 0\\)\n\n\nEstatística\n\\(t = \\dfrac{\\bar{y}_M - \\bar{y}_F}{s_p\\sqrt{1/n_F + 1/n_M}}\\)\n\\(t = \\dfrac{\\hat{\\beta}_1}{\\mathrm{EP}(\\hat{\\beta}_1)}\\)\n\n\n\n\nn   &lt;- table(adelie$sex)\ns2  &lt;- tapply(adelie$bill_length_mm, adelie$sex, var)\nsp  &lt;- sqrt(sum((n - 1) * s2) / (sum(n) - 2))   # desvio-padrão combinado\ndif &lt;- diff(tapply(adelie$bill_length_mm, adelie$sex, mean))\n\nc(t_teste = unname(dif / (sp * sqrt(sum(1 / n)))),\n  t_lm    = summary(m_t)$coefficients[\"sexmale\", \"t value\"])\n\nt_teste    t_lm \n8.77655 8.77655 \n\n\n\n\\(\\mu_F = \\mu_M\\) é o mesmo que \\(\\mu_M - \\mu_F = 0\\), e \\(\\mu_M - \\mu_F\\) é \\(\\beta_1\\). Mesma hipótese, mesmo numerador, mesmo denominador — \\(\\mathrm{EP}(\\hat{\\beta}_1)\\) é \\(s_p\\sqrt{1/n_F + 1/n_M}\\) —, os mesmos \\(n - 2\\) graus de liberdade e, portanto, o mesmo p."
+  },
+  {
+    "objectID": "slides/e02.html#desafio-do-coeficiente-5-min",
+    "href": "slides/e02.html#desafio-do-coeficiente-5-min",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Desafio do coeficiente (5 min)",
+    "text": "Desafio do coeficiente (5 min)\nPinguins-gentoo (Pygoscelis papua): machos e fêmeas diferem na massa corporal?\n\ngentoo &lt;- pinguins |&gt; filter(species == \"Gentoo\")\nm_gentoo &lt;- lm(body_mass_g ~ sex, data = gentoo)\nsummary(m_gentoo)$coefficients\n\n             Estimate Std. Error   t value      Pr(&gt;|t|)\n(Intercept) 4679.7414   39.15445 119.52004 3.888027e-124\nsexmale      805.0947   54.68770  14.72168  2.133688e-28\n\n\nEm duplas, só com a tabela acima:\n\nQual é a massa média das fêmeas?\nQuanto os machos pesam a mais, em média?\nE qual é a massa média dos machos?\nQual seria a \\(H_0\\) do teste t? E a do modelo linear?\nCom \\(\\alpha = 0{,}05\\), a diferença é distinguível de zero? Por quê?"
+  },
+  {
+    "objectID": "slides/e02.html#desafio-do-coeficiente-respostas",
+    "href": "slides/e02.html#desafio-do-coeficiente-respostas",
+    "title": "O modelo linear como arcabouço unificador",
+    "section": "Desafio do coeficiente: respostas",
+    "text": "Desafio do coeficiente: respostas\n\n4680 g — o intercepto \\(\\beta_0\\), a média do grupo de referência (fêmeas).\n805 g — o coeficiente sexmale, \\(\\beta_1\\).\n5485 g — \\(\\beta_0 + \\beta_1\\). A média dos machos não está na tabela: é a soma das duas linhas.\nTeste t: \\(H_0\\!: \\mu_F = \\mu_M\\). Modelo linear: \\(H_0\\!: \\beta_1 = 0\\). É a mesma hipótese.\nSim: t = 14,7 e p &lt; 0,001, na linha sexmale. A linha do intercepto testa outra coisa — se a massa média das fêmeas é zero —, e o p dela não responde à pergunta.\n\n\nA tabela de coeficientes é o teste t. Quem sabe ler as duas linhas não precisa da saída do t.test()."
   }
 ]
