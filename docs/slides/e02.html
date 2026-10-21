@@ -240,9 +240,6 @@ Diogo B. Provete
 <p><strong>Quinn &amp; Keough (2023), cap. 4</strong> — o arcabouço: as “técnicas” de nome próprio como variantes de um mesmo modelo.</p>
 <p><strong>Gelman, Hill &amp; Vehtari (2020), <em>Regression and Other Stories</em></strong> — a postura: regressão é uma ferramenta de <strong>comparação e predição</strong>, não uma máquina de produzir valores de <em>p</em>. Simular, ajustar, prever, checar.</p>
 <p><strong>Lindeløv, <em>Common statistical tests are linear models</em></strong> — a demonstração: a tabela que mostra cada teste clássico como um <code>lm()</code> com uma matriz de delineamento específica.</p>
-<div class="nota">
-<p>O ROS ajusta quase tudo com <code>stan_glm()</code>. Neste curso usamos <code>lm()</code> e <code>glm()</code> como padrão — que é o que vocês vão encontrar na literatura e nos laboratórios — e, quando mostramos a versão bayesiana, usamos <code>brms</code>, cuja sintaxe é idêntica à do <code>lme4</code> e do <code>glmmTMB</code> que veremos nos Encontros 7 e 8. Uma notação só para o curso inteiro.</p>
-</div>
 </section>
 <section id="hoje" class="slide level2">
 <h2>Hoje</h2>
@@ -863,9 +860,6 @@ sexmale      805.0947   54.68770  14.72168  2.133688e-28</code></pre>
 <p>A cada <strong>1 mm</strong> a mais de bico, a massa esperada aumenta 86.8 <strong>g</strong>.</p>
 </div>
 <p>Repare que a interpretação só existe <strong>com unidade</strong>. Coeficiente sem unidade é número solto.</p>
-<div class="nota">
-<p>O que o <code>lm()</code> está fazendo por baixo é o assunto do cap. 8 do ROS, <em>Fitting regression models</em>: a seção 8.1 põe mínimos quadrados, máxima verossimilhança e inferência bayesiana como três respostas à mesma pergunta, a 8.2 mostra quanto cada ponto puxa a reta, e a 8.4 ajusta o mesmo modelo com <code>lm()</code> e com <code>stan_glm()</code> lado a lado.</p>
-</div>
 </section>
 <section id="e-o-intercepto" class="slide level2">
 <h2>E o intercepto?</h2>
@@ -944,7 +938,7 @@ sexmale      805.0947   54.68770  14.72168  2.133688e-28</code></pre>
 <h2>E se eu dividir pelo desvio-padrão também?</h2>
 <p>Centrar mexeu no intercepto. Dividir pelo desvio-padrão mexe na <strong>unidade da inclinação</strong> — é o que o <code>scale()</code> faz, e é o que se chama de padronizar, ou escore <em>z</em>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="co"># o m_mult do slide anterior, agora com as duas preditoras padronizadas</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a></a><span class="co"># o m_mult da regressão múltipla, agora com as duas preditoras padronizadas</span></span>
 <span id="cb36-2"><a></a>m_pad <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> <span class="fu">scale</span>(bill_length_mm) <span class="sc">+</span> <span class="fu">scale</span>(flipper_length_mm),</span>
 <span id="cb36-3"><a></a>            <span class="at">data =</span> pinguins)</span>
 <span id="cb36-4"><a></a></span>
@@ -962,46 +956,21 @@ sexmale      805.0947   54.68770  14.72168  2.133688e-28</code></pre>
 <p>No bruto, a nadadeira parece pesar <strong>dez vezes</strong> mais que o bico (48,9 contra 5,0 g por mm). Padronizado, são <strong>vinte e cinco</strong> vezes (685 contra 27 g por desvio-padrão). O mesmo modelo — <span class="math inline">\(R^2\)</span> e <span class="math inline">\(\sigma\)</span> idênticos — e a leitura ingênua errou a ordem de grandeza.</p>
 </div>
 </section>
-<section id="por-que-a-conta-muda-tanto" class="slide level2">
-<h2>Por que a conta muda tanto</h2>
-<p>Porque as duas preditoras não variam igual. O bico varia 5,5 mm de desvio-padrão; a nadadeira, 14,0 mm. Um milímetro é muita coisa para um bico e pouca para uma nadadeira, então comparar “por mm” compara quantidades que não são comparáveis.</p>
+<section id="por-que-a-conta-muda-e-quando-vale-a-pena" class="slide level2 smaller">
+<h2>Por que a conta muda, e quando vale a pena</h2>
+<p>O bico varia 5,5 mm de desvio-padrão; a nadadeira, 14,0 mm. Um milímetro é muita coisa para um bico e pouca para uma nadadeira:</p>
 <p><span class="math display">\[
 b^{\text{padronizado}} = b^{\text{bruto}} \times s_x
+\qquad
+4{,}96 \times 5{,}47 = 27{,}1
+\qquad
+48{,}89 \times 14{,}02 = 685{,}2
 \]</span></p>
-<p>Confira na tabela acima: <span class="math inline">\(4{,}96 \times 5{,}47 = 27{,}1\)</span> e <span class="math inline">\(48{,}89 \times 14{,}02 = 685{,}2\)</span>.</p>
-<div class="nota">
-<p>E vale para <strong>preditoras</strong>. A resposta fica como está: num modelo linear padronizá-la só reescala tudo de novo, e num GLM ela não pode mesmo — contagem dividida por desvio-padrão não é Poisson.</p>
-</div>
-</section>
-<section id="quando-vale-a-pena-e-quando-não" class="slide level2">
-<h2>Quando vale a pena, e quando não</h2>
 <div class="definicao">
-<p><strong>Vale</strong> quando a pergunta é <em>qual preditora importa mais</em> e elas estão em escalas diferentes. Vale também como conserto de convergência no Encontro 8, e para domar interações e termos polinomiais.</p>
-<p><strong>Não vale</strong> quando a unidade natural é justamente o que interessa — “a cada 1 mm de bico, +5 g” é uma frase que um biólogo entende e confere. Esse é o caso mais comum.</p>
+<p><strong>Vale</strong> quando a pergunta é <em>qual preditora importa mais</em> e elas estão em escalas diferentes — e como conserto de convergência no Encontro 8.</p>
+<p><strong>Não vale</strong> quando a unidade natural é o que interessa: “a cada 1 mm de bico, +5 g” é uma frase que um biólogo entende e confere. É o caso mais comum.</p>
 </div>
-<p>Isso contradiz o “coeficiente com unidade” de agora há pouco só na aparência: o coeficiente padronizado <strong>continua tendo unidade</strong>, ela é que virou “por desvio-padrão de <span class="math inline">\(x\)</span>”. Relatar sem dizer quanto vale esse desvio-padrão é que torna o número solto de novo.</p>
-</section>
-<section id="sem-reajustar-o-modelo-à-mão" class="slide level2">
-<h2>Sem reajustar o modelo à mão</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a><span class="co"># o mesmo que o nosso scale(): padroniza só as preditoras</span></span>
-<span id="cb38-2"><a></a>effectsize<span class="sc">::</span><span class="fu">standardize_parameters</span>(m_mult, <span class="at">include_response =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb38-3"><a></a></span>
-<span id="cb38-4"><a></a><span class="co"># o padrão, num lm, padroniza a resposta também — e aí o coeficiente</span></span>
-<span id="cb38-5"><a></a><span class="co"># fica adimensional: desvios-padrão de y por desvio-padrão de x</span></span>
-<span id="cb38-6"><a></a>effectsize<span class="sc">::</span><span class="fu">standardize_parameters</span>(m_mult)</span>
-<span id="cb38-7"><a></a></span>
-<span id="cb38-8"><a></a><span class="co"># por DOIS desvios-padrão, para ficar comparável a preditoras</span></span>
-<span id="cb38-9"><a></a><span class="co"># binárias (Gelman 2008)</span></span>
-<span id="cb38-10"><a></a>effectsize<span class="sc">::</span><span class="fu">standardize_parameters</span>(m_mult, <span class="at">two_sd =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>As três respondem perguntas diferentes. A primeira devolve os nossos 27,1 e 685,2 g por desvio-padrão. A segunda divide isso pelo desvio-padrão da massa (805 g) e devolve 0,03 e 0,85 — números sem unidade nenhuma.</p>
-<div class="nota">
-<p>Num <strong>GLM</strong> a escolha nem existe: a resposta nunca é padronizada, qualquer que seja o argumento. É o que diz a documentação da função — “for GLMs the response value will never be standardized” — e é por isso que no Encontro 5 o <code>scale(CRC)</code> aparece só na preditora.</p>
-</div>
-<div class="ref">
-<p>Gelman, A. 2008. <a href="https://doi.org/10.1002/sim.3107">Scaling regression inputs by dividing by two standard deviations</a>. <em>Statistics in Medicine</em> 27:2865–2873.</p>
-</div>
+<p>O coeficiente padronizado continua tendo unidade: “por desvio-padrão de <span class="math inline">\(x\)</span>”. Relate quanto vale esse desvio-padrão. E padronize só as <strong>preditoras</strong> — num GLM a resposta não pode ser padronizada.</p>
 </section>
 <section id="paradoxo-de-simpson" class="slide level2">
 <h2>Paradoxo de Simpson</h2>
@@ -1009,7 +978,7 @@ b^{\text{padronizado}} = b^{\text{bruto}} \times s_x
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-22-1.png" width="672"></p>
+<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-21-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1027,8 +996,8 @@ b^{\text{padronizado}} = b^{\text{bruto}} \times s_x
 <section id="o-padrão-do-r-contr.treatment" class="slide level2">
 <h2>O padrão do R: <code>contr.treatment</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a></a>m_esp <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species, <span class="at">data =</span> pinguins)</span>
-<span id="cb39-2"><a></a><span class="fu">coef</span>(m_esp)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a></a>m_esp <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species, <span class="at">data =</span> pinguins)</span>
+<span id="cb38-2"><a></a><span class="fu">coef</span>(m_esp)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     (Intercept) speciesChinstrap    speciesGentoo 
       3706.16438         26.92385       1386.27259 </code></pre>
@@ -1039,14 +1008,14 @@ b^{\text{padronizado}} = b^{\text{bruto}} \times s_x
 <section id="soma-zero-contr.sum" class="slide level2">
 <h2>Soma zero: <code>contr.sum</code></h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a></a>m_sum <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species, <span class="at">data =</span> pinguins,</span>
-<span id="cb41-2"><a></a>            <span class="at">contrasts =</span> <span class="fu">list</span>(<span class="at">species =</span> <span class="st">"contr.sum"</span>))</span>
-<span id="cb41-3"><a></a><span class="fu">coef</span>(m_sum)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a></a>m_sum <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species, <span class="at">data =</span> pinguins,</span>
+<span id="cb40-2"><a></a>            <span class="at">contrasts =</span> <span class="fu">list</span>(<span class="at">species =</span> <span class="st">"contr.sum"</span>))</span>
+<span id="cb40-3"><a></a><span class="fu">coef</span>(m_sum)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>(Intercept)    species1    species2 
   4177.2299   -471.0655   -444.1416 </code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a></a><span class="fu">mean</span>(<span class="fu">tapply</span>(pinguins<span class="sc">$</span>body_mass_g, pinguins<span class="sc">$</span>species, mean))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a></a><span class="fu">mean</span>(<span class="fu">tapply</span>(pinguins<span class="sc">$</span>body_mass_g, pinguins<span class="sc">$</span>species, mean))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4177.23</code></pre>
 </div>
@@ -1059,7 +1028,7 @@ b^{\text{padronizado}} = b^{\text{bruto}} \times s_x
 <p>O ajuste é <strong>idêntico</strong> — mesmos valores preditos, mesmo <span class="math inline">\(R^2\)</span>, mesmos resíduos. O que muda é o <strong>significado de cada número</strong> na tabela.</p>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a></a><span class="fu">all.equal</span>(<span class="fu">fitted</span>(m_esp), <span class="fu">fitted</span>(m_sum))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a></a><span class="fu">all.equal</span>(<span class="fu">fitted</span>(m_esp), <span class="fu">fitted</span>(m_sum))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
@@ -1073,8 +1042,8 @@ b^{\text{padronizado}} = b^{\text{bruto}} \times s_x
 <section id="ordem-dos-níveis-não-é-detalhe" class="slide level2">
 <h2>Ordem dos níveis não é detalhe</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a></a>pinguins <span class="ot">&lt;-</span> pinguins <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">species2 =</span> <span class="fu">relevel</span>(species, <span class="at">ref =</span> <span class="st">"Gentoo"</span>))</span>
-<span id="cb47-2"><a></a><span class="fu">coef</span>(<span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species2, <span class="at">data =</span> pinguins))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a></a>pinguins <span class="ot">&lt;-</span> pinguins <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">species2 =</span> <span class="fu">relevel</span>(species, <span class="at">ref =</span> <span class="st">"Gentoo"</span>))</span>
+<span id="cb46-2"><a></a><span class="fu">coef</span>(<span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species2, <span class="at">data =</span> pinguins))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      (Intercept)    species2Adelie species2Chinstrap 
          5092.437         -1386.273         -1359.349 </code></pre>
@@ -1090,146 +1059,43 @@ b^{\text{padronizado}} = b^{\text{bruto}} \times s_x
 <h1>7. A mesma regressão, em <code>brms</code></h1>
 
 </section>
-<section id="por-que-mostrar-isso-agora" class="slide level2">
-<h2>Por que mostrar isso agora</h2>
-<p>O livro-texto do curso ajusta quase tudo em bayesiano. Vale ver, desde já, que é <strong>o mesmo modelo</strong> — e começar a usar a notação que vai valer até o fim do curso.</p>
+<section id="a-mesma-fórmula-outro-motor" class="slide level2 smaller">
+<h2>A mesma fórmula, outro motor</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a></a><span class="fu">library</span>(brms)</span>
-<span id="cb49-2"><a></a></span>
-<span id="cb49-3"><a></a>m_bayes <span class="ot">&lt;-</span> <span class="fu">brm</span>(body_mass_g <span class="sc">~</span> bill_length_mm, <span class="at">data =</span> pinguins,</span>
-<span id="cb49-4"><a></a>               <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">seed =</span> <span class="dv">2026</span>,</span>
-<span id="cb49-5"><a></a>               <span class="at">file =</span> <span class="st">"../cache/e02_bico"</span>)   <span class="co"># compila uma vez, reusa depois</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a></a><span class="fu">library</span>(brms)</span>
+<span id="cb48-2"><a></a></span>
+<span id="cb48-3"><a></a>m_bayes <span class="ot">&lt;-</span> <span class="fu">brm</span>(body_mass_g <span class="sc">~</span> bill_length_mm, <span class="at">data =</span> pinguins,</span>
+<span id="cb48-4"><a></a>               <span class="at">chains =</span> <span class="dv">4</span>, <span class="at">iter =</span> <span class="dv">2000</span>, <span class="at">seed =</span> <span class="dv">2026</span>,</span>
+<span id="cb48-5"><a></a>               <span class="at">file =</span> <span class="st">"../cache/e02_bico"</span>)   <span class="co"># compila uma vez, reusa depois</span></span>
+<span id="cb48-6"><a></a></span>
+<span id="cb48-7"><a></a><span class="fu">rbind</span>(<span class="at">lm  =</span> <span class="fu">coef</span>(m_reg),</span>
+<span id="cb48-8"><a></a>      <span class="at">brm =</span> <span class="fu">fixef</span>(m_bayes)[, <span class="st">"Estimate"</span>]) <span class="sc">|&gt;</span> <span class="fu">round</span>(<span class="dv">1</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    (Intercept) bill_length_mm
+lm        388.8           86.8
+brm       386.2           86.9</code></pre>
+</div>
 </div>
 <div class="definicao">
-<p>A fórmula é exatamente a mesma que você escreveria em <code>lm()</code>. E a mesma que você vai escrever em <code>lmer()</code>, <code>glmmTMB()</code> e <code>brm()</code> nos Encontros 7 e 8 — só acrescentando <code>(1 | grupo)</code>.</p>
+<p>A fórmula é exatamente a mesma do <code>lm()</code> — e a mesma que vocês vão escrever em <code>lmer()</code>, <code>glmmTMB()</code> e <code>brm()</code> nos Encontros 7 e 8, só acrescentando <code>(1 | grupo)</code>. Com bastante dado, as estimativas coincidem.</p>
 </div>
 <div class="nota">
-<p>Hoje é só isso: <strong>a fórmula é a mesma</strong>. O que são prior, posterior, MCMC, <code>Rhat</code> e <code>ESS</code> fica para o Encontro 8, que abre o bloco bayesiano com dois slides de definição. Se a saída aqui parecer críptica, é porque ainda é — olhe a coluna <code>Estimate</code> e compare com o <code>lm()</code>.</p>
-</div>
-</section>
-<section id="o-que-o-brm-devolve" class="slide level2">
-<h2>O que o <code>brm()</code> devolve</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a><span class="fu">summary</span>(m_bayes)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code> Family: gaussian 
-  Links: mu = identity 
-Formula: body_mass_g ~ bill_length_mm 
-   Data: pinguins (Number of observations: 333) 
-  Draws: 4 chains, each with iter = 2000; warmup = 1000; thin = 1;
-         total post-warmup draws = 4000
-
-Regression Coefficients:
-               Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-Intercept        386.18    290.99  -187.19   961.06 1.00     4237     2907
-bill_length_mm    86.85      6.57    73.96    99.96 1.00     4234     2828
-
-Further Distributional Parameters:
-      Estimate Est.Error l-95% CI u-95% CI Rhat Bulk_ESS Tail_ESS
-sigma   652.73     25.32   605.66   704.80 1.00     4196     3349
-
-Draws were sampled using sampling(NUTS). For each parameter, Bulk_ESS
-and Tail_ESS are effective sample size measures, and Rhat is the potential
-scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
-</div>
+<p>Prior, posterior, MCMC, <code>Rhat</code> e <code>ESS</code> ficam para o Encontro 8. O <code>brms</code> compila cada modelo em C++ na primeira vez; com <code>file =</code>, as vezes seguintes são instantâneas.</p>
 </div>
 </section>
 <section id="uma-notação-quatro-pacotes" class="slide level2">
 <h2>Uma notação, quatro pacotes</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a></a><span class="co"># nomes ilustrativos: este bloco mostra a notação, não roda</span></span>
-<span id="cb52-2"><a></a><span class="fu">lm</span>       (massa <span class="sc">~</span> svl,                  <span class="at">data =</span> d)                     <span class="co"># gaussiano</span></span>
-<span id="cb52-3"><a></a><span class="fu">glm</span>      (massa <span class="sc">~</span> svl, <span class="at">family =</span> Gamma,  <span class="at">data =</span> d)                     <span class="co"># GLM</span></span>
-<span id="cb52-4"><a></a>lme4<span class="sc">::</span><span class="fu">lmer</span>   (massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca),               <span class="at">data =</span> d)       <span class="co"># LMM</span></span>
-<span id="cb52-5"><a></a>glmmTMB<span class="sc">::</span><span class="fu">glmmTMB</span>(massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca), <span class="at">family =</span> Gamma, <span class="at">data =</span> d)  <span class="co"># GLMM</span></span>
-<span id="cb52-6"><a></a>brms<span class="sc">::</span><span class="fu">brm</span>    (massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca), <span class="at">family =</span> Gamma, <span class="at">data =</span> d)     <span class="co"># bayesiano</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a></a><span class="co"># nomes ilustrativos: este bloco mostra a notação, não roda</span></span>
+<span id="cb50-2"><a></a><span class="fu">lm</span>       (massa <span class="sc">~</span> svl,                  <span class="at">data =</span> d)                     <span class="co"># gaussiano</span></span>
+<span id="cb50-3"><a></a><span class="fu">glm</span>      (massa <span class="sc">~</span> svl, <span class="at">family =</span> Gamma,  <span class="at">data =</span> d)                     <span class="co"># GLM</span></span>
+<span id="cb50-4"><a></a>lme4<span class="sc">::</span><span class="fu">lmer</span>   (massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca),               <span class="at">data =</span> d)       <span class="co"># LMM</span></span>
+<span id="cb50-5"><a></a>glmmTMB<span class="sc">::</span><span class="fu">glmmTMB</span>(massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca), <span class="at">family =</span> Gamma, <span class="at">data =</span> d)  <span class="co"># GLMM</span></span>
+<span id="cb50-6"><a></a>brms<span class="sc">::</span><span class="fu">brm</span>    (massa <span class="sc">~</span> svl <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> poca), <span class="at">family =</span> Gamma, <span class="at">data =</span> d)     <span class="co"># bayesiano</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="nota">
-<p>É por isso que escolhemos <code>brms</code> e não outro pacote bayesiano: o custo de transferência entre as cinco linhas acima é quase zero. Referência prática: Kurz, <em>Statistical Rethinking recoded</em> (<a href="https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/" class="uri">https://bookdown.org/ajkurz/Statistical_Rethinking_recoded/</a>).</p>
+<p>É por isso que o curso usa <code>brms</code>: o custo de transferência entre as cinco linhas acima é quase zero.</p>
 </div>
-</section>
-<section id="o-preço-compilação" class="slide level2">
-<h2>O preço: compilação</h2>
-<p>O <code>brms</code> traduz cada modelo para um programa Stan e <strong>compila em C++</strong>.</p>
-<ul>
-<li>primeira vez na vida da máquina: alguns minutos;</li>
-<li>cada modelo <strong>novo</strong>: dezenas de segundos;</li>
-<li>mesmo modelo de novo, com <code>file = "cache/..."</code>: instantâneo.</li>
-</ul>
-<div class="definicao">
-<p>Por isso todos os modelos <code>brms</code> deste curso já estão em cache no repositório. Nas suas análises, use sempre <code>file =</code> — vocês vão agradecer na terceira vez que renderizarem o relatório.</p>
-</div>
-</section>
-<section id="o-que-muda-e-o-que-não-muda" class="slide level2">
-<h2>O que muda e o que não muda</h2>
-<table class="caption-top">
-<colgroup>
-<col style="width: 33%">
-<col style="width: 33%">
-<col style="width: 33%">
-</colgroup>
-<thead>
-<tr class="header">
-<th></th>
-<th><code>lm()</code></th>
-<th><code>brm()</code></th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Estimativa pontual</td>
-<td>idêntica, na prática</td>
-<td>mediana da posterior</td>
-</tr>
-<tr class="even">
-<td>Incerteza</td>
-<td>erro-padrão, IC de 95 %</td>
-<td>desvio-padrão da posterior, intervalo de credibilidade</td>
-</tr>
-<tr class="odd">
-<td>Priors</td>
-<td>nenhuma (implicitamente planas)</td>
-<td>fracamente informativas por padrão</td>
-</tr>
-<tr class="even">
-<td>O que você pode dizer</td>
-<td>“95 % dos ICs construídos assim conteriam o valor”</td>
-<td>“há 95 % de probabilidade de o parâmetro estar aqui”</td>
-</tr>
-<tr class="odd">
-<td>Amostra pequena</td>
-<td>estimativa instável</td>
-<td>a prior regulariza</td>
-</tr>
-</tbody>
-</table>
-<div class="definicao">
-<p>Com bastante dado e priors fracas, os dois dão praticamente o mesmo número. A diferença aparece quando o dado é pouco — que é a situação de boa parte da ecologia de campo.</p>
-</div>
-</section>
-<section id="o-que-você-ganha-de-graça" class="slide level2 smaller">
-<h2>O que você ganha de graça</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="co"># distribuição preditiva posterior — o que o modelo acha</span></span>
-<span id="cb53-2"><a></a><span class="co"># que seriam novos dados</span></span>
-<span id="cb53-3"><a></a><span class="fu">pp_check</span>(m_bayes, <span class="at">ndraws =</span> <span class="dv">50</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-30-1.png" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a></a><span class="co"># incerteza sobre qualquer quantidade derivada, sem fórmula:</span></span>
-<span id="cb54-2"><a></a>posterior <span class="ot">&lt;-</span> <span class="fu">as_draws_df</span>(m_bayes)</span>
-<span id="cb54-3"><a></a><span class="fu">quantile</span>(posterior<span class="sc">$</span>b_bill_length_mm <span class="sc">*</span> <span class="dv">10</span>, <span class="fu">c</span>(.<span class="dv">025</span>, .<span class="dv">5</span>, .<span class="dv">975</span>))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>    2.5%      50%    97.5% 
-739.6205 868.8990 999.5654 </code></pre>
-</div>
-</div>
-<p>Propagar incerteza para uma quantidade derivada — “massa esperada de um pinguim com bico 10 mm maior” — é uma linha de código, não uma derivação.</p>
-<p>Voltamos a isso no Encontro 8, com GLMM.</p>
 </section>
 <section class="slide level2">
 
@@ -1242,8 +1108,8 @@ scale reduction factor on split chains (at convergence, Rhat = 1).</code></pre>
 <section id="o-que-é-e-o-que-não-é" class="slide level2">
 <h2>O que é (e o que não é)</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a><span class="fu">round</span>(<span class="fu">cor</span>(pinguins[, <span class="fu">c</span>(<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>,</span>
-<span id="cb56-2"><a></a>                       <span class="st">"body_mass_g"</span>)], <span class="at">use =</span> <span class="st">"complete.obs"</span>), <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a></a><span class="fu">round</span>(<span class="fu">cor</span>(pinguins[, <span class="fu">c</span>(<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>,</span>
+<span id="cb51-2"><a></a>                       <span class="st">"body_mass_g"</span>)], <span class="at">use =</span> <span class="st">"complete.obs"</span>), <span class="dv">2</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
 bill_length_mm              1.00         -0.23              0.65        0.59
@@ -1259,13 +1125,12 @@ body_mass_g                 0.59         -0.47              0.87        1.00</co
 <section id="vif" class="slide level2">
 <h2>VIF</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a></a><span class="co"># o usdm quer um data frame de preditoras, nao um modelo — e nao aceita</span></span>
-<span id="cb58-2"><a></a><span class="co"># tibble: sem o as.data.frame() ele para com "invalid type (list)"</span></span>
-<span id="cb58-3"><a></a>preditoras <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(</span>
-<span id="cb58-4"><a></a>  pinguins[, <span class="fu">c</span>(<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>)]</span>
-<span id="cb58-5"><a></a>)</span>
-<span id="cb58-6"><a></a></span>
-<span id="cb58-7"><a></a>usdm<span class="sc">::</span><span class="fu">vifcor</span>(preditoras, <span class="at">th =</span> <span class="fl">0.7</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a></a><span class="co"># o usdm recebe as preditoras, não o modelo</span></span>
+<span id="cb53-2"><a></a>preditoras <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(</span>
+<span id="cb53-3"><a></a>  pinguins[, <span class="fu">c</span>(<span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span>, <span class="st">"flipper_length_mm"</span>)]</span>
+<span id="cb53-4"><a></a>)</span>
+<span id="cb53-5"><a></a></span>
+<span id="cb53-6"><a></a>usdm<span class="sc">::</span><span class="fu">vifcor</span>(preditoras, <span class="at">th =</span> <span class="fl">0.7</span>)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>No variable from the 3 input variables has collinearity problem. 
 
@@ -1281,17 +1146,17 @@ max correlation ( flipper_length_mm ~ bill_length_mm ):  0.6530956
 </div>
 </div>
 </section>
-<section id="o-que-essa-saída-diz-a-mais" class="slide level2">
-<h2>O que essa saída diz a mais</h2>
-<p>O <code>car::vif()</code> devolve só os valores. O <code>vifcor()</code> devolve, além deles, <strong>qual par é o mais correlacionado e quanto</strong> — que é a informação de que você precisa para decidir. Aqui o par mais apertado é comprimento de nadadeira com comprimento de bico, <em>r</em> = 0,65, e nenhum VIF passa de 2,6.</p>
-<div class="nota">
-<p>A função também <strong>exclui</strong> variáveis sozinha, quando alguma passa do limiar. Use a saída, não a exclusão: baixar o <code>th</code> até alguma coisa cair é a versão com nome técnico de escolher preditora pelo resultado.</p>
-</div>
+<section id="lendo-o-vif" class="slide level2">
+<h2>Lendo o VIF</h2>
+<p>Além dos VIFs, o <code>vifcor()</code> diz <strong>qual par é o mais correlacionado e quanto</strong>: aqui, nadadeira com bico, <em>r</em> = 0,65, e nenhum VIF passa de 2,6.</p>
 <p>Regras práticas: acima de 5 desconfie, acima de 10 preocupe-se. Mas a decisão é <strong>biológica</strong>, não mecânica:</p>
 <ul>
 <li>as duas preditoras medem coisas distintas na sua hipótese? → mantenha e relate a incerteza;</li>
 <li>são proxies da mesma coisa? → escolha uma, pelo argumento, não pelo <em>p</em>.</li>
 </ul>
+<div class="nota">
+<p>Use a saída, não a exclusão automática da função: baixar o <code>th</code> até alguma coisa cair é escolher preditora pelo resultado.</p>
+</div>
 </section>
 <section class="slide level2">
 
@@ -1304,12 +1169,12 @@ max correlation ( flipper_length_mm ~ bill_length_mm ):  0.6530956
 <section id="os-quatro-gráficos" class="slide level2">
 <h2>Os quatro gráficos</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
-<span id="cb60-2"><a></a><span class="fu">plot</span>(m_mult)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb55-2"><a></a><span class="fu">plot</span>(m_mult)</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-33-1.png" width="672"></p>
+<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-30-1.png" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1347,6 +1212,9 @@ max correlation ( flipper_length_mm ~ bill_length_mm ):  0.6530956
 </tr>
 </tbody>
 </table>
+<div class="nota">
+<p>A seguir, os mesmos diagnósticos com <code>performance::check_model()</code>, que desenha faixas de referência simuladas — mais fácil de julgar do que “isso parece um padrão?”. A partir do Encontro 6, com GLMs, entra o <code>DHARMa</code>.</p>
+</div>
 </section>
 <section id="versão-moderna" class="slide level2 smaller">
 <h2>Versão moderna</h2>
@@ -1355,21 +1223,15 @@ max correlation ( flipper_length_mm ~ bill_length_mm ):  0.6530956
      figura sem erro nem aviso. Medido em 14/09; ver
      claude/armadilhas-do-render.md no projeto. -->
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a></a><span class="fu">library</span>(performance)</span>
-<span id="cb61-2"><a></a><span class="fu">plot</span>(<span class="fu">check_model</span>(m_mult))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a></a><span class="fu">library</span>(performance)</span>
+<span id="cb56-2"><a></a><span class="fu">plot</span>(<span class="fu">check_model</span>(m_mult))</span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-34-1.png" width="672"></p>
+<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-31-1.png" width="672"></p>
 </figure>
 </div>
 </div>
-</div>
-</section>
-<section id="por-que-esta-é-melhor" class="slide level2">
-<h2>Por que esta é melhor</h2>
-<div class="nota">
-<p><code>performance::check_model()</code> produz os mesmos diagnósticos com intervalos de referência simulados — muito mais fácil de julgar do que “isso parece um padrão?”. A partir do Encontro 6, com GLMs, passamos a usar <code>DHARMa</code>, que é a única forma honesta de diagnosticar resíduos não gaussianos.</p>
 </div>
 </section>
 <section id="resíduo-contra-predito-nunca-contra-observado" class="slide level2">
@@ -1381,7 +1243,7 @@ max correlation ( flipper_length_mm ~ bill_length_mm ):  0.6530956
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-35-1.png" width="672"></p>
+<p><img data-src="e02_files/figure-revealjs/unnamed-chunk-32-1.png" width="672"></p>
 </figure>
 </div>
 </div>
